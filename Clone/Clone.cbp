@@ -50,7 +50,6 @@
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
 		</Linker>
-		<Unit filename="include/main.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
