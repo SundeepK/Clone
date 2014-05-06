@@ -5,31 +5,17 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Box2D/Box2D.h>
+#include "B2BodyBuilder.h"
 
 class B2DWorld
 {
     public:
         B2DWorld();
         virtual ~B2DWorld();
+        b2Body* createB2Body(B2BodyBuilder builder);
     protected:
     private:
         b2World world;
-};
-
-class B2BodyBuilder
-{
-     public:
-     B2BodyBuilder();
-     virtual ~B2BodyBuilder();
-     B2BodyBuilder setPosition(b2Vec2 position);
-     B2BodyBuilder bodyType(float x, float y);
-     B2BodyBuilder bodyDef(b2BodyDef bodyDef);
-     B2BodyBuilder setFriction(float friction);
-     B2BodyBuilder setRestitution(float restitution);
-     B2BodyBuilder setDensity(float density);
-     B2BodyBuilder setSensor(bool isSensor);
-     B2BodyBuilder build(b2Shape* shape);
-
 };
 
 #endif // B2DWORLD_H

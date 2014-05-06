@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1399413140 source:/media/sundeep/3 tb Vol/code/Clone/Clone/src/B2BodyBuilder.cpp
+	"B2BodyBuilder.h"
+
+1399412747 /media/sundeep/3 tb Vol/code/Clone/Clone/include/B2BodyBuilder.h
+	<SFML/System.hpp>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<Box2D/Box2D.h>
+	<memory.h>
+

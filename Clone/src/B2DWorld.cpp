@@ -2,10 +2,8 @@
 
 B2DWorld::B2DWorld()
 {
-    //ctor
 }
 
 B2DWorld::~B2DWorld()
 {
-    //dtor
 }
