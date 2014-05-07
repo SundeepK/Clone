@@ -15,7 +15,6 @@ class B2DWorld
         b2Body* createB2Body(B2BodyBuilder builder);
     protected:
     private:
-        b2World world;
 };
 
 #endif // B2DWORLD_H

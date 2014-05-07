@@ -1,4 +1,6 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 int main()
 {
@@ -10,7 +12,7 @@ int main()
     settings.minorVersion = 0;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     // Create the main window
-    sf::RenderWindow App(sf::VideoMode(1280, 800), "SFML window", settings);
+    sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 
 
 	// Start the game loop
