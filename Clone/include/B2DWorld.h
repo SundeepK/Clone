@@ -10,11 +10,12 @@
 class B2DWorld
 {
     public:
-        B2DWorld();
+        B2DWorld(float gravity);
         virtual ~B2DWorld();
         b2Body* createB2Body(B2BodyBuilder builder);
     protected:
     private:
+        b2World m_world;
 };
 
 #endif // B2DWORLD_H

@@ -18,6 +18,7 @@ class B2BodyBuilder
 {
      public:
          B2BodyBuilder(b2Shape* shape);
+         B2BodyBuilder();
          virtual ~B2BodyBuilder();
          B2BodyBuilder&  setPosition(b2Vec2 position);
          B2BodyBuilder&  bodyType(b2BodyType bodyType);
