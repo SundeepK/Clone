@@ -5,22 +5,29 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Box2D/Box2D.h>
-#include <memory.h>
+//#include <Box2D/Dynamics/b2World.h>
+//#include <Box2D/Common/b2Math.h>
+//#include <Box2D/Dynamics/b2Fixture.h>
+//#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+//#include <Box2D/Collision/Shapes/b2CircleShape.h>
+
+
+ #include <memory.h>
 
 class B2BodyBuilder
 {
      public:
          B2BodyBuilder(b2Shape* shape);
          virtual ~B2BodyBuilder();
-         B2BodyBuilder setPosition(b2Vec2 position);
-         B2BodyBuilder bodyType(float x, float y);
-         B2BodyBuilder bodyDef(b2BodyDef bodyDef);
-         B2BodyBuilder setFriction(float friction);
-         B2BodyBuilder setRestitution(float restitution);
-         B2BodyBuilder setDensity(float density);
-         B2BodyBuilder setSensor(bool isSensor);
-         b2Body* build(b2World world);
+         B2BodyBuilder&  setPosition(b2Vec2 position);
+         B2BodyBuilder&  bodyType(b2BodyType bodyType);
+         B2BodyBuilder&  setFriction(float friction);
+         B2BodyBuilder&  setRestitution(float restitution);
+         B2BodyBuilder&  setDensity(float density);
+         B2BodyBuilder&  setSensor(bool isSensor);
+         b2Body* build(b2World& world);
     private:
+         b2BodyDef m_bodyDef;
          b2FixtureDef m_fixtureDef;
          std::unique_ptr<b2Shape>  m_b2Shape;
 
