@@ -21,14 +21,19 @@ int main()
     boxShape.SetAsBox(1,1);
     B2BodyBuilder builder(&boxShape);
     builder
-        .bodyType(b2_dynamicBody)
-        .setPosition(b2Vec2(10,10))
-        .setDensity(1.0f)
-        .setFriction(0.3f);
+    .bodyType(b2_dynamicBody)
+    .setPosition(b2Vec2(10,10))
+    .setDensity(1.0f)
+    .setFriction(0.3f);
 
-    b2Body* body = box2DWorld.createB2Body(builder);
+    box2DWorld.createB2Body(builder);
 
-	// Start the game loop
+    sf::Clock deltaClock;
+
+
+    float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
+
+    // Start the game loop
     while (App.isOpen())
     {
         sf::Event Event;
@@ -39,6 +44,11 @@ int main()
                 App.close();
             }
         }
+
+        float currentTime = deltaClock.getElapsedTime().asSeconds();
+        float deltaTime = currentTime - initialUpdateTime;
+        initialUpdateTime = currentTime;
+        box2DWorld.update(deltaTime);
 
         // Clear screen
         App.clear();

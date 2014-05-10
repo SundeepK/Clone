@@ -7,7 +7,7 @@ class Updateable
     public:
         Updateable();
         virtual ~Updateable();
-        virtual void update() = 0;
+        virtual void update(float dt) = 0;
     protected:
     private:
 };
