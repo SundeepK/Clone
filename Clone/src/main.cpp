@@ -16,6 +16,7 @@ int main()
     // Create the main window
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 
+    //box
     B2DWorld box2DWorld(-9.8f);
     b2PolygonShape boxShape;
     boxShape.SetAsBox(1,1);
@@ -25,8 +26,19 @@ int main()
     .setPosition(b2Vec2(10,10))
     .setDensity(1.0f)
     .setFriction(0.3f);
-
     box2DWorld.createB2Body(builder);
+
+
+        //box
+    b2PolygonShape groundShape;
+    groundShape.SetAsBox(1,1);
+    B2BodyBuilder groundShapebuilder(&groundShape);
+    groundShapebuilder
+    .bodyType(b2_staticBody)
+    .setPosition(b2Vec2(10,10))
+    .setDensity(1.0f)
+    .setFriction(0.3f);
+    box2DWorld.createB2Body(groundShapebuilder);
 
     sf::Clock deltaClock;
 

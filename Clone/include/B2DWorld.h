@@ -11,25 +11,27 @@
 
 class B2DWorld : Updateable
 {
-    public:
-        B2DWorld(float gravity);
-        virtual ~B2DWorld();
-        b2Body* createB2Body(B2BodyBuilder& builder);
-        void update(float dt);
-    protected:
-    private:
-        void assertAccumilation();
-        void step(float dt);
-        void interpolateStates();
-        void resetStates();
+public:
+    B2DWorld(float gravity);
+    virtual ~B2DWorld();
+    void update(float dt);
+    b2Body* createB2Body(B2BodyBuilder& builder);
 
-        b2World m_world;
-        float m_fixedTimestepAccumulator = 0;
-	    float m_fixedTimestepAccumulatorRatio = 0;
-	    const float FIXED_TIMESTEP = 1.f / 60.f;
-        const int MAX_STEPS = 5;
-        const int VELOCITY_ITERATIONS = 8;
-        const int POSITION_ITERATIONS = 3;
+protected:
+private:
+    void assertAccumilation();
+    void step(float dt);
+    void interpolateStates();
+    void resetStates();
+
+    b2World m_world;
+    float m_fixedTimestepAccumulator = 0;
+    float m_fixedTimestepAccumulatorRatio = 0;
+
+    const float FIXED_TIMESTEP = 1.f / 60.f;
+    const int MAX_STEPS = 5;
+    const int VELOCITY_ITERATIONS = 8;
+    const int POSITION_ITERATIONS = 3;
 
 };
 

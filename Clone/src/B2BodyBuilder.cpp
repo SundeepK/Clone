@@ -9,7 +9,8 @@ B2BodyBuilder::~B2BodyBuilder()
 }
 
 B2BodyBuilder& B2BodyBuilder::setPosition(b2Vec2 position){
-    m_bodyDef.position = position;
+    //divide by scale to convert to box2d scale
+    m_bodyDef.position.Set( (position.x/Box2DConstants::WORLD_SCALE), (position.y/Box2DConstants::WORLD_SCALE) );
     return *this;
 }
 
