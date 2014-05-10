@@ -4,6 +4,7 @@
 
 #include "B2DWorld.h"
 
+
 int main()
 {
     sf::ContextSettings settings;
@@ -19,7 +20,7 @@ int main()
     //box
     B2DWorld box2DWorld(-9.8f);
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(1,1);
+    boxShape.SetAsBox(((2.0f/2)/Box2DConstants::WORLD_SCALE),((2.0f/2)/Box2DConstants::WORLD_SCALE));
     B2BodyBuilder builder(&boxShape);
     builder
     .bodyType(b2_dynamicBody)
@@ -29,13 +30,13 @@ int main()
     box2DWorld.createB2Body(builder);
 
 
-        //box
+    //ground
     b2PolygonShape groundShape;
-    groundShape.SetAsBox(1,1);
+    boxShape.SetAsBox(((5.0f/2)/Box2DConstants::WORLD_SCALE),((5.0f/2)/Box2DConstants::WORLD_SCALE));
     B2BodyBuilder groundShapebuilder(&groundShape);
     groundShapebuilder
     .bodyType(b2_staticBody)
-    .setPosition(b2Vec2(10,10))
+    .setPosition(b2Vec2(0,700))
     .setDensity(1.0f)
     .setFriction(0.3f);
     box2DWorld.createB2Body(groundShapebuilder);
