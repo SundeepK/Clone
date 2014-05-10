@@ -16,6 +16,8 @@ class B2DWorld
     protected:
     private:
         b2World m_world;
+        float m_fixedTimestepAccumulator = 0;
+	    float m_fixedTimestepAccumulatorRatio = 0;
 };
 
 #endif // B2DWORLD_H

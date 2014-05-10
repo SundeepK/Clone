@@ -2,6 +2,8 @@
 
 B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
 {
+    m_world.SetAutoClearForces(false);
+    m_world.SetAllowSleeping(true);
 }
 
 B2DWorld::~B2DWorld()
