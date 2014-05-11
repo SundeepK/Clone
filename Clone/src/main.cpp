@@ -32,7 +32,7 @@ int main()
 
     //ground
     b2PolygonShape groundShape;
-    boxShape.SetAsBox(((5.0f/2)/Box2DConstants::WORLD_SCALE),((5.0f/2)/Box2DConstants::WORLD_SCALE));
+    groundShape.SetAsBox(((5.0f/2)/Box2DConstants::WORLD_SCALE),((5.0f/2)/Box2DConstants::WORLD_SCALE));
     B2BodyBuilder groundShapebuilder(&groundShape);
     groundShapebuilder
     .bodyType(b2_staticBody)
