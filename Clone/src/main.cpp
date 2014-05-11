@@ -24,11 +24,11 @@ int main()
     drawer.SetFlags(b2Draw::e_shapeBit);
 
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(((20.0f/2)/Box2DConstants::WORLD_SCALE),((20.0f/2)/Box2DConstants::WORLD_SCALE));
-    B2BodyBuilder builder(&boxShape);
+    boxShape.SetAsBox((20.0f/Box2DConstants::WORLD_SCALE)/2,(20.0f/Box2DConstants::WORLD_SCALE)/2);
+    B2BodyBuilder builder(&boxShape, 20,20);
     builder
     .bodyType(b2_dynamicBody)
-    .setPosition(b2Vec2(30,30))
+    .setPosition(b2Vec2(1,30))
     .setDensity(1.0f)
     .setFriction(0.3f);
     box2DWorld.createB2Body(builder);
@@ -36,8 +36,8 @@ int main()
 
     //ground
     b2PolygonShape groundShape;
-    groundShape.SetAsBox(((50.0f/2)/Box2DConstants::WORLD_SCALE),((50.0f/2)/Box2DConstants::WORLD_SCALE));
-    B2BodyBuilder groundShapebuilder(&groundShape);
+    groundShape.SetAsBox(((700.0f/2)/Box2DConstants::WORLD_SCALE),((50.0f/2)/Box2DConstants::WORLD_SCALE));
+    B2BodyBuilder groundShapebuilder(&groundShape,700, 50);
     groundShapebuilder
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(0,700))

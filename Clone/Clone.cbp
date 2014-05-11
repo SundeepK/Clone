@@ -21,6 +21,7 @@
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="/usr/local/lib/libBox2D.a" />
 					<Add directory="/usr/local/lib/" />
 				</Linker>
 			</Target>
@@ -58,10 +59,12 @@
 		<Unit filename="include/B2DWorld.h" />
 		<Unit filename="include/Box2DConstants.h" />
 		<Unit filename="include/Player.h" />
+		<Unit filename="include/SFMLB2dDebugDraw.h" />
 		<Unit filename="include/Updateable.h" />
 		<Unit filename="src/B2BodyBuilder.cpp" />
 		<Unit filename="src/B2DWorld.cpp" />
 		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/SFMLB2dDebugDraw.cpp" />
 		<Unit filename="src/Updateable.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>

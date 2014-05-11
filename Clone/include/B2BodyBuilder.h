@@ -19,7 +19,7 @@ class B2BodyBuilder
 {
 public:
 
-    B2BodyBuilder(b2Shape* shape);
+    B2BodyBuilder(b2Shape* shape, float width, float height);
     B2BodyBuilder();
     virtual ~B2BodyBuilder();
     B2BodyBuilder&  setPosition(b2Vec2 position);
@@ -34,6 +34,8 @@ private:
     b2BodyDef m_bodyDef;
     b2FixtureDef m_fixtureDef;
     std::unique_ptr<b2Shape>  m_b2Shape;
+    float m_width;
+    float m_height;
 
 };
 #endif // B2BODYBUILDER_H
