@@ -10,6 +10,11 @@ B2DWorld::~B2DWorld()
 {
 }
 
+void B2DWorld::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
+    m_world.SetDebugDraw(&box2dDEbugDrawer);
+}
+
+
 b2Body* B2DWorld::createB2Body(B2BodyBuilder& builder){
     return builder.build(m_world);
 }
@@ -33,10 +38,13 @@ void B2DWorld::update(float dt){
 		step(FIXED_TIMESTEP);
 	}
 
+    m_world.DrawDebugData();
+
 	m_world.ClearForces();
 
     //smooth positions via interpolation
 	interpolateStates();
+
 }
 
 void B2DWorld::assertAccumilation(){

@@ -12,7 +12,7 @@ class SFMLB2dDebugDraw :  public b2Draw
 {
 
 public:
-    SFMLB2dDebugDraw(sf::RenderWindow *window);
+    SFMLB2dDebugDraw(sf::RenderWindow& window);
     virtual ~SFMLB2dDebugDraw();
 
     /// Convert Box2D's OpenGL style color definition[0-1] to SFML's color definition[0-255], with optional alpha byte[Default - opaque]

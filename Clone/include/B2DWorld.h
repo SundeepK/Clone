@@ -8,6 +8,7 @@
 #include "B2BodyBuilder.h"
 #include "Updateable.h"
 #include <math.h>
+#include "SFMLB2dDebugDraw.h"
 
 class B2DWorld : Updateable
 {
@@ -16,7 +17,7 @@ public:
     virtual ~B2DWorld();
     void update(float dt);
     b2Body* createB2Body(B2BodyBuilder& builder);
-
+    void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:
 private:
     void assertAccumilation();

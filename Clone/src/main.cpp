@@ -18,13 +18,17 @@ int main()
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 
     //box
-    B2DWorld box2DWorld(-9.8f);
+    B2DWorld box2DWorld(9.8f);
+    SFMLB2dDebugDraw drawer(App);
+    box2DWorld.setDebugDraw(drawer);
+    drawer.SetFlags(b2Draw::e_shapeBit);
+
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(((2.0f/2)/Box2DConstants::WORLD_SCALE),((2.0f/2)/Box2DConstants::WORLD_SCALE));
+    boxShape.SetAsBox(((20.0f/2)/Box2DConstants::WORLD_SCALE),((20.0f/2)/Box2DConstants::WORLD_SCALE));
     B2BodyBuilder builder(&boxShape);
     builder
     .bodyType(b2_dynamicBody)
-    .setPosition(b2Vec2(10,10))
+    .setPosition(b2Vec2(30,30))
     .setDensity(1.0f)
     .setFriction(0.3f);
     box2DWorld.createB2Body(builder);
@@ -32,7 +36,7 @@ int main()
 
     //ground
     b2PolygonShape groundShape;
-    groundShape.SetAsBox(((5.0f/2)/Box2DConstants::WORLD_SCALE),((5.0f/2)/Box2DConstants::WORLD_SCALE));
+    groundShape.SetAsBox(((50.0f/2)/Box2DConstants::WORLD_SCALE),((50.0f/2)/Box2DConstants::WORLD_SCALE));
     B2BodyBuilder groundShapebuilder(&groundShape);
     groundShapebuilder
     .bodyType(b2_staticBody)
@@ -61,10 +65,11 @@ int main()
         float currentTime = deltaClock.getElapsedTime().asSeconds();
         float deltaTime = currentTime - initialUpdateTime;
         initialUpdateTime = currentTime;
-        box2DWorld.update(deltaTime);
 
         // Clear screen
         App.clear();
+
+        box2DWorld.update(deltaTime);
 
         // Update the window
         App.display();
