@@ -15,8 +15,8 @@ void B2DWorld::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
 }
 
 
-b2Body* B2DWorld::createB2Body(B2BodyBuilder& builder){
-    return builder.build(m_world);
+b2Body* B2DWorld::createB2Body(B2Builder* builder){
+    return builder->build(m_world);
 }
 
 void B2DWorld::update(float dt){

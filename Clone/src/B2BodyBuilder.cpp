@@ -1,17 +1,14 @@
 #include "B2BodyBuilder.h"
 
-B2BodyBuilder::B2BodyBuilder(b2Shape* shape, float width, float height) : m_b2Shape(shape), m_width(width/Box2DConstants::WORLD_SCALE), m_height(height/Box2DConstants::WORLD_SCALE)
-{
 
+B2BodyBuilder&  B2BodyBuilder::setShape(b2Shape* shape){
+    m_b2Shape.reset(shape);
 }
 
-B2BodyBuilder::~B2BodyBuilder()
-{
-}
 
 B2BodyBuilder& B2BodyBuilder::setPosition(b2Vec2 position){
     //divide by scale to convert to box2d scale
-    m_bodyDef.position.Set( (position.x/Box2DConstants::WORLD_SCALE)+m_width/2, (position.y/Box2DConstants::WORLD_SCALE)+m_height/2 );
+    m_bodyDef.position.Set( position.x, position.y );
     return *this;
 }
 
@@ -43,7 +40,6 @@ B2BodyBuilder&  B2BodyBuilder::setSensor(bool isSensor){
 
 b2Body* B2BodyBuilder::build(b2World& world){
     m_fixtureDef.shape = (m_b2Shape.get());
-
     b2Body* body = world.CreateBody(&m_bodyDef);
     body->CreateFixture(&m_fixtureDef);
     return body;

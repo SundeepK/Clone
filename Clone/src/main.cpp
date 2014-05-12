@@ -3,7 +3,7 @@
 #include <SFML/Window.hpp>
 
 #include "B2DWorld.h"
-
+#include "B2BoxBuilder.h"
 
 int main()
 {
@@ -23,27 +23,23 @@ int main()
     box2DWorld.setDebugDraw(drawer);
     drawer.SetFlags(b2Draw::e_shapeBit);
 
-    b2PolygonShape boxShape;
-    boxShape.SetAsBox((20.0f/Box2DConstants::WORLD_SCALE)/2,(20.0f/Box2DConstants::WORLD_SCALE)/2);
-    B2BodyBuilder builder(&boxShape, 20,20);
+    B2BoxBuilder builder(20,20);
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(1,30))
     .setDensity(1.0f)
     .setFriction(0.3f);
-    box2DWorld.createB2Body(builder);
+    box2DWorld.createB2Body(&builder);
 
 
     //ground
-    b2PolygonShape groundShape;
-    groundShape.SetAsBox(((700.0f/2)/Box2DConstants::WORLD_SCALE),((50.0f/2)/Box2DConstants::WORLD_SCALE));
-    B2BodyBuilder groundShapebuilder(&groundShape,700, 50);
+    B2BoxBuilder groundShapebuilder(700, 50);
     groundShapebuilder
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(0,700))
     .setDensity(1.0f)
     .setFriction(0.3f);
-    box2DWorld.createB2Body(groundShapebuilder);
+    box2DWorld.createB2Body(&groundShapebuilder);
 
     sf::Clock deltaClock;
 

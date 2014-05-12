@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Box2D/Box2D.h>
-#include "B2BodyBuilder.h"
+#include "B2Builder.h"
 #include "Updateable.h"
 #include <math.h>
 #include "SFMLB2dDebugDraw.h"
@@ -16,7 +16,7 @@ public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
     void update(float dt);
-    b2Body* createB2Body(B2BodyBuilder& builder);
+    b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:
 private:
