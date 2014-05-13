@@ -47,6 +47,5 @@ B2BoxBuilder&  B2BoxBuilder::setSensor(bool isSensor){
 }
 
 b2Body* B2BoxBuilder::build(b2World& world){
-    m_builder.setShape(&m_boxShape);
-    return m_builder.build(world);
+    return m_builder.build(world, &m_boxShape);
 }

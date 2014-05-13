@@ -55,13 +55,16 @@
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
 		</Linker>
-		<Unit filename="include/B2BodyBuilder.h" />
+		<Unit filename="include/B2BoxBuilder.h" />
+		<Unit filename="include/B2Builder.h" />
+		<Unit filename="include/B2DBuilder.h" />
 		<Unit filename="include/B2DWorld.h" />
 		<Unit filename="include/Box2DConstants.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/SFMLB2dDebugDraw.h" />
 		<Unit filename="include/Updateable.h" />
-		<Unit filename="src/B2BodyBuilder.cpp" />
+		<Unit filename="src/B2BoxBuilder.cpp" />
+		<Unit filename="src/B2DBuilder.cpp" />
 		<Unit filename="src/B2DWorld.cpp" />
 		<Unit filename="src/Player.cpp" />
 		<Unit filename="src/SFMLB2dDebugDraw.cpp" />

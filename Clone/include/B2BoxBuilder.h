@@ -1,7 +1,7 @@
 #ifndef B2BOXBUILDER_H
 #define B2BOXBUILDER_H
 
-#include "B2BodyBuilder.h"
+#include "B2DBuilderHelper.h"
 
 class B2BoxBuilder : public B2Builder
 {
@@ -21,7 +21,7 @@ protected:
 private:
     float m_width;
     float m_height;
-    B2BodyBuilder m_builder;
+    B2DBuilderHelper m_builder;
     b2PolygonShape m_boxShape;
 
 };
