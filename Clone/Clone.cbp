@@ -16,6 +16,9 @@
 					<Add directory="/usr/local/include/SFML" />
 					<Add directory="/usr/local/include/Box2D/" />
 					<Add directory="include" />
+					<Add directory="/media/sundeep/3 tb Vol/code/Box2d tools/Box2d tools/include" />
+					<Add directory="../../Box2d tools/Box2d tools/include" />
+					<Add directory="../../Box2d tools/Box2d tools/src" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics" />
@@ -35,6 +38,9 @@
 					<Add directory="/usr/local/include/SFML" />
 					<Add directory="/usr/local/include/Box2D/" />
 					<Add directory="include" />
+					<Add directory="/media/sundeep/3 tb Vol/code/Box2d tools/Box2d tools/include" />
+					<Add directory="../../Box2d tools/Box2d tools/include" />
+					<Add directory="../../Box2d tools/Box2d tools/src" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -55,19 +61,19 @@
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
 		</Linker>
-		<Unit filename="include/B2BoxBuilder.h" />
-		<Unit filename="include/B2Builder.h" />
-		<Unit filename="include/B2DBuilder.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/include/B2BoxBuilder.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/include/B2Builder.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/include/B2DBuilderHelper.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/include/Box2DConstants.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/include/SFMLB2dDebugDraw.h" />
+		<Unit filename="../../Box2d tools/Box2d tools/src/B2BoxBuilder.cpp" />
+		<Unit filename="../../Box2d tools/Box2d tools/src/B2DBuilder.cpp" />
+		<Unit filename="../../Box2d tools/Box2d tools/src/SFMLB2dDebugDraw.cpp" />
 		<Unit filename="include/B2DWorld.h" />
-		<Unit filename="include/Box2DConstants.h" />
 		<Unit filename="include/Player.h" />
-		<Unit filename="include/SFMLB2dDebugDraw.h" />
 		<Unit filename="include/Updateable.h" />
-		<Unit filename="src/B2BoxBuilder.cpp" />
-		<Unit filename="src/B2DBuilder.cpp" />
 		<Unit filename="src/B2DWorld.cpp" />
 		<Unit filename="src/Player.cpp" />
-		<Unit filename="src/SFMLB2dDebugDraw.cpp" />
 		<Unit filename="src/Updateable.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
