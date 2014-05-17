@@ -4,18 +4,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include "LogicalNode.h"
+#include "EventNode.h"
+#include <memory>
 
 class Action
 {
     public:
-        Action();
+        Action(sf::Keyboard::Key key);
         virtual ~Action();
+        Action& operator&& (const Action& lhs);
 
     protected:
     private:
-        Action m_linkedNode;
-        sf::Event
+        Action(EventNode* nextEvent);
+        std::unique_ptr<EventNode> m_linkedNode;
 };
 
 #endif // ACTION_H
