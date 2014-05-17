@@ -1,6 +1,7 @@
 #include "AndEventNode.h"
+#include <functional>
 
-AndEventNode::AndEventNode(sf::Keyboard event, EventNode* nextNode)
+AndEventNode::AndEventNode(sf::Keyboard::Key event, EventNode* nextNode)
 {
 }
 
@@ -14,5 +15,13 @@ EventNode* AndEventNode::getNode(){
 }
 
 void AndEventNode::setNextNode(EventNode* nextNode){
-
+    m_nextNode.reset(nextNode);
 }
+
+bool AndEventNode::applyPredicateToEvents(std::vector<sf::Event> keyboardEvents){
+
+    return std::find_if(keyboardEvents.begin(), keyboardEvents.end(), [this](const sf::Event& event) -> bool { return event.key.code == m_event;} ) != keyboardEvents.end();
+}
+
+
+

@@ -11,13 +11,15 @@
 class AndEventNode : public EventNode
 {
     public:
-        AndEventNode(sf::Keyboard event, EventNode* nextNode);
+        AndEventNode(sf::Keyboard::Key event, EventNode* nextNode);
         virtual ~AndEventNode();
         EventNode* getNode();
         void setNextNode(EventNode* nextNode);
+        bool applyPredicateToEvents(std::vector<sf::Event> keyboardEvents);
+
     protected:
     private:
-        sf::Keyboard m_event;
+        sf::Keyboard::Key m_event;
         std::unique_ptr<EventNode> m_nextNode;
 };
 
