@@ -4,6 +4,9 @@
 #include <unordered_map>
 #include "Action.h"
 #include <vector>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 template <typename Key_type>
 struct TemplateHasher : public std::unary_function<Key_type, std::size_t> {
@@ -33,11 +36,15 @@ class ActionController
     public:
         ActionController();
         virtual ~ActionController();
-        Action& operator[] (const Key_type& actionKey);
+        ActionToCallbacks& operator[] (const Key_type& actionKey);
         void addCallback(const Key_type&, std::function<void()> callback);
+        void update(sf::RenderWindow& window);
+        void triggerCallbacks();
     protected:
     private:
-        std::unordered_map<const Key_type, Action, TemplateHasher<Key_type>> m_keyToActions;
+        std::unordered_map<const Key_type, ActionToCallbacks, TemplateHasher<Key_type>> m_keyToActions;
+        std::vector<sf::Event> m_events;
+
 };
 
 #endif // EVENCONTROLLER_H

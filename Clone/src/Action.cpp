@@ -17,3 +17,7 @@ Action& Action::operator&& (const Action& lhs)
     node->setNextNode(lhs.m_linkedNode.get());
 	return *this;
 }
+
+bool Action::isActionTriggered(std::vector<sf::Event>& events ){
+  return  m_linkedNode->applyPredicateToEvents(events);
+}

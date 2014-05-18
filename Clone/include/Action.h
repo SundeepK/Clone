@@ -13,7 +13,7 @@ class Action
         Action(sf::Keyboard::Key key);
         virtual ~Action();
         Action& operator&& (const Action& lhs);
-
+        bool isActionTriggered(std::vector<sf::Event>& events);
     protected:
     private:
         Action(EventNode* nextEvent);
