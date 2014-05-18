@@ -38,6 +38,8 @@ class ActionController
         virtual ~ActionController();
         ActionToCallbacks& operator[] (const Key_type& actionKey);
         void addCallback(const Key_type&, std::function<void()> callback);
+        ActionController& operator= (ActionController&& controller);
+
         void update(sf::RenderWindow& window);
         void triggerCallbacks();
     protected:

@@ -11,16 +11,25 @@ ActionController<Key_type>::~ActionController()
 }
 
 template <typename Key_type>
+ActionController<Key_type>& ActionController<Key_type>::operator= (ActionController&& source)
+{
+	m_events = std::move(source.m_events);
+	m_keyToActions = std::move(source.m_keyToActions);
+
+	return *this;
+}
+
+template <typename Key_type>
 ActionToCallbacks& ActionController<Key_type>::operator[] (const Key_type& actionKey)
 {
     return m_keyToActions[actionKey];
 }
 
-template <typename Key_type>
-ActionToCallbacks ActionController<Key_type>::operator[] (const Key_type& actionKey)
-{
-    return m_keyToActions[actionKey];
-}
+//template <typename Key_type>
+//ActionToCallbacks ActionController<Key_type>::operator[] (const Key_type& actionKey)
+//{
+//    return m_keyToActions[actionKey];
+//}
 
 template <typename Key_type>
 void ActionController<Key_type>::update(sf::RenderWindow& window)

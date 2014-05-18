@@ -4,6 +4,9 @@
 
 #include "B2DWorld.h"
 #include "B2BoxBuilder.h"
+#include <functional>
+#include <iostream>
+#include "ActionController.h"
 
 int main()
 {
@@ -46,17 +49,22 @@ int main()
 
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
 
+    ActionController<std::string> actionController;
+    actionController["Test"] = Action(sf::Keyboard::Key::A);
+    actionController.addCallback("Test",  []() -> void { std::cout << "working event" << endl; });
+
     // Start the game loop
     while (App.isOpen())
     {
-        sf::Event Event;
-        while (App.pollEvent(Event))
-        {
-            if (Event.type == sf::Event::Closed)
-            {
-                App.close();
-            }
-        }
+//        sf::Event Event;
+//        while (App.pollEvent(Event))
+//        {
+//            if (Event.type == sf::Event::Closed)
+//            {
+//                App.close();
+//            }
+//        }
+        actionController.update(App);
 
         float currentTime = deltaClock.getElapsedTime().asSeconds();
         float deltaTime = currentTime - initialUpdateTime;
@@ -69,6 +77,7 @@ int main()
 
         // Update the window
         App.display();
+        actionController.triggerCallbacks();
     }
 
     return EXIT_SUCCESS;
