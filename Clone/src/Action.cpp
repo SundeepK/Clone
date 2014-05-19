@@ -1,7 +1,14 @@
 #include "Action.h"
 
+Action::Action()
+{
+}
+
+
 Action::Action(sf::Keyboard::Key key)
 {
+
+    m_linkedNode.reset(new AndEventNode(key, NULL));
 }
 
 Action::~Action()
@@ -19,5 +26,8 @@ Action& Action::operator&& (const Action& lhs)
 }
 
 bool Action::isActionTriggered(std::vector<sf::Event>& events ){
-  return  m_linkedNode->applyPredicateToEvents(events);
+
+  if(m_linkedNode != NULL){
+    return  m_linkedNode->applyPredicateToEvents(events);
+  }
 }

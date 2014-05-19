@@ -10,7 +10,8 @@
 class EventNode
 {
     public:
-
+        EventNode();
+        virtual ~EventNode();
         virtual bool applyPredicateToEvents(std::vector<sf::Event>& keyboardEvents) = 0;
         virtual EventNode* getNode() = 0;
         virtual void setNextNode(EventNode* nextNode) = 0;
@@ -19,5 +20,6 @@ class EventNode
 
 
 };
+
 
 #endif // LOGICALNODE_H

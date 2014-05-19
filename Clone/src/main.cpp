@@ -7,6 +7,7 @@
 #include <functional>
 #include <iostream>
 #include "ActionController.h"
+#include <string>
 
 int main()
 {
@@ -51,7 +52,7 @@ int main()
 
     ActionController<std::string> actionController;
     actionController["Test"] = Action(sf::Keyboard::Key::A);
-    actionController.addCallback("Test",  []() -> void { std::cout << "working event" << endl; });
+    actionController.addCallback("Test",  []() -> void { std::cout << "working event" << std::endl; });
 
     // Start the game loop
     while (App.isOpen())

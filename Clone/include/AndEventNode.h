@@ -20,7 +20,7 @@ class AndEventNode : public EventNode
     protected:
     private:
         sf::Keyboard::Key m_event;
-        std::unique_ptr<EventNode> m_nextNode;
+        std::shared_ptr<EventNode> m_nextNode;
 };
 
 #endif // ANDEVENTNODE_H

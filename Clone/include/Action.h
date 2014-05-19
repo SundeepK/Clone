@@ -5,11 +5,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include "EventNode.h"
+#include "AndEventNode.h"
 #include <memory>
 
 class Action
 {
     public:
+        Action();
         Action(sf::Keyboard::Key key);
         virtual ~Action();
         Action& operator&& (const Action& lhs);
@@ -17,7 +19,7 @@ class Action
     protected:
     private:
         Action(EventNode* nextEvent);
-        std::unique_ptr<EventNode> m_linkedNode;
+        std::shared_ptr<EventNode> m_linkedNode;
 };
 
 #endif // ACTION_H

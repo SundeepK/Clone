@@ -18,7 +18,7 @@ public:
       return seed;
     }
 
-    void hash_combine(std::size_t & seed, const Key_type & v)
+    void hash_combine(std::size_t & seed, const Key_type & v) const
     {
         std::hash<Key_type> hasher;
         seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
@@ -35,9 +35,9 @@ class ActionController
 {
     public:
         ActionController();
-        virtual ~ActionController();
-        ActionToCallbacks& operator[] (const Key_type& actionKey);
-        void addCallback(const Key_type&, std::function<void()> callback);
+        ActionController(ActionController&& source);
+        Action& operator[] (const Key_type& actionKey);
+        void addCallback(const Key_type& actionKey, std::function<void()> callback);
         ActionController& operator= (ActionController&& controller);
 
         void update(sf::RenderWindow& window);
@@ -49,4 +49,89 @@ class ActionController
 
 };
 
+
+template <typename Key_type>
+ActionController<Key_type>::ActionController()
+{
+}
+
+template <typename Key_type>
+ActionController<Key_type>::ActionController(ActionController&& source)
+: m_events(std::move(source.m_events))
+, m_keyToActions(std::move(source.m_keyToActions))
+{
+}
+
+
+
+template <typename Key_type>
+ActionController<Key_type>& ActionController<Key_type>::operator= (ActionController&& source)
+{
+	m_events = std::move(source.m_events);
+	m_keyToActions = std::move(source.m_keyToActions);
+
+	return *this;
+}
+
+template <typename Key_type>
+Action& ActionController<Key_type>::operator[] (const Key_type& actionKey)
+{
+    ActionToCallbacks actionsToCallbacks = m_keyToActions[actionKey];
+    if(&actionsToCallbacks.m_action != NULL){
+      return m_keyToActions[actionKey].m_action;
+    }else{
+          ActionToCallbacks actCallbacks = {};
+          m_keyToActions[actionKey] =  actCallbacks;
+          return m_keyToActions[actionKey].m_action;
+    }
+}
+
+//template <typename Key_type>
+//ActionToCallbacks ActionController<Key_type>::operator[] (const Key_type& actionKey)
+//{
+//    return m_keyToActions[actionKey];
+//}
+
+
+template <typename Key_type>
+void ActionController<Key_type>::addCallback(const Key_type& actionKey, std::function<void()> callback){
+
+    ActionToCallbacks actionsToCallbacks = m_keyToActions[actionKey];
+    if(&actionsToCallbacks.m_action != NULL){
+       m_keyToActions[actionKey].m_callbacks.push_back(callback);
+    }
+}
+
+template <typename Key_type>
+void ActionController<Key_type>::update(sf::RenderWindow& window)
+{
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            window.close();
+        }
+        m_events.push_back(event);
+    }
+
+}
+
+template <typename Key_type>
+void ActionController<Key_type>::triggerCallbacks()
+{
+    for ( auto actionItr = m_keyToActions.begin(); actionItr!= m_keyToActions.end(); ++actionItr )
+    {
+        ActionToCallbacks actionsToCallbacks = actionItr->second;
+        Action action = actionsToCallbacks.m_action;
+        if(action.isActionTriggered(m_events))
+        {
+            auto callbacks = actionsToCallbacks.m_callbacks;
+            for(auto && fn : callbacks)
+                fn();
+        }
+
+    }
+    m_events.clear();
+}
 #endif // EVENCONTROLLER_H

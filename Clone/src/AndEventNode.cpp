@@ -1,7 +1,7 @@
 #include "AndEventNode.h"
 #include <functional>
 
-AndEventNode::AndEventNode(sf::Keyboard::Key event, EventNode* nextNode)
+AndEventNode::AndEventNode(sf::Keyboard::Key event, EventNode* nextNode) :  m_event(event), m_nextNode(nextNode)
 {
 }
 
