@@ -51,7 +51,10 @@ int main()
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
 
     ActionController<std::string> actionController;
-    actionController["Test"] = Action(sf::Keyboard::Key::A);
+    Action a =  Action(sf::Keyboard::Key::A);
+    Action d =   Action(sf::Keyboard::Key::D);
+    Action aandd= a && d;
+    actionController["Test"] = aandd;
     actionController.addCallback("Test",  []() -> void { std::cout << "working event" << std::endl; });
 
     // Start the game loop

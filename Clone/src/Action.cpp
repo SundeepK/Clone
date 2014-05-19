@@ -15,14 +15,25 @@ Action::~Action()
 {
 }
 
-Action& Action::operator&& (const Action& lhs)
+Action::Action(EventNode* nextEvent){
+    m_linkedNode.reset(nextEvent);
+}
+
+
+Action Action::operator&& (const Action& lhs)
 {
     EventNode* node = m_linkedNode.get();
     while(node){
-        node = node->getNode();
+        EventNode* n = node->getNode();
+        if(n){
+           node = n;
+        }else{
+            break;
+        }
     }
-    node->setNextNode(lhs.m_linkedNode.get());
-	return *this;
+    EventNode* n1 = lhs.m_linkedNode.get();
+    node->setNextNode(n1 );
+	return Action(m_linkedNode.get());
 }
 
 bool Action::isActionTriggered(std::vector<sf::Event>& events ){
