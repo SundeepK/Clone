@@ -86,13 +86,6 @@ Action& ActionController<Key_type>::operator[] (const Key_type& actionKey)
     }
 }
 
-//template <typename Key_type>
-//ActionToCallbacks ActionController<Key_type>::operator[] (const Key_type& actionKey)
-//{
-//    return m_keyToActions[actionKey];
-//}
-
-
 template <typename Key_type>
 void ActionController<Key_type>::addCallback(const Key_type& actionKey, std::function<void()> callback){
 
@@ -105,6 +98,7 @@ void ActionController<Key_type>::addCallback(const Key_type& actionKey, std::fun
 template <typename Key_type>
 void ActionController<Key_type>::update(sf::RenderWindow& window)
 {
+    m_events.clear();
     sf::Event event;
     while (window.pollEvent(event))
     {
@@ -112,6 +106,16 @@ void ActionController<Key_type>::update(sf::RenderWindow& window)
         {
             window.close();
         }
+
+        	switch (event.type)
+		{
+			case sf::Event::GainedFocus:
+				break;
+
+			case sf::Event::LostFocus:
+				break;
+		}
+
         m_events.push_back(event);
     }
 
@@ -132,6 +136,5 @@ void ActionController<Key_type>::triggerCallbacks()
         }
 
     }
-    m_events.clear();
 }
 #endif // EVENCONTROLLER_H
