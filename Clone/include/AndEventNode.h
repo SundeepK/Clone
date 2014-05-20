@@ -15,7 +15,7 @@ class AndEventNode : public EventNode
         virtual ~AndEventNode();
         EventNode* getNode();
         void setNextNode(EventNode* nextNode);
-        bool applyPredicateToEvents(std::vector<sf::Event>& keyboardEvents);
+        bool isEventTriggered(std::vector<sf::Event>& keyboardEvents);
 
     protected:
     private:

@@ -20,6 +20,7 @@ int main()
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     // Create the main window
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
+	App.setKeyRepeatEnabled(true);
 
     //box
     B2DWorld box2DWorld(9.8f);
@@ -51,7 +52,7 @@ int main()
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
 
     ActionController<std::string> actionController;
-    Action a =  Action(sf::Keyboard::Key::A);
+    Action a =  Action(sf::Keyboard::Key::LControl);
     Action d =   Action(sf::Keyboard::Key::D);
     Action aandd= a && d;
     actionController["Test"] = aandd;

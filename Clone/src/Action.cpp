@@ -39,6 +39,6 @@ Action Action::operator&& (const Action& lhs)
 bool Action::isActionTriggered(std::vector<sf::Event>& events ){
 
   if(m_linkedNode != NULL){
-    return  m_linkedNode->applyPredicateToEvents(events);
+    return  m_linkedNode->isEventTriggered(events);
   }
 }
