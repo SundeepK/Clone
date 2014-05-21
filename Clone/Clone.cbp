@@ -73,14 +73,15 @@
 		<Unit filename="include/B2DWorld.h" />
 		<Unit filename="include/EventNode.h" />
 		<Unit filename="include/Player.h" />
+		<Unit filename="include/RealtimeAndNode.h" />
 		<Unit filename="include/Updateable.h" />
 		<Unit filename="src/Action.cpp" />
 		<Unit filename="src/ActionController.cpp" />
 		<Unit filename="src/AndEventNode.cpp" />
 		<Unit filename="src/B2DWorld.cpp" />
-		<Unit filename="src/EventNode" />
 		<Unit filename="src/EventNode.cpp" />
 		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/RealtimeAndNode.cpp" />
 		<Unit filename="src/Updateable.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>

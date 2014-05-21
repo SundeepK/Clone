@@ -21,6 +21,7 @@ int main()
     // Create the main window
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 	App.setKeyRepeatEnabled(true);
+//    App.setFramerateLimit(60);
 
     //box
     B2DWorld box2DWorld(9.8f);
@@ -34,7 +35,8 @@ int main()
     .setPosition(b2Vec2(1,30))
     .setDensity(1.0f)
     .setFriction(0.3f);
-    box2DWorld.createB2Body(&builder);
+   b2Body* b = box2DWorld.createB2Body(&builder);
+   b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);
 
 
     //ground
@@ -44,8 +46,7 @@ int main()
     .setPosition(b2Vec2(0,700))
     .setDensity(1.0f)
     .setFriction(0.3f);
-    box2DWorld.createB2Body(&groundShapebuilder);
-
+     box2DWorld.createB2Body(&groundShapebuilder);
     sf::Clock deltaClock;
 
 
@@ -56,7 +57,8 @@ int main()
     Action d =   Action(sf::Keyboard::Key::D);
     Action aandd= a && d;
     actionController["Test"] = aandd;
-    actionController.addCallback("Test",  []() -> void { std::cout << "working event" << std::endl; });
+    int count = 0;
+    actionController.addCallback("Test",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);});
 
     // Start the game loop
     while (App.isOpen())
@@ -79,6 +81,7 @@ int main()
         App.clear();
 
         box2DWorld.update(deltaTime);
+
 
         // Update the window
         App.display();

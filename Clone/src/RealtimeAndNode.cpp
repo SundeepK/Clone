@@ -18,5 +18,10 @@ void RealtimeAndNode::setNextNode(EventNode* nextNode){
 }
 
 bool RealtimeAndNode::isEventTriggered(std::vector<sf::Event>& keyboardEvents){
-       return sf::Keyboard::isKeyPressed(m_event) && m_nextNode->isEventTriggered(keyboardEvents);
+    bool eventTriggered =  sf::Keyboard::isKeyPressed(m_event);
+    if(m_nextNode){
+       return eventTriggered && m_nextNode->isEventTriggered(keyboardEvents);
+    }else{
+        return eventTriggered;
+    }
 }

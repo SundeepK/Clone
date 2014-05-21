@@ -9,6 +9,10 @@
 #include "Updateable.h"
 #include <math.h>
 #include "SFMLB2dDebugDraw.h"
+#include "ActionController.h"
+#include "Action.h"
+#include <functional>
+#include <iostream>
 
 class B2DWorld : Updateable
 {

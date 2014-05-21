@@ -5,10 +5,17 @@ Action::Action()
 }
 
 
-Action::Action(sf::Keyboard::Key key)
+Action::Action(sf::Keyboard::Key key, ActionType actionType)
 {
+    switch(actionType){
+        case RealTime:
+            m_linkedNode.reset(new RealtimeAndNode(key, NULL));
+            break;
+        case Event:
+            m_linkedNode.reset(new AndEventNode(key, NULL));
+            break;
+    }
 
-    m_linkedNode.reset(new AndEventNode(key, NULL));
 }
 
 Action::~Action()
@@ -37,8 +44,5 @@ Action Action::operator&& (const Action& lhs)
 }
 
 bool Action::isActionTriggered(std::vector<sf::Event>& events ){
-
-  if(m_linkedNode != NULL){
     return  m_linkedNode->isEventTriggered(events);
-  }
 }
