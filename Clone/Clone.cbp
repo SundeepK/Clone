@@ -67,6 +67,16 @@
 		<Unit filename="../Box2d-tools/Box2d tools/src/B2BoxBuilder.cpp" />
 		<Unit filename="../Box2d-tools/Box2d tools/src/B2DBuilder.cpp" />
 		<Unit filename="../Box2d-tools/Box2d tools/src/SFMLB2dDebugDraw.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/include/Action.h" />
+		<Unit filename="../SFML-tools/SFML-tools/include/ActionController.h" />
+		<Unit filename="../SFML-tools/SFML-tools/include/AndEventNode.h" />
+		<Unit filename="../SFML-tools/SFML-tools/include/EventNode.h" />
+		<Unit filename="../SFML-tools/SFML-tools/include/RealtimeAndNode.h" />
+		<Unit filename="../SFML-tools/SFML-tools/src/Action.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/ActionController.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/AndEventNode.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/EventNode.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/RealtimeAndNode.cpp" />
 		<Unit filename="include/Action.h" />
 		<Unit filename="include/ActionController.h" />
 		<Unit filename="include/AndEventNode.h" />
