@@ -18,6 +18,7 @@
 					<Add directory="include" />
 					<Add directory="/media/sundeep/3 tb Vol/code/Box2d tools/Box2d tools/include" />
 					<Add directory="../Box2d-tools/Box2d tools/include" />
+					<Add directory="../SFML-tools/SFML-tools/include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics" />
@@ -39,6 +40,7 @@
 					<Add directory="include" />
 					<Add directory="/media/sundeep/3 tb Vol/code/Box2d tools/Box2d tools/include" />
 					<Add directory="../Box2d-tools/Box2d tools/include" />
+					<Add directory="../SFML-tools/SFML-tools/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -77,21 +79,11 @@
 		<Unit filename="../SFML-tools/SFML-tools/src/AndEventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/EventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/RealtimeAndNode.cpp" />
-		<Unit filename="include/Action.h" />
-		<Unit filename="include/ActionController.h" />
-		<Unit filename="include/AndEventNode.h" />
 		<Unit filename="include/B2DWorld.h" />
-		<Unit filename="include/EventNode.h" />
 		<Unit filename="include/Player.h" />
-		<Unit filename="include/RealtimeAndNode.h" />
 		<Unit filename="include/Updateable.h" />
-		<Unit filename="src/Action.cpp" />
-		<Unit filename="src/ActionController.cpp" />
-		<Unit filename="src/AndEventNode.cpp" />
 		<Unit filename="src/B2DWorld.cpp" />
-		<Unit filename="src/EventNode.cpp" />
 		<Unit filename="src/Player.cpp" />
-		<Unit filename="src/RealtimeAndNode.cpp" />
 		<Unit filename="src/Updateable.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
