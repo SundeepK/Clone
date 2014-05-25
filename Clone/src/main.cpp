@@ -53,10 +53,12 @@ int main()
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
 
     ActionController<std::string> actionController;
-    Action a =  Action(sf::Keyboard::Key::LControl);
+    Action a =  Action(sf::Keyboard::Key::A);
     Action d =   Action(sf::Keyboard::Key::D);
-    Action aandd= a && d;
-    actionController["Test"] = aandd;
+    Action e =   Action(sf::Keyboard::Key::E);
+
+    Action aandd= (a && d ) && e ;
+    actionController["Test"] =  aandd;
     int count = 0;
     actionController.addCallback("Test",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);});
 
