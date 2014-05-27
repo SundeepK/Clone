@@ -49,30 +49,22 @@ int main()
      box2DWorld.createB2Body(&groundShapebuilder);
     sf::Clock deltaClock;
 
-
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
 
     ActionController<std::string> actionController;
-    Action a =  Action(sf::Keyboard::Key::A);
-    Action d =   Action(sf::Keyboard::Key::D);
-    Action e =   Action(sf::Keyboard::Key::E);
+    Action a (sf::Keyboard::Key::A);
+    Action d(sf::Keyboard::Key::D);
+    Action e (sf::Keyboard::Key::E);
+    Action q (sf::Keyboard::Key::Q);
 
-    Action aandd= (a && d ) && e ;
-    actionController["Test"] =  aandd;
+    Action aandd=  a  && d ;
+    actionController["Test"] = aandd ;
     int count = 0;
     actionController.addCallback("Test",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);});
 
     // Start the game loop
     while (App.isOpen())
     {
-//        sf::Event Event;
-//        while (App.pollEvent(Event))
-//        {
-//            if (Event.type == sf::Event::Closed)
-//            {
-//                App.close();
-//            }
-//        }
         actionController.update(App);
 
         float currentTime = deltaClock.getElapsedTime().asSeconds();

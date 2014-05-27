@@ -75,6 +75,7 @@
 		<Unit filename="../SFML-tools/SFML-tools/include/AndEventNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/EventNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/OrEventNode.h" />
+		<Unit filename="../SFML-tools/SFML-tools/include/RealTimeNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/RealtimeAndNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/RealtimeOrNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/src/Action.cpp" />
@@ -82,9 +83,9 @@
 		<Unit filename="../SFML-tools/SFML-tools/src/AndEventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/EventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/OrEventNode.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/RealTimeNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/RealtimeAndNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/RealtimeOrNode.cpp" />
-		<Unit filename="../include/OrEventNode.h" />
 		<Unit filename="include/B2DWorld.h" />
 		<Unit filename="include/Player.h" />
 		<Unit filename="include/Updateable.h" />
