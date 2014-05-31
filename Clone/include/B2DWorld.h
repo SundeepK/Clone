@@ -14,12 +14,19 @@
 #include <functional>
 #include <iostream>
 
-class B2DWorld : Updateable
+struct PhysicsComponent  {
+	float previousAngle;
+	float smoothedAngle;
+	b2Vec2 previousPosition;
+	b2Vec2 smoothedPosition;
+};
+
+class B2DWorld
 {
 public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt);
+    void update(float dt, ActionController<std::string>& actionController);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:

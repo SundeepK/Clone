@@ -19,7 +19,7 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
     return builder->build(m_world);
 }
 
-void B2DWorld::update(float dt){
+void B2DWorld::update(float dt, ActionController<std::string>& actionController){
     m_fixedTimestepAccumulator += dt;
     const int steps = floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP);
 
@@ -35,6 +35,7 @@ void B2DWorld::update(float dt){
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		resetStates();
+		actionController.triggerCallbacks();
 		step(FIXED_TIMESTEP);
 	}
 
@@ -59,9 +60,40 @@ void B2DWorld::step(float dt){
 }
 
 void B2DWorld::interpolateStates(){
+
+	const float oneMinusRatio = 1.f - m_fixedTimestepAccumulatorRatio;
+
+	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+
+		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+		c->smoothedPosition =
+		m_fixedTimestepAccumulatorRatio * b->GetPosition () +
+		oneMinusRatio * c->previousPosition;
+		c->smoothedAngle =
+		m_fixedTimestepAccumulatorRatio * b->GetAngle () +
+		oneMinusRatio * c->previousAngle;
+	}
+
 }
 
 void B2DWorld::resetStates(){
+
+for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+ 		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+		c->smoothedPosition = c->previousPosition = b->GetPosition ();
+		c->smoothedAngle = c->previousAngle = b->GetAngle ();
+	}
+
 }
 
 

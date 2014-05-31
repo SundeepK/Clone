@@ -54,13 +54,29 @@ int main()
     ActionController<std::string> actionController;
     Action a (sf::Keyboard::Key::A);
     Action d(sf::Keyboard::Key::D);
-    Action e (sf::Keyboard::Key::E);
-    Action q (sf::Keyboard::Key::Q);
+    Action w (sf::Keyboard::Key::W);
+    Action s (sf::Keyboard::Key::S);
 
-    Action aandd=  a  && d ;
-    actionController["Test"] = aandd ;
+    actionController["a"] = a ;
+    actionController["d"] = d ;
+    actionController["w"] = w ;
+    actionController["s"] = s ;
+
     int count = 0;
-    actionController.addCallback("Test",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);});
+    actionController.addCallback("a",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(-0.1f,0.0f), b->GetWorldCenter(), true);});
+    actionController.addCallback("d",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.0f), b->GetWorldCenter(), true);});
+    actionController.addCallback("w",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,-0.1f), b->GetWorldCenter(), true);});
+    actionController.addCallback("s",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,0.1f), b->GetWorldCenter(), true);});
+
+
+    	// wrap everything up into a struct
+	PhysicsComponent *physicsTrack = new PhysicsComponent();
+	physicsTrack->previousAngle = b->GetAngle();
+	physicsTrack->previousPosition = b->GetPosition();
+	physicsTrack->smoothedAngle = b->GetAngle();
+	physicsTrack->smoothedPosition = b->GetPosition();
+	b->SetUserData(physicsTrack);
+
 
     // Start the game loop
     while (App.isOpen())
@@ -74,12 +90,11 @@ int main()
         // Clear screen
         App.clear();
 
-        box2DWorld.update(deltaTime);
+        box2DWorld.update(deltaTime, actionController);
 
 
         // Update the window
         App.display();
-        actionController.triggerCallbacks();
     }
 
     return EXIT_SUCCESS;
