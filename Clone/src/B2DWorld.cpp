@@ -39,12 +39,12 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController)
 		step(FIXED_TIMESTEP);
 	}
 
-    m_world.DrawDebugData();
-
 	m_world.ClearForces();
 
     //smooth positions via interpolation
 	interpolateStates();
+	m_world.DrawDebugData();
+
 
 }
 

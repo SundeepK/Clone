@@ -32,7 +32,7 @@ int main()
     B2BoxBuilder builder(20,20);
     builder
     .bodyType(b2_dynamicBody)
-    .setPosition(b2Vec2(1,30))
+    .setPosition(b2Vec2(30,30))
     .setDensity(1.0f)
     .setFriction(0.3f);
    b2Body* b = box2DWorld.createB2Body(&builder);
@@ -40,13 +40,31 @@ int main()
 
 
     //ground
-    B2BoxBuilder groundShapebuilder(700, 50);
+    B2BoxBuilder groundShapebuilder(1200, 50);
     groundShapebuilder
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(0,700))
     .setDensity(1.0f)
     .setFriction(0.3f);
      box2DWorld.createB2Body(&groundShapebuilder);
+
+         B2BoxBuilder left(50, 700);
+    left
+    .bodyType(b2_staticBody)
+    .setPosition(b2Vec2(0,0))
+    .setDensity(1.0f)
+    .setFriction(0.3f);
+     box2DWorld.createB2Body(&left);
+
+         B2BoxBuilder right(50, 700);
+    right
+    .bodyType(b2_staticBody)
+    .setPosition(b2Vec2(1200,0))
+    .setDensity(1.0f)
+    .setFriction(0.3f);
+     box2DWorld.createB2Body(&right);
+
+
     sf::Clock deltaClock;
 
     float initialUpdateTime = deltaClock.getElapsedTime().asSeconds();
@@ -63,10 +81,10 @@ int main()
     actionController["s"] = s ;
 
     int count = 0;
-    actionController.addCallback("a",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(-0.1f,0.0f), b->GetWorldCenter(), true);});
-    actionController.addCallback("d",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.1f,0.0f), b->GetWorldCenter(), true);});
-    actionController.addCallback("w",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,-0.1f), b->GetWorldCenter(), true);});
-    actionController.addCallback("s",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,0.1f), b->GetWorldCenter(), true);});
+    actionController.addCallback("a",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(-0.4f,0.0f), b->GetWorldCenter(), true);});
+    actionController.addCallback("d",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.4f,0.0f), b->GetWorldCenter(), true);});
+    actionController.addCallback("w",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,-0.4f), b->GetWorldCenter(), true);});
+    actionController.addCallback("s",  [&count, &b]() -> void { std::cout << "working event" << count++ << std::endl; b->ApplyLinearImpulse( b2Vec2(0.0f,0.4f), b->GetWorldCenter(), true);});
 
 
     	// wrap everything up into a struct
@@ -77,23 +95,24 @@ int main()
 	physicsTrack->smoothedPosition = b->GetPosition();
 	b->SetUserData(physicsTrack);
 
-
+    sf::RectangleShape rect(sf::Vector2f(20,20));
+    rect.setPosition(sf::Vector2f(b->GetPosition().x,b->GetPosition().y));
     // Start the game loop
     while (App.isOpen())
     {
-        actionController.update(App);
+//        actionController.update(App);
+        App.clear();
 
         float currentTime = deltaClock.getElapsedTime().asSeconds();
         float deltaTime = currentTime - initialUpdateTime;
         initialUpdateTime = currentTime;
 
-        // Clear screen
-        App.clear();
-
         box2DWorld.update(deltaTime, actionController);
 
+        PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+        rect.setPosition(sf::Vector2f(c->smoothedPosition.x*30-10,c->smoothedPosition.y*30-10));
 
-        // Update the window
+        App.draw(rect);
         App.display();
     }
 
