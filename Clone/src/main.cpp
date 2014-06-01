@@ -21,7 +21,7 @@ int main()
     // Create the main window
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 	App.setKeyRepeatEnabled(true);
-  //  App.setFramerateLimit(60);
+//    App.setFramerateLimit(60);
 //   App.setVerticalSyncEnabled(true);
 
     //box
@@ -113,8 +113,8 @@ int main()
         box2DWorld.update(deltaTime, actionController);
 
         PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
-       rect.setPosition(sf::Vector2f(b->GetPosition().x*30-10,b->GetPosition().y*30-10));
-//        rect.setPosition(sf::Vector2f(c->smoothedPosition.x*30-10,c->smoothedPosition.y*30-10));
+       rect.setPosition(sf::Vector2f(floor(b->GetPosition().x*30-10),floor(b->GetPosition().y*30-10)));
+//        rect.setPosition(sf::Vector2f(floor(c->smoothedPosition.x*30-10),floor(c->smoothedPosition.y*30-10)));
 
         App.draw(rect);
         App.display();

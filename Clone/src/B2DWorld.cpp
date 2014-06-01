@@ -39,10 +39,30 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController)
 		step(FIXED_TIMESTEP);
 	}
 
-
-    //smooth positions via interpolation
 	interpolateStates();
 	m_world.DrawDebugData();
+
+}
+
+void B2DWorld::step(float dt){
+    m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+}
+
+void B2DWorld::interpolateStates(){
+
+	const float oneMinusRatio = 1.0f - m_fixedTimestepAccumulatorRatio;
+
+	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+
+		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+		c->smoothedPosition = m_fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c->previousPosition;
+		c->smoothedAngle = floor (m_fixedTimestepAccumulatorRatio * b->GetAngle () + oneMinusRatio * c->previousAngle);
+	}
 
 }
 
@@ -66,31 +86,7 @@ void B2DWorld::assertAccumilation(){
 	);
 }
 
-void B2DWorld::step(float dt){
-    m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-}
 
-void B2DWorld::interpolateStates(){
-
-	const float oneMinusRatio = 1.0f - m_fixedTimestepAccumulatorRatio;
-
-	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
-	{
-		if (b->GetType () == b2_staticBody)
-		{
-			continue;
-		}
-
-		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
-		c->smoothedPosition =
-		m_fixedTimestepAccumulatorRatio * b->GetPosition () +
-		oneMinusRatio * c->previousPosition;
-		c->smoothedAngle =
-		m_fixedTimestepAccumulatorRatio * b->GetAngle () +
-		oneMinusRatio * c->previousAngle;
-	}
-
-}
 
 void B2DWorld::resetStates(){
 
