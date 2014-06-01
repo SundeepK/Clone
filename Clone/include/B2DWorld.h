@@ -37,14 +37,13 @@ private:
     void resetStates();
 
     b2World m_world;
-    float m_fixedTimestepAccumulator = 0;
-    float m_fixedTimestepAccumulatorRatio = 0;
+    float m_fixedTimestepAccumulator = 0.0f;
+    float m_fixedTimestepAccumulatorRatio = 0.0f;
 
-    const float FIXED_TIMESTEP = 1.f / 60.f;
+    const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int MAX_STEPS = 5;
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
-        double t = 0.0;
 
 };
 

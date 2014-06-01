@@ -2,8 +2,8 @@
 
 B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
 {
-    m_world.SetAutoClearForces(false);
-    m_world.SetAllowSleeping(true);
+   // m_world.SetAutoClearForces(false);
+  //  m_world.SetAllowSleeping(true);
 }
 
 B2DWorld::~B2DWorld()
@@ -37,7 +37,6 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController)
 		resetStates();
 		actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
 		step(FIXED_TIMESTEP);
-			m_world.ClearForces();
 	}
 
 
@@ -50,9 +49,9 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController)
 //void B2DWorld::update(float accumulator, ActionController<std::string>& actionController){
 //
 //        actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
-//		step(accumulator);
+//		step(FIXED_TIMESTEP);
 //
-//	//m_world.ClearForces();
+//	m_world.ClearForces();
 //
 //    //smooth positions via interpolation
 //	m_world.DrawDebugData();
@@ -73,7 +72,7 @@ void B2DWorld::step(float dt){
 
 void B2DWorld::interpolateStates(){
 
-	const float oneMinusRatio = 1.f - m_fixedTimestepAccumulatorRatio;
+	const float oneMinusRatio = 1.0f - m_fixedTimestepAccumulatorRatio;
 
 	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
 	{

@@ -21,8 +21,8 @@ int main()
     // Create the main window
     sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
 	App.setKeyRepeatEnabled(true);
-   // App.setFramerateLimit(60);
-//    App.setVerticalSyncEnabled(true);
+  //  App.setFramerateLimit(60);
+//   App.setVerticalSyncEnabled(true);
 
     //box
     B2DWorld box2DWorld(9.8f);
@@ -46,23 +46,20 @@ int main()
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(0,700))
     .setDensity(1.0f);
-//    .setFriction(0.3f);
      box2DWorld.createB2Body(&groundShapebuilder);
 
-         B2BoxBuilder left(50, 700);
+    B2BoxBuilder left(50, 700);
     left
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(0,0))
     .setDensity(1.0f);
-//    .setFriction(0.3f);
      box2DWorld.createB2Body(&left);
 
-         B2BoxBuilder right(50, 700);
+    B2BoxBuilder right(50, 700);
     right
     .bodyType(b2_staticBody)
     .setPosition(b2Vec2(1200,0))
     .setDensity(1.0f);
-//    .setFriction(0.3f);
      box2DWorld.createB2Body(&right);
 
 
@@ -96,17 +93,18 @@ int main()
 	physicsTrack->smoothedPosition = b->GetPosition();
 	b->SetUserData(physicsTrack);
 
+
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(b->GetPosition().x,b->GetPosition().y));
     // Start the game loop
 
     double currentTime = deltaClock.getElapsedTime().asSeconds();
     double accumulator = 0.0;
+    sf::RenderStates r(sf::BlendAdd);
 
     while (App.isOpen())
     {
-        App.clear();
-        actionController.update(App);
+     //   actionController.update(App);
 
         float currentTime = deltaClock.getElapsedTime().asSeconds();
         float deltaTime = currentTime - initialUpdateTime;
@@ -115,12 +113,14 @@ int main()
         box2DWorld.update(deltaTime, actionController);
 
         PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
-        rect.setPosition(sf::Vector2f(c->smoothedPosition.x*30-10,c->smoothedPosition.y*30-10));
+       rect.setPosition(sf::Vector2f(b->GetPosition().x*30-10,b->GetPosition().y*30-10));
+//        rect.setPosition(sf::Vector2f(c->smoothedPosition.x*30-10,c->smoothedPosition.y*30-10));
 
         App.draw(rect);
         App.display();
+        App.clear();
     }
-
+    delete physicsTrack;
     return EXIT_SUCCESS;
 }
 
