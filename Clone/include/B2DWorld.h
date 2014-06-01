@@ -44,6 +44,7 @@ private:
     const int MAX_STEPS = 5;
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
+        double t = 0.0;
 
 };
 

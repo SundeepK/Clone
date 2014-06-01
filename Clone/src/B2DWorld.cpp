@@ -35,18 +35,30 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController)
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		resetStates();
-		actionController.triggerCallbacks();
+		actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
 		step(FIXED_TIMESTEP);
+			m_world.ClearForces();
 	}
 
-	m_world.ClearForces();
 
     //smooth positions via interpolation
 	interpolateStates();
 	m_world.DrawDebugData();
 
-
 }
+
+//void B2DWorld::update(float accumulator, ActionController<std::string>& actionController){
+//
+//        actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
+//		step(accumulator);
+//
+//	//m_world.ClearForces();
+//
+//    //smooth positions via interpolation
+//	m_world.DrawDebugData();
+//
+//
+//}
 
 void B2DWorld::assertAccumilation(){
 	assert (
