@@ -69,9 +69,9 @@ void B2DWorld::interpolateStates(){
 //void B2DWorld::update(float accumulator, ActionController<std::string>& actionController){
 //
 //        actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
-//		step(FIXED_TIMESTEP);
+//		step(accumulator);
 //
-//	m_world.ClearForces();
+////	m_world.ClearForces();
 //
 //    //smooth positions via interpolation
 //	m_world.DrawDebugData();

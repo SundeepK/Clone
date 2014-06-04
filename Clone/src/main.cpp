@@ -19,7 +19,7 @@ int main()
     settings.minorVersion = 0;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     // Create the main window
-    sf::RenderWindow App(sf::VideoMode(1280, 800, desktop.bitsPerPixel), "Clone",sf::Style::Default, settings);
+    sf::RenderWindow App(sf::VideoMode(1280, 800,32), "Clone",sf::Style::Default, settings);
 	App.setKeyRepeatEnabled(true);
 //    App.setFramerateLimit(60);
 //   App.setVerticalSyncEnabled(true);
@@ -34,8 +34,8 @@ int main()
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
-    .setDensity(1.0f)
-    .setFriction(0.2f);
+    .setDensity(1.0f);
+//    .setFriction(0.2f);
    b2Body* b = box2DWorld.createB2Body(&builder);
    b->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), b->GetWorldCenter(), true);
     b->SetBullet(true);
@@ -110,7 +110,7 @@ int main()
         float deltaTime = currentTime - initialUpdateTime;
         initialUpdateTime = currentTime;
 
-        box2DWorld.update(deltaTime, actionController);
+        box2DWorld.update(deltaClock.restart().asSeconds(), actionController);
 
         PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
        rect.setPosition(sf::Vector2f(floor(b->GetPosition().x*30-10),floor(b->GetPosition().y*30-10)));
