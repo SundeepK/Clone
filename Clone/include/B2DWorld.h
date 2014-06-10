@@ -26,7 +26,7 @@ class B2DWorld
 public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt, ActionController<std::string>& actionController);
+    void update(float dt, ActionController<std::string>& actionController, sf::RenderWindow& win);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:
@@ -35,6 +35,7 @@ private:
     void step(float dt);
     void interpolateStates();
     void resetStates();
+    void drawSquare(b2Vec2* points,b2Vec2 center,float angle);
 
     b2World m_world;
     float m_fixedTimestepAccumulator = 0.0f;

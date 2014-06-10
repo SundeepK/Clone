@@ -25,6 +25,8 @@
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
 					<Add library="/usr/local/lib/libBox2D.a" />
+					<Add library="SDL" />
+					<Add library="GL" />
 					<Add directory="/usr/local/lib/" />
 				</Linker>
 			</Target>
@@ -48,6 +50,7 @@
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
 					<Add library="/usr/local/lib/libBox2D.a" />
+					<Add library="GL" />
 					<Add directory="/usr/local/lib/" />
 					<Add directory="/usr/local/include/Box2D" />
 				</Linker>
