@@ -25,6 +25,8 @@
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
 					<Add library="/usr/local/lib/libBox2D.a" />
+					<Add library="SDL" />
+					<Add library="GL" />
 					<Add directory="/usr/local/lib/" />
 				</Linker>
 			</Target>
@@ -48,6 +50,7 @@
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
 					<Add library="/usr/local/lib/libBox2D.a" />
+					<Add library="GL" />
 					<Add directory="/usr/local/lib/" />
 					<Add directory="/usr/local/include/Box2D" />
 				</Linker>
@@ -72,16 +75,10 @@
 		<Unit filename="../SFML-tools/SFML-tools/include/Action.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/ActionController.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/ActionNode.h" />
-		<Unit filename="../SFML-tools/SFML-tools/include/AndEventNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/include/EventNode.h" />
-		<Unit filename="../SFML-tools/SFML-tools/include/OrEventNode.h" />
-		<Unit filename="../SFML-tools/SFML-tools/include/RealTimeNode.h" />
-		<Unit filename="../SFML-tools/SFML-tools/include/RealtimeAndNode.h" />
-		<Unit filename="../SFML-tools/SFML-tools/include/RealtimeOrNode.h" />
 		<Unit filename="../SFML-tools/SFML-tools/src/Action.cpp" />
-		<Unit filename="../SFML-tools/SFML-tools/src/ActionController.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/AndEventNode.cpp" />
-		<Unit filename="../SFML-tools/SFML-tools/src/EventNode.cpp" />
+		<Unit filename="../SFML-tools/SFML-tools/src/InputEventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/OrEventNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/RealTimeNode.cpp" />
 		<Unit filename="../SFML-tools/SFML-tools/src/RealtimeAndNode.cpp" />

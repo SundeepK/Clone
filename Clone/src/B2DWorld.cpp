@@ -1,8 +1,9 @@
 #include "B2DWorld.h"
-
+#include <GL/gl.h>
+#include <GL/glu.h>
 B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
 {
-    m_world.SetAutoClearForces(false);
+    m_world.SetAutoClearForces(true);
     m_world.SetAllowSleeping(true);
 }
 
@@ -19,9 +20,9 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
     return builder->build(m_world);
 }
 
-void B2DWorld::update(float dt){
+void B2DWorld::update(float dt, ActionController<std::string>& actionController,  sf::RenderWindow& win){
     m_fixedTimestepAccumulator += dt;
-    const int steps = floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP);
+    const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
     if (steps > 0)
 	{
@@ -30,22 +31,68 @@ void B2DWorld::update(float dt){
 
 	assertAccumilation();
     m_fixedTimestepAccumulatorRatio = m_fixedTimestepAccumulator / FIXED_TIMESTEP;
-
     const int clampedSteps = std::min(steps, MAX_STEPS);
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		resetStates();
+		actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
 		step(FIXED_TIMESTEP);
 	}
 
-    m_world.DrawDebugData();
-
-	m_world.ClearForces();
-
-    //smooth positions via interpolation
 	interpolateStates();
+	m_world.DrawDebugData();
 
 }
+
+void B2DWorld::drawSquare(b2Vec2* points,b2Vec2 center,float angle)
+{
+const float M2P=30;
+const float P2M=1/M2P;
+     //   glColor3f(distribution(generator),distribution(generator),distribution(generator));
+        glPushMatrix();
+                glTranslatef(center.x*M2P,center.y*M2P,0);
+                glRotatef(angle*180.0/M_PI,0,0,1);
+                glBegin(GL_QUADS);
+                        for(int i=0;i<4;i++)
+                                glVertex2f(points[i].x*M2P,points[i].y*M2P);
+                glEnd();
+        glPopMatrix();
+}
+
+void B2DWorld::step(float dt){
+    m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+}
+
+void B2DWorld::interpolateStates(){
+
+	const float oneMinusRatio = 1.0f - m_fixedTimestepAccumulatorRatio;
+
+	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+
+		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+		c->smoothedPosition =  m_fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c->previousPosition;
+		c->smoothedAngle = floor (m_fixedTimestepAccumulatorRatio * b->GetAngle () + oneMinusRatio * c->previousAngle);
+	}
+
+}
+
+//void B2DWorld::update(float accumulator, ActionController<std::string>& actionController){
+//
+//        actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
+//		step(FIXED_TIMESTEP);
+//
+////	m_world.ClearForces();
+//
+//    //smooth positions via interpolation
+//	m_world.DrawDebugData();
+//
+//
+//}
 
 void B2DWorld::assertAccumilation(){
 	assert (
@@ -54,14 +101,22 @@ void B2DWorld::assertAccumilation(){
 	);
 }
 
-void B2DWorld::step(float dt){
-    m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-}
 
-void B2DWorld::interpolateStates(){
-}
 
 void B2DWorld::resetStates(){
+
+for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+ 		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+
+		c->smoothedPosition = c->previousPosition = b->GetPosition ();
+		c->smoothedAngle = c->previousAngle = b->GetAngle ();
+	}
+
 }
 
 

@@ -14,12 +14,19 @@
 #include <functional>
 #include <iostream>
 
-class B2DWorld : Updateable
+struct PhysicsComponent  {
+	float previousAngle;
+	float smoothedAngle;
+	b2Vec2 previousPosition;
+	b2Vec2 smoothedPosition;
+};
+
+class B2DWorld
 {
 public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt);
+    void update(float dt, ActionController<std::string>& actionController, sf::RenderWindow& win);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:
@@ -28,12 +35,13 @@ private:
     void step(float dt);
     void interpolateStates();
     void resetStates();
+    void drawSquare(b2Vec2* points,b2Vec2 center,float angle);
 
     b2World m_world;
-    float m_fixedTimestepAccumulator = 0;
-    float m_fixedTimestepAccumulatorRatio = 0;
+    float m_fixedTimestepAccumulator = 0.0f;
+    float m_fixedTimestepAccumulatorRatio = 0.0f;
 
-    const float FIXED_TIMESTEP = 1.f / 60.f;
+    const float FIXED_TIMESTEP = 1.0f / 60.0f;
     const int MAX_STEPS = 5;
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
