@@ -4,3 +4,6 @@
 [submodule "SFML-tools"]
 	path = SFML-tools
 	url = https://github.com/SundeepK/SFML-tools.git
+[submodule "anax"]
+	path = anax
+	url = https://github.com/SundeepK/anax.git
