@@ -1,6 +1,8 @@
 #bin
-Clone/bin
-Clone/release
+
+*/bin
+*/release
+*/debug
 
 ##tmp files
 *~
