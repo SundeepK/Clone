@@ -8,6 +8,7 @@
 #include <iostream>
 #include "ActionController.h"
 #include <string>
+#include <anax/World.hpp>
 
 int main()
 {
@@ -109,6 +110,10 @@ sf::Texture texture;
 
     rect.setTexture(&texture);
     sf::VertexArray quad(sf::Quads, 4);
+
+    anax::World world;
+    anax::Entity entity = world.createEntity();
+
 
     while (App.isOpen())
     {
