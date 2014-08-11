@@ -4,11 +4,9 @@
 #include <anax/Component.hpp>
 #include <SFML/System.hpp>
 
-class PlayerControlsComponent : anax::Component<PlayerControlsComponent>
+class PlayerControls
 {
 	public:
-	 struct Controls
-	    {
 	       typedef sf::Keyboard::Key Key;
 
 	       const Key JUMP_KEY = Key::W;
@@ -16,9 +14,6 @@ class PlayerControlsComponent : anax::Component<PlayerControlsComponent>
 	       const Key DOWN_KEY = Key::S;
 	       const Key RIGHT_KEY = Key::D;
 
-	    };
-
-	 const Controls controls;
 };
 
 #endif /* PLAYERCONTROLSCOMPONENT_H_ */
