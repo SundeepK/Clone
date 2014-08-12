@@ -74,7 +74,7 @@ void B2DWorld::interpolateStates(){
 			continue;
 		}
 
-		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+		PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
 		c->smoothedPosition =  m_fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c->previousPosition;
 		c->smoothedAngle = floor (m_fixedTimestepAccumulatorRatio * b->GetAngle () + oneMinusRatio * c->previousAngle);
 	}
@@ -111,7 +111,7 @@ for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
 		{
 			continue;
 		}
- 		PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+ 		PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
 
 		c->smoothedPosition = c->previousPosition = b->GetPosition ();
 		c->smoothedAngle = c->previousAngle = b->GetAngle ();

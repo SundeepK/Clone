@@ -85,7 +85,7 @@ int main()
 
 
     	// wrap everything up into a struct
-	PhysicsComponent *physicsTrack = new PhysicsComponent();
+	PhysicsComponentOld *physicsTrack = new PhysicsComponentOld();
 	physicsTrack->previousAngle = b->GetAngle();
 	physicsTrack->previousPosition = b->GetPosition();
 	physicsTrack->smoothedAngle = b->GetAngle();
@@ -132,7 +132,7 @@ sf::Texture texture;
 
         box2DWorld.update(deltaTime, actionController, App);
 
-        PhysicsComponent *c   = (PhysicsComponent*) b->GetUserData();
+        PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
        rect.setPosition(sf::Vector2f(floor(b->GetPosition().x*30-10),floor(b->GetPosition().y*30-10)));
 //        rect.setPosition(sf::Vector2f(floor(c->smoothedPosition.x*30-10),floor(c->smoothedPosition.y*30-10)));
 

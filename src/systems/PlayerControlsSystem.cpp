@@ -1,6 +1,6 @@
 #include "PlayerControlsSystem.h"
 
-PlayerControlsSystem::PlayerControlsSystem() {
+PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requires<PlayerStateComponent,PhysicsComponent>()) {
 	 m_actionController[PlayerState::MOVE_LEFT] = m_moveLeft ;
      m_actionController[PlayerState::MOVE_RIGHT] = m_moveRight ;
 	 m_actionController[PlayerState::JUMP] = m_jump ;
@@ -16,7 +16,14 @@ PlayerControlsSystem::~PlayerControlsSystem() {
 }
 
 void PlayerControlsSystem::update(float dt) {
-	m_actionController.triggerCallbacks(dt);
+
+    auto entities = getEntities();
+
+    for(auto e : entities){
+    	m_actionController.triggerCallbacks(dt);
+
+    }
+
 }
 
 void PlayerControlsSystem::movePlayerLeft(float dt) {

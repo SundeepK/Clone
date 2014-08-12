@@ -14,7 +14,7 @@
 #include <functional>
 #include <iostream>
 
-struct PhysicsComponent  {
+struct PhysicsComponentOld  {
 	float previousAngle;
 	float smoothedAngle;
 	b2Vec2 previousPosition;

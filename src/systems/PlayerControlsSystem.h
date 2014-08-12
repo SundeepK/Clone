@@ -7,10 +7,13 @@
 #include <PlayerControls.h>
 #include <PlayerState.h>
 #include <Box2D/Common/b2Math.h>
+#include <PhysicsComponent.h>
+#include <unordered_map>
 
 class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
 	public:
 		PlayerControlsSystem();
+	//	PlayerControlsSystem(std::unordered_map<PlayerState, sf::Keyboard::Key, std::hash<int>> playerControlsMap);
 		virtual ~PlayerControlsSystem();
 
 		void update(float dt);
