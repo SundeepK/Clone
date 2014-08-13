@@ -3,9 +3,10 @@
 
 #include <Box2D/Dynamics/b2Body.h>
 
-class PhysicsComponent  : anax::Component<PhysicsComponent> {
+class PhysicsComponent  : public anax::Component<PhysicsComponent> {
 
 	public:
+		PhysicsComponent();
 		PhysicsComponent(b2Body* inPhysicsBody) : physicsBody(inPhysicsBody){}
 		~PhysicsComponent();
 

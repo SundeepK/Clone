@@ -1,12 +1,14 @@
 #ifndef PLAYERSTATECOMPONENET_H_
 #define PLAYERSTATECOMPONENET_H_
 
+#include <components/PlayerState.h>
 
-#include <PlayerState.h>
-
-class PlayerStateComponent : anax::Component<PlayerStateComponent>
+class PlayerStateComponent : public anax::Component<PlayerStateComponent>
 {
 	public:
+	PlayerStateComponent();
+	~PlayerStateComponent();
+
 	PlayerState playerState;
 
 	private:

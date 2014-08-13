@@ -4,13 +4,16 @@
 #include <anax/System.hpp>
 #include <Updateable.h>
 #include <ActionController.h>
-#include <PlayerControls.h>
-#include <PlayerState.h>
+#include <components/PlayerControls.h>
+#include <components/PlayerState.h>
+#include <components/PlayerStateComponent.h>
 #include <Box2D/Common/b2Math.h>
-#include <PhysicsComponent.h>
+#include <components/PhysicsComponent.h>
 #include <unordered_map>
 
 class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
+
+
 	public:
 		PlayerControlsSystem();
 	//	PlayerControlsSystem(std::unordered_map<PlayerState, sf::Keyboard::Key, std::hash<int>> playerControlsMap);
@@ -21,15 +24,15 @@ class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
 
 	private:
 
-		void movePlayerLeft(float dt);
+	//	void movePlayerLeft(float dt);
 		void movePlayerRight(float dt);
 		void playerJump(float dt);
 		void movePlayerDown(float dt);
 
-		Action m_moveLeft (PlayerControls::LEFT_KEY);
-		Action m_moveRight (PlayerControls::RIGHT_KEY);
-		Action m_jump (PlayerControls::JUMP_KEY);
-		Action m_moveDown (PlayerControls::DOWN_KEY);
+		Action m_moveLeft;
+		Action m_moveRight;
+		Action m_jump;
+		Action m_moveDown;
 
 	    ActionController<PlayerState> m_actionController;
 	    b2Vec2 m_impulse;
