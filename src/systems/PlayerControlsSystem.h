@@ -10,6 +10,7 @@
 #include <Box2D/Common/b2Math.h>
 #include <components/PhysicsComponent.h>
 #include <unordered_map>
+#include <functional>
 
 class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
 
@@ -24,10 +25,10 @@ class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
 
 	private:
 
-	//	void movePlayerLeft(float dt);
-		void movePlayerRight(float dt);
-		void playerJump(float dt);
-		void movePlayerDown(float dt);
+		std::function<void (float)>  movePlayerLeft();
+		std::function<void (float)>  movePlayerRight();
+		std::function<void (float)>  playerJump();
+		std::function<void (float)>  movePlayerDown();
 
 		Action m_moveLeft;
 		Action m_moveRight;

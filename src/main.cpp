@@ -130,7 +130,7 @@ sf::Texture texture;
         deltaTime = 0.25;
 
 
-        box2DWorld.update(deltaTime, actionController, App);
+     //   box2DWorld.update(deltaTime, actionController, App);
 
         PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
        rect.setPosition(sf::Vector2f(floor(b->GetPosition().x*30-10),floor(b->GetPosition().y*30-10)));
