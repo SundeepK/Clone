@@ -26,7 +26,7 @@ class B2DWorld
 public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt, ActionController<std::string>& actionController, sf::RenderWindow& win);
+    void update(float dt);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
 protected:

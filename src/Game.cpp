@@ -73,7 +73,7 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_world.refresh();
-    m_box2DWorld.update(1.0f/60.0f)
+    m_box2DWorld.update(1.0f/60.0f);
     m_playerControlsSystem.update(deltaTime);
 }
 

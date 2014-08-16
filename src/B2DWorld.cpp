@@ -20,7 +20,7 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
     return builder->build(m_world);
 }
 
-void B2DWorld::update(float dt, ActionController<std::string>& actionController,  sf::RenderWindow& win){
+void B2DWorld::update(float dt){
     m_fixedTimestepAccumulator += dt;
     const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
@@ -35,7 +35,6 @@ void B2DWorld::update(float dt, ActionController<std::string>& actionController,
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		resetStates();
-		actionController.triggerCallbacks(m_fixedTimestepAccumulatorRatio);
 		step(FIXED_TIMESTEP);
 	}
 
