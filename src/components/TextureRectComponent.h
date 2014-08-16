@@ -6,7 +6,7 @@
 class TextureRectComponent  : public anax::Component<TextureRectComponent> {
 
 	public:
-		TextureRectComponent(sf::Texture& texture, sf::RectangleShape& rect);
+		TextureRectComponent();
 		~TextureRectComponent();
 
 		sf::Texture texture;

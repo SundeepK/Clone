@@ -1,0 +1,17 @@
+#ifndef TEXTURERECTRENDERSYSTEM_H_
+#define TEXTURERECTRENDERSYSTEM_H_
+
+#include <anax/System.hpp>
+#include <components/TextureRectComponent.h>
+#include <components/PhysicsComponent.h>
+
+class TextureRectRenderSystem  : anax::System<TextureRectRenderSystem> {
+	public:
+		TextureRectRenderSystem() ;
+		virtual ~TextureRectRenderSystem();
+
+		void render(sf::RenderTarget* renderTarget);
+
+};
+
+#endif /* TEXTURERECTRENDERSYSTEM_H_ */

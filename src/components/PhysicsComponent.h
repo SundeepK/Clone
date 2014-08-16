@@ -7,7 +7,6 @@ class PhysicsComponent  : public anax::Component<PhysicsComponent> {
 
 	public:
 		PhysicsComponent();
-		PhysicsComponent(b2Body* inPhysicsBody) : physicsBody(inPhysicsBody){}
 		~PhysicsComponent();
 
 		b2Body* physicsBody;
