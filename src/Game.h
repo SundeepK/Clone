@@ -20,6 +20,7 @@ class Game {
 
 	private:
 		 B2DWorld m_box2DWorld;
+		 SFMLB2dDebugDraw m_debugDrawer;
 		 anax::World m_world;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;

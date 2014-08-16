@@ -2,7 +2,7 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow renderWindow) : m_box2DWorld(9.8f), m_mainRenderWindow(renderWindow) {
+Game::Game(sf::RenderWindow renderWindow) : m_box2DWorld(9.8f), m_mainRenderWindow(renderWindow), m_debugDrawer(renderWindow) {
 
 }
 
@@ -11,10 +11,8 @@ Game::~Game() {
 
 void Game::init()
 {
-
-	SFMLB2dDebugDraw drawer(App);
-	m_box2DWorld.setDebugDraw(drawer);
-    drawer.SetFlags(b2Draw::e_shapeBit);
+	m_box2DWorld.setDebugDraw(m_debugDrawer);
+	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
     m_world.addSystem(m_playerControlsSystem);
 
