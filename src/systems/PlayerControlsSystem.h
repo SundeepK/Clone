@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <functional>
 
-class PlayerControlsSystem : anax::System<PlayerControlsSystem>, Updateable {
+class PlayerControlsSystem : public anax::System<PlayerControlsSystem>, Updateable {
 
 
 	public:

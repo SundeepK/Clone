@@ -2,8 +2,7 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow renderWindow) : m_box2DWorld(9.8f), m_mainRenderWindow(renderWindow), m_debugDrawer(renderWindow) {
-
+Game::Game(sf::RenderTarget& renderWindow) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow), m_box2DWorld(9.8f) {
 }
 
 Game::~Game() {
@@ -15,6 +14,7 @@ void Game::init()
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
     m_world.addSystem(m_playerControlsSystem);
+    m_world.addSystem(m_textureRectSystem);
 
     m_player = m_world.createEntity();
     auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
@@ -35,7 +35,9 @@ void Game::init()
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
 
     sf::Texture texture;
-    if (!texture.loadFromFile("1.png")) {}
+    if (!texture.loadFromFile("1.png")) {
+    	std::cout << "no 1.png found" << std::endl;
+    }
 
     textureRectComp.rect = rect;
     textureRectComp.texture = texture;
@@ -71,10 +73,10 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_world.refresh();
-    m_box2DWorld.update(1.0f/60.0f);
     m_playerControlsSystem.update(deltaTime);
+    m_box2DWorld.update(deltaTime);
 }
 
 void Game::render() {
-
+	m_textureRectSystem.render(m_mainRenderWindow.get());
 }

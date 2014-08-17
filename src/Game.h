@@ -5,13 +5,16 @@
 #include <components/TextureRectComponent.h>
 #include <components/PhysicsComponent.h>
 #include <systems/PlayerControlsSystem.h>
+#include <systems/TextureRectRenderSystem.h>
 #include <B2DWorld.h>
 #include <SFML/Graphics.hpp>
-
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <memory.h>
 
 class Game {
 	public:
-		Game(sf::RenderWindow renderWindow);
+		Game(sf::RenderTarget& renderWindow);
 		virtual ~Game();
 
 		 void init();
@@ -19,12 +22,13 @@ class Game {
 		 void render();
 
 	private:
-		 B2DWorld m_box2DWorld;
+		 std::unique_ptr<sf::RenderTarget> m_mainRenderWindow;
 		 SFMLB2dDebugDraw m_debugDrawer;
+		 B2DWorld m_box2DWorld;
 		 anax::World m_world;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;
-		 sf::RenderWindow m_mainRenderWindow;
+		 TextureRectRenderSystem m_textureRectSystem;
 
 };
 

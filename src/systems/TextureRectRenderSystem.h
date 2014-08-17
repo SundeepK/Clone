@@ -5,7 +5,7 @@
 #include <components/TextureRectComponent.h>
 #include <components/PhysicsComponent.h>
 
-class TextureRectRenderSystem  : anax::System<TextureRectRenderSystem> {
+class TextureRectRenderSystem  : public anax::System<TextureRectRenderSystem> {
 	public:
 		TextureRectRenderSystem() ;
 		virtual ~TextureRectRenderSystem();

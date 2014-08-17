@@ -34,11 +34,11 @@ void B2DWorld::update(float dt){
     const int clampedSteps = std::min(steps, MAX_STEPS);
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
-		resetStates();
+		//resetStates();
 		step(FIXED_TIMESTEP);
 	}
 
-	interpolateStates();
+	//interpolateStates();
 	m_world.DrawDebugData();
 
 }

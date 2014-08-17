@@ -2,12 +2,11 @@
 #define PHYSICSCOMPONENT_H_
 
 #include <Box2D/Dynamics/b2Body.h>
+#include <anax/Component.hpp>
 
 class PhysicsComponent  : public anax::Component<PhysicsComponent> {
 
 	public:
-		PhysicsComponent();
-		~PhysicsComponent();
 
 		b2Body* physicsBody;
 };
