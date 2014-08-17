@@ -2,7 +2,8 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderTarget& renderWindow) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow), m_box2DWorld(9.8f) {
+Game::Game(sf::RenderWindow& renderWindow) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow),
+		m_box2DWorld(9.8f){
 }
 
 Game::~Game() {
@@ -17,6 +18,7 @@ void Game::init()
     m_world.addSystem(m_textureRectSystem);
 
     m_player = m_world.createEntity();
+    auto& playerStateComp = m_player.addComponent<PlayerStateComponent>();
     auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = m_player.addComponent<PhysicsComponent>();
 
@@ -73,7 +75,7 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_world.refresh();
-    m_playerControlsSystem.update(deltaTime);
+    m_playerControlsSystem.update(deltaTime, m_mainRenderWindow.get());
     m_box2DWorld.update(deltaTime);
 }
 

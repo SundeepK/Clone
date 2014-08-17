@@ -17,34 +17,53 @@ PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requ
 PlayerControlsSystem::~PlayerControlsSystem() {
 }
 
-void PlayerControlsSystem::update(float dt) {
-
+void PlayerControlsSystem::update(float dt, sf::RenderWindow* renderWindow) {
+	m_actionController.update(*renderWindow);
     auto entities = getEntities();
 
     for(auto entity : entities){
-    	m_actionController.triggerCallbacks(dt);
-    	auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-    	b2Body* body = physicsComponent.physicsBody;
-    	if(body->GetLinearVelocity().x > -10.0f && body->GetLinearVelocity().x < 10.0f ){
+
+    	if(	m_currentPlayerState != PlayerState::NO_STATE || m_currentPlayerState != PlayerState::DEFAULT_STATE){
+    		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+    		b2Body* body = physicsComponent.physicsBody;
+
+    		if(m_currentPlayerState ==  PlayerState::MOVE_LEFT && (body->GetLinearVelocity().x < -10.0f)){
+    			return;
+    		}
+
+    		if(m_currentPlayerState ==  PlayerState::MOVE_RIGHT && (body->GetLinearVelocity().x > 10.0f)){
+    			return;
+    		}
     		body->ApplyLinearImpulse(m_impulse, body->GetWorldCenter(), true);
     	}
     }
+	m_actionController.triggerCallbacks(dt);
+
 }
 
 std::function<void (float)> PlayerControlsSystem::movePlayerLeft() {
-	 return [this](float x) { m_impulse = b2Vec2(-0.4f,0.0f); };
+	 return [this](float x) {
+		 m_currentPlayerState = PlayerState::MOVE_LEFT;
+		 m_impulse = b2Vec2(-0.4f,0.0f);
+	 };
 }
 
 std::function<void (float)> PlayerControlsSystem::movePlayerRight() {
-	 return [this](float x) { m_impulse =  b2Vec2( 0.4,0.0f);};
+	 return [this](float x) {
+		 m_currentPlayerState = PlayerState::MOVE_RIGHT;
+		 m_impulse =  b2Vec2( 0.4,0.0f);};
 }
 
 std::function<void (float)> PlayerControlsSystem::playerJump() {
-	return [this](float x) { m_impulse =  b2Vec2(0.0f,-0.4);};
+	return [this](float x) {
+		 m_currentPlayerState = PlayerState::JUMP;
+		m_impulse =  b2Vec2(0.0f,-0.4);};
 }
 
 std::function<void (float)> PlayerControlsSystem::movePlayerDown() {
-	 return [this](float x) { m_impulse = b2Vec2(0.0f,0.4);};
+	 return [this](float x) {
+		 m_currentPlayerState = PlayerState::MOVE_DOWN;
+		 m_impulse = b2Vec2(0.0f,0.4);};
 }
 
 

@@ -6,8 +6,6 @@
 class PlayerStateComponent : public anax::Component<PlayerStateComponent>
 {
 	public:
-	PlayerStateComponent();
-	~PlayerStateComponent();
 
 	PlayerState playerState;
 

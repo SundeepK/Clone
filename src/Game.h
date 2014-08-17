@@ -11,10 +11,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <memory.h>
+#include <components/PlayerStateComponent.h>
 
 class Game {
 	public:
-		Game(sf::RenderTarget& renderWindow);
+		Game(sf::RenderWindow& renderWindow);
 		virtual ~Game();
 
 		 void init();
@@ -22,7 +23,7 @@ class Game {
 		 void render();
 
 	private:
-		 std::unique_ptr<sf::RenderTarget> m_mainRenderWindow;
+		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 SFMLB2dDebugDraw m_debugDrawer;
 		 B2DWorld m_box2DWorld;
 		 anax::World m_world;

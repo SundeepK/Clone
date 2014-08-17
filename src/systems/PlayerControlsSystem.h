@@ -11,8 +11,9 @@
 #include <components/PhysicsComponent.h>
 #include <unordered_map>
 #include <functional>
+#include <components/PlayerState.h>
 
-class PlayerControlsSystem : public anax::System<PlayerControlsSystem>, Updateable {
+class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 
 
 	public:
@@ -20,7 +21,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem>, Updateab
 	//	PlayerControlsSystem(std::unordered_map<PlayerState, sf::Keyboard::Key, std::hash<int>> playerControlsMap);
 		virtual ~PlayerControlsSystem();
 
-		void update(float dt);
+		void update(float dt, sf::RenderWindow* renderWindow);
 		b2Vec2 getMovementImpulse();
 
 	private:
@@ -37,6 +38,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem>, Updateab
 
 	    ActionController<PlayerState> m_actionController;
 	    b2Vec2 m_impulse;
+	    PlayerState m_currentPlayerState;
 };
 
 #endif /* PLAYERCONTROLSSYSTEM_H_ */

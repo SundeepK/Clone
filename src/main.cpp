@@ -24,7 +24,6 @@ int main()
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 	//App.setVerticalSyncEnabled(true);
-
     Game game(mainRenderWindow);
     game.init();
 
