@@ -25,7 +25,6 @@ void PlayerControlsSystem::update(float dt, sf::RenderWindow* renderWindow) {
     		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
     		b2Body* body = physicsComponent.physicsBody;
     		m_actionController.triggerCallbacks(dt, body);
-
     	//}
     }
 	m_currentPlayerState = PlayerState::NO_STATE;

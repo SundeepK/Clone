@@ -29,10 +29,12 @@ public:
     void update(float dt);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
+    void drawDebug();
+    void step(float dt);
 protected:
 private:
     void assertAccumilation();
-    void step(float dt);
+
     void interpolateStates();
     void resetStates();
     void drawSquare(b2Vec2* points,b2Vec2 center,float angle);

@@ -80,5 +80,6 @@ void Game::update(float deltaTime) {
 }
 
 void Game::render() {
+	m_box2DWorld.drawDebug();
 	m_textureRectSystem.render(m_mainRenderWindow.get());
 }

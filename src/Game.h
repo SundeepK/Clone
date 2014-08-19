@@ -12,9 +12,13 @@
 #include <SFML/Window.hpp>
 #include <memory.h>
 #include <components/PlayerStateComponent.h>
+#include <chrono>
+
 
 class Game {
+
 	public:
+
 		Game(sf::RenderWindow& renderWindow);
 		virtual ~Game();
 

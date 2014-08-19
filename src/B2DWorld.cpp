@@ -39,8 +39,6 @@ void B2DWorld::update(float dt){
 	}
 
 	//interpolateStates();
-	m_world.DrawDebugData();
-
 }
 
 void B2DWorld::drawSquare(b2Vec2* points,b2Vec2 center,float angle)
@@ -118,7 +116,6 @@ for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
 
 }
 
-
-
-
-
+void B2DWorld::drawDebug() {
+	m_world.DrawDebugData();
+}
