@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <functional>
 #include <components/PlayerState.h>
+#include <components/Texcoords.h>
+#include <iostream>
 
 class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 

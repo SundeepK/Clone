@@ -42,6 +42,7 @@ class Game {
 		 OpenGLTextureRenderer m_openglTextureRenderer;
 		 std::string m_name = "sund";
 		    std::vector<b2Vec2> m_texs;
+		 int   m_number = 20;
 
 
 };

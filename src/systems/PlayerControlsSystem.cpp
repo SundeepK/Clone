@@ -23,6 +23,10 @@ void PlayerControlsSystem::update(float dt, sf::RenderWindow* renderWindow) {
     for(auto entity : entities){
     	//if(	m_currentPlayerState != PlayerState::NO_STATE || m_currentPlayerState != PlayerState::DEFAULT_STATE){
     		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+    	//	auto& physicsComp = entity.getComponent<PhysicsComponent>();
+    	//	auto image = texCoordsComp.image;
+    	//	auto name = texCoordsComp.name;
+
     		b2Body* body = physicsComponent.physicsBody;
     		m_actionController.triggerCallbacks(dt, body);
     	//}

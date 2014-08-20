@@ -15,7 +15,7 @@ void Game::init()
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
     m_world.addSystem(m_playerControlsSystem);
-    m_world.addSystem(m_textureRectSystem);
+ //   m_world.addSystem(m_textureRectSystem);
     m_world.addSystem(m_openglTextureRenderer);
 
     m_player = m_world.createEntity();
@@ -24,14 +24,13 @@ void Game::init()
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = m_player.addComponent<PhysicsComponent>();
 
-
+    texCoordsComp.name = "sund";
     m_texs.push_back(b2Vec2(0.0f, 1.f));
     m_texs.push_back(b2Vec2(1.0f, 1.0f));
     m_texs.push_back(b2Vec2(1.0f, 0.0f));
     m_texs.push_back(b2Vec2(0.0f, 0.0f));
 
-    texCoordsComp.textCoords = m_texs;
-
+  //  texCoordsComp.textCoords = m_texs;
 
     B2BoxBuilder builder(20,20);
     builder
