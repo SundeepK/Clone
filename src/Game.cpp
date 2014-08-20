@@ -30,7 +30,7 @@ void Game::init()
     m_texs.push_back(b2Vec2(1.0f, 0.0f));
     m_texs.push_back(b2Vec2(0.0f, 0.0f));
 
-  //  texCoordsComp.textCoords = m_texs;
+    texCoordsComp.textCoords = m_texs;
 
     B2BoxBuilder builder(20,20);
     builder
