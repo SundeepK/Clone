@@ -16,11 +16,22 @@ void Game::init()
 
     m_world.addSystem(m_playerControlsSystem);
     m_world.addSystem(m_textureRectSystem);
+    m_world.addSystem(m_openglTextureRenderer);
 
     m_player = m_world.createEntity();
+    auto& texCoordsComp = m_player.addComponent<Texcoords>();
     auto& playerStateComp = m_player.addComponent<PlayerStateComponent>();
-    auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
+    //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = m_player.addComponent<PhysicsComponent>();
+
+
+    m_texs.push_back(b2Vec2(0.0f, 1.f));
+    m_texs.push_back(b2Vec2(1.0f, 1.0f));
+    m_texs.push_back(b2Vec2(1.0f, 0.0f));
+    m_texs.push_back(b2Vec2(0.0f, 0.0f));
+
+    texCoordsComp.textCoords = m_texs;
+
 
     B2BoxBuilder builder(20,20);
     builder
@@ -36,14 +47,14 @@ void Game::init()
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
 
-    sf::Texture texture;
-    if (!texture.loadFromFile("1.png")) {
-    	std::cout << "no 1.png found" << std::endl;
-    }
-
-    textureRectComp.rect = rect;
-    textureRectComp.texture = texture;
-    rect.setTexture(&textureRectComp.texture);
+//    sf::Texture texture;
+//    if (!texture.loadFromFile("1.png")) {
+//    	std::cout << "no 1.png found" << std::endl;
+//    }
+//
+//    textureRectComp.rect = rect;
+//    textureRectComp.texture = texture;
+//    rect.setTexture(&textureRectComp.texture);
 
 
     //TODO below should be removed once parsing tile-maps
@@ -71,6 +82,27 @@ void Game::init()
 
 
     m_player.activate();
+
+
+
+    glDisable(GL_LIGHTING);
+
+       // Configure the viewport (the same size as the window)
+       glViewport(0, 0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y);
+
+       glMatrixMode(GL_PROJECTION);
+       glOrtho(0,1280,800,0,-1,1);
+       glMatrixMode(GL_MODELVIEW);
+       glEnableClientState(GL_VERTEX_ARRAY);
+       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+       glEnable(GL_TEXTURE_2D);
+       glShadeModel(GL_SMOOTH);
+       glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+       glClearDepth(1.0f);                  // Depth Buffer Setup
+       glEnable(GL_DEPTH_TEST);             // Enables Depth Testing
+       glDepthFunc(GL_LEQUAL);
+
 }
 
 void Game::update(float deltaTime) {
@@ -80,6 +112,21 @@ void Game::update(float deltaTime) {
 }
 
 void Game::render() {
+	m_mainRenderWindow->pushGLStates();
+	m_mainRenderWindow->clear(sf::Color::Black);
+	m_mainRenderWindow->popGLStates();
+
 	m_box2DWorld.drawDebug();
-	m_textureRectSystem.render(m_mainRenderWindow.get());
+
+	m_mainRenderWindow->setActive(true);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+    glColor3f(1.0f,1.0f,1.0f);
+
+	m_openglTextureRenderer.render();
+	m_mainRenderWindow->pushGLStates();
+	//TODO draw more sfml stuff here
+	m_mainRenderWindow->popGLStates();
+	//m_textureRectSystem.render(m_mainRenderWindow.get());
 }

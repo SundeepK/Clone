@@ -32,7 +32,7 @@ int main()
        game.update(1.0f/60.0f);
        game.render();
        mainRenderWindow.display();
-       mainRenderWindow.clear();
+     //  mainRenderWindow.clear();
     }
 }
 
