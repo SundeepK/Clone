@@ -25,9 +25,9 @@ struct PhysicsComponentOld  {
 class B2DWorld
 {
 public:
-    B2DWorld(float gravity, PhysicsInterpolatorSystem& physicsInterpolator);
+    B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt);
+    void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
     void drawDebug();
@@ -52,7 +52,6 @@ private:
 
     unsigned int t_accum=0,lt=0,ct=0;
     sf::Clock clock;
-    PhysicsInterpolatorSystem m_physicsInterpolator;
 
 };
 

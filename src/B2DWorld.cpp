@@ -1,7 +1,7 @@
 #include "B2DWorld.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-B2DWorld::B2DWorld(float gravity,  PhysicsInterpolatorSystem& physicsInterpolator) : m_world(b2Vec2(0.f, gravity)), m_physicsInterpolator(physicsInterpolator)
+B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
 {
     m_world.SetAutoClearForces(true);
     m_world.SetAllowSleeping(true);
@@ -21,7 +21,7 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
     return builder->build(m_world);
 }
 
-void B2DWorld::update(float dt){
+void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator){
     m_fixedTimestepAccumulator += dt/1000;
     const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
@@ -35,11 +35,11 @@ void B2DWorld::update(float dt){
     const int clampedSteps = std::min(steps, MAX_STEPS);
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
-		m_physicsInterpolator.resetComponents();
+		physicsInterpolator.resetComponents();
 		step(FIXED_TIMESTEP);
 	}
 
-	m_physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
+	physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
 
 }
 

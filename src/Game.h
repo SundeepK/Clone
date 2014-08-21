@@ -24,7 +24,7 @@ class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow, PhysicsInterpolatorSystem& physicsInterpolator);
+		Game(sf::RenderWindow& renderWindow);
 		virtual ~Game();
 
 		 void init();

@@ -10,7 +10,6 @@
 #include <string>
 #include <anax/World.hpp>
 #include <Game.h>
-#include <systems/PhysicsInterpolatorSystem.h>
 
 int main()
 {
@@ -25,8 +24,7 @@ int main()
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	//mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);
-	PhysicsInterpolatorSystem physicsInterpolator;
-    Game game(mainRenderWindow, physicsInterpolator);
+    Game game(mainRenderWindow);
     game.init();
 
     sf::Clock clock;

@@ -2,8 +2,8 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow, PhysicsInterpolatorSystem& physicsInterpolator) : m_physicsInterpolator(physicsInterpolator), m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow),
-		m_box2DWorld(9.8f, physicsInterpolator){
+Game::Game(sf::RenderWindow& renderWindow) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow),
+		m_box2DWorld(9.8f){
 }
 
 Game::~Game() {
@@ -37,7 +37,7 @@ void Game::init()
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
-    .setDensity(3.0f);
+    .setDensity(1.0f);
     b2Body* playerBody = m_box2DWorld.createB2Body(&builder);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
     playerBody->SetBullet(true);
@@ -109,7 +109,7 @@ void Game::update(float deltaTime) {
     m_world.refresh();
     m_playerControlsSystem.update(deltaTime, m_mainRenderWindow.get());
  //   m_box2DWorld.step(deltaTime);
-    m_box2DWorld.update(deltaTime);
+    m_box2DWorld.update(deltaTime, m_physicsInterpolator);
 }
 
 void Game::render() {
@@ -117,7 +117,7 @@ void Game::render() {
 	m_mainRenderWindow->clear(sf::Color::Black);
 	m_mainRenderWindow->popGLStates();
 
-	//m_box2DWorld.drawDebug();
+//	m_box2DWorld.drawDebug();
 
 	m_mainRenderWindow->setActive(true);
 
