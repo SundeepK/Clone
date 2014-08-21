@@ -24,7 +24,7 @@ class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow);
+		Game(sf::RenderWindow& renderWindow, PhysicsInterpolatorSystem& physicsInterpolator);
 		virtual ~Game();
 
 		 void init();
@@ -40,6 +40,7 @@ class Game {
 		 PlayerControlsSystem m_playerControlsSystem;
 		 TextureRectRenderSystem m_textureRectSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;
+		 PhysicsInterpolatorSystem m_physicsInterpolator;
 		 std::string m_name = "sund";
 		    std::vector<b2Vec2> m_texs;
 		 int   m_number = 20;

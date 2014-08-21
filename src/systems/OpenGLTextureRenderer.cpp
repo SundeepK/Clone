@@ -17,8 +17,6 @@ void OpenGLTextureRenderer::render() {
 		auto image = texCoordsComp.image;
 		auto name = texCoordsComp.name;
 
-		std::cout << name << "hello" << std::endl;
-
 		auto& texCoordsVec = texCoordsComp.textCoords;
 		b2Body* body = physicsComp.physicsBody;
 
@@ -49,7 +47,7 @@ void OpenGLTextureRenderer::render() {
 		}
 
 		glPushMatrix();
-		b2Vec2 center = body->GetPosition();
+		b2Vec2 center = physicsComp.smoothedPosition;
 		float angle = body->GetAngle();
 		glTranslatef(center.x * M2P, center.y * M2P, 0.0f);
 		glRotatef(angle * 180.0 / M_PI, 0, 0, 1);

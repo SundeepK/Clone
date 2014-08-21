@@ -39,7 +39,6 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 		Action m_moveDown;
 
 	    ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
-	    b2Vec2 m_impulse;
 	    PlayerState m_currentPlayerState;
 
 	    b2Vec2 left;
@@ -47,6 +46,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 	    b2Vec2 jump;
 	    b2Vec2 down;
 
+	    const float m_impulse = 0.8f;
 
 };
 

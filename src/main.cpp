@@ -10,6 +10,7 @@
 #include <string>
 #include <anax/World.hpp>
 #include <Game.h>
+#include <systems/PhysicsInterpolatorSystem.h>
 
 int main()
 {
@@ -23,13 +24,15 @@ int main()
     sf::RenderWindow mainRenderWindow(sf::VideoMode(1280,800,32), "Clone",sf::Style::Default, settings);
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	//mainRenderWindow.setFramerateLimit(60);
-	//App.setVerticalSyncEnabled(true);
-    Game game(mainRenderWindow);
+	//mainRenderWindow.setVerticalSyncEnabled(true);
+	PhysicsInterpolatorSystem physicsInterpolator;
+    Game game(mainRenderWindow, physicsInterpolator);
     game.init();
 
+    sf::Clock clock;
     while (mainRenderWindow.isOpen())
     {
-       game.update(1.0f/60.0f);
+       game.update(clock.restart().asMilliseconds());
        game.render();
        mainRenderWindow.display();
      //  mainRenderWindow.clear();

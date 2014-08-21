@@ -13,6 +13,7 @@
 #include "Action.h"
 #include <functional>
 #include <iostream>
+#include <systems/PhysicsInterpolatorSystem.h>
 
 struct PhysicsComponentOld  {
 	float previousAngle;
@@ -24,7 +25,7 @@ struct PhysicsComponentOld  {
 class B2DWorld
 {
 public:
-    B2DWorld(float gravity);
+    B2DWorld(float gravity, PhysicsInterpolatorSystem& physicsInterpolator);
     virtual ~B2DWorld();
     void update(float dt);
     b2Body* createB2Body(B2Builder* builder);
@@ -47,6 +48,11 @@ private:
     const int MAX_STEPS = 5;
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
+
+
+    unsigned int t_accum=0,lt=0,ct=0;
+    sf::Clock clock;
+    PhysicsInterpolatorSystem m_physicsInterpolator;
 
 };
 

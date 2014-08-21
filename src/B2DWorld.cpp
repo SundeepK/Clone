@@ -1,10 +1,11 @@
 #include "B2DWorld.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
+B2DWorld::B2DWorld(float gravity,  PhysicsInterpolatorSystem& physicsInterpolator) : m_world(b2Vec2(0.f, gravity)), m_physicsInterpolator(physicsInterpolator)
 {
     m_world.SetAutoClearForces(true);
     m_world.SetAllowSleeping(true);
+    m_world.SetContinuousPhysics(false);
 }
 
 B2DWorld::~B2DWorld()
@@ -21,7 +22,7 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
 }
 
 void B2DWorld::update(float dt){
-    m_fixedTimestepAccumulator += dt;
+    m_fixedTimestepAccumulator += dt/1000;
     const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
     if (steps > 0)
@@ -34,11 +35,12 @@ void B2DWorld::update(float dt){
     const int clampedSteps = std::min(steps, MAX_STEPS);
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
-		//resetStates();
+		m_physicsInterpolator.resetComponents();
 		step(FIXED_TIMESTEP);
 	}
 
-	//interpolateStates();
+	m_physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
+
 }
 
 void B2DWorld::drawSquare(b2Vec2* points,b2Vec2 center,float angle)

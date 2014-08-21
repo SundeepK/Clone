@@ -38,7 +38,7 @@ std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerLeft() {
 	 return [this](float x, b2Body* body){
 	 m_currentPlayerState = PlayerState::MOVE_LEFT;
 	 if(body->GetLinearVelocity().x < -10.0f) {return ;}
-	 body->ApplyLinearImpulse( b2Vec2(-0.4f,0.0f), body->GetWorldCenter(), true);
+	 body->ApplyLinearImpulse( b2Vec2(-m_impulse,0.0f), body->GetWorldCenter(), true);
 	 };
 }
 
@@ -46,21 +46,21 @@ std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerRight() {
 	 return [this](float x, b2Body* body){
 		 m_currentPlayerState = PlayerState::MOVE_RIGHT;
 		 if(body->GetLinearVelocity().x > 10.0f) {return ;}
-		 body->ApplyLinearImpulse( b2Vec2( 0.4,0.0f), body->GetWorldCenter() ,  true);
+		 body->ApplyLinearImpulse( b2Vec2(m_impulse,0.0f), body->GetWorldCenter() ,  true);
 	 };
 }
 
 std::function<void (float, b2Body*)> PlayerControlsSystem::playerJump() {
 	 return [this](float x, b2Body* body){
 		 m_currentPlayerState = PlayerState::JUMP;
-		 body->ApplyLinearImpulse( b2Vec2(0.0f,-0.4f), body->GetWorldCenter() ,  true);
+		 body->ApplyLinearImpulse( b2Vec2(0.0f,-m_impulse), body->GetWorldCenter() ,  true);
 	};
 }
 
 std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerDown() {
 	 return [this](float x, b2Body* body){
 		 m_currentPlayerState = PlayerState::MOVE_DOWN;
-		 body->ApplyLinearImpulse( b2Vec2(0.0f,0.4f) , body->GetWorldCenter() , true);
+		 body->ApplyLinearImpulse( b2Vec2(0.0f,m_impulse) , body->GetWorldCenter() , true);
 	 };
 }
 
