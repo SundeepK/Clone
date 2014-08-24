@@ -3,7 +3,7 @@
 #include <GL/glu.h>
 B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
 {
-    m_world.SetAutoClearForces(true);
+    m_world.SetAutoClearForces(false);
     m_world.SetAllowSleeping(true);
     m_world.SetContinuousPhysics(false);
 }
@@ -21,7 +21,7 @@ b2Body* B2DWorld::createB2Body(B2Builder* builder){
     return builder->build(m_world);
 }
 
-void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator){
+void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
     m_fixedTimestepAccumulator += dt/1000;
     const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
@@ -36,9 +36,11 @@ void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator){
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		physicsInterpolator.resetComponents();
+		controlSystem.update(dt);
 		step(FIXED_TIMESTEP);
 	}
 
+	m_world.ClearForces();
 	physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
 
 }
@@ -62,23 +64,6 @@ void B2DWorld::step(float dt){
     m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 }
 
-void B2DWorld::interpolateStates(){
-
-	const float oneMinusRatio = 1.0f - m_fixedTimestepAccumulatorRatio;
-
-	for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
-	{
-		if (b->GetType () == b2_staticBody)
-		{
-			continue;
-		}
-
-		PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
-		c->smoothedPosition =  m_fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c->previousPosition;
-		c->smoothedAngle = floor (m_fixedTimestepAccumulatorRatio * b->GetAngle () + oneMinusRatio * c->previousAngle);
-	}
-
-}
 
 //void B2DWorld::update(float accumulator, ActionController<std::string>& actionController){
 //
@@ -98,24 +83,6 @@ void B2DWorld::assertAccumilation(){
 		"Accumulator must have a value lesser than the fixed time step" &&
 		m_fixedTimestepAccumulator < FIXED_TIMESTEP + FLT_EPSILON
 	);
-}
-
-
-
-void B2DWorld::resetStates(){
-
-for (b2Body * b = m_world.GetBodyList (); b != NULL; b = b->GetNext ())
-	{
-		if (b->GetType () == b2_staticBody)
-		{
-			continue;
-		}
- 		PhysicsComponentOld *c   = (PhysicsComponentOld*) b->GetUserData();
-
-		c->smoothedPosition = c->previousPosition = b->GetPosition ();
-		c->smoothedAngle = c->previousAngle = b->GetAngle ();
-	}
-
 }
 
 void B2DWorld::drawDebug() {

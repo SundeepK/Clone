@@ -13,21 +13,15 @@
 #include "Action.h"
 #include <functional>
 #include <iostream>
+#include <systems/PlayerControlsSystem.h>
 #include <systems/PhysicsInterpolatorSystem.h>
-
-struct PhysicsComponentOld  {
-	float previousAngle;
-	float smoothedAngle;
-	b2Vec2 previousPosition;
-	b2Vec2 smoothedPosition;
-};
 
 class B2DWorld
 {
 public:
     B2DWorld(float gravity);
     virtual ~B2DWorld();
-    void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator);
+    void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
     void drawDebug();

@@ -37,7 +37,7 @@ void Game::init()
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
-    .setDensity(1.0f);
+    .setDensity(2.0f);
     b2Body* playerBody = m_box2DWorld.createB2Body(&builder);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
     playerBody->SetBullet(true);
@@ -107,9 +107,9 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_world.refresh();
-    m_playerControlsSystem.update(deltaTime, m_mainRenderWindow.get());
+  //  m_playerControlsSystem.update(deltaTime);
  //   m_box2DWorld.step(deltaTime);
-    m_box2DWorld.update(deltaTime, m_physicsInterpolator);
+    m_box2DWorld.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
 }
 
 void Game::render() {

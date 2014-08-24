@@ -49,13 +49,13 @@ void OpenGLTextureRenderer::render() {
 		glPushMatrix();
 		b2Vec2 center = physicsComp.smoothedPosition;
 		float angle = body->GetAngle();
-		glTranslatef(center.x * M2P, center.y * M2P, 0.0f);
+		glTranslatef(static_cast<float>(floor(center.x * M2P)), static_cast<float>(floor(center.y * M2P)), 0.0f);
 		glRotatef(angle * 180.0 / M_PI, 0, 0, 1);
 
 		glBegin(GL_POLYGON); //begin drawing of polygon
 		for (int i = 0; i < shape->GetVertexCount(); i++) {
 				glTexCoord2d(texCoordsVec[i].x, texCoordsVec[i].y);
-			glVertex2f(points[i].x * M2P, points[i].y * M2P);
+			glVertex2f(floor(points[i].x * M2P), floor(points[i].y * M2P));
 		}
 		glEnd(); //end drawing of polygon
 		glPopMatrix();

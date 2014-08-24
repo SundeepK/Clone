@@ -23,7 +23,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 	//	PlayerControlsSystem(std::unordered_map<PlayerState, sf::Keyboard::Key, std::hash<int>> playerControlsMap);
 		virtual ~PlayerControlsSystem();
 
-		void update(float dt, sf::RenderWindow* renderWindow);
+		void update(float dt);
 		b2Vec2 getMovementImpulse();
 
 	private:

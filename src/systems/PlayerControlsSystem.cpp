@@ -17,8 +17,7 @@ PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requ
 PlayerControlsSystem::~PlayerControlsSystem() {
 }
 
-void PlayerControlsSystem::update(float dt, sf::RenderWindow* renderWindow) {
-	m_actionController.update(*renderWindow);
+void PlayerControlsSystem::update(float dt) {
     auto entities = getEntities();
     for(auto entity : entities){
     	//if(	m_currentPlayerState != PlayerState::NO_STATE || m_currentPlayerState != PlayerState::DEFAULT_STATE){
@@ -53,7 +52,7 @@ std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerRight() {
 std::function<void (float, b2Body*)> PlayerControlsSystem::playerJump() {
 	 return [this](float x, b2Body* body){
 		 m_currentPlayerState = PlayerState::JUMP;
-		 body->ApplyLinearImpulse( b2Vec2(0.0f,-m_impulse), body->GetWorldCenter() ,  true);
+		 body->ApplyLinearImpulse( b2Vec2(0.0f,-m_impulse*2), body->GetWorldCenter() ,  true);
 	};
 }
 
