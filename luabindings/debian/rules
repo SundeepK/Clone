@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+%:
+	dh --buildsystem=cmake $@
+
+override_dh_strip:
+	dh_strip --dbg-package=libluabind-stlport-dbg
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DWITH_STLPORT=ON
+
+#override_dh_install:
+#	find debian/tmp/usr/share/doc/libnel-doc -type d -empty -delete
+#	dh_install
+
+#	dh_installchangelogs -p libluabind-stlport-doc doc/changes.txt
+#	dh_installdocs debian/copyright
+

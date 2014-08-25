@@ -18,7 +18,7 @@
 #include <SFML/OpenGL.hpp>
 #include <GL/glut.h>
 #include <vector>
-
+#include <ActionController.h>
 
 class Game {
 
@@ -44,6 +44,7 @@ class Game {
 		 std::string m_name = "sund";
 		    std::vector<b2Vec2> m_texs;
 		 int   m_number = 20;
+		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
 
 
 };

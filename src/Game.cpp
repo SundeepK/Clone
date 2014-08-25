@@ -107,9 +107,11 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_world.refresh();
+  //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
  //   m_box2DWorld.step(deltaTime);
     m_box2DWorld.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+
 }
 
 void Game::render() {
