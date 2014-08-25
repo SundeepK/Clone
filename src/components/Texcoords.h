@@ -11,7 +11,6 @@ class Texcoords : public anax::Component<Texcoords>{
 	public:
 	    std::vector<b2Vec2> textCoords;
         sf::Image image;
-        std::string name = "sun";
 };
 
 

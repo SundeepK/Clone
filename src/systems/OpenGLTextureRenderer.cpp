@@ -15,7 +15,6 @@ void OpenGLTextureRenderer::render() {
 		auto& texCoordsComp = entity.getComponent<Texcoords>();
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 		auto image = texCoordsComp.image;
-		auto name = texCoordsComp.name;
 
 		auto& texCoordsVec = texCoordsComp.textCoords;
 		b2Body* body = physicsComp.physicsBody;

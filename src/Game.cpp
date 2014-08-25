@@ -11,6 +11,7 @@ Game::~Game() {
 
 void Game::init()
 {
+	m_componentLoader.loadPlayerComponents();
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
@@ -25,7 +26,6 @@ void Game::init()
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = m_player.addComponent<PhysicsComponent>();
 
-    texCoordsComp.name = "sund";
     m_texs.push_back(b2Vec2(0.0f, 1.f));
     m_texs.push_back(b2Vec2(1.0f, 1.0f));
     m_texs.push_back(b2Vec2(1.0f, 0.0f));

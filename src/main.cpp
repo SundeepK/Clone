@@ -11,14 +11,7 @@
 #include <anax/World.hpp>
 #include <Game.h>
 
-extern "C"
-{
-	#include <lua5.1/lua.h>
-	#include <lua5.1/lualib.h>
-	#include <lua5.1/lauxlib.h>
-}
 
-#include <luabind/luabind.hpp>
 
 int main()
 {
@@ -35,25 +28,25 @@ int main()
 	//mainRenderWindow.setVerticalSyncEnabled(true);
     Game game(mainRenderWindow);
     game.init();
-
-    lua_State *myLuaState = luaL_newstate();
-
-    // Connect LuaBind to this lua state
-    luabind::open(myLuaState);
-
-    // Define a lua function that we can call
-    luaL_dostring(
-      myLuaState,
-      "function add(first, second)\n"
-      "  return first + second\n"
-      "end\n"
-    );
-
-    std::cout << "Result: "
-         << luabind::call_function<int>(myLuaState, "add", 2, 3)
-         << std::endl;
-
-    lua_close(myLuaState);
+//
+//    lua_State *myLuaState = luaL_newstate();
+//
+//    // Connect LuaBind to this lua state
+//    luabind::open(myLuaState);
+//
+//    // Define a lua function that we can call
+//    luaL_dostring(
+//      myLuaState,
+//      "function add(first, second)\n"
+//      "  return first + second\n"
+//      "end\n"
+//    );
+//
+//    std::cout << "Result: "
+//         << luabind::call_function<int>(myLuaState, "add", 2, 3)
+//         << std::endl;
+//
+//    lua_close(myLuaState);
 
     sf::Clock clock;
     while (mainRenderWindow.isOpen())

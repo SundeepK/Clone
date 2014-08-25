@@ -19,6 +19,7 @@
 #include <GL/glut.h>
 #include <vector>
 #include <ActionController.h>
+#include <components/ComponentLoader.h>
 
 class Game {
 
@@ -41,11 +42,9 @@ class Game {
 		 TextureRectRenderSystem m_textureRectSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;
 		 PhysicsInterpolatorSystem m_physicsInterpolator;
-		 std::string m_name = "sund";
-		    std::vector<b2Vec2> m_texs;
-		 int   m_number = 20;
+		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
-
+		 ComponentLoader m_componentLoader;
 
 };
 
