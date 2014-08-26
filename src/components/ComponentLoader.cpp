@@ -30,10 +30,17 @@ void ComponentLoader::loadPlayerComponents() {
 	}
 
 	luabind::module(myLuaState)[
+	luabind::class_<b2Vec2>("b2Vec2")
+		.def(luabind::constructor<float32, float32>())
+	];
+
+	luabind::module(myLuaState)[
 	luabind::class_<PhysicsComponent>("PhysicsComponent")
 	      .def(luabind::constructor<>())
 	      .def_readwrite("previousAngle", &PhysicsComponent::previousAngle)
+	      .def_readwrite("previousPosition", &PhysicsComponent::previousPosition)
 	];
+
 
 	PhysicsComponent physicsComp;
 	try {
@@ -43,7 +50,7 @@ void ComponentLoader::loadPlayerComponents() {
 	    std::cout << error << std::endl;
 	}
 
-	std::cout << physicsComp.previousAngle << std::endl;
+	std::cout << physicsComp.previousPosition.x << std::endl;
 
     lua_close(myLuaState);
 }
