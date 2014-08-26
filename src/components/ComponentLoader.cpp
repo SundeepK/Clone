@@ -29,12 +29,20 @@ void ComponentLoader::loadPlayerComponents() {
         printf("%s\n", lua_tostring(myLuaState, -1));
 	}
 
+	luabind::module(myLuaState)[
+	luabind::class_<Test>("Test")
+	      .def(luabind::constructor<>())
+	      .def_readwrite("x", &Test::x)
+	];
+	Test t;
 	try {
-	    luabind::call_function<void>(myLuaState, "main");
+	    luabind::call_function<void>(myLuaState, "main", &t);
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;
 	}
+
+	std::cout << t.x << std::endl;
 
     lua_close(myLuaState);
 }

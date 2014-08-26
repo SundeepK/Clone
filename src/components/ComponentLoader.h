@@ -1,8 +1,16 @@
 #ifndef COMPONENTLOADER_H_
 #define COMPONENTLOADER_H_
 
+class Test{
+public:
+	int x;
+};
+
 class ComponentLoader {
 public:
+
+
+
 	ComponentLoader();
 	virtual ~ComponentLoader();
 
