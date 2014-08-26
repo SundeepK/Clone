@@ -28,17 +28,17 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 
 	private:
 
-		std::function<void (float, b2Body*)>  movePlayerLeft();
-		std::function<void (float, b2Body*)>  movePlayerRight();
-		std::function<void (float, b2Body*)>  playerJump();
-		std::function<void (float, b2Body*)>  movePlayerDown();
+		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerLeft();
+		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerRight();
+		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  playerJump();
+		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerDown();
 
 		Action m_moveLeft;
 		Action m_moveRight;
 		Action m_jump;
 		Action m_moveDown;
 
-	    ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
+	    ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*, PhysicsComponent&> m_actionController;
 	    PlayerState m_currentPlayerState;
 
 	    b2Vec2 left;

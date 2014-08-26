@@ -20,44 +20,38 @@ PlayerControlsSystem::~PlayerControlsSystem() {
 void PlayerControlsSystem::update(float dt) {
     auto entities = getEntities();
     for(auto entity : entities){
-    	//if(	m_currentPlayerState != PlayerState::NO_STATE || m_currentPlayerState != PlayerState::DEFAULT_STATE){
     		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-    	//	auto& physicsComp = entity.getComponent<PhysicsComponent>();
-    	//	auto image = texCoordsComp.image;
-    	//	auto name = texCoordsComp.name;
-
     		b2Body* body = physicsComponent.physicsBody;
-    		m_actionController.triggerCallbacks(dt, body);
-    	//}
+    		m_actionController.triggerCallbacks(dt, body, physicsComponent);
     }
 	m_currentPlayerState = PlayerState::NO_STATE;
 }
 
-std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerLeft() {
-	 return [this](float x, b2Body* body){
+std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)> PlayerControlsSystem::movePlayerLeft() {
+	 return [this](float x, b2Body* body, PhysicsComponent& physicsComponent){
 	 m_currentPlayerState = PlayerState::MOVE_LEFT;
 	 if(body->GetLinearVelocity().x < -10.0f) {return ;}
 	 body->ApplyLinearImpulse( b2Vec2(-m_impulse,0.0f), body->GetWorldCenter(), true);
 	 };
 }
 
-std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerRight() {
-	 return [this](float x, b2Body* body){
+std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)> PlayerControlsSystem::movePlayerRight() {
+	 return [this](float x, b2Body* body, PhysicsComponent& physicsComponent){
 		 m_currentPlayerState = PlayerState::MOVE_RIGHT;
 		 if(body->GetLinearVelocity().x > 10.0f) {return ;}
 		 body->ApplyLinearImpulse( b2Vec2(m_impulse,0.0f), body->GetWorldCenter() ,  true);
 	 };
 }
 
-std::function<void (float, b2Body*)> PlayerControlsSystem::playerJump() {
-	 return [this](float x, b2Body* body){
+std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)> PlayerControlsSystem::playerJump() {
+	 return [this](float x, b2Body* body, PhysicsComponent& physicsComponent){
 		 m_currentPlayerState = PlayerState::JUMP;
 		 body->ApplyLinearImpulse( b2Vec2(0.0f,-m_impulse*2), body->GetWorldCenter() ,  true);
 	};
 }
 
-std::function<void (float, b2Body*)> PlayerControlsSystem::movePlayerDown() {
-	 return [this](float x, b2Body* body){
+std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)> PlayerControlsSystem::movePlayerDown() {
+	 return [this](float x, b2Body* body, PhysicsComponent& physicsComponent){
 		 m_currentPlayerState = PlayerState::MOVE_DOWN;
 		 body->ApplyLinearImpulse( b2Vec2(0.0f,m_impulse) , body->GetWorldCenter() , true);
 	 };

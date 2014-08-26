@@ -28,25 +28,6 @@ int main()
 	//mainRenderWindow.setVerticalSyncEnabled(true);
     Game game(mainRenderWindow);
     game.init();
-//
-//    lua_State *myLuaState = luaL_newstate();
-//
-//    // Connect LuaBind to this lua state
-//    luabind::open(myLuaState);
-//
-//    // Define a lua function that we can call
-//    luaL_dostring(
-//      myLuaState,
-//      "function add(first, second)\n"
-//      "  return first + second\n"
-//      "end\n"
-//    );
-//
-//    std::cout << "Result: "
-//         << luabind::call_function<int>(myLuaState, "add", 2, 3)
-//         << std::endl;
-//
-//    lua_close(myLuaState);
 
     sf::Clock clock;
     while (mainRenderWindow.isOpen())
