@@ -1,4 +1,4 @@
-function main(test)
-	test.x = 10
+function loadPlayerComponent(playerComp)
+	playerComp.previousAngle = 10
 	print("Hello World")
 end

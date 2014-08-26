@@ -1,7 +1,7 @@
 #ifndef COMPONENTLOADER_H_
 #define COMPONENTLOADER_H_
 
-#include <components/PhysicsComponent.h>
+#include <components/phy>
 
 class ComponentLoader {
 public:

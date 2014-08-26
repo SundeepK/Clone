@@ -30,19 +30,20 @@ void ComponentLoader::loadPlayerComponents() {
 	}
 
 	luabind::module(myLuaState)[
-	luabind::class_<Test>("Test")
+	luabind::class_<PhysicsComponent>("PhysicsComponent")
 	      .def(luabind::constructor<>())
-	      .def_readwrite("x", &Test::x)
+	      .def_readwrite("previousAngle", &PhysicsComponent::previousAngle)
 	];
-	Test t;
+
+	PhysicsComponent physicsComp;
 	try {
-	    luabind::call_function<void>(myLuaState, "main", &t);
+	    luabind::call_function<void>(myLuaState, "loadPlayerComponent", &physicsComp);
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;
 	}
 
-	std::cout << t.x << std::endl;
+	std::cout << physicsComp.previousAngle << std::endl;
 
     lua_close(myLuaState);
 }
