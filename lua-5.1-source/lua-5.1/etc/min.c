@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 
-#include "src/lua.h"
-#include "src/lauxlib.h"
+#include "lua-5.1/src/lua.h"
+#include "lua-5.1/src/lauxlib.h"
 
 static int print(lua_State *L)
 {

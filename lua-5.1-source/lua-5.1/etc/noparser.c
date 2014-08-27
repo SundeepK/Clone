@@ -14,9 +14,9 @@
 
 #define LUA_CORE
 
-#include "src/llex.h"
-#include "src/lparser.h"
-#include "src/lzio.h"
+#include "lua-5.1/src/llex.h"
+#include "lua-5.1/src/lparser.h"
+#include "lua-5.1/src/lzio.h"
 
 //LUAI_FUNC void luaX_init (lua_State *L) {
 //  UNUSED(L);

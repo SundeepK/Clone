@@ -19,7 +19,7 @@
 #include <GL/glut.h>
 #include <vector>
 #include <ActionController.h>
-#include <components/ComponentLoader.h>
+#include <entity-loaders/WorldEntityLoader.h>
 
 class Game {
 
@@ -44,7 +44,7 @@ class Game {
 		 PhysicsInterpolatorSystem m_physicsInterpolator;
 		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
-		 ComponentLoader m_componentLoader;
+		 WorldEntityLoader m_componentLoader;
 
 };
 

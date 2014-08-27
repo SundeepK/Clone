@@ -11,7 +11,8 @@ Game::~Game() {
 
 void Game::init()
 {
-	m_componentLoader.loadPlayerComponents();
+	std::vector<LuaEntityLoader*> vec;
+	m_componentLoader.loadWorldEntities(m_world,vec);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
