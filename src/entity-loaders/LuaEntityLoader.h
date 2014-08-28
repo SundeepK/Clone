@@ -10,13 +10,15 @@ extern "C"
 #include <luabind/luabind.hpp>
 #include <anax/World.hpp>
 #include <iostream>
+#include <Box2D/Box2D.h>
+#include <B2DWorld.h>
 
 class LuaEntityLoader{
 
 public:
 
     virtual ~LuaEntityLoader(){}
-	virtual void loadEntity(anax::World& anaxWorld, lua_State *myLuaState) = 0;
+	virtual void loadEntity(anax::World& anaxWorld, B2DWorld& box2dWorld,  lua_State *myLuaState) = 0;
 
 };
 

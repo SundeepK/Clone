@@ -12,51 +12,14 @@ Game::~Game() {
 void Game::init()
 {
 	std::vector<LuaEntityLoader*> vec;
-	m_componentLoader.loadWorldEntities(m_world,vec);
+	m_componentLoader.loadWorldEntities(m_world, m_box2DWorld);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
-    m_world.addSystem(m_playerControlsSystem);
- //   m_world.addSystem(m_textureRectSystem);
-    m_world.addSystem(m_openglTextureRenderer);
-    m_world.addSystem(m_physicsInterpolator);
-
-    m_player = m_world.createEntity();
-    auto& texCoordsComp = m_player.addComponent<Texcoords>();
-    auto& playerStateComp = m_player.addComponent<PlayerStateComponent>();
-    //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
-    auto& physComp = m_player.addComponent<PhysicsComponent>();
-
-    m_texs.push_back(b2Vec2(0.0f, 1.f));
-    m_texs.push_back(b2Vec2(1.0f, 1.0f));
-    m_texs.push_back(b2Vec2(1.0f, 0.0f));
-    m_texs.push_back(b2Vec2(0.0f, 0.0f));
-
-    texCoordsComp.textCoords = m_texs;
-
-    B2BoxBuilder builder(20,20);
-    builder
-    .bodyType(b2_dynamicBody)
-    .setPosition(b2Vec2(30,30))
-    .setDensity(2.0f);
-    b2Body* playerBody = m_box2DWorld.createB2Body(&builder);
-    playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
-    playerBody->SetBullet(true);
-
-    physComp.physicsBody = playerBody;
-
-    sf::RectangleShape rect(sf::Vector2f(20,20));
-    rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
-
-//    sf::Texture texture;
-//    if (!texture.loadFromFile("1.png")) {
-//    	std::cout << "no 1.png found" << std::endl;
-//    }
-//
-//    textureRectComp.rect = rect;
-//    textureRectComp.texture = texture;
-//    rect.setTexture(&textureRectComp.texture);
-
+	m_world.addSystem(m_playerControlsSystem);
+	//   m_world.addSystem(m_textureRectSystem);
+	m_world.addSystem(m_openglTextureRenderer);
+	m_world.addSystem(m_physicsInterpolator);
 
     //TODO below should be removed once parsing tile-maps
     //ground
@@ -81,28 +44,24 @@ void Game::init()
     .setDensity(1.0f);
     m_box2DWorld.createB2Body(&right);
 
+	glDisable(GL_LIGHTING);
 
-    m_player.activate();
+	// Configure the viewport (the same size as the window)
+	glViewport(0, 0, m_mainRenderWindow->getSize().x,
+			m_mainRenderWindow->getSize().y);
 
+	glMatrixMode(GL_PROJECTION);
+	glOrtho(0, 1280, 800, 0, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-
-    glDisable(GL_LIGHTING);
-
-       // Configure the viewport (the same size as the window)
-       glViewport(0, 0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y);
-
-       glMatrixMode(GL_PROJECTION);
-       glOrtho(0,1280,800,0,-1,1);
-       glMatrixMode(GL_MODELVIEW);
-       glEnableClientState(GL_VERTEX_ARRAY);
-       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-       glEnable(GL_TEXTURE_2D);
-       glShadeModel(GL_SMOOTH);
-       glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-       glClearDepth(1.0f);                  // Depth Buffer Setup
-       glEnable(GL_DEPTH_TEST);             // Enables Depth Testing
-       glDepthFunc(GL_LEQUAL);
+	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+	glClearDepth(1.0f);                  // Depth Buffer Setup
+	glEnable(GL_DEPTH_TEST);             // Enables Depth Testing
+	glDepthFunc(GL_LEQUAL);
 
 }
 

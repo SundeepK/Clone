@@ -12,12 +12,13 @@ extern "C"
 
 WorldEntityLoader::WorldEntityLoader()  {
 
+	m_entityLoaders.push_back(std::unique_ptr<LuaEntityLoader>(new PlayerEntityLoader()));
 }
 
 WorldEntityLoader::~WorldEntityLoader() {
 }
 
-void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, std::vector<LuaEntityLoader*>& entityLoaders){
+void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, B2DWorld& box2dWorld){
 
     lua_State *myLuaState = luaL_newstate();
 
@@ -33,23 +34,9 @@ void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, std::vector<Lu
 		.def(luabind::constructor<float32, float32>())
 	];
 
-//	luabind::module(myLuaState)[
-//	luabind::class_<PhysicsComponent>("PhysicsComponent")
-//	      .def(luabind::constructor<>())
-//	      .def_readwrite("previousAngle", &PhysicsComponent::previousAngle)
-//	      .def_readwrite("previousPosition", &PhysicsComponent::previousPosition)
-//	];
-//
-//
-//	PhysicsComponent physicsComp;
-//	try {
-//	    luabind::call_function<void>(myLuaState, "loadPlayerComponent", &physicsComp);
-//	} catch (luabind::error& e) {
-//	    std::string error = lua_tostring(e.state(), -1);
-//	    std::cout << error << std::endl;
-//	}
-//
-//	std::cout << physicsComp.previousPosition.x << std::endl;
+	for(auto& entityLoader : m_entityLoaders) {
+		entityLoader->loadEntity(anaxWorld, box2dWorld, myLuaState);
+	}
 
     lua_close(myLuaState);
 }
