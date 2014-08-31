@@ -11,3 +11,25 @@ function loadTexCoords(texComp)
 	texCoords:push_back(b2Vec2(0.0, 0.0))
 	texComp.textCoords = texCoords
 end
+
+function loadAnimation(animationComp)
+	walk = thor_FrameAnimation;
+	--addFrames(walk, 0, 0, 7, 1);		
+	--addFrames(walk, 0, 6, 0, 1);		
+end
+
+
+function addFrames(animation,  x,  yFirst,  yLast, duration)
+	local step = 0;
+	if yFirst < yLast then
+		step = 1
+	else
+		step = -1
+	end
+
+	yLast = yLast + step
+	for  y = yFirst, y ~= yLast, step do
+		rect = sf_IntRect(36*x, 39*y, 36, 39)
+		animation:addFrame(duration, rect)
+	end
+end

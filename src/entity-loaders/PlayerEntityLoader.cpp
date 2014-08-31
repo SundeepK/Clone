@@ -15,12 +15,32 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	      .def_readwrite("textCoords", &Texcoords::textCoords)
 	];
 
+	luabind::module(luaState)[
+	luabind::class_<thor::Animator<sf::Sprite, std::string>>("thor_Animator")
+	      .def(luabind::constructor<>())
+	      .def_readwrite("addAnimation", &thor::Animator<sf::Sprite, std::string>::addAnimation)
+	];
+
+	luabind::module(luaState)[
+	luabind::class_<sf::IntRect>("sf_IntRect")
+	      .def(luabind::constructor<float32, float32, float32, float32>())
+	];
+
+	luabind::module(luaState)[
+	luabind::class_<thor::FrameAnimation>("thor_FrameAnimation")
+	      .def(luabind::constructor<>())
+			 .def("addFrame",  &thor::FrameAnimation::addFrame)
+	];
 
 	luabind::module(luaState)[
 	luabind::class_<AnimationComponent>("AnimationComponent")
 	      .def(luabind::constructor<>())
 	      .def_readwrite("animator", &AnimationComponent::animator)
 	];
+
+
+
+
 
 	auto playerEntity = anaxWorld.createEntity();
     auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
@@ -52,10 +72,10 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 //    textureRectComp.texture = texture;
 //    rect.setTexture(&textureRectComp.texture);
 
-
 	try {
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
 	    luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
+	  //  luabind::call_function<void>(luaState, "loadAnimations", &animationComp);
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;
