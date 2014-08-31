@@ -16,8 +16,15 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	];
 
 
+	luabind::module(luaState)[
+	luabind::class_<AnimationComponent>("AnimationComponent")
+	      .def(luabind::constructor<>())
+	      .def_readwrite("animator", &AnimationComponent::animator)
+	];
+
 	auto playerEntity = anaxWorld.createEntity();
     auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
+    auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
