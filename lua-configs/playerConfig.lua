@@ -12,9 +12,9 @@ function loadTexCoords(texComp)
 	texComp.textCoords = texCoords
 end
 
-function loadAnimation(animationComp)
-	walk = thor_FrameAnimation;
-	--addFrames(walk, 0, 0, 7, 1);		
+function loadAnimations(animationComp)
+	walk = thor_FrameAnimation();
+	addFrames(walk, 0, 0, 7, 1);		
 	--addFrames(walk, 0, 6, 0, 1);		
 end
 
@@ -28,7 +28,7 @@ function addFrames(animation,  x,  yFirst,  yLast, duration)
 	end
 
 	yLast = yLast + step
-	for  y = yFirst, y ~= yLast, step do
+	for  y = yFirst, yLast, step do
 		rect = sf_IntRect(36*x, 39*y, 36, 39)
 		animation:addFrame(duration, rect)
 	end
