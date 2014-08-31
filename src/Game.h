@@ -20,6 +20,7 @@
 #include <vector>
 #include <ActionController.h>
 #include <entity-loaders/WorldEntityLoader.h>
+#include <systems/PlayerAnimationSystem.h>
 
 class Game {
 
@@ -45,6 +46,7 @@ class Game {
 		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
 		 WorldEntityLoader m_componentLoader;
+		 PlayerAnimationSystem m_playerAnimationSystem;
 
 };
 

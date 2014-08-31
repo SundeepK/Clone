@@ -5,7 +5,6 @@
 #include <Updateable.h>
 #include <ActionController.h>
 #include <components/PlayerControls.h>
-#include <components/PlayerState.h>
 #include <components/PlayerStateComponent.h>
 #include <Box2D/Common/b2Math.h>
 #include <components/PhysicsComponent.h>

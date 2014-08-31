@@ -16,9 +16,19 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	];
 
 	luabind::module(luaState)[
+	luabind::class_<sf::Time>("sf_Time")
+	      .def(luabind::constructor<>())
+		  .def("asSeconds",  &sf::Time::asSeconds)
+	];
+
+	luabind::module(luaState)[
+	       luabind::def("sf_seconds", &sf::seconds)
+	];
+
+	luabind::module(luaState)[
 	luabind::class_<thor::Animator<sf::Sprite, std::string>>("thor_Animator")
 	      .def(luabind::constructor<>())
-	      .def_readwrite("addAnimation", &thor::Animator<sf::Sprite, std::string>::addAnimation)
+	      .def("addAnimation", &thor::Animator<sf::Sprite, std::string>::addAnimation)
 	];
 
 	luabind::module(luaState)[
@@ -35,6 +45,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	luabind::module(luaState)[
 	luabind::class_<AnimationComponent>("AnimationComponent")
 	      .def(luabind::constructor<>())
+	      .def("registerAnimation", &AnimationComponent::registerAnimation)
 	      .def_readwrite("animator", &AnimationComponent::animator)
 	];
 
@@ -76,9 +87,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;
 	}
-
-	std::cout << physComp.previousPosition.x << std::endl;
-	std::cout << texCoordsComp.textCoords[0].x << std::endl;
-
+	animationComp.loadSpriteSheet("animation.png");
+	animationComp.m_sprite.setPosition(100.f, 100.f);
 	playerEntity.activate();
 }

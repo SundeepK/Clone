@@ -15,7 +15,9 @@ end
 function loadAnimations(animationComp)
 	walk = thor_FrameAnimation();
 	addFrames(walk, 0, 0, 7, 1);		
-	--addFrames(walk, 0, 6, 0, 1);		
+	addFrames(walk, 0, 6, 0, 1);		
+	time = sf_seconds(1.0)
+	animationComp:registerAnimation("walk", walk, time)
 end
 
 

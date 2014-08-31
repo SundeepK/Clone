@@ -4,6 +4,7 @@
 #include <entity-loaders/LuaEntityLoader.h>
 #include <components/PhysicsComponent.h>
 #include <components/AnimationComponent.h>
+#include <Thor/Animation.hpp>
 #include <B2Builder.h>
 #include <B2DWorld.h>
 #include <B2BoxBuilder.h>

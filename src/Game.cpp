@@ -19,6 +19,7 @@ void Game::init()
 	//   m_world.addSystem(m_textureRectSystem);
 	m_world.addSystem(m_openglTextureRenderer);
 	m_world.addSystem(m_physicsInterpolator);
+	m_world.addSystem(m_playerAnimationSystem);
 
     //TODO below should be removed once parsing tile-maps
     //ground
@@ -70,6 +71,7 @@ void Game::update(float deltaTime) {
   //  m_playerControlsSystem.update(deltaTime);
  //   m_box2DWorld.step(deltaTime);
     m_box2DWorld.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+    m_playerAnimationSystem.update(deltaTime);
 
 }
 
