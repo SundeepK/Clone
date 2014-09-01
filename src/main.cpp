@@ -35,7 +35,7 @@ int main()
        game.update(clock.restart().asMilliseconds());
        game.render();
        mainRenderWindow.display();
-     //  mainRenderWindow.clear();
+      // mainRenderWindow.clear();
     }
 }
 

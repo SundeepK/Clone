@@ -16,22 +16,22 @@ class AnimationComponent  : public anax::Component<AnimationComponent> {
 
 	private:
 		sf::Texture m_texture;
+		sf::Image image;
+
 
 };
 
-inline bool AnimationComponent::loadSpriteSheet(std::string spriteSheetLocation) {
-	sf::Image image;
+ inline bool AnimationComponent::loadSpriteSheet(std::string spriteSheetLocation) {
 	if (!image.loadFromFile(spriteSheetLocation)){
 		return false;
 	}
 
 	image.createMaskFromColor(sf::Color::White);
-	sf::Texture texture;
 
-	if (!texture.loadFromImage(image))
+	if (!m_texture.loadFromImage(image))
 		return false;
 
-	m_sprite = sf::Sprite(texture);
+	m_sprite = sf::Sprite(m_texture);
 	return true;
 }
 

@@ -10,6 +10,7 @@
 #include <components/PlayerStateComponent.h>
 #include <components/PlayerState.h>
 #include <components/AnimationComponent.h>
+#include <iostream>
 
 class PlayerAnimationSystem :  public anax::System<PlayerAnimationSystem>{
 public:

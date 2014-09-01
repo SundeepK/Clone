@@ -87,7 +87,10 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;
 	}
+
 	animationComp.loadSpriteSheet("animation.png");
-	animationComp.m_sprite.setPosition(100.f, 100.f);
+
+	animationComp.animator.playAnimation("walk", true);
+
 	playerEntity.activate();
 }

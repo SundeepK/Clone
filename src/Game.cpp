@@ -16,7 +16,7 @@ void Game::init()
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
 	m_world.addSystem(m_playerControlsSystem);
-	//   m_world.addSystem(m_textureRectSystem);
+	   m_world.addSystem(m_textureRectSystem);
 	m_world.addSystem(m_openglTextureRenderer);
 	m_world.addSystem(m_physicsInterpolator);
 	m_world.addSystem(m_playerAnimationSystem);
@@ -76,21 +76,22 @@ void Game::update(float deltaTime) {
 }
 
 void Game::render() {
-	m_mainRenderWindow->pushGLStates();
-	m_mainRenderWindow->clear(sf::Color::Black);
-	m_mainRenderWindow->popGLStates();
-
-//	m_box2DWorld.drawDebug();
-
+//	m_mainRenderWindow->pushGLStates();
+//	m_mainRenderWindow->clear(sf::Color::Black);
+//	m_mainRenderWindow->popGLStates();
+//
+////	m_box2DWorld.drawDebug();
+//
 	m_mainRenderWindow->setActive(true);
-
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-    glColor3f(1.0f,1.0f,1.0f);
-
-	m_openglTextureRenderer.render();
-	m_mainRenderWindow->pushGLStates();
-	//TODO draw more sfml stuff here
-	m_mainRenderWindow->popGLStates();
-	//m_textureRectSystem.render(m_mainRenderWindow.get());
+//
+//	glClear(GL_DEPTH_BUFFER_BIT);
+//	glLoadIdentity();
+//    glColor3f(1.0f,1.0f,1.0f);
+//
+//	m_openglTextureRenderer.render();
+//	m_mainRenderWindow->pushGLStates();
+//	//TODO draw more sfml stuff here
+//	m_mainRenderWindow->popGLStates();
+	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
+	m_textureRectSystem.render(m_mainRenderWindow.get());
 }

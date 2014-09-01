@@ -13,12 +13,13 @@ void PlayerAnimationSystem::update(float dt) {
     		auto& playerState = entity.getComponent<PlayerStateComponent>();
     		auto& animationComp = entity.getComponent<AnimationComponent>();
     		PlayerState currentStatus = playerState.playerState;
-    		if(currentStatus == PlayerState::MOVE_RIGHT || currentStatus == PlayerState::MOVE_LEFT){
-    			animationComp.animator.playAnimation("walk", true);
-    		}else{
-    			animationComp.animator.stopAnimation();
-    		}
-    		animationComp.animator.update(sf::seconds(dt));
+//    		if(currentStatus == PlayerState::MOVE_RIGHT || currentStatus == PlayerState::MOVE_LEFT){
+//    		}else{
+//    			animationComp.animator.stopAnimation();
+//    		}
+
+
+    		animationComp.animator.update(sf::milliseconds(dt));
     		animationComp.animator.animate(animationComp.m_sprite);
     }
 }

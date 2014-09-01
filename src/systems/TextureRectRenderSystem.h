@@ -4,6 +4,7 @@
 #include <anax/System.hpp>
 #include <components/TextureRectComponent.h>
 #include <components/PhysicsComponent.h>
+#include <components/AnimationComponent.h>
 
 class TextureRectRenderSystem  : public anax::System<TextureRectRenderSystem> {
 	public:

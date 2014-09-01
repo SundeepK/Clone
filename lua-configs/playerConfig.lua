@@ -14,8 +14,8 @@ end
 
 function loadAnimations(animationComp)
 	walk = thor_FrameAnimation();
-	addFrames(walk, 0, 0, 7, 1);		
-	addFrames(walk, 0, 6, 0, 1);		
+	addFrames(walk, 0, 0, 7, 1.0);		
+	addFrames(walk, 0, 6, 0, 1.0);		
 	time = sf_seconds(1.0)
 	animationComp:registerAnimation("walk", walk, time)
 end
@@ -29,9 +29,11 @@ function addFrames(animation,  x,  yFirst,  yLast, duration)
 		step = -1
 	end
 
-	yLast = yLast + step
+	yLast = (yLast + step ) 
 	for  y = yFirst, yLast, step do
+		if y < yLast then
 		rect = sf_IntRect(36*x, 39*y, 36, 39)
 		animation:addFrame(duration, rect)
+		end
 	end
 end
