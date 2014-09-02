@@ -24,7 +24,7 @@ int main()
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     sf::RenderWindow mainRenderWindow(sf::VideoMode(1280,800,32), "Clone",sf::Style::Default, settings);
 	mainRenderWindow.setKeyRepeatEnabled(true);
-	//mainRenderWindow.setFramerateLimit(60);
+	mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);
     Game game(mainRenderWindow);
     game.init();

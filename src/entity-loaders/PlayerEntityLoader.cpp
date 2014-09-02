@@ -88,7 +88,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 	    std::cout << error << std::endl;
 	}
 
-	animationComp.loadSpriteSheet("animation.png");
+	animationComp.loadSpriteSheet("Spritesheet.PNG");
 
 	animationComp.animator.playAnimation("walk", true);
 
