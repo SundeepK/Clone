@@ -90,7 +90,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
 
 	animationComp.loadSpriteSheet("Spritesheet.PNG");
 
-	animationComp.animator.playAnimation("walk", true);
+//	animationComp.animator.playAnimation("walkRight", true);
 
 	playerEntity.activate();
 }

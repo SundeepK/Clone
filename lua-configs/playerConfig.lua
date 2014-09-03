@@ -13,43 +13,55 @@ function loadTexCoords(texComp)
 end
 
 function loadAnimations(animationComp)
-	walk = thor_FrameAnimation();
-	addFrames(walk, 0, 0, 4, 1);		
+	
+	--standing
+	standing = thor_FrameAnimation();
+	addSingleFrame(standing, 0, 1, 0.5, false);		
 	time = sf_seconds(0.5)
-	animationComp:registerAnimation("walk", walk, time)
+	animationComp:registerAnimation("standing", standing, time)
+	
+	--walk right
+	walkRight = thor_FrameAnimation();
+	addFrames(walkRight, 0, 0, 4, 0.5, false);		
+	time = sf_seconds(0.5)
+	animationComp:registerAnimation("walkRight", walkRight, time)
+	
+	--walk left
+	walkLeft = thor_FrameAnimation();
+	addFrames(walkLeft, 0, 1, 5, 0.5, true);		
+	time = sf_seconds(0.5)
+	animationComp:registerAnimation("walkLeft", walkLeft, time)	
+	
+	
 end
 
+function addSingleFrame(animation, xOffset, yOffset, duration, shouldFlip)
+	local flip = 1
+	if shouldFlip then
+		flip = -1
+	end
+	rect = sf_IntRect(88*xOffset, 88*yOffset, 88 * flip, 88)
+	animation:addFrame(duration, rect)
+end
 
-function addFrames(animation,  y, xFirst,  xLast, duration)
+function addFrames(animation,  y, xFirst,  xLast, duration, shouldFlip)
 	local step = 0;
 	if xFirst < xLast then
 		step = 1
 	else
 		step = -1
 	end
-
+	
+	local flip = 1
+	if shouldFlip then
+		flip = -1
+	end
+	
 	xLast = (xLast + step ) 
 	for  x = xFirst, xLast, step do
 		if x < xLast then
-		rect = sf_IntRect(88*x, 88*y, 88, 88)
+		rect = sf_IntRect(88*x, 88*y, 88 * flip, 88)
 		animation:addFrame(duration, rect)
 		end
 	end
 end
-
---[[function addFrames(animation,  x,  yFirst,  yLast, duration)
-	local step = 0;
-	if yFirst < yLast then
-		step = 1
-	else
-		step = -1
-	end
-
-	yLast = (yLast + step ) 
-	for  y = yFirst, yLast, step do
-		if y < yLast then
-		rect = sf_IntRect(36*x, 39*y, 36, 39)
-		animation:addFrame(duration, rect)
-		end
-	end
-end--]]

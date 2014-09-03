@@ -5,10 +5,10 @@
 enum class PlayerState {
 		NO_STATE = -1,
 		DEFAULT_STATE = 0,
-		MOVE_LEFT,
-		MOVE_RIGHT,
-		JUMP,
-		MOVE_DOWN
+		MOVE_LEFT = 2,
+		MOVE_RIGHT = 3,
+		JUMP = 4,
+		MOVE_DOWN = 5
 };
 
 namespace std

@@ -23,8 +23,11 @@ void PlayerControlsSystem::update(float dt) {
     		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
     		b2Body* body = physicsComponent.physicsBody;
     		m_actionController.triggerCallbacks(dt, body, physicsComponent);
+    		auto& playerStateComp = entity.getComponent<PlayerStateComponent>();
+    		playerStateComp.playerState = m_currentPlayerState;
+
     }
-	m_currentPlayerState = PlayerState::NO_STATE;
+ m_currentPlayerState = PlayerState::DEFAULT_STATE;
 }
 
 std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)> PlayerControlsSystem::movePlayerLeft() {
