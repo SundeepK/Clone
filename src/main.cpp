@@ -26,7 +26,8 @@ int main()
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);
-    Game game(mainRenderWindow);
+	b2World b2world(b2Vec2(0, 9.8f));
+    Game game(mainRenderWindow, b2world);
     game.init();
 
     sf::Clock clock;

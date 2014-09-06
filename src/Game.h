@@ -21,12 +21,13 @@
 #include <ActionController.h>
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
+#include <Box2D/Box2D.h>
 
 class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow);
+		Game(sf::RenderWindow& renderWindow, b2World& b2World);
 		virtual ~Game();
 
 		 void init();
@@ -34,10 +35,11 @@ class Game {
 		 void render();
 
 	private:
+		 b2World m_b2world;
 		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 SFMLB2dDebugDraw m_debugDrawer;
 		 B2DWorld m_box2DWorld;
-		 anax::World m_world;
+		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;
 		 TextureRectRenderSystem m_textureRectSystem;

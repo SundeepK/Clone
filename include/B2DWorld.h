@@ -15,11 +15,12 @@
 #include <iostream>
 #include <systems/PlayerControlsSystem.h>
 #include <systems/PhysicsInterpolatorSystem.h>
+#include <memory.h>
 
 class B2DWorld
 {
 public:
-    B2DWorld(float gravity);
+    B2DWorld(b2World& b2world);
     virtual ~B2DWorld();
     void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);
     b2Body* createB2Body(B2Builder* builder);

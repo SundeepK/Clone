@@ -2,8 +2,8 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow),
-		m_box2DWorld(9.8f){
+Game::Game(sf::RenderWindow& renderWindow, b2World& b2World) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow), m_b2world(b2World),
+		m_box2DWorld(b2World){
 }
 
 Game::~Game() {
@@ -11,15 +11,15 @@ Game::~Game() {
 
 void Game::init()
 {
-	m_componentLoader.loadWorldEntities(m_world, m_box2DWorld);
+	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2DWorld);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
-	m_world.addSystem(m_playerControlsSystem);
-	   m_world.addSystem(m_textureRectSystem);
-	m_world.addSystem(m_openglTextureRenderer);
-	m_world.addSystem(m_physicsInterpolator);
-	m_world.addSystem(m_playerAnimationSystem);
+	m_anaxWorld.addSystem(m_playerControlsSystem);
+	m_anaxWorld.addSystem(m_textureRectSystem);
+	m_anaxWorld.addSystem(m_openglTextureRenderer);
+	m_anaxWorld.addSystem(m_physicsInterpolator);
+	m_anaxWorld.addSystem(m_playerAnimationSystem);
 
     //TODO below should be removed once parsing tile-maps
     //ground
@@ -66,7 +66,7 @@ void Game::init()
 }
 
 void Game::update(float deltaTime) {
-    m_world.refresh();
+    m_anaxWorld.refresh();
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
  //   m_box2DWorld.step(deltaTime);

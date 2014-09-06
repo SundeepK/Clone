@@ -1,7 +1,8 @@
 #include "B2DWorld.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-B2DWorld::B2DWorld(float gravity) : m_world(b2Vec2(0.f, gravity))
+
+B2DWorld::B2DWorld(b2World& b2World) : m_world(b2World)
 {
     m_world.SetAutoClearForces(false);
     m_world.SetAllowSleeping(true);

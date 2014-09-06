@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt2LENABAUBuG3jhGoTWP/AdCJWuLIXfIXr/O1akTUT/Z6OljpYKWDlQ5WOljpYKWDlQ5WOli96phvbtut414p/nDksbLct/+bTq4DUZgpKw==
+  </data>
+ </layer>
+ <objectgroup color="#15a400" name="Static-objects" width="50" height="25">
+  <object x="1" y="0" width="28" height="799"/>
+  <object x="30" y="769" width="1571" height="31"/>
+  <object x="1441" y="639" width="61" height="127"/>
+  <object x="1571" y="1" width="56" height="764"/>
+  <object x="32" y="1" width="1535" height="33"/>
+ </objectgroup>
+</map>
