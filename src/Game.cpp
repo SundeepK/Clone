@@ -2,8 +2,8 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow, b2World& b2World) : m_mainRenderWindow(&renderWindow),  m_debugDrawer(renderWindow), m_b2world(b2World),
-		m_box2DWorld(b2World){
+Game::Game(sf::RenderWindow& renderWindow, b2World& b2World) : m_mainRenderWindow(&renderWindow), m_b2world(b2World),  m_debugDrawer(renderWindow),
+		m_box2DWorld(b2World), m_mapLoader("maps/"), m_box2dLevelLoader(m_b2world, m_mapLoader){
 }
 
 Game::~Game() {
@@ -11,6 +11,9 @@ Game::~Game() {
 
 void Game::init()
 {
+
+	m_box2dLevelLoader.loadLevel("test-lvl-1.tmx",m_b2world);
+
 	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2DWorld);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
@@ -93,5 +96,7 @@ void Game::render() {
 //	//TODO draw more sfml stuff here
 //	m_mainRenderWindow->popGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
+	m_mainRenderWindow->draw(m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
+
 }

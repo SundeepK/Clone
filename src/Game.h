@@ -22,6 +22,8 @@
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
 #include <Box2D/Box2D.h>
+#include <tmx/MapLoader.h>
+#include <levels/Box2dLevelLoader.h>
 
 class Game {
 
@@ -35,12 +37,14 @@ class Game {
 		 void render();
 
 	private:
-		 b2World m_b2world;
 		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
+		 b2World m_b2world;
 		 SFMLB2dDebugDraw m_debugDrawer;
 		 B2DWorld m_box2DWorld;
 		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
+		 tmx::MapLoader m_mapLoader;
+		 Box2dLevelLoader m_box2dLevelLoader;
 		 PlayerControlsSystem m_playerControlsSystem;
 		 TextureRectRenderSystem m_textureRectSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;
