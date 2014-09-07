@@ -12,7 +12,7 @@ Game::~Game() {
 void Game::init()
 {
 
-	m_box2dLevelLoader.loadLevel("test-lvl-1.tmx",m_b2world);
+	m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
 
 	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2DWorld);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
