@@ -24,7 +24,7 @@
 #include <Box2D/Box2D.h>
 #include <tmx/MapLoader.h>
 #include <levels/Box2dLevelLoader.h>
-
+#include <tmx/tmx2box2d.h>
 class Game {
 
 	public:
@@ -53,7 +53,7 @@ class Game {
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
 		 WorldEntityLoader m_componentLoader;
 		 PlayerAnimationSystem m_playerAnimationSystem;
-
+		 std::vector<tmx::MapLayer> layers;
 };
 
 #endif /* GAME_H_ */

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
  <layer name="Tile Layer 1" width="50" height="25">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20KP6AAAAAAgLcBE4gAAQ==
+   eJztw0EJAAAIBLALaf8s/i+BwgZLAAAAAOCuebotkDIPGQ==
   </data>
  </layer>
  <objectgroup name="Static" width="50" height="25">
-  <object x="2" y="768">
-   <polygon points="0,0 1504,-1 1498,31 0,31"/>
+  <object x="514" y="256">
+   <polygon points="0,0 30,0 30,32 0,31"/>
   </object>
  </objectgroup>
 </map>

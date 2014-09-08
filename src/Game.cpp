@@ -12,7 +12,9 @@ Game::~Game() {
 void Game::init()
 {
 
-	m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
+
+
+	//m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
 
 	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2DWorld);
 	m_box2DWorld.setDebugDraw(m_debugDrawer);
@@ -23,6 +25,9 @@ void Game::init()
 	m_anaxWorld.addSystem(m_openglTextureRenderer);
 	m_anaxWorld.addSystem(m_physicsInterpolator);
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
+
+
+	m_mapLoader.Load("test-lvl-1.tmx");
 
     //TODO below should be removed once parsing tile-maps
     //ground
@@ -46,6 +51,16 @@ void Game::init()
     .setPosition(b2Vec2(1200,0))
     .setDensity(1.0f);
     m_box2DWorld.createB2Body(&right);
+
+    layers = m_mapLoader.GetLayers();
+	for (const auto& l : layers) {
+		if (l.name == "Static") {
+			for ( auto& object : l.objects) {
+				b2Body* bo = tmx::BodyCreator::Add(object, m_b2world);
+			}
+		}
+
+	}
 
 	glDisable(GL_LIGHTING);
 
@@ -83,7 +98,6 @@ void Game::render() {
 //	m_mainRenderWindow->clear(sf::Color::Black);
 //	m_mainRenderWindow->popGLStates();
 //
-////	m_box2DWorld.drawDebug();
 //
 	m_mainRenderWindow->setActive(true);
 //
@@ -98,5 +112,7 @@ void Game::render() {
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
+	m_box2DWorld.drawDebug();
+
 
 }

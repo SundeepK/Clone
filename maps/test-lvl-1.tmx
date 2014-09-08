@@ -11,8 +11,5 @@
  <objectgroup color="#15a400" name="Static" width="50" height="25">
   <object x="1" y="0" width="28" height="799"/>
   <object x="30" y="769" width="1571" height="31"/>
-  <object x="1441" y="639" width="61" height="127"/>
-  <object x="1571" y="1" width="56" height="764"/>
-  <object x="32" y="1" width="1535" height="33"/>
  </objectgroup>
 </map>
