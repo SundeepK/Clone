@@ -1,6 +1,13 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <tmx/MapLoader.h>
+#include <tmx/tmx2box2d.h>
+
+
 #include <anax/anax.hpp>
 #include <components/TextureRectComponent.h>
 #include <components/PhysicsComponent.h>
@@ -8,9 +15,6 @@
 #include <systems/TextureRectRenderSystem.h>
 #include <components/Texcoords.h>
 #include <B2DWorld.h>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 #include <memory.h>
 #include <components/PlayerStateComponent.h>
 #include <systems/OpenGLTextureRenderer.h>
@@ -21,15 +25,13 @@
 #include <ActionController.h>
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
-#include <Box2D/Box2D.h>
-#include <tmx/MapLoader.h>
 #include <levels/Box2dLevelLoader.h>
-#include <tmx/tmx2box2d.h>
+
 class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow, b2World& b2World);
+		Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& maploader);
 		virtual ~Game();
 
 		 void init();
@@ -41,10 +43,9 @@ class Game {
 		 b2World m_b2world;
 		 SFMLB2dDebugDraw m_debugDrawer;
 		 B2DWorld m_box2DWorld;
+		 std::unique_ptr<tmx::MapLoader> m_mapLoader;
 		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
-		 tmx::MapLoader m_mapLoader;
-		 Box2dLevelLoader m_box2dLevelLoader;
 		 PlayerControlsSystem m_playerControlsSystem;
 		 TextureRectRenderSystem m_textureRectSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;

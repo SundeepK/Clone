@@ -2,8 +2,8 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow, b2World& b2World) : m_mainRenderWindow(&renderWindow), m_b2world(b2World),  m_debugDrawer(renderWindow),
-		m_box2DWorld(b2World), m_mapLoader("maps/"), m_box2dLevelLoader(m_b2world, m_mapLoader){
+Game::Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& maploader) : m_mainRenderWindow(&renderWindow), m_b2world(b2World),  m_debugDrawer(renderWindow),
+		m_box2DWorld(b2World), m_mapLoader(&maploader){
 }
 
 Game::~Game() {
@@ -11,8 +11,6 @@ Game::~Game() {
 
 void Game::init()
 {
-
-
 
 	//m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
 
@@ -27,40 +25,31 @@ void Game::init()
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
 
 
-	m_mapLoader.Load("test-lvl-1.tmx");
 
     //TODO below should be removed once parsing tile-maps
     //ground
-    B2BoxBuilder groundShapebuilder(1200, 50);
-    groundShapebuilder
-    .bodyType(b2_staticBody)
-    .setPosition(b2Vec2(0,700))
-    .setDensity(1.0f);
-     m_box2DWorld.createB2Body(&groundShapebuilder);
+//    B2BoxBuilder groundShapebuilder(1200, 50);
+//    groundShapebuilder
+//    .bodyType(b2_staticBody)
+//    .setPosition(b2Vec2(0,700))
+//    .setDensity(1.0f);
+//     m_box2DWorld.createB2Body(&groundShapebuilder);
+//
+//    B2BoxBuilder left(50, 700);
+//    left
+//    .bodyType(b2_staticBody)
+//    .setPosition(b2Vec2(0,0))
+//    .setDensity(1.0f);
+//    m_box2DWorld.createB2Body(&left);
+//
+//    B2BoxBuilder right(50, 700);
+//    right
+//    .bodyType(b2_staticBody)
+//    .setPosition(b2Vec2(1200,0))
+//    .setDensity(1.0f);
+//    m_box2DWorld.createB2Body(&right);
 
-    B2BoxBuilder left(50, 700);
-    left
-    .bodyType(b2_staticBody)
-    .setPosition(b2Vec2(0,0))
-    .setDensity(1.0f);
-    m_box2DWorld.createB2Body(&left);
 
-    B2BoxBuilder right(50, 700);
-    right
-    .bodyType(b2_staticBody)
-    .setPosition(b2Vec2(1200,0))
-    .setDensity(1.0f);
-    m_box2DWorld.createB2Body(&right);
-
-    layers = m_mapLoader.GetLayers();
-	for (const auto& l : layers) {
-		if (l.name == "Static") {
-			for ( auto& object : l.objects) {
-				b2Body* bo = tmx::BodyCreator::Add(object, m_b2world);
-			}
-		}
-
-	}
 
 	glDisable(GL_LIGHTING);
 
@@ -110,7 +99,7 @@ void Game::render() {
 //	//TODO draw more sfml stuff here
 //	m_mainRenderWindow->popGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
-	m_mainRenderWindow->draw(m_mapLoader);
+	m_mainRenderWindow->draw(*m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
 	m_box2DWorld.drawDebug();
 

@@ -14,7 +14,7 @@ void Box2dLevelLoader::loadLevel(std::string levelName, b2World& b2dworld) {
 	for (const auto& l : layers) {
 		if (l.name == "Static") {
 			for (const auto& object : l.objects) {
-				b2Body* b = tmx::BodyCreator::Add(object, m_b2World);
+			//	b2Body* b = tmx::BodyCreator::Add(object, m_b2World);
 				//sf::Vector2f pos = tmx::BoxToSfVec(b->GetPosition());
 
 			}
