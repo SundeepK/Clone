@@ -33,19 +33,18 @@ int main()
 	b2World b2world(b2Vec2(0, 9.8f));
 
 	 tmx::MapLoader m_mapLoader("maps/");
-    m_mapLoader.Load("test-b2d.tmx");
-	const std::vector<tmx::MapLayer>& layers = m_mapLoader.GetLayers();
-		    tmx::BodyCreator creator;
-			for (const auto& l : layers) {
-				if (l.name == "Static") {
-					for (const auto& object : l.objects) {
-						b2Body* bo = creator.Add(object, b2world, b2_staticBody);
-					}
-				}
+     m_mapLoader.Load("test-b2d.tmx");
+//			for (const auto& l : m_mapLoader.GetLayers()) {
+//				if (l.name == "Static") {
+//					for (const auto& object : l.objects) {
+//						b2Body* bo = tmx::BodyCreator::Add(object, b2world, b2_staticBody);
+//					}
+//				}
+//
+//			}
 
-			}
-
-    Game game(mainRenderWindow, b2world, m_mapLoader);
+    Game game(mainRenderWindow, b2world,  m_mapLoader);
+    game.loadMap(m_mapLoader);
     game.init();
 
 

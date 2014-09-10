@@ -8,13 +8,12 @@
 
 class Box2dLevelLoader {
 	public:
-		Box2dLevelLoader(b2World& b2dworld, tmx::MapLoader& mapLoader);
+		Box2dLevelLoader(tmx::MapLoader& mapLoader);
 		virtual ~Box2dLevelLoader();
 
 		void loadLevel(std::string levelName, b2World& b2dworld);
 
 	private:
-		b2World m_b2World;
 		std::unique_ptr<tmx::MapLoader> m_mapLoader;
 };
 

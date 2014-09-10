@@ -1,7 +1,7 @@
 #include "Box2dLevelLoader.h"
 
-Box2dLevelLoader::Box2dLevelLoader(b2World& b2dworld, tmx::MapLoader& mapLoader) :
-		m_b2World(b2dworld), m_mapLoader(&mapLoader) {
+Box2dLevelLoader::Box2dLevelLoader(tmx::MapLoader& mapLoader) :
+		 m_mapLoader(&mapLoader) {
 }
 
 Box2dLevelLoader::~Box2dLevelLoader() {

@@ -2,15 +2,40 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& maploader) : m_mainRenderWindow(&renderWindow), m_b2world(b2World),  m_debugDrawer(renderWindow),
-		m_box2DWorld(b2World), m_mapLoader(&maploader){
+Game::Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& levelLoader) : m_mainRenderWindow(&renderWindow), m_b2world(&b2World),  m_debugDrawer(renderWindow),
+		m_box2DWorld(b2World), m_mapLoader(&levelLoader){
 }
 
 Game::~Game() {
 }
 
+
+void Game::loadMap(tmx::MapLoader& levelLoader){
+		const std::vector<tmx::MapLayer>& layers = levelLoader.GetLayers();
+				for (const auto& l : layers) {
+					if (l.name == "Static") {
+						for (const auto& object : l.objects) {
+							b2Body* bo = tmx::BodyCreator::Add(object, *m_b2world, b2_staticBody);
+						}
+					}
+
+				}
+}
+
 void Game::init()
 {
+
+//	m_mapLoader->Load("test-b2d.tmx");
+//	    tmx::BodyCreator creator;
+//	    const std::vector<tmx::MapLayer>& layers  = m_mapLoader->GetLayers();
+//		for (const auto& l : layers) {
+//			if (l.name == "Static") {
+//				for (const auto& object : l.objects) {
+//					b2Body* bo = creator.Add(object, m_b2world, b2_staticBody);
+//				}
+//			}
+//
+//		}
 
 	//m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
 
@@ -99,7 +124,7 @@ void Game::render() {
 //	//TODO draw more sfml stuff here
 //	m_mainRenderWindow->popGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
-	m_mainRenderWindow->draw(*m_mapLoader);
+	//m_mainRenderWindow->draw(m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
 	m_box2DWorld.drawDebug();
 
