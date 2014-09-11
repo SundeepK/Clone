@@ -30,30 +30,27 @@ int main()
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);
-	b2World b2world(b2Vec2(0, 9.8f));
 
+	b2World b2world(b2Vec2(0, 9.8f));
+	b2world.SetAutoClearForces(false);
+	b2world.SetAllowSleeping(true);
+	b2world.SetContinuousPhysics(false);
 	 tmx::MapLoader m_mapLoader("maps/");
      m_mapLoader.Load("test-b2d.tmx");
-//			for (const auto& l : m_mapLoader.GetLayers()) {
-//				if (l.name == "Static") {
-//					for (const auto& object : l.objects) {
-//						b2Body* bo = tmx::BodyCreator::Add(object, b2world, b2_staticBody);
-//					}
-//				}
-//
-//			}
 
-    Game game(mainRenderWindow, b2world,  m_mapLoader);
-    game.loadMap(m_mapLoader);
+    SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
+    b2world.SetDebugDraw(&m_debugDrawer);
+	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
+    Game game(mainRenderWindow, b2world);
+    game.loadMap(m_mapLoader, &b2world);
     game.init();
-
-
 
 
     sf::Clock clock;
     while (mainRenderWindow.isOpen())
     {
-       game.update(clock.restart().asMilliseconds());
+       float dt = clock.restart().asMilliseconds();
+       game.update(dt);
        game.render();
        mainRenderWindow.display();
       // mainRenderWindow.clear();

@@ -2,46 +2,31 @@
 #include "B2BoxBuilder.h"
 #include <functional>
 
-Game::Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& levelLoader) : m_mainRenderWindow(&renderWindow), m_b2world(&b2World),  m_debugDrawer(renderWindow),
-		m_box2DWorld(b2World), m_mapLoader(&levelLoader){
+Game::Game(sf::RenderWindow& renderWindow, b2World& box2dWorld) : m_mainRenderWindow(&renderWindow), m_box2dWorld(box2dWorld)
+		{
 }
 
 Game::~Game() {
 }
 
 
-void Game::loadMap(tmx::MapLoader& levelLoader){
-		const std::vector<tmx::MapLayer>& layers = levelLoader.GetLayers();
-				for (const auto& l : layers) {
-					if (l.name == "Static") {
-						for (const auto& object : l.objects) {
-							b2Body* bo = tmx::BodyCreator::Add(object, *m_b2world, b2_staticBody);
-						}
-					}
-
-				}
+void Game::loadMap(tmx::MapLoader& levelLoader, b2World* b2world) {
+	const std::vector<tmx::MapLayer>& layers = levelLoader.GetLayers();
+	for (const auto& l : layers) {
+		if (l.name == "Static") {
+			for (const auto& object : l.objects) {
+				b2Body* bo = tmx::BodyCreator::Add(object, *b2world,
+						b2_staticBody);
+			}
+		}
+	}
 }
 
 void Game::init()
 {
 
-//	m_mapLoader->Load("test-b2d.tmx");
-//	    tmx::BodyCreator creator;
-//	    const std::vector<tmx::MapLayer>& layers  = m_mapLoader->GetLayers();
-//		for (const auto& l : layers) {
-//			if (l.name == "Static") {
-//				for (const auto& object : l.objects) {
-//					b2Body* bo = creator.Add(object, m_b2world, b2_staticBody);
-//				}
-//			}
-//
-//		}
+	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2dWorld);
 
-	//m_box2dLevelLoader.loadLevel("test-b2d.tmx",m_b2world);
-
-	m_componentLoader.loadWorldEntities(m_anaxWorld, m_box2DWorld);
-	m_box2DWorld.setDebugDraw(m_debugDrawer);
-	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
 
 	m_anaxWorld.addSystem(m_playerControlsSystem);
 	m_anaxWorld.addSystem(m_textureRectSystem);
@@ -101,8 +86,8 @@ void Game::update(float deltaTime) {
     m_anaxWorld.refresh();
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
- //   m_box2DWorld.step(deltaTime);
-    m_box2DWorld.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+  //  m_box2dWorld.step(deltaTime);
+    m_box2dWorld.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
     m_playerAnimationSystem.update(deltaTime);
 
 }
@@ -124,9 +109,9 @@ void Game::render() {
 //	//TODO draw more sfml stuff here
 //	m_mainRenderWindow->popGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
-	//m_mainRenderWindow->draw(m_mapLoader);
+	//m_mainRenderWindow->draw(*m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
-	m_box2DWorld.drawDebug();
+	m_box2dWorld.drawDebug();
 
 
 }

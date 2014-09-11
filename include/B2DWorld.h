@@ -21,7 +21,11 @@ class B2DWorld
 {
 public:
     B2DWorld(b2World& b2world);
-    virtual ~B2DWorld();
+    B2DWorld(B2DWorld&& b2dworld) : m_world(std::move(b2dworld.m_world)) {}
+    ~B2DWorld() { m_world.reset(nullptr); }
+    B2DWorld &operator=(B2DWorld &&a ) { m_world = move(a.m_world); }
+
+
     void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);
     b2Body* createB2Body(B2Builder* builder);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
@@ -35,7 +39,7 @@ private:
     void resetStates();
     void drawSquare(b2Vec2* points,b2Vec2 center,float angle);
 
-    b2World m_world;
+    std::unique_ptr<b2World> m_world;
     float m_fixedTimestepAccumulator = 0.0f;
     float m_fixedTimestepAccumulatorRatio = 0.0f;
 

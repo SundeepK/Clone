@@ -31,10 +31,10 @@ class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow, b2World& b2World, tmx::MapLoader& mapLoader);
+		Game(sf::RenderWindow& renderWindow, b2World& box2dWorld);
 		virtual ~Game();
 
-		 void loadMap(tmx::MapLoader& levelLoader);
+		 void loadMap(tmx::MapLoader& levelLoader,b2World* b2world);
 		 void init();
 		 void update(float deltaTime);
 		 void render();
@@ -42,9 +42,7 @@ class Game {
 	private:
 		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 std::unique_ptr<b2World> m_b2world;
-		 SFMLB2dDebugDraw m_debugDrawer;
-		 B2DWorld m_box2DWorld;
-		 std::unique_ptr<tmx::MapLoader> m_mapLoader;
+
 		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;
@@ -56,6 +54,8 @@ class Game {
 		 WorldEntityLoader m_componentLoader;
 		 PlayerAnimationSystem m_playerAnimationSystem;
 		 std::vector<tmx::MapLayer> layers;
+		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
+		 B2DWorld m_box2dWorld;
 
 };
 

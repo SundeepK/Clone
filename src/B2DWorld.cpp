@@ -2,24 +2,19 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-B2DWorld::B2DWorld(b2World& b2World) : m_world(b2World)
+B2DWorld::B2DWorld(b2World& b2World) : m_world(&b2World)
 {
-    m_world.SetAutoClearForces(false);
-    m_world.SetAllowSleeping(true);
-    m_world.SetContinuousPhysics(false);
+
 }
 
-B2DWorld::~B2DWorld()
-{
-}
 
 void B2DWorld::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
-    m_world.SetDebugDraw(&box2dDEbugDrawer);
+    m_world->SetDebugDraw(&box2dDEbugDrawer);
 }
 
 
 b2Body* B2DWorld::createB2Body(B2Builder* builder){
-    return builder->build(m_world);
+    return builder->build(*m_world);
 }
 
 void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
@@ -41,7 +36,7 @@ void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, 
 		step(FIXED_TIMESTEP);
 	}
 
-	m_world.ClearForces();
+	m_world->ClearForces();
 	physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
 
 }
@@ -62,7 +57,7 @@ const float P2M=1/M2P;
 }
 
 void B2DWorld::step(float dt){
-    m_world.Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    m_world->Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 }
 
 
@@ -87,5 +82,5 @@ void B2DWorld::assertAccumilation(){
 }
 
 void B2DWorld::drawDebug() {
-	m_world.DrawDebugData();
+	m_world->DrawDebugData();
 }
