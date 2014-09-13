@@ -1,6 +1,6 @@
 #include <entity-loaders/PlayerEntityLoader.h>
 
-void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, lua_State* luaState) {
+void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, lua_State* luaState) {
 
 	luabind::module(luaState)[
 	luabind::class_<PhysicsComponent>("PhysicsComponent")
@@ -61,7 +61,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, B2DWorld& b2dWorld, 
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
     .setDensity(2.0f);
-    b2Body* playerBody = b2dWorld.createB2Body(&builder);
+    b2Body* playerBody = builder.build(b2dWorld);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
     playerBody->SetBullet(true);
 

@@ -6,13 +6,13 @@
 #include <components/AnimationComponent.h>
 #include <Thor/Animation.hpp>
 #include <B2Builder.h>
-#include <B2DWorld.h>
+#include <PhysicsTimeStepSystem.h>
 #include <B2BoxBuilder.h>
 
 class PlayerEntityLoader : public LuaEntityLoader {
 public:
-	void loadEntity(anax::World& anaxWorld, B2DWorld& box2dWorld, lua_State *myLuaState);
 
+	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld, lua_State *myLuaState);
 
 };
 

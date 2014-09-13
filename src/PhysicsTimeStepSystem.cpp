@@ -1,23 +1,23 @@
-#include "B2DWorld.h"
+#include "PhysicsTimeStepSystem.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-B2DWorld::B2DWorld(b2World& b2World) : m_world(&b2World)
+PhysicsTimeStepSystem::PhysicsTimeStepSystem(b2World& b2World) : m_world(&b2World)
 {
 
 }
 
 
-void B2DWorld::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
+void PhysicsTimeStepSystem::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
     m_world->SetDebugDraw(&box2dDEbugDrawer);
 }
 
 
-b2Body* B2DWorld::createB2Body(B2Builder* builder){
+b2Body* PhysicsTimeStepSystem::createB2Body(B2Builder* builder){
     return builder->build(*m_world);
 }
 
-void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
+void PhysicsTimeStepSystem::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
     m_fixedTimestepAccumulator += dt/1000;
     const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
@@ -41,7 +41,7 @@ void B2DWorld::update(float dt, PhysicsInterpolatorSystem& physicsInterpolator, 
 
 }
 
-void B2DWorld::drawSquare(b2Vec2* points,b2Vec2 center,float angle)
+void PhysicsTimeStepSystem::drawSquare(b2Vec2* points,b2Vec2 center,float angle)
 {
 const float M2P=30;
 const float P2M=1/M2P;
@@ -56,7 +56,7 @@ const float P2M=1/M2P;
         glPopMatrix();
 }
 
-void B2DWorld::step(float dt){
+void PhysicsTimeStepSystem::step(float dt){
     m_world->Step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 }
 
@@ -74,13 +74,13 @@ void B2DWorld::step(float dt){
 //
 //}
 
-void B2DWorld::assertAccumilation(){
+void PhysicsTimeStepSystem::assertAccumilation(){
 	assert (
 		"Accumulator must have a value lesser than the fixed time step" &&
 		m_fixedTimestepAccumulator < FIXED_TIMESTEP + FLT_EPSILON
 	);
 }
 
-void B2DWorld::drawDebug() {
+void PhysicsTimeStepSystem::drawDebug() {
 	m_world->DrawDebugData();
 }

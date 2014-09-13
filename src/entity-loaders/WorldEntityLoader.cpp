@@ -18,7 +18,7 @@ WorldEntityLoader::WorldEntityLoader()  {
 WorldEntityLoader::~WorldEntityLoader() {
 }
 
-void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, B2DWorld& box2dWorld){
+void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld){
 
     lua_State *luaState = luaL_newstate();
 

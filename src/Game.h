@@ -14,7 +14,7 @@
 #include <systems/PlayerControlsSystem.h>
 #include <systems/TextureRectRenderSystem.h>
 #include <components/Texcoords.h>
-#include <B2DWorld.h>
+#include <PhysicsTimeStepSystem.h>
 #include <memory.h>
 #include <components/PlayerStateComponent.h>
 #include <systems/OpenGLTextureRenderer.h>
@@ -25,13 +25,13 @@
 #include <ActionController.h>
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
-#include <levels/Box2dLevelLoader.h>
+#include <levels/TmxBox2dLevelLoader.h>
 
 class Game {
 
 	public:
 
-		Game(sf::RenderWindow& renderWindow, b2World& box2dWorld);
+		Game(b2World& box2dWorld, sf::RenderWindow& renderWindow);
 		virtual ~Game();
 
 		 void loadMap(tmx::MapLoader& levelLoader,b2World* b2world);
@@ -40,8 +40,11 @@ class Game {
 		 void render();
 
 	private:
-		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 std::unique_ptr<b2World> m_b2world;
+		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
+		 PhysicsTimeStepSystem m_fixedTimeStepSystem;
+		 tmx::MapLoader m_mapLoader;
+		 TmxBox2dLevelLoader m_tmxLevelLoader;
 
 		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
@@ -51,11 +54,10 @@ class Game {
 		 PhysicsInterpolatorSystem m_physicsInterpolator;
 		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
-		 WorldEntityLoader m_componentLoader;
+		 WorldEntityLoader m_entityLoader;
 		 PlayerAnimationSystem m_playerAnimationSystem;
 		 std::vector<tmx::MapLayer> layers;
 		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
-		 B2DWorld m_box2dWorld;
 
 };
 

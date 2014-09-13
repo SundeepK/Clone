@@ -17,13 +17,13 @@
 #include <systems/PhysicsInterpolatorSystem.h>
 #include <memory.h>
 
-class B2DWorld
+class PhysicsTimeStepSystem
 {
 public:
-    B2DWorld(b2World& b2world);
-    B2DWorld(B2DWorld&& b2dworld) : m_world(std::move(b2dworld.m_world)) {}
-    ~B2DWorld() { m_world.reset(nullptr); }
-    B2DWorld &operator=(B2DWorld &&a ) { m_world = move(a.m_world); }
+    PhysicsTimeStepSystem(b2World& b2world);
+    PhysicsTimeStepSystem(PhysicsTimeStepSystem&& b2dworld) : m_world(std::move(b2dworld.m_world)) {}
+    ~PhysicsTimeStepSystem() { m_world.reset(nullptr); }
+    PhysicsTimeStepSystem &operator=(PhysicsTimeStepSystem &&a ) { m_world = move(a.m_world); }
 
 
     void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);

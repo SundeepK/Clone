@@ -7,7 +7,7 @@
 #include <memory.h>
 #include <vector>
 #include <entity-loaders/PlayerEntityLoader.h>
-#include <B2DWorld.h>
+#include <Box2D/Box2D.h>
 
 class WorldEntityLoader {
 public:
@@ -15,7 +15,7 @@ public:
 	WorldEntityLoader();
 	virtual ~WorldEntityLoader();
 
-	void loadWorldEntities(anax::World& anaxWorld, B2DWorld& box2dWorld);
+	void loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld);
 
 private:
 	std::vector<std::unique_ptr<LuaEntityLoader>> m_entityLoaders;

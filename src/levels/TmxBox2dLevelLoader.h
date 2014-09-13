@@ -6,10 +6,10 @@
 #include <tmx/tmx2box2d.h>
 #include <memory.h>
 
-class Box2dLevelLoader {
+class TmxBox2dLevelLoader {
 	public:
-		Box2dLevelLoader(tmx::MapLoader& mapLoader);
-		virtual ~Box2dLevelLoader();
+		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory);
+		virtual ~TmxBox2dLevelLoader();
 
 		void loadLevel(std::string levelName, b2World& b2dworld);
 

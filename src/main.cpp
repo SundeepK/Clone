@@ -5,8 +5,6 @@
 #include <tmx/MapLoader.h>
 #include <tmx/tmx2box2d.h>
 
-
-#include "B2DWorld.h"
 #include "B2BoxBuilder.h"
 #include <functional>
 #include <iostream>
@@ -14,8 +12,6 @@
 #include <string>
 #include <anax/World.hpp>
 #include <Game.h>
-
-
 
 int main()
 {
@@ -35,16 +31,13 @@ int main()
 	b2world.SetAutoClearForces(false);
 	b2world.SetAllowSleeping(true);
 	b2world.SetContinuousPhysics(false);
-	 tmx::MapLoader m_mapLoader("maps/");
-     m_mapLoader.Load("test-b2d.tmx");
 
-    SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
+	SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
     b2world.SetDebugDraw(&m_debugDrawer);
 	m_debugDrawer.SetFlags(b2Draw::e_shapeBit);
-    Game game(mainRenderWindow, b2world);
-    game.loadMap(m_mapLoader, &b2world);
-    game.init();
 
+    Game game(b2world, mainRenderWindow);
+    game.init();
 
     sf::Clock clock;
     while (mainRenderWindow.isOpen())
