@@ -5,15 +5,18 @@
  </tileset>
  <layer name="Tile Layer 1" width="50" height="25">
   <data encoding="base64" compression="zlib">
-   eJztz9EJACAIBcCGa4T2n6XfEIqKCKI7eB8iKqYEAABwV24S69hb2TU7c9rodu+33X8BflQeTVQBC4UWAQ==
+   eJztzzENAEAIwED0MeNfCwsjBvi/SyqgEQAAAAB/yum61z/qYLnUdw8R8w==
   </data>
  </layer>
  <objectgroup name="Static" width="50" height="25">
-  <object x="514" y="256">
-   <polygon points="0,0 30,0 30,32 0,31"/>
+  <object x="2" y="769">
+   <polygon points="0,0 1404,-2 1404,31 -2,32"/>
   </object>
-  <object x="141" y="520">
-   <polygon points="0,0 631,-8 611,49 -2,29"/>
+  <object x="1409" y="673">
+   <polygon points="0,0 64,0 65,128 0,126"/>
+  </object>
+  <object x="1477" y="770">
+   <polygon points="0,0 122,-1 121,30 1,29"/>
   </object>
  </objectgroup>
 </map>
