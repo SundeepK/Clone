@@ -13,6 +13,7 @@
 #include <components/PhysicsComponent.h>
 #include <systems/PlayerControlsSystem.h>
 #include <systems/TextureRectRenderSystem.h>
+#include <systems/CameraSystem.h>
 #include <components/Texcoords.h>
 #include <PhysicsTimeStepSystem.h>
 #include <memory.h>
@@ -26,6 +27,7 @@
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
 #include <levels/TmxBox2dLevelLoader.h>
+
 
 class Game {
 
@@ -52,6 +54,7 @@ class Game {
 		 TextureRectRenderSystem m_textureRectSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;
 		 PhysicsInterpolatorSystem m_physicsInterpolator;
+		 CameraSystem m_cameraSystem;
 		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
 		 WorldEntityLoader m_entityLoader;

@@ -21,6 +21,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_openglTextureRenderer);
 	m_anaxWorld.addSystem(m_physicsInterpolator);
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
+	m_anaxWorld.addSystem(m_cameraSystem);
 
 	glDisable(GL_LIGHTING);
 
@@ -49,6 +50,7 @@ void Game::update(float deltaTime) {
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
     m_fixedTimeStepSystem.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+    m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
 
 }
@@ -70,6 +72,7 @@ void Game::render() {
 //	//TODO draw more sfml stuff here
 //	m_mainRenderWindow->popGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
+	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
 	m_fixedTimeStepSystem.drawDebug();
