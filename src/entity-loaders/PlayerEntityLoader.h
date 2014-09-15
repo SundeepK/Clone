@@ -4,6 +4,7 @@
 #include <entity-loaders/LuaEntityLoader.h>
 #include <components/PhysicsComponent.h>
 #include <components/AnimationComponent.h>
+#include <components/PlayerTagComponent.h>
 #include <Thor/Animation.hpp>
 #include <B2Builder.h>
 #include <PhysicsTimeStepSystem.h>

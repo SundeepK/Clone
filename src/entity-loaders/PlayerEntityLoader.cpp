@@ -55,6 +55,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
+    auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
 
     B2BoxBuilder builder(20,20);
     builder

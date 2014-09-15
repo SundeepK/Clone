@@ -28,13 +28,15 @@ void PhysicsTimeStepSystem::update(float dt, PhysicsInterpolatorSystem& physicsI
 
 	assertAccumilation();
     m_fixedTimestepAccumulatorRatio = m_fixedTimestepAccumulator / FIXED_TIMESTEP;
-    const int clampedSteps = std::min(steps, MAX_STEPS);
+    const int clampedSteps = std::min(steps, MAX_STEPS) <= 0 ? 1 : std::min(steps, MAX_STEPS);
 	for (int i = 0; i < clampedSteps; ++ i)
 	{
 		physicsInterpolator.resetComponents();
 		controlSystem.update(dt);
 		step(FIXED_TIMESTEP);
 	}
+
+	//step(FIXED_TIMESTEP);
 
 	m_world->ClearForces();
 	physicsInterpolator.interpolateComponents(m_fixedTimestepAccumulatorRatio);
