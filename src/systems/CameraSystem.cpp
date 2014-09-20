@@ -18,19 +18,16 @@ void CameraSystem::update(){
 	Vec position(body->GetPosition());
 	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
 
-	sf::Vector2f cameraCenterPos(0, 0);
+	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
 
 	if (bodyPosInPix.x >= halfWidth) {
 		cameraCenterPos.x = bodyPosInPix.x;
-	} else {
-		cameraCenterPos.x =halfWidth ;
 	}
 
 	if (bodyPosInPix.y <= halfHeight) {
 		cameraCenterPos.y = bodyPosInPix.y;
-	} else {
-		cameraCenterPos.y = halfHeight;
 	}
+
 	m_view.setCenter(floor(cameraCenterPos.x), cameraCenterPos.y);
 }
 
