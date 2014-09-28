@@ -4,6 +4,8 @@
 #include <Box2D/Box2D.h>
 #include <tmx/MapLoader.h>
 #include <tmx/tmx2box2d.h>
+#include <anax/World.hpp>
+#include <sstream>
 #include <memory.h>
 
 class TmxBox2dLevelLoader {
@@ -11,7 +13,7 @@ class TmxBox2dLevelLoader {
 		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory);
 		virtual ~TmxBox2dLevelLoader();
 
-		void loadLevel(std::string levelName, b2World& b2dworld);
+		void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld);
 
 	private:
 		std::unique_ptr<tmx::MapLoader> m_mapLoader;
