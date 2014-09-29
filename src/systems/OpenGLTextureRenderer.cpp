@@ -9,8 +9,7 @@ OpenGLTextureRenderer::~OpenGLTextureRenderer() {
 
 void OpenGLTextureRenderer::render() {
 	auto entities = getEntities();
-	const float M2P = 30;
-	int s = entities.size();
+	const float M2P = 30.0f;
 	for (auto entity : entities) {
 		auto& texCoordsComp = entity.getComponent<Texcoords>();
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
@@ -46,7 +45,9 @@ void OpenGLTextureRenderer::render() {
 		}
 
 		glPushMatrix();
-		b2Vec2 center = physicsComp.smoothedPosition;
+//		b2Vec2 center = physicsComp.smoothedPosition;
+		b2Vec2 center = physicsComp.physicsBody->GetPosition();
+
 		float angle = body->GetAngle();
 		glTranslatef(static_cast<float>(floor(center.x * M2P)), static_cast<float>(floor(center.y * M2P)), 0.0f);
 		glRotatef(angle * 180.0 / M_PI, 0, 0, 1);
