@@ -50,7 +50,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
 	];
 
 	auto playerEntity = anaxWorld.createEntity();
-    auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
+//    auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
     auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
@@ -82,7 +82,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
 
 	try {
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
-	    luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
+	   // luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
 	    luabind::call_function<void>(luaState, "loadAnimations", &animationComp);
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);

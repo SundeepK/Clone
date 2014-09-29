@@ -7,6 +7,8 @@
 #include <anax/World.hpp>
 #include <sstream>
 #include <memory.h>
+#include <components/PhysicsComponent.h>
+#include <components/Texcoords.h>
 
 class TmxBox2dLevelLoader {
 	public:

@@ -39,10 +39,17 @@ void TmxBox2dLevelLoader::loadLevel(std::string levelName, b2World& b2dworld, an
 
 		if (l.name == "SplittableObjects") {
 			for ( auto& object : l.objects) {
-				std::vector<b2Vec2> texs =  parseTexCoordsFromMapObject(object.GetPropertyString(t));
-				for ( auto& texcoord : texs) {
-					std::cout << "x: " << texcoord.x << "  y: " << texcoord.y << std::endl;
-				}
+				auto objectEntity = anaxWorld.createEntity();
+			    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
+			    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+
+		        if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
+		        		std::cout << "unable to load texture from tmx" << std::endl;
+		        texCoordsComp.image.flipVertically();
+
+		        texCoordsComp.textCoords = parseTexCoordsFromMapObject(object.GetPropertyString(t));
+		        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld);
+		        objectEntity.activate();
 			}
 		}
 

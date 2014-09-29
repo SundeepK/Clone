@@ -14,16 +14,16 @@ void OpenGLTextureRenderer::render() {
 	for (auto entity : entities) {
 		auto& texCoordsComp = entity.getComponent<Texcoords>();
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
-		auto image = texCoordsComp.image;
+		auto& image = texCoordsComp.image;
 
 		auto& texCoordsVec = texCoordsComp.textCoords;
 		b2Body* body = physicsComp.physicsBody;
 
 		GLuint texture = 0;
 		{
-			if (!image.loadFromFile("1.png"))
-				return;
-			image.flipVertically();
+//			if (!image.loadFromFile("1.png"))
+//				return;
+//			image.flipVertically();
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, image.getSize().x,
