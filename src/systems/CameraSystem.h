@@ -3,6 +3,8 @@
 
 #include <anax/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/OpenGL.hpp>
+#include <GL/glut.h>
 #include <Vec.h>
 #include <components/PhysicsComponent.h>
 #include <components/PlayerTagComponent.h>
@@ -13,6 +15,7 @@ class CameraSystem : public sf::Drawable, public anax::System<CameraSystem>{
 		CameraSystem(int width, int height);
 		virtual ~CameraSystem();
 		void update();
+		void updateOpenglCamera();
 
 	private:
 		int m_screenWidth;

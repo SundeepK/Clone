@@ -20,9 +20,6 @@ void OpenGLTextureRenderer::render() {
 
 		GLuint texture = 0;
 		{
-//			if (!image.loadFromFile("1.png"))
-//				return;
-//			image.flipVertically();
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, image.getSize().x,

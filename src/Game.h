@@ -61,6 +61,7 @@ class Game {
 		 PlayerAnimationSystem m_playerAnimationSystem;
 		 std::vector<tmx::MapLayer> layers;
 		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
+		 sf::View m_view;
 
 };
 

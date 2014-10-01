@@ -3,7 +3,7 @@
 #include <functional>
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
-		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(1280, 800) {
+		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(1280, 800), m_view(sf::FloatRect(0,0, 1280, 800)) {
 }
 
 Game::~Game() {
@@ -30,6 +30,7 @@ void Game::init()
 			m_mainRenderWindow->getSize().y);
 
 	glMatrixMode(GL_PROJECTION);
+  //  gluPerspective( 90.0f, 1.0f, 1.0f, 1500.0f );
 	glOrtho(0, 1280, 800, 0, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -65,15 +66,13 @@ void Game::render() {
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_textureRectSystem.render(m_mainRenderWindow.get());
 	m_fixedTimeStepSystem.drawDebug();
-
 	m_mainRenderWindow->popGLStates();
 
 	//TODO draw opengl stuff here
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+	//glLoadIdentity();
     glColor3f(1.0f,1.0f,1.0f);
 	m_openglTextureRenderer.render();
-
-
+    m_cameraSystem.updateOpenglCamera();
 
 }
