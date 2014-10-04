@@ -72,7 +72,9 @@ void Game::render() {
 	glClear(GL_DEPTH_BUFFER_BIT);
 	//glLoadIdentity();
     glColor3f(1.0f,1.0f,1.0f);
-	m_openglTextureRenderer.render();
     m_cameraSystem.updateOpenglCamera();
+	m_openglTextureRenderer.render();
+	glPopMatrix();
+
 
 }

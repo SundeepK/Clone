@@ -43,7 +43,7 @@ void OpenGLTextureRenderer::render() {
 
 		glPushMatrix();
 //		b2Vec2 center = physicsComp.smoothedPosition;
-		b2Vec2 center = physicsComp.physicsBody->GetPosition();
+		b2Vec2 center = (body->GetPosition());
 
 		float angle = body->GetAngle();
 		glTranslatef(static_cast<float>(floor(center.x * M2P)), static_cast<float>(floor(center.y * M2P)), 0.0f);

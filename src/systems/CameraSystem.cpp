@@ -38,7 +38,7 @@ void CameraSystem::updateOpenglCamera() {
 	auto entity = *getEntities().begin();
 	auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 	b2Body* body = physicsComponent.physicsBody;
-	Vec position(body->GetPosition());
+	Vec position((body->GetPosition()));
 	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
 
 	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
@@ -51,15 +51,17 @@ void CameraSystem::updateOpenglCamera() {
 		cameraCenterPos.y = bodyPosInPix.y;
 	}
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(cameraCenterPos.x,
-    		cameraCenterPos.x + 1280,
-    		cameraCenterPos.y + 800,
-            cameraCenterPos.y,
-            -1,
-            1);
-    glMatrixMode(GL_MODELVIEW);
+   	glPushMatrix();
+    glTranslatef( -cameraCenterPos.x + 1280.0f/2, -cameraCenterPos.y + 800.0f/2, 0);
+
+//    glMatrixMode(GL_PROJECTION);
+//    glLoadIdentity();
+  //  glOrtho(cameraCenterPos.x,cameraCenterPos.x + 1280.0f,cameraCenterPos.y + 800.0f,cameraCenterPos.y, -1,1);
+//	glOrtho(0, 1280, 800, 0 , -1, 1);
+
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
+
 }
 
 void CameraSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
