@@ -8,7 +8,7 @@ CameraSystem::CameraSystem(int width, int height) : Base(anax::ComponentFilter()
 CameraSystem::~CameraSystem() {
 }
 
-void CameraSystem::update(){
+sf::Vector2f CameraSystem::getCameraPosition(){
 	int halfWidth = m_screenWidth / 2;
 	int halfHeight = m_screenHeight / 2;
 
@@ -27,41 +27,17 @@ void CameraSystem::update(){
 	if (bodyPosInPix.y <= halfHeight) {
 		cameraCenterPos.y = bodyPosInPix.y;
 	}
+	return cameraCenterPos;
+}
 
-	m_view.setCenter(floor(cameraCenterPos.x), cameraCenterPos.y);
+void CameraSystem::update(){
+	sf::Vector2f cameraPos = getCameraPosition();
+	m_view.setCenter(floor(cameraPos.x), cameraPos.y);
 }
 
 void CameraSystem::updateOpenglCamera() {
-	int halfWidth = m_screenWidth / 2;
-	int halfHeight = m_screenHeight / 2;
-
-	auto entity = *getEntities().begin();
-	auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-	b2Body* body = physicsComponent.physicsBody;
-	Vec position((body->GetPosition()));
-	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
-
-	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
-
-	if (bodyPosInPix.x >= halfWidth) {
-		cameraCenterPos.x = bodyPosInPix.x;
-	}
-
-	if (bodyPosInPix.y <= halfHeight) {
-		cameraCenterPos.y = bodyPosInPix.y;
-	}
-
-   	glPushMatrix();
-    glTranslatef( -cameraCenterPos.x + 1280.0f/2, -cameraCenterPos.y + 800.0f/2, 0);
-
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-  //  glOrtho(cameraCenterPos.x,cameraCenterPos.x + 1280.0f,cameraCenterPos.y + 800.0f,cameraCenterPos.y, -1,1);
-//	glOrtho(0, 1280, 800, 0 , -1, 1);
-
-//    glMatrixMode(GL_MODELVIEW);
-//    glLoadIdentity();
-
+	sf::Vector2f cameraPos = getCameraPosition();
+    glTranslatef( -cameraPos.x + m_screenWidth/2, -cameraPos.y + m_screenHeight/2, 0);
 }
 
 void CameraSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const {

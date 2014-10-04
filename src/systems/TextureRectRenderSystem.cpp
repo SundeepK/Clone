@@ -6,7 +6,7 @@ TextureRectRenderSystem::TextureRectRenderSystem() : Base(anax::ComponentFilter(
 TextureRectRenderSystem::~TextureRectRenderSystem() {
 }
 
-void TextureRectRenderSystem::render(sf::RenderTarget* renderTarget) {
+void TextureRectRenderSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const{
     auto entities = getEntities();
     for(auto& entity : entities)
     {
@@ -19,7 +19,7 @@ void TextureRectRenderSystem::render(sf::RenderTarget* renderTarget) {
 
         auto& animationComp = entity.getComponent<AnimationComponent>().m_sprite;
         animationComp.setPosition(sf::Vector2f(floor(center.x*30),floor(center.y*30)));
-        renderTarget->draw(animationComp);
+        rt.draw(animationComp);
     }
 
 }

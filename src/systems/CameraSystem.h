@@ -18,6 +18,8 @@ class CameraSystem : public sf::Drawable, public anax::System<CameraSystem>{
 		void updateOpenglCamera();
 
 	private:
+		sf::Vector2f getCameraPosition();
+
 		int m_screenWidth;
 		int m_screenHeight;
 		void draw(sf::RenderTarget& rt, sf::RenderStates states) const;

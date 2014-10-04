@@ -58,13 +58,13 @@ void Game::update(float deltaTime) {
 
 void Game::render() {
 	m_mainRenderWindow->setActive(true);
-	m_mainRenderWindow->pushGLStates();
-	//TODO draw more sfml stuff here
 
+	//TODO draw more sfml stuff here
+	m_mainRenderWindow->pushGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
 	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
-	m_textureRectSystem.render(m_mainRenderWindow.get());
+	m_mainRenderWindow->draw(m_textureRectSystem);
 	m_fixedTimeStepSystem.drawDebug();
 	m_mainRenderWindow->popGLStates();
 
@@ -72,9 +72,9 @@ void Game::render() {
 	glClear(GL_DEPTH_BUFFER_BIT);
 	//glLoadIdentity();
     glColor3f(1.0f,1.0f,1.0f);
+    glPushMatrix();
     m_cameraSystem.updateOpenglCamera();
 	m_openglTextureRenderer.render();
 	glPopMatrix();
-
 
 }
