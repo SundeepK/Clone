@@ -12,7 +12,7 @@ void PhysicsInterpolatorSystem::resetComponents() {
 	for (auto entity : entities) {
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 		b2Body* body = physicsComp.physicsBody;
-
+		if(body){
 			if (body->GetType () == b2_staticBody)
 			{
 				continue;
@@ -20,7 +20,10 @@ void PhysicsInterpolatorSystem::resetComponents() {
 
 			physicsComp.smoothedPosition = physicsComp.previousPosition =body->GetPosition();
 			physicsComp.smoothedAngle = physicsComp.previousAngle = body->GetAngle ();
-		}
+		}else{
+		entity.deactivate();
+	}
+	}
 }
 
 void PhysicsInterpolatorSystem::interpolateComponents(float fixedTimestepAccumulatorRatio) {
@@ -31,12 +34,17 @@ void PhysicsInterpolatorSystem::interpolateComponents(float fixedTimestepAccumul
 	for (auto entity : entities) {
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 		b2Body* body = physicsComp.physicsBody;
+		if(body){
+
 		if (body->GetType () == b2_staticBody)
 		{
 			continue;
 		}
 		physicsComp.smoothedPosition = fixedTimestepAccumulatorRatio * body->GetPosition() + oneMinusRatio * physicsComp.previousPosition;
 		physicsComp.smoothedAngle = floor(fixedTimestepAccumulatorRatio * body->GetAngle() + oneMinusRatio * physicsComp.previousAngle);
+		}else{
+			entity.deactivate();
+		}
 	}
 
 }

@@ -22,7 +22,9 @@ class PhysicsTimeStepSystem
 public:
     PhysicsTimeStepSystem(b2World& b2world);
     PhysicsTimeStepSystem(PhysicsTimeStepSystem&& b2dworld) : m_world(std::move(b2dworld.m_world)) {}
-    ~PhysicsTimeStepSystem() { m_world.reset(nullptr); }
+    ~PhysicsTimeStepSystem() {
+    //	m_world.reset(nullptr);
+    }
     PhysicsTimeStepSystem &operator=(PhysicsTimeStepSystem &&a ) { m_world = move(a.m_world); }
 
 

@@ -3,7 +3,8 @@
 #include <functional>
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
-		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(1280, 800), m_view(sf::FloatRect(0,0, 1280, 800)) {
+		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(1280, 800), m_view(sf::FloatRect(0,0, 1280, 800)),
+		m_splitter(box2dWorld, m_anaxWorld){
 }
 
 Game::~Game() {
@@ -22,6 +23,8 @@ void Game::init()
 	m_anaxWorld.addSystem(m_physicsInterpolator);
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
 	m_anaxWorld.addSystem(m_cameraSystem);
+	m_anaxWorld.addSystem(m_splitter);
+
 
 	glDisable(GL_LIGHTING);
 
@@ -47,13 +50,13 @@ void Game::init()
 
 void Game::update(float deltaTime) {
     m_anaxWorld.refresh();
+    m_splitter.processMouseEventsForSplitter(*m_mainRenderWindow);
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
     m_fixedTimeStepSystem.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
-
 }
 
 void Game::render() {
@@ -65,6 +68,7 @@ void Game::render() {
 	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_mainRenderWindow->draw(m_textureRectSystem);
+	m_mainRenderWindow->draw(m_splitter);
 	m_fixedTimeStepSystem.drawDebug();
 	m_mainRenderWindow->popGLStates();
 

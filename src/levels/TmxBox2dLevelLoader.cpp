@@ -48,7 +48,9 @@ void TmxBox2dLevelLoader::loadLevel(std::string levelName, b2World& b2dworld, an
 		        texCoordsComp.image.flipVertically();
 
 		        texCoordsComp.textCoords = parseTexCoordsFromMapObject(object.GetPropertyString(t));
-		        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld);
+		        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
+//		        physComp.physicsBody->GetFixtureList()->SetDensity(1.0f);
+//		        physComp.physicsBody->ResetMassData();
 		        objectEntity.activate();
 			}
 		}

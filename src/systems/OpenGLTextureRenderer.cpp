@@ -18,6 +18,7 @@ void OpenGLTextureRenderer::render() {
 		auto& texCoordsVec = texCoordsComp.textCoords;
 		b2Body* body = physicsComp.physicsBody;
 
+		if(body){
 		GLuint texture = 0;
 		{
 			glGenTextures(1, &texture);
@@ -56,6 +57,9 @@ void OpenGLTextureRenderer::render() {
 		}
 		glEnd(); //end drawing of polygon
 		glPopMatrix();
+	}else{
+		entity.deactivate();
+	}
 	}
 
 }

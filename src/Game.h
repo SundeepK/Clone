@@ -27,6 +27,7 @@
 #include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
 #include <levels/TmxBox2dLevelLoader.h>
+#include <input-events/Bd2Splitter.h>
 
 
 class Game {
@@ -42,7 +43,7 @@ class Game {
 		 void render();
 
 	private:
-		 std::unique_ptr<b2World> m_b2world;
+		 std::shared_ptr<b2World> m_b2world;
 		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 PhysicsTimeStepSystem m_fixedTimeStepSystem;
 		 tmx::MapLoader m_mapLoader;
@@ -62,7 +63,7 @@ class Game {
 		 std::vector<tmx::MapLayer> layers;
 		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
 		 sf::View m_view;
-
+		 Bd2Splitter m_splitter;
 };
 
 #endif /* GAME_H_ */
