@@ -11,6 +11,8 @@
 #include <anax/anax.hpp>
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
+#include <vector>
+#include <algorithm>
 
 class Bd2Splitter : public B2BodySplitCallback,  public anax::System<Bd2Splitter>, public sf::Drawable{
 public:
@@ -19,7 +21,7 @@ public:
 
 	void processMouseEventsForSplitter(sf::RenderWindow& App);
     void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies, b2Body* body);
-
+    void deleteEntities();
 
 private:
     bool isleftPressed = false;
@@ -30,6 +32,8 @@ private:
     TextureMapper m_textureMapper;
 	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 
+	std::vector<b2Body*> m_bodiesToDelete;
+	std::vector<anax::Entity> m_entitiesToDelete;
 };
 
 #endif /* MOUSEEVENTPROCESSOR_H_ */

@@ -49,8 +49,10 @@ void Game::init()
 }
 
 void Game::update(float deltaTime) {
-    m_anaxWorld.refresh();
     m_splitter.processMouseEventsForSplitter(*m_mainRenderWindow);
+    m_splitter.deleteEntities();
+    m_anaxWorld.refresh();
+
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);

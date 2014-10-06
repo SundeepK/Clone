@@ -63,21 +63,31 @@ void Bd2Splitter::onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* b
 	        		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 	        		if(physicsComp.physicsBody == body){
 	        			oldTexCoords = entity.getComponent<Texcoords>();
+
+	        			if(std::find_if(m_bodiesToDelete.begin(), m_bodiesToDelete.end(), [&body](const b2Body* bodyToCompare){ return bodyToCompare == body; }) == m_bodiesToDelete.end() ){
+	        				m_bodiesToDelete.push_back(body);
+	        			}
+
+	        			if(std::find_if(m_entitiesToDelete.begin(), m_entitiesToDelete.end(), [&entity](const anax::Entity entityToCompare){ return entityToCompare == entity; }) == m_entitiesToDelete.end()){
+		        	        m_entitiesToDelete.push_back(entity);
+	        			}
+
+
+	    	            b2Body* newB = builder.build(*m_world);
+	    				auto objectEntity = m_anaxWorld->createEntity();
+	    			    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
+	    			    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+
+	    			    physComp.physicsBody = newB;
+
+	    	            std::vector<b2Vec2> newBOdyTexCoords =  m_textureMapper.mapSplitBody(newB, body,oldTexCoords.textCoords);
+	    	            texCoordsComp.textCoords = newBOdyTexCoords;
+	    	            texCoordsComp.image = oldTexCoords.image;
+	    	            objectEntity.activate();
+
 	        			break;
 	        		}
 	        	}
-
-	            b2Body* newB = builder.build(*m_world);
-				auto objectEntity = m_anaxWorld->createEntity();
-			    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
-			    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
-
-			    physComp.physicsBody = newB;
-
-	            std::vector<b2Vec2> newBOdyTexCoords =  m_textureMapper.mapSplitBody(newB, body,oldTexCoords.textCoords);
-	            texCoordsComp.textCoords = newBOdyTexCoords;
-	            texCoordsComp.image = oldTexCoords.image;
-	            objectEntity.activate();
 	        }
 
 	        //m_world->DestroyBody(body);
@@ -88,6 +98,23 @@ void Bd2Splitter::onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* b
 //        			break;
 //        		}
 //        	}
+}
+
+void Bd2Splitter::deleteEntities() {
+
+	for(b2Body * body : m_bodiesToDelete){
+		m_world->DestroyBody(body);
+	}
+
+	for (auto entity : m_entitiesToDelete) {
+		//entity.removeAllComponents();
+		entity.kill();
+	}
+
+	m_bodiesToDelete.clear();
+	m_entitiesToDelete.clear();
+
+
 }
 
 void Bd2Splitter::draw(sf::RenderTarget& rt, sf::RenderStates states) const {

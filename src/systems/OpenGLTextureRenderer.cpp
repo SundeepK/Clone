@@ -11,6 +11,9 @@ void OpenGLTextureRenderer::render() {
 	auto entities = getEntities();
 	const float M2P = 30.0f;
 	for (auto entity : entities) {
+
+		if(!entity.isActivated() || !entity.isValid()) continue;
+
 		auto& texCoordsComp = entity.getComponent<Texcoords>();
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 		auto& image = texCoordsComp.image;
@@ -58,7 +61,7 @@ void OpenGLTextureRenderer::render() {
 		glEnd(); //end drawing of polygon
 		glPopMatrix();
 	}else{
-		entity.deactivate();
+		//entity.deactivate();
 	}
 	}
 
