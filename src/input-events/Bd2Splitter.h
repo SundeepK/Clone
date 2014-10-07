@@ -12,7 +12,15 @@
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <vector>
+#include <set>
 #include <algorithm>
+
+struct CompareEntities
+{
+    bool operator() (const anax::Entity& lhs, const anax::Entity& rhs) const{
+        return lhs.getId() < rhs.getId();
+    }
+};
 
 class Bd2Splitter : public B2BodySplitCallback,  public anax::System<Bd2Splitter>, public sf::Drawable{
 public:
@@ -21,19 +29,27 @@ public:
 
 	void processMouseEventsForSplitter(sf::RenderWindow& App);
     void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies, b2Body* body);
-    void deleteEntities();
 
 private:
+
+    void createNewSplitBodies(B2BoxBuilder& builder,b2Body* body, anax::Entity& entity);
+    void performBox2dSplit(const sf::Event& event);
+    void performRayCastForSplitter();
+    void processLeftMousePressed(const sf::Event& event);
+    void processLeftMouseReleased(const sf::Event& event);
+    void deleteEntities();
+	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
+
     bool isleftPressed = false;
-    sf::VertexArray sliceLine;
+    sf::VertexArray m_sliceLine;
     Splitter m_splitter;
     std::unique_ptr<b2World> m_world;
     std::unique_ptr<anax::World> m_anaxWorld;
     TextureMapper m_textureMapper;
-	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 
-	std::vector<b2Body*> m_bodiesToDelete;
-	std::vector<anax::Entity> m_entitiesToDelete;
+	std::set<anax::Entity, CompareEntities> m_entitiesToKill;
+	std::set<b2Body*> m_bodiesToKill;
+
 };
 
 #endif /* MOUSEEVENTPROCESSOR_H_ */
