@@ -6,11 +6,13 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string.h>
+#include <SFML/OpenGL.hpp>
 
 class Texcoords : public anax::Component<Texcoords>{
 	public:
 	    std::vector<b2Vec2> textCoords;
         sf::Image image;
+		GLuint texture;
 };
 
 

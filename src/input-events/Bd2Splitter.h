@@ -14,6 +14,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <opengl/TextureLoader.h>
 
 struct CompareEntities
 {
@@ -46,6 +47,7 @@ private:
     std::unique_ptr<b2World> m_world;
     std::unique_ptr<anax::World> m_anaxWorld;
     TextureMapper m_textureMapper;
+    TextureLoader m_textureLoader;
 
 	std::set<anax::Entity, CompareEntities> m_entitiesToKill;
 	std::set<b2Body*> m_bodiesToKill;

@@ -74,7 +74,6 @@ void Bd2Splitter::performBox2dSplit(const sf::Event& event){
 void Bd2Splitter::processMouseEventsForSplitter(sf::RenderWindow& App) {
     sf::Event event;
     while( App.pollEvent(event)) {
-
         if(event.type == sf::Event::Closed){
                     App.close();
         }
@@ -96,6 +95,9 @@ void  Bd2Splitter::createNewSplitBodies(B2BoxBuilder& builder,b2Body* body, anax
 
     texCoordsComp.textCoords = m_textureMapper.mapSplitBody(newSplitBody, body,oldTexCoords.textCoords);
     texCoordsComp.image = oldTexCoords.image;
+
+    m_textureLoader.loadAsOpenglTexture(texCoordsComp);
+
     objectEntity.activate();
 }
 

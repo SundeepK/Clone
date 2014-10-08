@@ -28,9 +28,9 @@ int main()
 	//mainRenderWindow.setVerticalSyncEnabled(true);
 
 	b2World b2world(b2Vec2(0, 9.8f));
-	b2world.SetAutoClearForces(false);
+	//	b2world.SetAutoClearForces(false);
 	b2world.SetAllowSleeping(true);
-	//b2world.SetContinuousPhysics(false);
+	b2world.SetContinuousPhysics(false);
 
 	SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
     b2world.SetDebugDraw(&m_debugDrawer);
@@ -46,7 +46,6 @@ int main()
        game.update(dt);
        game.render();
        mainRenderWindow.display();
-      // mainRenderWindow.clear();
     }
 }
 
