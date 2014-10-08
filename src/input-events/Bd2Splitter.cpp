@@ -96,7 +96,16 @@ void  Bd2Splitter::createNewSplitBodies(B2BoxBuilder& builder,b2Body* body, anax
     texCoordsComp.textCoords = m_textureMapper.mapSplitBody(newSplitBody, body,oldTexCoords.textCoords);
     texCoordsComp.image = oldTexCoords.image;
 
-    m_textureLoader.loadAsOpenglTexture(texCoordsComp);
+  //  m_textureLoader.loadAsOpenglTexture(texCoordsComp);
+
+	glGenTextures(1, &texCoordsComp.texture);
+	glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texCoordsComp.image.getSize().x,
+			texCoordsComp.image.getSize().y, GL_RGBA, GL_UNSIGNED_BYTE,
+			texCoordsComp.image.getPixelsPtr());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+			GL_LINEAR_MIPMAP_LINEAR);
 
     objectEntity.activate();
 }

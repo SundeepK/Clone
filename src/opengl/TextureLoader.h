@@ -10,7 +10,7 @@ public:
 	TextureLoader();
 	virtual ~TextureLoader();
 
-	void loadAsOpenglTexture(Texcoords& texCoords);
+	GLuint loadAsOpenglTexture(Texcoords& texCoords);
 
 };
 

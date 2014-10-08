@@ -36,10 +36,19 @@ void TmxBox2dLevelLoader::loadSplittableObjects( tmx::MapObjects& mapObject, ana
 	        if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
 	        		std::cout << "unable to load texture from tmx" << std::endl;
 	        texCoordsComp.image.flipVertically();
-
-	        m_textureLoader.loadAsOpenglTexture(texCoordsComp);
-
 	        texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
+
+	   //     texCoordsComp.texture =  m_textureLoader.loadAsOpenglTexture(texCoordsComp);
+
+			glGenTextures(1, &texCoordsComp.texture);
+			glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);
+			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texCoordsComp.image.getSize().x,
+					texCoordsComp.image.getSize().y, GL_RGBA, GL_UNSIGNED_BYTE,
+					texCoordsComp.image.getPixelsPtr());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+					GL_LINEAR_MIPMAP_LINEAR);
+
 	        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
 	        objectEntity.activate();
 		}
@@ -62,7 +71,7 @@ void TmxBox2dLevelLoader::loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2
 
 void TmxBox2dLevelLoader::loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
 	m_mapLoader->Load(levelName);
-	auto& layers = m_mapLoader->GetLayers();
+	 std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 	const std::string t = "TexCoords";
 	for ( auto& layer : layers) {
 		loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
