@@ -4,13 +4,16 @@
 
 #include <SFML/OpenGL.hpp>
 #include <components/Texcoords.h>
+#include <GL/glut.h>
+
 
 class TextureLoader {
 public:
 	TextureLoader();
 	virtual ~TextureLoader();
 
-	GLuint loadAsOpenglTexture(Texcoords& texCoords);
+    static GLuint loadAsOpenglTexture(Texcoords* texCoords);
+    static GLuint loadAsOpenglTexture(GLuint& gluint, sf::Image& image);
 
 };
 

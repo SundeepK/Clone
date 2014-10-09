@@ -27,7 +27,6 @@ class TmxBox2dLevelLoader {
 		void loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld);
 
 		std::unique_ptr<tmx::MapLoader> m_mapLoader;
-		TextureLoader m_textureLoader;
 };
 
 #endif /* BOX2DLEVELLOADER_H_ */

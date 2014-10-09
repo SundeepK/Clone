@@ -38,16 +38,7 @@ void TmxBox2dLevelLoader::loadSplittableObjects( tmx::MapObjects& mapObject, ana
 	        texCoordsComp.image.flipVertically();
 	        texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
 
-	   //     texCoordsComp.texture =  m_textureLoader.loadAsOpenglTexture(texCoordsComp);
-
-			glGenTextures(1, &texCoordsComp.texture);
-			glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);
-			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, texCoordsComp.image.getSize().x,
-					texCoordsComp.image.getSize().y, GL_RGBA, GL_UNSIGNED_BYTE,
-					texCoordsComp.image.getPixelsPtr());
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-					GL_LINEAR_MIPMAP_LINEAR);
+	        texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
 
 	        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
 	        objectEntity.activate();
