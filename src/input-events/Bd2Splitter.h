@@ -28,16 +28,16 @@ public:
 	Bd2Splitter(b2World& box2dWorld, anax::World& anaxWorld);
 	virtual ~Bd2Splitter();
 
-	void processMouseEventsForSplitter(sf::RenderWindow& App);
+	void processMouseEventsForSplitter(sf::RenderWindow& App, sf::Vector2f cameraPos);
     void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies, b2Body* body);
 
 private:
 
     void createNewSplitBodies(B2BoxBuilder& builder,b2Body* body, anax::Entity& entity);
-    void performBox2dSplit(const sf::Event& event);
+    void performBox2dSplit(const sf::Event& event,  sf::Vector2f cameraPos);
     void performRayCastForSplitter();
-    void processLeftMousePressed(const sf::Event& event);
-    void processLeftMouseReleased(const sf::Event& event);
+    void processLeftMousePressed(const sf::Event& event,  sf::Vector2f cameraPos);
+    void processLeftMouseReleased(const sf::Event& event,  sf::Vector2f cameraPos);
     void deleteEntities();
 	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 

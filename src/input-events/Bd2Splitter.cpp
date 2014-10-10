@@ -21,15 +21,15 @@ void Bd2Splitter::deleteEntities() {
 	m_entitiesToKill.clear();
 }
 
-void Bd2Splitter::processLeftMousePressed(const sf::Event& event){
+void Bd2Splitter::processLeftMousePressed(const sf::Event& event,  sf::Vector2f cameraPos){
     if(isleftPressed) {
-          m_sliceLine[1].position = (sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+          m_sliceLine[1].position = (sf::Vector2f(event.mouseMove.x + cameraPos.x, event.mouseMove.y + cameraPos.y));
           m_sliceLine[1].color =     sf::Color::Red;
       }
 
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-        	sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+        	sf::Vector2f mousePos(event.mouseButton.x + cameraPos.x, event.mouseButton.y +cameraPos.y);
             m_sliceLine[0].position = (mousePos);
             m_sliceLine[0].color =     sf::Color::Red;
             m_sliceLine[1].position = (mousePos);
@@ -39,11 +39,11 @@ void Bd2Splitter::processLeftMousePressed(const sf::Event& event){
     }
 }
 
-void Bd2Splitter::processLeftMouseReleased(const sf::Event& event){
+void Bd2Splitter::processLeftMouseReleased(const sf::Event& event,  sf::Vector2f cameraPos){
     if (event.type == sf::Event::MouseButtonReleased) {
         if (event.mouseButton.button == sf::Mouse::Left) {
         	m_splitter.clearIntersects();
-        	sf::Vector2f mousePos(event.mouseButton.x, event.mouseButton.y);
+        	sf::Vector2f mousePos(event.mouseButton.x + cameraPos.x, event.mouseButton.y + cameraPos.y);
             m_sliceLine[1].position = (mousePos);
             m_sliceLine[1].color =     sf::Color::Red;
             isleftPressed = false;
@@ -66,18 +66,19 @@ void Bd2Splitter::performRayCastForSplitter(){
 }
 
 
-void Bd2Splitter::performBox2dSplit(const sf::Event& event){
-    processLeftMousePressed(event);
-    processLeftMouseReleased(event);
+void Bd2Splitter::performBox2dSplit(const sf::Event& event,  sf::Vector2f cameraPos){
+    processLeftMousePressed(event, cameraPos);
+    processLeftMouseReleased(event, cameraPos);
 }
 
-void Bd2Splitter::processMouseEventsForSplitter(sf::RenderWindow& App) {
+void Bd2Splitter::processMouseEventsForSplitter(sf::RenderWindow& App, sf::Vector2f cameraPos) {
     sf::Event event;
     while( App.pollEvent(event)) {
         if(event.type == sf::Event::Closed){
                     App.close();
         }
-        performBox2dSplit(event);
+        sf::Vector2f gg(App.getViewport(App.getView()).left, App.getViewport(App.getView()).top);
+        performBox2dSplit(event,cameraPos);
     }
 }
 

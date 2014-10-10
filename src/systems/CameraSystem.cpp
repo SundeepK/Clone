@@ -11,14 +11,15 @@ CameraSystem::~CameraSystem() {
 sf::Vector2f CameraSystem::getCameraPosition(){
 	int halfWidth = m_screenWidth / 2;
 	int halfHeight = m_screenHeight / 2;
+	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
 
+	if(getEntities().size() > 0){
 	auto entity = *getEntities().begin();
 	auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 	b2Body* body = physicsComponent.physicsBody;
 	Vec position(body->GetPosition());
 	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
 
-	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
 
 	if (bodyPosInPix.x >= halfWidth) {
 		cameraCenterPos.x = bodyPosInPix.x;
@@ -27,7 +28,10 @@ sf::Vector2f CameraSystem::getCameraPosition(){
 	if (bodyPosInPix.y <= halfHeight) {
 		cameraCenterPos.y = bodyPosInPix.y;
 	}
-	return cameraCenterPos;
+		return cameraCenterPos;
+	}else{
+		return sf::Vector2f();
+	}
 }
 
 void CameraSystem::update(){
@@ -40,6 +44,16 @@ void CameraSystem::updateOpenglCamera() {
     glTranslatef( -cameraPos.x + m_screenWidth/2, -cameraPos.y + m_screenHeight/2, 0);
 }
 
+sf::View CameraSystem::getView() {
+	return m_view;
+}
+
 void CameraSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 	rt.setView(m_view);
+}
+
+
+
+sf::Vector2f CameraSystem::getCamerPos() {
+	return getCameraPosition();
 }

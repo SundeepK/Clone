@@ -16,6 +16,8 @@ class CameraSystem : public sf::Drawable, public anax::System<CameraSystem>{
 		virtual ~CameraSystem();
 		void update();
 		void updateOpenglCamera();
+		sf::Vector2f getCamerPos();
+		sf::View getView();
 
 	private:
 		sf::Vector2f getCameraPosition();
