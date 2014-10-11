@@ -17,9 +17,14 @@
 class OpenGLTextureRenderer : public anax::System<OpenGLTextureRenderer>  {
 public:
 	OpenGLTextureRenderer();
-	virtual ~OpenGLTextureRenderer();
+	~OpenGLTextureRenderer();
 
 	void render();
+
+private:
+
+	class OpenGLTextureRendererImpl;
+	std::unique_ptr<OpenGLTextureRendererImpl> m_impl;
 
 };
 

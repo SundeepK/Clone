@@ -1,14 +1,20 @@
 #include <systems/OpenGLTextureRenderer.h>
 
-OpenGLTextureRenderer::OpenGLTextureRenderer() : Base(anax::ComponentFilter().requires<Texcoords, PhysicsComponent>()) {
 
-}
+class OpenGLTextureRenderer::OpenGLTextureRendererImpl{
 
-OpenGLTextureRenderer::~OpenGLTextureRenderer() {
-}
+public:
+	OpenGLTextureRendererImpl(){
+	}
 
-void OpenGLTextureRenderer::render() {
-	auto entities = getEntities();
+	~OpenGLTextureRendererImpl(){
+	}
+
+	void render(std::vector<anax::Entity>& entities);
+
+};
+
+void OpenGLTextureRenderer::OpenGLTextureRendererImpl::render(std::vector<anax::Entity>& entities) {
 	const float M2P = 30.0f;
 	for (auto entity : entities) {
 
@@ -16,7 +22,6 @@ void OpenGLTextureRenderer::render() {
 
 		auto& texCoordsComp = entity.getComponent<Texcoords>();
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
-		auto& image = texCoordsComp.image;
 
 		auto& texCoordsVec = texCoordsComp.textCoords;
 		b2Body* body = physicsComp.physicsBody;
@@ -47,7 +52,17 @@ void OpenGLTextureRenderer::render() {
 		}
 		glEnd(); //end drawing of polygon
 		glPopMatrix();
-
 	}
+}
 
+
+OpenGLTextureRenderer::OpenGLTextureRenderer() : Base(anax::ComponentFilter().requires<Texcoords, PhysicsComponent>()), m_impl(new OpenGLTextureRendererImpl()) {
+}
+
+OpenGLTextureRenderer::~OpenGLTextureRenderer() {
+}
+
+void OpenGLTextureRenderer::render() {
+	auto entities = getEntities();
+	m_impl->render(entities);
 }

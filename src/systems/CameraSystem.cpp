@@ -3,22 +3,23 @@
 class CameraSystem::CameraSystemImpl {
 
 public:
-	CameraSystemImpl(int width, int height) : m_screenWidth(width), m_screenHeight(height), m_view(sf::FloatRect(0,0, m_screenWidth, m_screenHeight)) {
+	CameraSystemImpl(int width, int height) : m_screenWidth(width), m_screenHeight(height), m_view(sf::FloatRect(0,0, m_screenWidth, m_screenHeight)),
+											m_cameraCenterPos(m_screenWidth/2, m_screenHeight/2) {
 	}
 
 public:
 	sf::Vector2f getCameraPosition(std::vector<anax::Entity>& entities);
+	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 
 	int m_screenWidth;
 	int m_screenHeight;
-	void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 	sf::View m_view;
+	sf::Vector2f m_cameraCenterPos;
+
 };
 
 sf::Vector2f CameraSystem::CameraSystemImpl::getCameraPosition(std::vector<anax::Entity>& entities) {
-	int halfWidth = m_screenWidth / 2;
-	int halfHeight = m_screenHeight / 2;
-	sf::Vector2f cameraCenterPos(halfWidth, halfHeight);
+	sf::Vector2f cameraPositon = m_cameraCenterPos;
 
 	if(entities.size() > 0){
 	auto entity = *entities.begin();
@@ -28,17 +29,18 @@ sf::Vector2f CameraSystem::CameraSystemImpl::getCameraPosition(std::vector<anax:
 	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
 
 
-	if (bodyPosInPix.x >= halfWidth) {
-		cameraCenterPos.x = bodyPosInPix.x;
+	if (bodyPosInPix.x >= m_cameraCenterPos.x) {
+		cameraPositon.x = floor(bodyPosInPix.x);
 	}
 
-	if (bodyPosInPix.y <= halfHeight) {
-		cameraCenterPos.y = bodyPosInPix.y;
+	if (bodyPosInPix.y <= m_cameraCenterPos.y) {
+		cameraPositon.y = floor(bodyPosInPix.y);
 	}
-		return cameraCenterPos;
 	}else{
-		return sf::Vector2f();
+		cameraPositon = sf::Vector2f();
 	}
+
+	return cameraPositon;
 }
 
 
@@ -52,13 +54,13 @@ CameraSystem::~CameraSystem() {
 void CameraSystem::update(){
 	auto entities = getEntities();
 	sf::Vector2f cameraPos = m_impl->getCameraPosition(entities);
-	m_impl->m_view.setCenter(floor(cameraPos.x), cameraPos.y);
+	m_impl->m_view.setCenter(cameraPos.x, cameraPos.y);
 }
 
 void CameraSystem::updateOpenglCamera() {
 	auto entities = getEntities();
 	sf::Vector2f cameraPos = m_impl->getCameraPosition(entities);
-    glTranslatef( -cameraPos.x + m_impl->m_screenWidth/2, -cameraPos.y + m_impl->m_screenHeight/2, 0);
+    glTranslatef( -cameraPos.x + m_impl->m_cameraCenterPos.x, -cameraPos.y + m_impl->m_cameraCenterPos.y, 0);
 }
 
 sf::View CameraSystem::getView() {
