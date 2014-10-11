@@ -3,7 +3,7 @@
 #include <functional>
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
-		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(1280, 800), m_view(sf::FloatRect(0,0, 1280, 800)),
+		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, 1280, 800)),
 		m_splitter(box2dWorld, m_anaxWorld){
 }
 
@@ -50,10 +50,7 @@ void Game::init()
 
 void Game::update(float deltaTime) {
 
-	sf::IntRect rect = m_mainRenderWindow->getViewport(m_cameraSystem.getView());
 	sf::Vector2f p(m_cameraSystem.getView().getCenter());
-
-	m_mainRenderWindow->getView();
     m_splitter.processMouseEventsForSplitter(*m_mainRenderWindow, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
     m_anaxWorld.refresh();
 
