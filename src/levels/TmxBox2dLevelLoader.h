@@ -22,11 +22,9 @@ class TmxBox2dLevelLoader {
 		void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld);
 
 	private:
-		void loadSplittableObjects(tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld);
-		void loadStaticObjects(const tmx::MapObjects& mapObject, b2World& b2dworld);
-		void loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld);
 
-		std::unique_ptr<tmx::MapLoader> m_mapLoader;
+		class TmxBox2dLevelLoaderImpl;
+		std::unique_ptr<TmxBox2dLevelLoaderImpl> m_impl;
 };
 
 #endif /* BOX2DLEVELLOADER_H_ */

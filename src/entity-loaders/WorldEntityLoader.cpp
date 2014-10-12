@@ -1,4 +1,7 @@
 #include "WorldEntityLoader.h"
+#include <vector>
+#include <entity-loaders/PlayerEntityLoader.h>
+#include <components/PhysicsComponent.h>
 
 extern "C"
 {
