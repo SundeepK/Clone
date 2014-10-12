@@ -3,7 +3,7 @@
 
 #include <anax/Component.hpp>
 #include <SFML/System.hpp>
-
+#include <SFML/Window.hpp>
 class PlayerControls
 {
 	public:

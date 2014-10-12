@@ -3,17 +3,7 @@
 
 
 #include <anax/System.hpp>
-#include <Box2D/Box2D.h>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <components/Texcoords.h>
-#include <components/PhysicsComponent.h>
-#include <anax/Component.hpp>
-#include <SFML/OpenGL.hpp>
-#include <GL/glut.h>
-#include <vector>
-#include <iostream>
+#include <memory>
 
 class PhysicsInterpolatorSystem :  public anax::System<PhysicsInterpolatorSystem> {
 public:
@@ -22,6 +12,10 @@ public:
 
 	void resetComponents();
 	void interpolateComponents(float fixedTimestepAccumulatorRatio);
+
+private:
+	class PhysicsInterpolatorSystemImpl;
+	std::unique_ptr<PhysicsInterpolatorSystemImpl> m_impl;
 };
 
 #endif /* PHYSICSINTERPOLATORSYSTEM_H_ */

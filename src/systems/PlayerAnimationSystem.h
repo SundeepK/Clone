@@ -3,14 +3,6 @@
 
 #include <anax/System.hpp>
 #include <Updateable.h>
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <components/PlayerControls.h>
-#include <components/PlayerStateComponent.h>
-#include <components/PlayerState.h>
-#include <components/AnimationComponent.h>
-#include <iostream>
 
 class PlayerAnimationSystem :  public anax::System<PlayerAnimationSystem>{
 public:
@@ -18,6 +10,11 @@ public:
 	virtual ~PlayerAnimationSystem();
 
 	void update(float dt);
+
+private:
+	class PlayerAnimationSystemImpl;
+	std::unique_ptr<PlayerAnimationSystemImpl> m_impl;
+
 
 };
 
