@@ -17,17 +17,17 @@ struct CompareEntities
     }
 };
 
-class B2dSplitter : public B2BodySplitCallback,  public anax::System<B2dSplitter>, public sf::Drawable{
+class B2dSplitter : public B2BodySplitCallback,  public anax::System<B2dSplitter>{
 public:
 	B2dSplitter(b2World& box2dWorld, anax::World& anaxWorld);
 	~B2dSplitter();
 
-	void processMouseEventsForSplitter(sf::RenderWindow& App, sf::Vector2f cameraPos);
     void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies, b2Body* body);
+    void split(b2Vec2 startPoint, b2Vec2 endPoint);
+    void clearIntersects();
+    void deleteEntities();
 
 private:
-
-    void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 
     class B2dSplitterImpl;
     std::unique_ptr<B2dSplitterImpl> m_impl;

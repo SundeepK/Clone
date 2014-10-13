@@ -3,11 +3,6 @@
 
 #include <anax/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
-#include <GL/glut.h>
-#include <Vec.h>
-#include <components/PhysicsComponent.h>
-#include <components/PlayerTagComponent.h>
 #include <memory>
 
 

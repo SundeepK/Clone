@@ -4,7 +4,7 @@
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
 		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, 1280, 800)),
-		m_splitter(box2dWorld, m_anaxWorld){
+		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter){
 }
 
 Game::~Game() {
@@ -23,7 +23,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_physicsInterpolator);
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
 	m_anaxWorld.addSystem(m_cameraSystem);
-	m_anaxWorld.addSystem(m_splitter);
+	m_anaxWorld.addSystem(m_b2Dsplitter);
 
 
 	glDisable(GL_LIGHTING);
@@ -51,7 +51,7 @@ void Game::init()
 void Game::update(float deltaTime) {
 
 	sf::Vector2f p(m_cameraSystem.getView().getCenter());
-    m_splitter.processMouseEventsForSplitter(*m_mainRenderWindow, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
+	m_mouseSplitterSystem.processMouseEventsForSplitter(*m_mainRenderWindow, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
     m_anaxWorld.refresh();
 
   //  m_actionController.update(*m_mainRenderWindow.get());
@@ -73,7 +73,7 @@ void Game::render() {
 
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_mainRenderWindow->draw(m_textureRectSystem);
-	m_mainRenderWindow->draw(m_splitter);
+	m_mainRenderWindow->draw(m_mouseSplitterSystem);
 	m_fixedTimeStepSystem.drawDebug();
 	m_mainRenderWindow->popGLStates();
 

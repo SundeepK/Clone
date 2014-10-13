@@ -28,7 +28,7 @@
 #include <systems/PlayerAnimationSystem.h>
 #include <levels/TmxBox2dLevelLoader.h>
 #include <input-events/B2dSplitter.h>
-
+#include <systems/MouseSplitterSystem.h>
 
 class Game {
 
@@ -63,7 +63,8 @@ class Game {
 		 std::vector<tmx::MapLayer> layers;
 		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
 		 sf::View m_view;
-		 B2dSplitter m_splitter;
+		 B2dSplitter m_b2Dsplitter;
+		 MouseSplitterSystem m_mouseSplitterSystem;
 
 };
 

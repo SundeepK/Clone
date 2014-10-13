@@ -1,4 +1,9 @@
 #include <systems/CameraSystem.h>
+#include <SFML/OpenGL.hpp>
+#include <GL/glut.h>
+#include <Vec.h>
+#include <components/PhysicsComponent.h>
+#include <components/PlayerTagComponent.h>
 
 class CameraSystem::CameraSystemImpl {
 
