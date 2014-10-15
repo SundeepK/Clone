@@ -24,6 +24,8 @@ void Game::init()
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
 	m_anaxWorld.addSystem(m_cameraSystem);
 	m_anaxWorld.addSystem(m_b2Dsplitter);
+	m_anaxWorld.addSystem(m_mouseSplitterSystem);
+
 
 
 	glDisable(GL_LIGHTING);

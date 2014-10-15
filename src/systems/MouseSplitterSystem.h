@@ -1,6 +1,7 @@
 #ifndef MOUSESPLITTERSYSTEM_H_
 #define MOUSESPLITTERSYSTEM_H_
 
+#include <anax/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -8,7 +9,7 @@
 #include <input-events/B2dSplitter.h>
 
 
-class MouseSplitterSystem : public sf::Drawable{
+class MouseSplitterSystem : public anax::System<MouseSplitterSystem>, public sf::Drawable{
 
 public:
 	MouseSplitterSystem(B2dSplitter& wb2dSplitter);
