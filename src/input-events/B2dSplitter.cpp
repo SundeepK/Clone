@@ -39,12 +39,8 @@ public:
 		m_entitiesToKill.clear();
 	}
 
-	void  createNewSplitBodies(B2BoxBuilder& builder,b2Body* body, anax::Entity& entity){
-		Texcoords oldTexCoords = entity.getComponent<Texcoords>();
-		m_bodiesToKill.insert(body);
-		m_entitiesToKill.insert(entity);
 
-	    b2Body* newSplitBody = builder.build(*m_world);
+	void createSplitBodyEntityFromOldTexCoords(b2Body* newSplitBody, b2Body* body, Texcoords oldTexCoords){
 		auto objectEntity = m_anaxWorld->createEntity();
 	    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 	    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
@@ -59,12 +55,20 @@ public:
 	    objectEntity.activate();
 	}
 
+	void  createNewSplitBody(B2BoxBuilder& newSplitB2bodyBuilder,b2Body* oldBodyToSplit, anax::Entity& entity){
+		Texcoords oldBodyTexCoords = entity.getComponent<Texcoords>();
+		m_bodiesToKill.insert(oldBodyToSplit);
+		m_entitiesToKill.insert(entity);
+		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world)
+		createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, oldBodyTexCoords);
+	}
+
 	void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* body, std::vector<anax::Entity> entities) {
 		if (body->GetMass() < 0.1f) return;
 		for (auto builder : splitBodies) {
 			for (auto entity : entities) {
 				if (entity.getComponent<PhysicsComponent>().physicsBody == body) {
-					createNewSplitBodies(builder, body, entity);
+					createNewSplitBody(builder, body, entity);
 					break;
 				}
 			}
