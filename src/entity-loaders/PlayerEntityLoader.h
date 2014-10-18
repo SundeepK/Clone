@@ -9,6 +9,7 @@
 #include <B2Builder.h>
 #include <PhysicsTimeStepSystem.h>
 #include <B2BoxBuilder.h>
+#include <components/SensorComponent.h>
 
 class PlayerEntityLoader : public LuaEntityLoader {
 public:

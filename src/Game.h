@@ -29,6 +29,7 @@
 #include <levels/TmxBox2dLevelLoader.h>
 #include <input-events/B2dSplitter.h>
 #include <systems/MouseSplitterSystem.h>
+#include <systems/SensorSystem.h>
 
 class Game {
 
@@ -65,6 +66,7 @@ class Game {
 		 sf::View m_view;
 		 B2dSplitter m_b2Dsplitter;
 		 MouseSplitterSystem m_mouseSplitterSystem;
+		 SensorSystem m_sensorSystem;
 
 };
 

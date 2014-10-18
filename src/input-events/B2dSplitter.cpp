@@ -59,7 +59,7 @@ public:
 		Texcoords oldBodyTexCoords = entity.getComponent<Texcoords>();
 		m_bodiesToKill.insert(oldBodyToSplit);
 		m_entitiesToKill.insert(entity);
-		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world)
+		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world);
 		createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, oldBodyTexCoords);
 	}
 

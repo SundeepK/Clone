@@ -53,20 +53,35 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
 //    auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
     auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
+    auto& sensorComp = playerEntity.addComponent<SensorComponent>();
+
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
     auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
 
-    B2BoxBuilder builder(20,20);
+    B2BoxBuilder builder(30,40);
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
+    .fixedRotation(true)
     .setDensity(2.0f);
     b2Body* playerBody = builder.build(b2dWorld);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
     playerBody->SetBullet(true);
 
     physComp.physicsBody = playerBody;
+
+    b2PolygonShape footShape;
+    b2FixtureDef footSensor;
+    footSensor.shape = &footShape;
+
+    footSensor.density = 1;
+
+    footShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
+    footSensor.isSensor = true;
+    b2Fixture* footSensorFixture = physComp.physicsBody->CreateFixture(&footSensor);
+
+    sensorComp.sensors = footSensorFixture;
 
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
