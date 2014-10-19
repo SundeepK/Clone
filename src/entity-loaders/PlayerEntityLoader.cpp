@@ -80,7 +80,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     footShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
     footSensor.isSensor = true;
     b2Fixture* footSensorFixture = physComp.physicsBody->CreateFixture(&footSensor);
-
+  //  footSensorFixture->SetUserData("playerFootSenser");
     sensorComp.sensors = footSensorFixture;
 
     sf::RectangleShape rect(sf::Vector2f(20,20));

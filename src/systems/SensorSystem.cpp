@@ -1,5 +1,6 @@
 #include <systems/SensorSystem.h>
 #include <components/SensorComponent.h>
+#include <iostream>
 
 class SensorSystem::SensorSystemImpl {
 
@@ -11,18 +12,21 @@ public:
 	}
 
 	void incrementSensor(b2Contact* contact, std::vector<anax::Entity> entities){
-		for(auto entity : entities){
+		for (auto entity : entities) {
 			auto& sensorComp = entity.getComponent<SensorComponent>();
-				if(sensorComp.sensors == contact->m_fixtureA || sensorComp.sensors == contact->m_fixtureB){
+				if (sensorComp.sensors == contact->GetFixtureA()
+						|| sensorComp.sensors == contact->GetFixtureB()) {
 					sensorComp.currentTotalContacts++;
 				}
 		}
 	}
 
 	void decrementSensor(b2Contact* contact, std::vector<anax::Entity> entities){
-		for(auto entity : entities){
+		for (auto entity : entities) {
 			auto& sensorComp = entity.getComponent<SensorComponent>();
-				if(sensorComp.sensors == contact->m_fixtureA || sensorComp.sensors == contact->m_fixtureB){
+				if (sensorComp.sensors == contact->GetFixtureA()
+						|| sensorComp.sensors == contact->GetFixtureB()) {
+					std::cout << "found sensor --" << std::endl;
 					sensorComp.currentTotalContacts--;
 				}
 		}

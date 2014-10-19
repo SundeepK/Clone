@@ -13,6 +13,7 @@
 #include <components/PlayerState.h>
 #include <components/Texcoords.h>
 #include <iostream>
+#include <components/SensorComponent.h>
 
 class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 
@@ -27,17 +28,17 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 
 	private:
 
-		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerLeft();
-		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerRight();
-		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  playerJump();
-		std::function<void (float, b2Body*, PhysicsComponent& physicsComponent)>  movePlayerDown();
+		std::function<void (float, anax::Entity& entity)>  movePlayerLeft();
+		std::function<void (float, anax::Entity& entity)>  movePlayerRight();
+		std::function<void (float, anax::Entity& entity)>  playerJump();
+		std::function<void (float, anax::Entity& entity)>  movePlayerDown();
 
 		Action m_moveLeft;
 		Action m_moveRight;
 		Action m_jump;
 		Action m_moveDown;
 
-	    ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*, PhysicsComponent&> m_actionController;
+	    ActionController<PlayerState, TemplateHasher<PlayerState>, anax::Entity&> m_actionController;
 	    PlayerState m_currentPlayerState;
 
 	    b2Vec2 left;
@@ -45,7 +46,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 	    b2Vec2 jump;
 	    b2Vec2 down;
 
-	    const float m_impulse = 0.8f;
+	    const float m_impulse = 2.0f;
 
 };
 
