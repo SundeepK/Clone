@@ -26,7 +26,6 @@ public:
 			auto& sensorComp = entity.getComponent<SensorComponent>();
 				if (sensorComp.sensors == contact->GetFixtureA()
 						|| sensorComp.sensors == contact->GetFixtureB()) {
-					std::cout << "found sensor --" << std::endl;
 					sensorComp.currentTotalContacts--;
 				}
 		}
