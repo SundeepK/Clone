@@ -4,7 +4,7 @@
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
 		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, 1280, 800)),
-		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter){
+		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(){
 	box2dWorld.SetContactListener(&m_sensorSystem);
 }
 
@@ -61,7 +61,7 @@ void Game::update(float deltaTime) {
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
-    m_fixedTimeStepSystem.update(deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+    m_fixedTimeStepSystem.update(*m_mainRenderWindow, deltaTime, m_physicsInterpolator, m_playerControlsSystem);
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
 }

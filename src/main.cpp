@@ -27,7 +27,7 @@ int main()
 	mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);
 
-	b2World b2world(b2Vec2(0, 12.0f));
+	b2World b2world(b2Vec2(0, 15.0f));
 	//	b2world.SetAutoClearForces(false);
 	b2world.SetAllowSleeping(true);
 	b2world.SetContinuousPhysics(false);

@@ -4,21 +4,29 @@
 class PlayerControlsSystem::PlayerControlsSystemImpl{
 
 public:
-	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY), m_moveDown (PlayerControls::DOWN_KEY){
+	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY),
+								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released), m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released){
 		 m_actionController[PlayerState::MOVE_LEFT] = m_moveLeft ;
 	     m_actionController[PlayerState::MOVE_RIGHT] = m_moveRight ;
 		 m_actionController[PlayerState::JUMP] = m_jump ;
 		 m_actionController[PlayerState::MOVE_DOWN] = m_moveDown ;
+//		 m_actionController[PlayerState::MOVE_LEFT_RELEASED] = m_moveLeftReleased ;
+//		 m_actionController[PlayerState::MOVE_RIGHT_RELEASED] = m_moveRightReleased ;
 
 		 m_actionController.addCallback(PlayerState::MOVE_LEFT, movePlayerLeft());
 		 m_actionController.addCallback(PlayerState::MOVE_RIGHT,  movePlayerRight());
 		 m_actionController.addCallback(PlayerState::JUMP,  playerJump());
+		 m_actionController.addCallback(PlayerState::MOVE_LEFT_RELEASED,  movePlayerLeftReleased());
+		 m_actionController.addCallback(PlayerState::MOVE_RIGHT_RELEASED,  movePlayerRightReleased());
+
 		// m_actionController.addCallback(PlayerState::MOVE_DOWN,  movePlayerDown());
 	}
 
 	~PlayerControlsSystemImpl(){}
 
 	Action m_moveLeft;
+	Action m_moveLeftReleased;
+	Action m_moveRightReleased;
 	Action m_moveRight;
 	Action m_jump;
 	Action m_moveDown;
@@ -31,17 +39,31 @@ public:
 	b2Vec2 jump;
 	b2Vec2 down;
 
-	const float m_impulse = 3.0f;
-	const float m_jumpImpulse = 4.0f;
+	const float m_impulse = 60.0f;
+	const float m_jumpImpulse = 6.0f;
+	int moved = 0;
 
+	void update(sf::RenderWindow& window, float dt, std::vector<anax::Entity>& entities) {
 
-	void update(float dt, std::vector<anax::Entity>& entities) {
-	    for(auto entity : entities){
-	   			m_actionController.triggerCallbacks(dt, entity);
-	    		auto& playerStateComp = entity.getComponent<PlayerStateComponent>();
-	    		playerStateComp.playerState = m_currentPlayerState;
+	    if(moved == 0){
+			for (auto entity : entities) {
+				auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+				b2Body* body = physicsComponent.physicsBody;
+				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
 
+				auto & sensorComp = entity.getComponent<SensorComponent>();
+				if(sensorComp.currentTotalContacts >= 1)
+					body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+			}
 	    }
+	    moved = 0;
+
+	    for(auto entity : entities){
+	    		auto& playerStateComp = entity.getComponent<PlayerStateComponent>();
+	   			m_actionController.triggerCallbacks(dt, entity);
+	    		playerStateComp.playerState = m_currentPlayerState;
+	    }
+
 	    m_currentPlayerState = PlayerState::DEFAULT_STATE;
 	}
 
@@ -50,8 +72,10 @@ public:
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_LEFT;
-			if(body->GetLinearVelocity().x < -10.0f) {return;}
-			body->ApplyLinearImpulse( b2Vec2(-m_impulse,0.0f), body->GetWorldCenter(), true);
+			if(body->GetLinearVelocity().x > -20.0f  ) {
+				body->ApplyForce( b2Vec2(-m_impulse,0.0f),  body->GetWorldCenter() , true);
+			}
+			moved++;
 		};
 	}
 
@@ -60,10 +84,32 @@ public:
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_RIGHT;
-			if(body->GetLinearVelocity().x > 10.0f) {return;}
-			body->ApplyLinearImpulse( b2Vec2(m_impulse,0.0f), body->GetWorldCenter() , true);
+			if(body->GetLinearVelocity().x < 20.0f) {
+				body->ApplyForce( b2Vec2(m_impulse,0.0f),  body->GetWorldCenter()  , true);
+			}
+			moved++;
 		};
 	}
+
+	std::function<void (float,  anax::Entity& entity)> movePlayerLeftReleased() {
+		 return [this](float,  anax::Entity& entity){
+			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+			b2Body* body = physicsComponent.physicsBody;
+			m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
+			body->SetLinearVelocity(b2Vec2 (0,body->GetLinearVelocity().y));
+		};
+	}
+
+	std::function<void (float,  anax::Entity& entity)> movePlayerRightReleased() {
+		 return [this](float,  anax::Entity& entity){
+			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+			b2Body* body = physicsComponent.physicsBody;
+			m_currentPlayerState = PlayerState::MOVE_RIGHT_RELEASED;
+			body->SetLinearVelocity(b2Vec2 (0,body->GetLinearVelocity().y));
+		};
+	}
+
+
 
 	std::function<void (float, anax::Entity& entity)> playerJump() {
 		return [this](float,  anax::Entity& entity) {
@@ -74,6 +120,7 @@ public:
 
 			if(sensorComp.currentTotalContacts >= 1)
 				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse*2), body->GetWorldCenter() , true);
+			moved++;
 		};
 	}
 
@@ -93,9 +140,9 @@ PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requ
 PlayerControlsSystem::~PlayerControlsSystem() {
 }
 
-void PlayerControlsSystem::update(float dt) {
+void PlayerControlsSystem::update(sf::RenderWindow& window, float dt) {
     auto entities = getEntities();
-    m_impl->update(dt, entities);
+    m_impl->update(window, dt, entities);
 }
 
 

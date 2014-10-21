@@ -24,7 +24,7 @@ public:
     ~PhysicsTimeStepSystem();
     //check git history for move contructor if needed again
 
-    void update(float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);
+    void update(sf::RenderWindow& window, float dt, PhysicsInterpolatorSystem& physicsInterpolator,  PlayerControlsSystem& controlSystem);
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer);
     void drawDebug();
     void step(float dt);

@@ -19,7 +19,7 @@ public:
 	       // textureRect.setPosition(sf::Vector2f(floor(physicsb2Body->GetPosition().x*30-10),floor(physicsb2Body->GetPosition().y*30-10)));
 
 	        auto& animationComp = entity.getComponent<AnimationComponent>().m_sprite;
-	        animationComp.setPosition(sf::Vector2f(floor(center.x*30),floor(center.y*30)));
+	        animationComp.setPosition(sf::Vector2f(floor(center.x*30-30),floor(center.y*30-40)));
 	        rt.draw(animationComp);
 	    }
 	}
