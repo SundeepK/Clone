@@ -54,7 +54,7 @@ public:
 	b2Vec2 jump;
 	b2Vec2 down;
 
-	const float m_impulse = 50.0f;
+	const float m_impulse = 30.0f;
 	const float m_slowDownForce = 5.f;
 	const float m_jumpImpulse = 6.0f;
 	int movedLeft = 0;
@@ -81,14 +81,6 @@ public:
 
 					body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
 
-
-//					if (body->GetLinearVelocity().x > 20.0f) {
-//						body->ApplyForce(b2Vec2(-m_slowDownForce, body->GetLinearVelocity().y), body->GetWorldCenter(), true);
-//					} else if (body->GetLinearVelocity().x < -20.0f) {
-//						body->ApplyForce(b2Vec2(m_slowDownForce, body->GetLinearVelocity().y), body->GetWorldCenter(), true);
-//					} else {
-//						body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
-//					}
 				}
 			}
 	    }
@@ -106,19 +98,28 @@ public:
 	}
 
 	std::function<void (float,  anax::Entity& entity)> movePlayerLeft() {
-		 return [this](float,  anax::Entity& entity){
+		return [this](float, anax::Entity& entity) {
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+			auto & sensorComp = entity.getComponent<SensorComponent>();
+
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_LEFT;
 			m_leftPressed = m_clock.getElapsedTime();
 			float impulse = m_impulse;
 
-			if(( m_leftPressed - m_RightPressed ).asMilliseconds() < 500 && movedRight== 0){
-				impulse = impulse * 5;
+			if(sensorComp.currentTotalContacts >= 1) {
+
+				if(( m_leftPressed - m_RightPressed ).asMilliseconds() < 500 && movedRight== 0 && body->GetLinearVelocity().x > 0) {
+					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 40);
+				}
+
+				if(body->GetLinearVelocity().x <= 0 && body->GetLinearVelocity().x >= -10) {
+					impulse = impulse *8;
+				}
 			}
 
-			if(body->GetLinearVelocity().x > -30.0f  ) {
-				body->ApplyForce( b2Vec2(-impulse,0.0f),  body->GetWorldCenter() , true);
+			if(body->GetLinearVelocity().x > -30.0f ) {
+				body->ApplyForce( b2Vec2(-impulse,0.0f), body->GetWorldCenter() , true);
 			}
 			movedLeft++;
 		};
@@ -127,15 +128,25 @@ public:
 	std::function<void (float, anax::Entity& entity)> movePlayerRight() {
 		 return [this](float,  anax::Entity& entity){
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+			auto & sensorComp = entity.getComponent<SensorComponent>();
+
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_RIGHT;
 			float impulse = m_impulse;
 			m_RightPressed = m_clock.getElapsedTime();
 
-			if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0){
-				std::cout << "in quick boost" << std::endl;
-				impulse = impulse * 5;
+			if(sensorComp.currentTotalContacts >= 1) {
+
+				if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0) {
+					std::cout << "in quick boost" << std::endl;
+					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 40 );
+				}
+
+				if(body->GetLinearVelocity().x >= 0 && body->GetLinearVelocity().x <= 10) {
+					impulse = impulse *8;
+				}
 			}
+
 			if(body->GetLinearVelocity().x < 30.0f) {
 				body->ApplyForce( b2Vec2(impulse,0.0f),  body->GetWorldCenter()  , true);
 			}
