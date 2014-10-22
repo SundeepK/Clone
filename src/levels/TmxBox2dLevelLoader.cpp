@@ -64,7 +64,9 @@ public:
 		 std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 		const std::string t = "TexCoords";
 		for ( auto& layer : layers) {
-			loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
+			if(layer.visible){
+			   loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
+			}
 		}
 	}
 

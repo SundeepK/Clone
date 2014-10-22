@@ -6,24 +6,11 @@
  <tileset firstgid="161" name="SplittableWood" tilewidth="100" tileheight="200">
   <image source="planks.png" width="480" height="480"/>
  </tileset>
- <layer name="SplittableLayer" width="50" height="25" visible="0">
-  <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7D5d4FTLOwjJK2CJgAAAADQmevAYwvaRACi
-  </data>
- </layer>
  <layer name="TileLayer" width="50" height="25">
   <data encoding="base64" compression="zlib">
    eJzt1MEJwCAQRNEtxhJSxZ7Tfy25RAhBRKKQGfkf5ijsu1giomwy93BohUOrEYfDH4QDh4vjeO3r/fWtimN2qxwO4dAKh1Y4tMKhlaMj7z3D8V89x2m2bOwCEvY70w==
   </data>
  </layer>
- <objectgroup name="SplittableObjects" width="50" height="25">
-  <object x="672" y="570" width="98" height="195">
-   <properties>
-    <property name="TexCoords" value="0.0f,1.f,1.0f,1.0f,1.0f,0.0f,0.0f,0.0f"/>
-    <property name="Texture" value="planks.png"/>
-   </properties>
-  </object>
- </objectgroup>
  <objectgroup name="StaticObjects" width="50" height="25">
   <object x="2" y="769">
    <polygon points="0,0 1404,-2 1404,31 -2,32"/>

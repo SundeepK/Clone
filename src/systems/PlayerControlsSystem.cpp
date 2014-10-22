@@ -1,5 +1,16 @@
 #include "PlayerControlsSystem.h"
-
+#include <Updateable.h>
+#include <ActionController.h>
+#include <components/PlayerControls.h>
+#include <components/PlayerStateComponent.h>
+#include <Box2D/Common/b2Math.h>
+#include <components/PhysicsComponent.h>
+#include <unordered_map>
+#include <functional>
+#include <components/PlayerState.h>
+#include <components/Texcoords.h>
+#include <iostream>
+#include <components/SensorComponent.h>
 
 class PlayerControlsSystem::PlayerControlsSystemImpl{
 
@@ -31,6 +42,10 @@ public:
 	Action m_jump;
 	Action m_moveDown;
 
+	sf::Clock m_clock;
+	sf::Time m_leftPressed;
+	sf::Time m_RightPressed;
+
 	ActionController<PlayerState, TemplateHasher<PlayerState>, anax::Entity&> m_actionController;
 	PlayerState m_currentPlayerState;
 
@@ -39,25 +54,48 @@ public:
 	b2Vec2 jump;
 	b2Vec2 down;
 
-	const float m_impulse = 60.0f;
+	const float m_impulse = 50.0f;
+	const float m_slowDownForce = 5.f;
 	const float m_jumpImpulse = 6.0f;
-	int moved = 0;
+	int movedLeft = 0;
+	int movedRight = 0;
 
 	void update(sf::RenderWindow& window, float dt, std::vector<anax::Entity>& entities) {
 
-	    if(moved == 0){
+		if(m_leftPressed.asMilliseconds() == 0){
+			m_leftPressed = m_clock.getElapsedTime();
+		}
+
+		if(m_RightPressed.asMilliseconds() == 0){
+			m_RightPressed = m_clock.getElapsedTime();
+		}
+
+	    if(movedLeft == 0 && movedRight ==0 ){
 			for (auto entity : entities) {
 				auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 				b2Body* body = physicsComponent.physicsBody;
 				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
 
 				auto & sensorComp = entity.getComponent<SensorComponent>();
-				if(sensorComp.currentTotalContacts >= 1)
+				if(sensorComp.currentTotalContacts >= 1){
+
 					body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+
+
+//					if (body->GetLinearVelocity().x > 20.0f) {
+//						body->ApplyForce(b2Vec2(-m_slowDownForce, body->GetLinearVelocity().y), body->GetWorldCenter(), true);
+//					} else if (body->GetLinearVelocity().x < -20.0f) {
+//						body->ApplyForce(b2Vec2(m_slowDownForce, body->GetLinearVelocity().y), body->GetWorldCenter(), true);
+//					} else {
+//						body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+//					}
+				}
 			}
 	    }
-	    moved = 0;
 
+
+	    movedLeft = 0;
+	    movedRight = 0;
 	    for(auto entity : entities){
 	    		auto& playerStateComp = entity.getComponent<PlayerStateComponent>();
 	   			m_actionController.triggerCallbacks(dt, entity);
@@ -72,10 +110,17 @@ public:
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_LEFT;
-			if(body->GetLinearVelocity().x > -20.0f  ) {
-				body->ApplyForce( b2Vec2(-m_impulse,0.0f),  body->GetWorldCenter() , true);
+			m_leftPressed = m_clock.getElapsedTime();
+			float impulse = m_impulse;
+
+			if(( m_leftPressed - m_RightPressed ).asMilliseconds() < 500 && movedRight== 0){
+				impulse = impulse * 5;
 			}
-			moved++;
+
+			if(body->GetLinearVelocity().x > -30.0f  ) {
+				body->ApplyForce( b2Vec2(-impulse,0.0f),  body->GetWorldCenter() , true);
+			}
+			movedLeft++;
 		};
 	}
 
@@ -84,10 +129,17 @@ public:
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_RIGHT;
-			if(body->GetLinearVelocity().x < 20.0f) {
-				body->ApplyForce( b2Vec2(m_impulse,0.0f),  body->GetWorldCenter()  , true);
+			float impulse = m_impulse;
+			m_RightPressed = m_clock.getElapsedTime();
+
+			if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0){
+				std::cout << "in quick boost" << std::endl;
+				impulse = impulse * 5;
 			}
-			moved++;
+			if(body->GetLinearVelocity().x < 30.0f) {
+				body->ApplyForce( b2Vec2(impulse,0.0f),  body->GetWorldCenter()  , true);
+			}
+			movedRight++;
 		};
 	}
 
@@ -120,7 +172,7 @@ public:
 
 			if(sensorComp.currentTotalContacts >= 1)
 				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse*2), body->GetWorldCenter() , true);
-			moved++;
+			movedLeft++;
 		};
 	}
 

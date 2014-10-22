@@ -5,6 +5,8 @@
 #include <components/PhysicsComponent.h>
 #include <components/AnimationComponent.h>
 #include <components/PlayerTagComponent.h>
+#include <components/PlayerStateComponent.h>
+#include <components/Texcoords.h>
 #include <Thor/Animation.hpp>
 #include <B2Builder.h>
 #include <PhysicsTimeStepSystem.h>
