@@ -44,7 +44,16 @@ public:
 
 	sf::Clock m_clock;
 	sf::Time m_leftPressed;
+	sf::Time m_leftBoost;
+	sf::Time m_rightBoost;
 	sf::Time m_RightPressed;
+
+	float frame = 1.0f/60.0f;
+	float beginLeftBoostVal;
+	float beginRightBoostVal;
+
+	bool m_leftBoostInAction;
+	bool m_rightBoostInAction;
 
 	ActionController<PlayerState, TemplateHasher<PlayerState>, anax::Entity&> m_actionController;
 	PlayerState m_currentPlayerState;
@@ -110,12 +119,24 @@ public:
 			if(sensorComp.currentTotalContacts >= 1) {
 
 				if(( m_leftPressed - m_RightPressed ).asMilliseconds() < 500 && movedRight== 0 && body->GetLinearVelocity().x > 0) {
-					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 40);
+					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 50);
+					m_leftBoostInAction = true;
+					m_leftBoost = m_leftPressed;
+					beginLeftBoostVal = body->GetLinearVelocity().x;
+				}
+
+				if(m_leftBoostInAction){
+					frame += 1.0f/60.0f;
+					impulse -= body->GetLinearVelocity().x *  (1.0f/60.0f) * 50;
+					if((m_leftPressed - m_leftBoost).asMilliseconds() > 1000){
+						m_rightBoostInAction = false;
+					}
 				}
 
 				if(body->GetLinearVelocity().x <= 0 && body->GetLinearVelocity().x >= -10) {
 					impulse = impulse *8;
 				}
+
 			}
 
 			if(body->GetLinearVelocity().x > -30.0f ) {
@@ -123,6 +144,10 @@ public:
 			}
 			movedLeft++;
 		};
+	}
+
+	static float easeOutExpo(float currentTime,float beginingValue,float changeInValue, float duration){
+		return (currentTime==duration) ? beginingValue+changeInValue : changeInValue * (- std::pow(4, -10 * currentTime/duration) + 1) + beginingValue;
 	}
 
 	std::function<void (float, anax::Entity& entity)> movePlayerRight() {
@@ -137,17 +162,35 @@ public:
 
 			if(sensorComp.currentTotalContacts >= 1) {
 
-				if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0) {
-					std::cout << "in quick boost" << std::endl;
-					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 40 );
+				if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_rightBoostInAction) {
+					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 50 );
+					m_rightBoostInAction = true;
+					m_rightBoost = m_RightPressed;
+					beginLeftBoostVal = body->GetLinearVelocity().x;
+					frame = 1.0f/60.0f;
+				}
+
+				if(m_rightBoostInAction){
+				//	impulse += body->GetLinearVelocity().x * (1.0f/60.0f) * 50;
+					frame += 1.0f/60.0f;
+					PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 30 -beginLeftBoostVal,1);
+					std::cout<< "easing: " << PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 100 -beginLeftBoostVal ,1) << std::endl;
+					//PlayerControlsSystemImpl::easeOutExpo(frame,body->GetLinearVelocity().x, );
+					impulse = PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 150 -beginLeftBoostVal ,1);
+					float elapsed = (m_RightPressed - m_rightBoost ).asMilliseconds();
+					if(elapsed > 1000.0f){
+						m_rightBoostInAction = false;
+					}
+
 				}
 
 				if(body->GetLinearVelocity().x >= 0 && body->GetLinearVelocity().x <= 10) {
-					impulse = impulse *8;
+					//impulse = impulse *8;
 				}
+
 			}
 
-			if(body->GetLinearVelocity().x < 30.0f) {
+			if(body->GetLinearVelocity().x < 40.0f) {
 				body->ApplyForce( b2Vec2(impulse,0.0f),  body->GetWorldCenter()  , true);
 			}
 			movedRight++;
