@@ -97,13 +97,29 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
 
     rightSensor.density = 1;
     rightSensor.restitution = 0.0f;
-    rightShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
+    rightShape.SetAsBox(0.15, 0.15, b2Vec2(0.5,0), 0);
     rightSensor.isSensor = true;
     b2Fixture* rightSensorFixture = physComp.physicsBody->CreateFixture(&rightSensor);
     SensorComponent rightSensorComp;
     rightSensorComp.sensors = rightSensorFixture;
     rightSensorComp.tag = "RightSensor";
     sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("RightSensor", rightSensorComp));
+
+
+    //left sensor
+    b2PolygonShape leftShape;
+    b2FixtureDef leftSensor;
+    leftSensor.shape = &leftShape;
+
+    leftSensor.density = 1;
+    leftSensor.restitution = 0.0f;
+    leftShape.SetAsBox(0.15, 0.15, b2Vec2(-0.5,0), 0);
+    leftSensor.isSensor = true;
+    b2Fixture* leftSensorFixture = physComp.physicsBody->CreateFixture(&leftSensor);
+    SensorComponent leftSensorComp;
+    leftSensorComp.sensors = leftSensorFixture;
+    leftSensorComp.tag = "LeftSensor";
+    sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("LeftSensor", leftSensorComp));
 
 
 
