@@ -10,6 +10,7 @@
 #include <components/PlayerState.h>
 #include <components/Texcoords.h>
 #include <iostream>
+#include <components/Sensors.h>
 #include <components/SensorComponent.h>
 
 class PlayerControlsSystem::PlayerControlsSystemImpl{
@@ -46,12 +47,13 @@ public:
 	sf::Time m_leftPressed;
 	sf::Time m_leftBoost;
 	sf::Time m_rightBoost;
-	sf::Time m_RightPressed;
+	sf::Time m_rightPressed;
 
-	float frame = 1.0f/60.0f;
+	float rightFrame = 1.0f/60.0f;
+	float leftFrame = 1.0f/60.0f;
 	float beginLeftBoostVal;
 	float beginRightBoostVal;
-
+	float m_switchDirectionBoost = 200.0f;
 	bool m_leftBoostInAction;
 	bool m_rightBoostInAction;
 
@@ -63,7 +65,7 @@ public:
 	b2Vec2 jump;
 	b2Vec2 down;
 
-	const float m_impulse = 30.0f;
+	const float m_impulse = 40.0f;
 	const float m_slowDownForce = 5.f;
 	const float m_jumpImpulse = 6.0f;
 	int movedLeft = 0;
@@ -75,8 +77,8 @@ public:
 			m_leftPressed = m_clock.getElapsedTime();
 		}
 
-		if(m_RightPressed.asMilliseconds() == 0){
-			m_RightPressed = m_clock.getElapsedTime();
+		if(m_rightPressed.asMilliseconds() == 0){
+			m_rightPressed = m_clock.getElapsedTime();
 		}
 
 	    if(movedLeft == 0 && movedRight ==0 ){
@@ -85,12 +87,11 @@ public:
 				b2Body* body = physicsComponent.physicsBody;
 				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
 
-				auto & sensorComp = entity.getComponent<SensorComponent>();
-				if(sensorComp.currentTotalContacts >= 1){
-
-					body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
-
-				}
+				auto &sensorComps = entity.getComponent<Sensor>();
+				auto sensor = sensorComps.sensors["FootSensor"];
+					if(sensor.currentTotalContacts >= 1){
+						body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+					}
 			}
 	    }
 
@@ -106,10 +107,15 @@ public:
 	    m_currentPlayerState = PlayerState::DEFAULT_STATE;
 	}
 
+
+	static float easeOutExpo(float currentTime,float beginingValue,float changeInValue, float duration){
+		return (currentTime==duration) ? beginingValue+changeInValue : changeInValue * (- std::pow(6, -10 * currentTime/duration) + 1) + beginingValue;
+	}
+
 	std::function<void (float,  anax::Entity& entity)> movePlayerLeft() {
 		return [this](float, anax::Entity& entity) {
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-			auto & sensorComp = entity.getComponent<SensorComponent>();
+			auto & sensorComp = entity.getComponent<Sensor>().sensors["FootSensor"];
 
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_LEFT;
@@ -118,76 +124,60 @@ public:
 
 			if(sensorComp.currentTotalContacts >= 1) {
 
-				if(( m_leftPressed - m_RightPressed ).asMilliseconds() < 500 && movedRight== 0 && body->GetLinearVelocity().x > 0) {
-					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 50);
+				if(( m_leftPressed - m_rightPressed ).asMilliseconds() < 500 && movedRight== 0 && body->GetLinearVelocity().x > 0 && !m_leftBoostInAction) {
 					m_leftBoostInAction = true;
 					m_leftBoost = m_leftPressed;
 					beginLeftBoostVal = body->GetLinearVelocity().x;
+					leftFrame = 1.0f/60.0f;
 				}
+
 
 				if(m_leftBoostInAction){
-					frame += 1.0f/60.0f;
-					impulse -= body->GetLinearVelocity().x *  (1.0f/60.0f) * 50;
-					if((m_leftPressed - m_leftBoost).asMilliseconds() > 1000){
-						m_rightBoostInAction = false;
+					leftFrame += 1.0f/60.0f;
+					impulse = PlayerControlsSystemImpl::easeOutExpo(leftFrame,beginLeftBoostVal, -m_switchDirectionBoost  - beginLeftBoostVal ,1.0f);
+					float elapsed = (m_leftPressed - m_leftBoost ).asMilliseconds();
+					if(elapsed > 500.0f){
+						m_leftBoostInAction = false;
 					}
-				}
-
-				if(body->GetLinearVelocity().x <= 0 && body->GetLinearVelocity().x >= -10) {
-					impulse = impulse *8;
 				}
 
 			}
 
-			if(body->GetLinearVelocity().x > -30.0f ) {
-				body->ApplyForce( b2Vec2(-impulse,0.0f), body->GetWorldCenter() , true);
+			if(body->GetLinearVelocity().x > -40.0f ) {
+				body->ApplyForce( b2Vec2(-std::abs(impulse),0.0f), body->GetWorldCenter() , true);
 			}
 			movedLeft++;
 		};
 	}
 
-	static float easeOutExpo(float currentTime,float beginingValue,float changeInValue, float duration){
-		return (currentTime==duration) ? beginingValue+changeInValue : changeInValue * (- std::pow(4, -10 * currentTime/duration) + 1) + beginingValue;
-	}
-
 	std::function<void (float, anax::Entity& entity)> movePlayerRight() {
 		 return [this](float,  anax::Entity& entity){
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-			auto & sensorComp = entity.getComponent<SensorComponent>();
+			auto & sensorComp = entity.getComponent<Sensor>().sensors["FootSensor"];
 
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_RIGHT;
 			float impulse = m_impulse;
-			m_RightPressed = m_clock.getElapsedTime();
+			m_rightPressed = m_clock.getElapsedTime();
 
 			if(sensorComp.currentTotalContacts >= 1) {
 
-				if((m_RightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_rightBoostInAction) {
-					impulse = std::abs(impulse * (body->GetLinearVelocity().x * (1.0f/60.0f)) * 50 );
+				if((m_rightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_rightBoostInAction) {
+					std::cout << "in right" <<std::endl;
 					m_rightBoostInAction = true;
-					m_rightBoost = m_RightPressed;
-					beginLeftBoostVal = body->GetLinearVelocity().x;
-					frame = 1.0f/60.0f;
+					m_rightBoost = m_rightPressed;
+					beginRightBoostVal= body->GetLinearVelocity().x;
+					rightFrame = 1.0f/60.0f;
 				}
 
 				if(m_rightBoostInAction){
-				//	impulse += body->GetLinearVelocity().x * (1.0f/60.0f) * 50;
-					frame += 1.0f/60.0f;
-					PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 30 -beginLeftBoostVal,1);
-					std::cout<< "easing: " << PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 100 -beginLeftBoostVal ,1) << std::endl;
-					//PlayerControlsSystemImpl::easeOutExpo(frame,body->GetLinearVelocity().x, );
-					impulse = PlayerControlsSystemImpl::easeOutExpo(frame,beginLeftBoostVal, 150 -beginLeftBoostVal ,1);
-					float elapsed = (m_RightPressed - m_rightBoost ).asMilliseconds();
+					rightFrame += 1.0f/60.0f;
+					impulse = PlayerControlsSystemImpl::easeOutExpo(rightFrame,beginRightBoostVal, m_switchDirectionBoost -beginRightBoostVal ,1.0f);
+					float elapsed = (m_rightPressed - m_rightBoost ).asMilliseconds();
 					if(elapsed > 1000.0f){
 						m_rightBoostInAction = false;
 					}
-
 				}
-
-				if(body->GetLinearVelocity().x >= 0 && body->GetLinearVelocity().x <= 10) {
-					//impulse = impulse *8;
-				}
-
 			}
 
 			if(body->GetLinearVelocity().x < 40.0f) {
@@ -220,7 +210,7 @@ public:
 	std::function<void (float, anax::Entity& entity)> playerJump() {
 		return [this](float,  anax::Entity& entity) {
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-			auto & sensorComp = entity.getComponent<SensorComponent>();
+			auto & sensorComp = entity.getComponent<Sensor>().sensors["FootSensor"];
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::JUMP;
 
@@ -240,7 +230,7 @@ public:
 	}
 };
 
-PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requires<PlayerStateComponent, PhysicsComponent, SensorComponent>()), m_impl(new PlayerControlsSystemImpl()){
+PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requires<PlayerStateComponent, PhysicsComponent, Sensor>()), m_impl(new PlayerControlsSystemImpl()){
 }
 
 PlayerControlsSystem::~PlayerControlsSystem() {

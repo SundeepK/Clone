@@ -3,13 +3,13 @@
 
 #include <Box2D/Box2D.h>
 #include <anax/Component.hpp>
-#include <vector>
 
 class SensorComponent  : public anax::Component<SensorComponent> {
 
 	public:
+		std::string tag;
 		b2Fixture* sensors;
-		int currentTotalContacts;
+		int currentTotalContacts = 0;
 
 };
 

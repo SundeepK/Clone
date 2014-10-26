@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="200" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="TileLayer" width="200" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztmusKwyAMhfdQ9gX75PuzQXHGXDyxup4PhJZWTWJOUtiOFyGkxfEZhJBfqA/yJE7n+9QHGaXcbYCDTH3sFAeST7mMXUDpo+X3inHY7Xz+hV3jjuwfpbqOxEObNxpnVA2747x3zTGU3eU1vwetpA+L7yOxuc6doTHUGe74XXIFFes6v1Br9sapPK/x6MPjhyV3R3Mb3d8y+5xnHc95W88ZxUiMe7Z57Y7GRdKHRIY+LLUBUfvredH+ps3P1gY6v7M04lk34o+3drT2ieijB1ofrT1b95a81EDowzIfpY3rdXatR/cW69zsfbQaFu0f0r4WfVhrfa8+eu5HGKlVFtu9IHP0Liw5i/Stt563X2j60ND00ar1Uh5Z6m9GDnrXsvowet47a+KLdq7Zvo32i5Y+6vk9tN8HLXXW2hNn5Umkx9XPo7b+gya+aHVkBf+s30pS/9D8iOrDk/Oz4xnpcZ53tLkr5A2CVi+92zf095Wmk4g+ajutPs3E6j9ps2rsEPrwwP8nkidBfRAiQ30QgoP6IESG+iBEhvogRIb6IESG+iBE5thglAVs4HjueAN9xZZ4
+  </data>
+ </layer>
+ <objectgroup name="StaticObjects" width="200" height="25">
+  <object x="6373" y="-3" width="24" height="771"/>
+  <object x="3" y="3" width="26" height="762"/>
+  <object x="5" y="769" width="6317" height="29"/>
+  <object x="5985" y="65" width="35" height="513"/>
+ </objectgroup>
+</map>

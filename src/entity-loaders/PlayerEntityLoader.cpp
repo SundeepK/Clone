@@ -53,7 +53,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
 //    auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
     auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
-    auto& sensorComp = playerEntity.addComponent<SensorComponent>();
+    auto& sensorsComp = playerEntity.addComponent<Sensor>();
 
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
@@ -64,24 +64,49 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(30,30))
     .fixedRotation(true)
-    .setDensity(2.0f);
+    .setRestitution(0.0f)
+    .setDensity(1.0f);
     b2Body* playerBody = builder.build(b2dWorld);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
     playerBody->SetBullet(true);
 
     physComp.physicsBody = playerBody;
 
+
+    //foot sensor
     b2PolygonShape footShape;
     b2FixtureDef footSensor;
     footSensor.shape = &footShape;
 
     footSensor.density = 1;
-
+    footSensor.restitution = 0.0f;
     footShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
     footSensor.isSensor = true;
     b2Fixture* footSensorFixture = physComp.physicsBody->CreateFixture(&footSensor);
-  //  footSensorFixture->SetUserData("playerFootSenser");
-    sensorComp.sensors = footSensorFixture;
+    SensorComponent footSensorComp;
+    footSensorComp.sensors = footSensorFixture;
+    footSensorComp.tag = "FootSensor";
+    sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("FootSensor", footSensorComp));
+
+
+
+    //right sensor
+    b2PolygonShape rightShape;
+    b2FixtureDef rightSensor;
+    rightSensor.shape = &rightShape;
+
+    rightSensor.density = 1;
+    rightSensor.restitution = 0.0f;
+    rightShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
+    rightSensor.isSensor = true;
+    b2Fixture* rightSensorFixture = physComp.physicsBody->CreateFixture(&rightSensor);
+    SensorComponent rightSensorComp;
+    rightSensorComp.sensors = rightSensorFixture;
+    rightSensorComp.tag = "RightSensor";
+    sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("RightSensor", rightSensorComp));
+
+
+
 
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
