@@ -44,20 +44,16 @@ public:
 	Action m_moveDown;
 
 	sf::Clock m_clock;
+	sf::Time m_changeInDirectionTime;
 	sf::Time m_leftPressed;
-	sf::Time m_leftBoost;
-	sf::Time m_rightBoost;
 	sf::Time m_rightPressed;
 	sf::Time m_lastJumpTime;
 
-	float rightFrame = 1.0f/60.0f;
-	float leftFrame = 1.0f/60.0f;
-	float beginLeftBoostVal;
-	float beginRightBoostVal;
+	float frameIteration = 1.0f/60.0f;
+	float beginBoostVal;
 	float m_switchDirectionBoost = 200.0f;
-	bool m_leftBoostInAction;
-	bool m_rightBoostInAction;
 
+	bool m_boostInAction;
 	bool m_isLeftWallJumpTriggered;
 	bool m_isRightWallJumpTriggered;
 
@@ -118,6 +114,35 @@ public:
 		return (currentTime==duration) ? beginingValue+changeInValue : changeInValue * (- std::pow(6, -10 * currentTime/duration) + 1) + beginingValue;
 	}
 
+
+	void setupChangeDirectionBoost(SensorComponent& footSensor,  float dtSinceChangeInDirection, int keyPressCount, b2Body* player){
+		float xvelocity = player->GetLinearVelocity().x;
+		if (footSensor.currentTotalContacts >= 1) {
+			if (dtSinceChangeInDirection < 500 && movedRight == 0 && xvelocity > 0 && !m_boostInAction) {
+				m_boostInAction = true;
+				m_changeInDirectionTime = m_leftPressed;
+				beginBoostVal = xvelocity;
+				frameIteration = 1.0f / 60.0f;
+			}
+		}
+	}
+
+	void applyForce(b2Body* player,float impulse, int oppositeKeyPressedCount, bool isWalledJumped){
+		float xVelocity = player->GetLinearVelocity().x ;
+		b2Vec2 playerCenter = player->GetWorldCenter();
+		if(xVelocity > -40.0f ) {
+			if(isWalledJumped && !m_boostInAction && oppositeKeyPressedCount <= 0){
+				player->ApplyForce( b2Vec2(impulse,-80), playerCenter , true);
+				m_boostInAction = true;
+				m_changeInDirectionTime = m_leftPressed;
+				frameIteration = 1.0f/60.0f;
+				beginBoostVal = xVelocity;
+			}else{
+				player->ApplyForce( b2Vec2(impulse,0.0f), playerCenter , true);
+			}
+		}
+	}
+
 	std::function<void (float,  anax::Entity& entity)> movePlayerLeft() {
 		return [this](float, anax::Entity& entity) {
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
@@ -128,41 +153,23 @@ public:
 			m_leftPressed = m_clock.getElapsedTime();
 			float impulse = m_impulse;
 
-			if(sensorComp.currentTotalContacts >= 1) {
+			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), movedRight, body);
 
-				if(( m_leftPressed - m_rightPressed ).asMilliseconds() < 500 && movedRight== 0 && body->GetLinearVelocity().x > 0 && !m_leftBoostInAction) {
-					m_leftBoostInAction = true;
-					m_leftBoost = m_leftPressed;
-					beginLeftBoostVal = body->GetLinearVelocity().x;
-					leftFrame = 1.0f/60.0f;
-				}
-			}
-
-			if(m_leftBoostInAction){
-				leftFrame += 1.0f/60.0f;
+			if(m_boostInAction){
+				frameIteration += 1.0f/60.0f;
 				if(m_isLeftWallJumpTriggered){
-					impulse = PlayerControlsSystemImpl::easeOutExpo(leftFrame,beginLeftBoostVal, -60  - beginLeftBoostVal ,2.0f);
+					impulse = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -60  - beginBoostVal ,2.0f);
 				}else{
-					impulse = PlayerControlsSystemImpl::easeOutExpo(leftFrame,beginLeftBoostVal, -m_switchDirectionBoost  - beginLeftBoostVal ,1.0f);
+					impulse = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -m_switchDirectionBoost  - beginBoostVal ,1.0f);
 				}
-				float elapsed = (m_leftPressed - m_leftBoost ).asMilliseconds();
+				float elapsed = (m_leftPressed - m_changeInDirectionTime ).asMilliseconds();
 				if(elapsed > 500.0f){
-					m_leftBoostInAction = false;
+					m_boostInAction = false;
 					m_isLeftWallJumpTriggered = false;
 				}
 			}
 
-			if(body->GetLinearVelocity().x > -40.0f ) {
-				if(m_isLeftWallJumpTriggered && !m_leftBoostInAction && movedRight <= 0){
-					body->ApplyForce( b2Vec2(-std::abs(impulse),-80), body->GetWorldCenter() , true);
-					m_leftBoostInAction = true;
-					m_leftBoost = m_leftPressed;
-					leftFrame = 1.0f/60.0f;
-					beginLeftBoostVal = body->GetLinearVelocity().x;
-				}else{
-					body->ApplyForce( b2Vec2(-std::abs(impulse),0.0f), body->GetWorldCenter() , true);
-				}
-			}
+			applyForce(body, -std::abs(impulse), movedRight, m_isLeftWallJumpTriggered);
 			movedLeft++;
 		};
 	}
@@ -179,27 +186,27 @@ public:
 
 			if(sensorComp.currentTotalContacts >= 1) {
 
-				if((m_rightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_rightBoostInAction) {
+				if((m_rightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_boostInAction) {
 					std::cout << "in right" <<std::endl;
-					m_rightBoostInAction = true;
-					m_rightBoost = m_rightPressed;
-					beginRightBoostVal= body->GetLinearVelocity().x;
-					rightFrame = 1.0f/60.0f;
+					m_boostInAction = true;
+					m_changeInDirectionTime = m_rightPressed;
+					beginBoostVal= body->GetLinearVelocity().x;
+					frameIteration = 1.0f/60.0f;
 				}
 
 			}
 
 
-			if(m_rightBoostInAction){
-				rightFrame += 1.0f/60.0f;
+			if(m_boostInAction){
+				frameIteration += 1.0f/60.0f;
 				if(m_isRightWallJumpTriggered){
-					impulse = PlayerControlsSystemImpl::easeOutExpo(rightFrame,beginLeftBoostVal, 60  - beginRightBoostVal ,2.0f);
+					impulse = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, 60  - beginBoostVal ,2.0f);
 				}else{
-					impulse = PlayerControlsSystemImpl::easeOutExpo(rightFrame,beginLeftBoostVal, m_switchDirectionBoost  - beginRightBoostVal ,1.0f);
+					impulse = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, m_switchDirectionBoost  - beginBoostVal ,1.0f);
 				}
-				float elapsed = (m_rightPressed - m_rightBoost ).asMilliseconds();
+				float elapsed = (m_rightPressed - m_changeInDirectionTime ).asMilliseconds();
 				if(elapsed > 1000.0f){
-					m_rightBoostInAction = false;
+					m_boostInAction = false;
 					m_isRightWallJumpTriggered = false;
 				}
 			}
@@ -207,12 +214,12 @@ public:
 
 			if(body->GetLinearVelocity().x < 40.0f) {
 
-				if(m_isRightWallJumpTriggered && !m_rightBoostInAction){
+				if(m_isRightWallJumpTriggered && !m_boostInAction){
 					body->ApplyForce( b2Vec2(std::abs(impulse),-80), body->GetWorldCenter() , true);
-					m_rightBoostInAction = true;
-					m_rightBoost = m_leftPressed;
-					rightFrame = 1.0f/60.0f;
-					beginLeftBoostVal = body->GetLinearVelocity().x;
+					m_boostInAction = true;
+					m_changeInDirectionTime = m_leftPressed;
+					frameIteration = 1.0f/60.0f;
+					beginBoostVal = body->GetLinearVelocity().x;
 				}else{
 					body->ApplyForce( b2Vec2(std::abs(impulse),0.0f), body->GetWorldCenter() , true);
 				}
