@@ -5,13 +5,22 @@
  </tileset>
  <layer name="TileLayer" width="200" height="25">
   <data encoding="base64" compression="zlib">
-   eJztmusKwyAMhfdQ9gX75PuzQXHGXDyxup4PhJZWTWJOUtiOFyGkxfEZhJBfqA/yJE7n+9QHGaXcbYCDTH3sFAeST7mMXUDpo+X3inHY7Xz+hV3jjuwfpbqOxEObNxpnVA2747x3zTGU3eU1vwetpA+L7yOxuc6doTHUGe74XXIFFes6v1Br9sapPK/x6MPjhyV3R3Mb3d8y+5xnHc95W88ZxUiMe7Z57Y7GRdKHRIY+LLUBUfvredH+ps3P1gY6v7M04lk34o+3drT2ieijB1ofrT1b95a81EDowzIfpY3rdXatR/cW69zsfbQaFu0f0r4WfVhrfa8+eu5HGKlVFtu9IHP0Liw5i/Stt563X2j60ND00ar1Uh5Z6m9GDnrXsvowet47a+KLdq7Zvo32i5Y+6vk9tN8HLXXW2hNn5Umkx9XPo7b+gya+aHVkBf+s30pS/9D8iOrDk/Oz4xnpcZ53tLkr5A2CVi+92zf095Wmk4g+ajutPs3E6j9ps2rsEPrwwP8nkidBfRAiQ30QgoP6IESG+iBEhvogRIb6IESG+iBE5thglAVs4HjueAN9xZZ4
+   eJztmlkOwzAIRHODXsa5/9X600qRa8ywJU46T0Lqhm0wA5Xafdu2F41G+7H9Y4SQX6gPQmSoDxKlXX2AQiz6eHIeiJ12sKci6WMU94p5ePr9rMq/5H02P1r32JMPzS+a56wedsV937XGss7dtvVnUKU+kNgjuTn6nqGxrDtcvSY0snLd11fWmjPTfHos+uhfQ84884nWdvZ8q5xzlnUs943ecxaRHM/OZj13JC+WfFXoA+kNGb2/9/PON82/WhvZ9V2lEcu6nnisnx3t49HHjGx9jPYcPUfqUiNDH4h/ljaOj6t7ffZsQX2r99F6mHd+SPsi+kB7/aw/Wp5HiPQq5OxWMmv0KpCazYxttp51Xmj60ND0Mer1Uh0h/beiBq1roTFE7/vOmvii3Wt1bNF5Id0Benbt90Gkz6Iz8aw68cy4/n3vWZ+giS9aH1khPvS7kjQ/tDi8+rDU/Nn59Mw4y2c03xXqJgNPv60m+/uVphOPPvo90JjOBI2fjFk1dxn6sMD/JxIiQ30QIkN9ECJDfRAiQ30QIkN9ECJDfRAiQ30QIrPfwNoCZ6D9r70BEjCZVg==
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="200" height="25">
   <object x="6373" y="-3" width="24" height="771"/>
   <object x="3" y="3" width="26" height="762"/>
   <object x="5" y="769" width="6317" height="29"/>
-  <object x="5985" y="65" width="35" height="513"/>
+  <object x="33" y="2" width="6335" height="28"/>
+ </objectgroup>
+ <objectgroup color="#10a400" name="SplittableObjects" width="200" height="25">
+  <object x="1185" y="576">
+   <properties>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+   <polygon points="0,0 -35,-1 -34,-392 0,-391"/>
+  </object>
  </objectgroup>
 </map>

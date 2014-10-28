@@ -51,7 +51,7 @@ public:
 
 	float frameIteration = 1.0f/60.0f;
 	float beginBoostVal;
-	float m_switchDirectionBoost = 200.0f;
+	float m_switchDirectionBoost = 170.0f;
 
 	bool m_boostInAction;
 	bool m_isLeftWallJumpTriggered;
@@ -65,10 +65,11 @@ public:
 	b2Vec2 jump;
 	b2Vec2 down;
 
-	const float m_impulse = 40.0f;
+	const float m_impulse = 35.0f;
 	const float m_slowDownForce = 5.f;
-	const float m_jumpImpulse = 160.0f;
-	const float m_wallJumpForce = 300.0f;
+	const float m_jumpImpulse = 5.0f;
+	const float m_wallJumpImpulse = 5.5f;
+	const float m_wallJumpForce = 4.0f;
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
@@ -260,12 +261,12 @@ public:
 			m_currentPlayerState = PlayerState::JUMP;
 
 			if(footSensor.currentTotalContacts >= 1){
-				body->ApplyForce( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
+				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 			}else if(leftSensor.currentTotalContacts >= 1){
-				body->ApplyForce( b2Vec2(m_wallJumpForce,-m_jumpImpulse*3), body->GetWorldCenter() , true);
+				body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 				m_isLeftWallJumpTriggered = true;
 			}else if(rightSensor.currentTotalContacts >= 1){
-				body->ApplyForce( b2Vec2(-m_wallJumpForce,-m_jumpImpulse*3), body->GetWorldCenter() , true);
+				body->ApplyLinearImpulse( b2Vec2(-m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 				m_isRightWallJumpTriggered = true;
 			}
 		};

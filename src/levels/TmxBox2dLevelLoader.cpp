@@ -38,7 +38,7 @@ public:
 		        texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
 
 		        texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
-
+		        std::cout << object.PolyPoints().size() << "points size" << std::endl;
 		        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
 		        objectEntity.activate();
 			}
