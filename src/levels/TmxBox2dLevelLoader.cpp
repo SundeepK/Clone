@@ -39,7 +39,13 @@ public:
 
 		        texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
 		        std::cout << object.PolyPoints().size() << "points size" << std::endl;
-		        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
+
+		        if(object.GetPropertyString("Body") == "dynamic"){
+			        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
+		        }else{
+			        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
+		        }
+
 		        objectEntity.activate();
 			}
 	}
