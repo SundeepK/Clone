@@ -10,6 +10,8 @@
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <opengl/TextureLoader.h>
+#include <components/SplitDirectionComponent.h>
+#include <unordered_map>
 #include <SFML/OpenGL.hpp>
 #include <GL/glut.h>
 
@@ -25,6 +27,7 @@ class TmxBox2dLevelLoader {
 
 		class TmxBox2dLevelLoaderImpl;
 		std::unique_ptr<TmxBox2dLevelLoaderImpl> m_impl;
+
 };
 
 #endif /* BOX2DLEVELLOADER_H_ */

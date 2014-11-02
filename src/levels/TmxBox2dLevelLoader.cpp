@@ -3,7 +3,16 @@
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
 
-	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory) : m_mapLoader(&mapDirectory) {}
+	std::unique_ptr<tmx::MapLoader> m_mapLoader;
+	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
+
+	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory) : m_mapLoader(&mapDirectory) {
+		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
+		m_splitDirectionMap["left"] = SplitDirection::LEFT;
+		m_splitDirectionMap["top"] =  SplitDirection::TOP;
+		m_splitDirectionMap["down"] = SplitDirection::DOWN;
+	}
+
 	~TmxBox2dLevelLoaderImpl() {}
 
 	std::vector<b2Vec2> parseTexCoordsFromTmxObject(std::string texCoordsToParse){
@@ -26,11 +35,22 @@ public:
 	}
 
 
+	SplitDirection parseSplitDirection(std::string direction){
+		auto splitDirection =  m_splitDirectionMap.find(direction);
+		std::cout << "dir: " << direction << std::endl;
+    	assert (
+    		"Split direction is not found" &&
+    		splitDirection != m_splitDirectionMap.end()
+    	);
+    	return splitDirection->second;
+	}
+
 	void loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
 			for ( auto& object : mapObject) {
 				auto objectEntity = anaxWorld.createEntity();
 			    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 			    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+			    auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
 
 		        if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
 		        		std::cout << "unable to load texture from tmx" << std::endl;
@@ -45,6 +65,8 @@ public:
 		        }else{
 			        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
 		        }
+
+		        splitDirectionComp.splitDirection = parseSplitDirection(object.GetPropertyString("SplitDir"));
 
 		        objectEntity.activate();
 			}
@@ -76,7 +98,6 @@ public:
 		}
 	}
 
-	std::unique_ptr<tmx::MapLoader> m_mapLoader;
 };
 
 TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory) : m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory)) {

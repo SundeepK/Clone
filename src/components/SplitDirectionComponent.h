@@ -4,7 +4,7 @@
 #include <anax/Component.hpp>
 
 enum class SplitDirection {
-		RIGHT = 1,
+		RIGHT,
 		LEFT,
 		TOP,
 		DOWN
@@ -13,6 +13,8 @@ enum class SplitDirection {
 
 class SplitDirectionComponent : public anax::Component<SplitDirectionComponent>{
 
+public:
+	SplitDirection splitDirection;
 
 };
 
