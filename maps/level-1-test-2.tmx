@@ -27,7 +27,7 @@
   <object x="802" y="159">
    <properties>
     <property name="Body" value="static"/>
-    <property name="SplitDir" value="right"/>
+    <property name="SplitDir" value="left"/>
     <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
     <property name="Texture" value="planks.png"/>
    </properties>

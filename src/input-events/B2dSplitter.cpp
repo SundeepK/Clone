@@ -138,28 +138,29 @@ public:
     		firstSplitDir.splitDirection == secondSplitDir.splitDirection
     	);
 
-		if (firstSplitDir.splitDirection == SplitDirection::RIGHT) {
-			b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
-			b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+		b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+		b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 
-            b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
-            b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
+        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
 
-
+		if (firstSplitDir.splitDirection == SplitDirection::RIGHT ||  firstSplitDir.splitDirection == SplitDirection::LEFT) {
 			if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
 
-				float b = firstBody->GetPosition().x;
-				std::cout << "local first: " << b << std::endl;
-				std::cout << "local sec: " << secondBody->GetWorldCenter().x << std::endl;
-
-				if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
-					firstBody->SetType(b2_dynamicBody);
-				} else {
-					secondBody->SetType(b2_dynamicBody);
+				if (firstSplitDir.splitDirection == SplitDirection::RIGHT) {
+					if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
+						firstBody->SetType(b2_dynamicBody);
+					} else {
+						secondBody->SetType(b2_dynamicBody);
+					}
+				}else{
+					if (firtshape->GetVertex(0).x < secshape->GetVertex(0).x) {
+						firstBody->SetType(b2_dynamicBody);
+					} else {
+						secondBody->SetType(b2_dynamicBody);
+					}
 				}
 			}
-			std::cout << "local sec: " << firtshape->GetVertex(0).x << " y:" << firtshape->GetVertex(0).y << std::endl;
-
 		}
 	}
 
