@@ -8,6 +8,30 @@
 #include <opengl/TextureLoader.h>
 #include <components/SplitDirectionComponent.h>
 #include <iostream>
+#include <algorithm>
+#include <functional>
+
+struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Entity, anax::Entity>&, bool>
+{
+    bool operator()(std::pair<anax::Entity, anax::Entity>& entityPair) const
+    {
+		auto firstSplitEntity = entityPair.first;
+		auto secondSplitEntity = entityPair.second;
+
+		b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+		b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+
+        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
+        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+
+		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
+    		return true;
+    	}else{
+    		return false;
+    	}
+
+    }
+};
 
 class B2dSplitter::B2dSplitterImpl{
 
@@ -25,6 +49,7 @@ public:
     TextureLoader m_textureLoader;
 
 	std::set<anax::Entity, CompareEntities> m_entitiesToKill;
+	std::vector<std::pair<anax::Entity, anax::Entity>> m_splitEntityPairs;
 	std::set<b2Body*> m_bodiesToKill;
     std::unique_ptr<b2World> m_world;
 
@@ -69,15 +94,41 @@ public:
 		entitiesToFill.push_back(createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, entity));
 	}
 
-	void setBodyTypes( std::vector<anax::Entity>& entities){
-		std::cout << "newlyCreatedEntities size: " << entities.size()  << std::endl;
-    	assert (
-    		"split bodies created is more than 2" &&
-    		entities.size() < 3
-    	);
+	void debug( std::pair<anax::Entity, anax::Entity> entityPair){
+		auto firstSplitEntity = entityPair.first;
+			auto secondSplitEntity = entityPair.second;
 
-		auto firstSplitEntity = entities[0];
-		auto secondSplitEntity = entities[1];
+			auto& firstSplitDir = firstSplitEntity.getComponent<SplitDirectionComponent>();
+			auto& secondSplitDir = secondSplitEntity.getComponent<SplitDirectionComponent>();
+
+				b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+				b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
+
+				float b = firstBody->GetPosition().x;
+				std::cout << "local first: " << b  << std::endl;
+				std::cout << "local sec: " << secondBody->GetWorldCenter().x  << std::endl;
+	}
+
+	void refreshEntityBodyTypes(){
+
+		for(auto entitypair: m_splitEntityPairs){
+			setBodyTypes(entitypair);
+		}
+
+		m_splitEntityPairs.erase(std::remove_if(m_splitEntityPairs.begin(), m_splitEntityPairs.end(), RemoveValidSplitEntities()),
+				m_splitEntityPairs.end());
+
+	//	m_splitEntityPairs.clear();
+	}
+
+	void setBodyTypes( std::pair<anax::Entity, anax::Entity> entityPair){
+//    	assert (
+//    		"split bodies created is more than 2" &&
+//    		entities.size() < 3
+//    	);
+
+		auto firstSplitEntity = entityPair.first;
+		auto secondSplitEntity = entityPair.second;
 
 		auto& firstSplitDir = firstSplitEntity.getComponent<SplitDirectionComponent>();
 		auto& secondSplitDir = secondSplitEntity.getComponent<SplitDirectionComponent>();
@@ -87,15 +138,28 @@ public:
     		firstSplitDir.splitDirection == secondSplitDir.splitDirection
     	);
 
-		if(firstSplitDir.splitDirection == SplitDirection::RIGHT){
+		if (firstSplitDir.splitDirection == SplitDirection::RIGHT) {
 			b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 			b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 
-			if(firstBody->GetLocalCenter().x > secondBody->GetLocalCenter().x){
-				firstBody->SetType(b2_dynamicBody);
-			}else{
-				secondBody->SetType(b2_dynamicBody);
+            b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
+            b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+
+
+			if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
+
+				float b = firstBody->GetPosition().x;
+				std::cout << "local first: " << b << std::endl;
+				std::cout << "local sec: " << secondBody->GetWorldCenter().x << std::endl;
+
+				if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
+					firstBody->SetType(b2_dynamicBody);
+				} else {
+					secondBody->SetType(b2_dynamicBody);
+				}
 			}
+			std::cout << "local sec: " << firtshape->GetVertex(0).x << " y:" << firtshape->GetVertex(0).y << std::endl;
+
 		}
 	}
 
@@ -110,7 +174,8 @@ public:
 				}
 			}
 		}
-		setBodyTypes(newlyCreatedEntities);
+		m_splitEntityPairs.push_back(std::pair<anax::Entity, anax::Entity>(newlyCreatedEntities[0], newlyCreatedEntities[1]));
+	//	setBodyTypes(newlyCreatedEntities);
 
 	}
 
@@ -140,5 +205,9 @@ void B2dSplitter::clearIntersects() {
 
 void B2dSplitter::deleteEntities() {
 	m_impl->deleteEntities();
+}
+
+void B2dSplitter::refreshEntityBodyTypes() {
+	m_impl->refreshEntityBodyTypes();
 }
 

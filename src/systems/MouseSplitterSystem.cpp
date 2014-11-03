@@ -33,6 +33,7 @@ public:
     }
 
     void onLeftClick(const sf::Event& event,  sf::Vector2f cameraPos, sf::Vector2f playerPos){
+    	//	m_b2dSplitter->refreshEntityBodyTypes();
 	        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
 	        	m_b2dSplitter->clearIntersects();
 	        	sf::Vector2f mousePos(event.mouseButton.x + cameraPos.x, event.mouseButton.y +cameraPos.y);

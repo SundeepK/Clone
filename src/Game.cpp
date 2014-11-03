@@ -62,6 +62,7 @@ void Game::update(float deltaTime) {
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
     m_fixedTimeStepSystem.update(*m_mainRenderWindow, deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+    m_b2Dsplitter.refreshEntityBodyTypes();
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
 }

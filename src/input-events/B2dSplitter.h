@@ -26,6 +26,7 @@ public:
     void split(b2Vec2 startPoint, b2Vec2 endPoint);
     void clearIntersects();
     void deleteEntities();
+    void refreshEntityBodyTypes();
 
 private:
 
