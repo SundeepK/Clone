@@ -122,10 +122,6 @@ public:
 	}
 
 	void setBodyTypes( std::pair<anax::Entity, anax::Entity> entityPair){
-//    	assert (
-//    		"split bodies created is more than 2" &&
-//    		entities.size() < 3
-//    	);
 
 		auto firstSplitEntity = entityPair.first;
 		auto secondSplitEntity = entityPair.second;
@@ -144,17 +140,34 @@ public:
         b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
         b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
 
-		if (firstSplitDir.splitDirection == SplitDirection::RIGHT ||  firstSplitDir.splitDirection == SplitDirection::LEFT) {
-			if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
+        bool shouldSetFirstBodyAsDynamic = false;
 
+		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0
+				&& secshape->GetVertex(0).y > 0) {
+
+			if (firstSplitDir.splitDirection == SplitDirection::RIGHT || firstSplitDir.splitDirection == SplitDirection::LEFT) {
 				if (firstSplitDir.splitDirection == SplitDirection::RIGHT) {
 					if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
 						firstBody->SetType(b2_dynamicBody);
 					} else {
 						secondBody->SetType(b2_dynamicBody);
 					}
-				}else{
+				} else {
 					if (firtshape->GetVertex(0).x < secshape->GetVertex(0).x) {
+						firstBody->SetType(b2_dynamicBody);
+					} else {
+						secondBody->SetType(b2_dynamicBody);
+					}
+				}
+			} else if (firstSplitDir.splitDirection == SplitDirection::TOP || firstSplitDir.splitDirection == SplitDirection::DOWN) {
+				if (firstSplitDir.splitDirection == SplitDirection::DOWN) {
+					if (firtshape->GetVertex(0).y > secshape->GetVertex(0).y) {
+						firstBody->SetType(b2_dynamicBody);
+					} else {
+						secondBody->SetType(b2_dynamicBody);
+					}
+				} else {
+					if (firtshape->GetVertex(0).y < secshape->GetVertex(0).y) {
 						firstBody->SetType(b2_dynamicBody);
 					} else {
 						secondBody->SetType(b2_dynamicBody);
@@ -175,7 +188,9 @@ public:
 				}
 			}
 		}
-		m_splitEntityPairs.push_back(std::pair<anax::Entity, anax::Entity>(newlyCreatedEntities[0], newlyCreatedEntities[1]));
+		if(splitBodies.size() == 2 && newlyCreatedEntities.size() == 2 && body->GetType() == b2_staticBody){
+			m_splitEntityPairs.push_back(std::pair<anax::Entity, anax::Entity>(newlyCreatedEntities[0], newlyCreatedEntities[1]));
+		}
 	//	setBodyTypes(newlyCreatedEntities);
 
 	}

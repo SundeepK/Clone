@@ -27,13 +27,22 @@
   <object x="802" y="159">
    <properties>
     <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
+    <property name="SplitDir" value="right"/>
     <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
     <property name="Texture" value="planks.png"/>
    </properties>
    <polygon points="0,0 0,31 320,35 253,2"/>
   </object>
   <object x="804" y="192">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+   <polygon points="0,0 31,0 29,479 -2,480"/>
+  </object>
+  <object x="753" y="193">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
