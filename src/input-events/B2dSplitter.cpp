@@ -37,6 +37,12 @@ class B2dSplitter::B2dSplitterImpl{
 
 public:
 
+	enum class SplitBody{
+			FIRST_BODY,
+			SECOND_BODY,
+			NOT_SURE
+	};
+
 	B2dSplitterImpl(b2World& box2dWorld, anax::World& anaxWorld) :  m_world(&box2dWorld), m_anaxWorld(&anaxWorld), m_textureMapper(Box2DConstants::WORLD_SCALE){
 	}
 
@@ -121,8 +127,45 @@ public:
 	//	m_splitEntityPairs.clear();
 	}
 
-	void setBodyTypes( std::pair<anax::Entity, anax::Entity> entityPair){
+	SplitBody decideBodyToSetAsDynamic(b2Body* firstBody, b2Body* secondBody, SplitDirection splitDirection){
+        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
+        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+		bool shouldSetFirstBodyAsDynamic = false;
+		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0
+				&& secshape->GetVertex(0).y > 0) {
+			if (splitDirection == SplitDirection::RIGHT || splitDirection == SplitDirection::LEFT) {
+				if (splitDirection == SplitDirection::RIGHT) {
+					if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
+						shouldSetFirstBodyAsDynamic = true;
+					}
+				} else {
+					if (firtshape->GetVertex(0).x < secshape->GetVertex(0).x) {
+						shouldSetFirstBodyAsDynamic = true;
+					}
+				}
+			} else if (splitDirection == SplitDirection::TOP || splitDirection == SplitDirection::DOWN) {
+				if (splitDirection == SplitDirection::DOWN) {
+					if (firtshape->GetVertex(0).y > secshape->GetVertex(0).y) {
+						shouldSetFirstBodyAsDynamic = true;
+					}
+				} else {
+					if (firtshape->GetVertex(0).y < secshape->GetVertex(0).y) {
+						shouldSetFirstBodyAsDynamic = true;
+					}
+				}
+			}
+			if(shouldSetFirstBodyAsDynamic){
+				return SplitBody::FIRST_BODY;
+			}else{
+				return SplitBody::SECOND_BODY;
+			}
+		}else{
+			return SplitBody::NOT_SURE;
+		}
 
+	}
+
+	void setBodyTypes( std::pair<anax::Entity, anax::Entity> entityPair){
 		auto firstSplitEntity = entityPair.first;
 		auto secondSplitEntity = entityPair.second;
 
@@ -130,50 +173,18 @@ public:
 		auto& secondSplitDir = secondSplitEntity.getComponent<SplitDirectionComponent>();
 
     	assert (
-    		"Split direction are not the same" &&
+    		"Split direction are not the same as split body" &&
     		firstSplitDir.splitDirection == secondSplitDir.splitDirection
     	);
 
 		b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 		b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 
-        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
-        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
-
-        bool shouldSetFirstBodyAsDynamic = false;
-
-		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0
-				&& secshape->GetVertex(0).y > 0) {
-
-			if (firstSplitDir.splitDirection == SplitDirection::RIGHT || firstSplitDir.splitDirection == SplitDirection::LEFT) {
-				if (firstSplitDir.splitDirection == SplitDirection::RIGHT) {
-					if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
-						firstBody->SetType(b2_dynamicBody);
-					} else {
-						secondBody->SetType(b2_dynamicBody);
-					}
-				} else {
-					if (firtshape->GetVertex(0).x < secshape->GetVertex(0).x) {
-						firstBody->SetType(b2_dynamicBody);
-					} else {
-						secondBody->SetType(b2_dynamicBody);
-					}
-				}
-			} else if (firstSplitDir.splitDirection == SplitDirection::TOP || firstSplitDir.splitDirection == SplitDirection::DOWN) {
-				if (firstSplitDir.splitDirection == SplitDirection::DOWN) {
-					if (firtshape->GetVertex(0).y > secshape->GetVertex(0).y) {
-						firstBody->SetType(b2_dynamicBody);
-					} else {
-						secondBody->SetType(b2_dynamicBody);
-					}
-				} else {
-					if (firtshape->GetVertex(0).y < secshape->GetVertex(0).y) {
-						firstBody->SetType(b2_dynamicBody);
-					} else {
-						secondBody->SetType(b2_dynamicBody);
-					}
-				}
-			}
+		SplitBody bodyToSetAsDynamic = decideBodyToSetAsDynamic(firstBody, secondBody, firstSplitDir.splitDirection);
+		if(bodyToSetAsDynamic == SplitBody::FIRST_BODY){
+			firstBody->SetType(b2_dynamicBody);
+		}else if(bodyToSetAsDynamic == SplitBody::SECOND_BODY){
+			secondBody->SetType(b2_dynamicBody);
 		}
 	}
 
