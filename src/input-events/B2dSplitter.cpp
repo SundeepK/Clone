@@ -127,34 +127,37 @@ public:
 	//	m_splitEntityPairs.clear();
 	}
 
-	SplitBody decideBodyToSetAsDynamic(b2Body* firstBody, b2Body* secondBody, SplitDirection splitDirection){
-        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
-        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+	bool shouldSetFirstBodyAsDynamic(const b2PolygonShape* firtShape, const b2PolygonShape* secondShape, const SplitDirection& splitDirection){
 		bool shouldSetFirstBodyAsDynamic = false;
-		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0
-				&& secshape->GetVertex(0).y > 0) {
-			if (splitDirection == SplitDirection::RIGHT || splitDirection == SplitDirection::LEFT) {
-				if (splitDirection == SplitDirection::RIGHT) {
-					if (firtshape->GetVertex(0).x > secshape->GetVertex(0).x) {
-						shouldSetFirstBodyAsDynamic = true;
-					}
-				} else {
-					if (firtshape->GetVertex(0).x < secshape->GetVertex(0).x) {
-						shouldSetFirstBodyAsDynamic = true;
-					}
+		if (splitDirection == SplitDirection::RIGHT || splitDirection == SplitDirection::LEFT) {
+			if (splitDirection == SplitDirection::RIGHT) {
+				if (firtShape->GetVertex(0).x > secondShape->GetVertex(0).x) {
+					shouldSetFirstBodyAsDynamic = true;
 				}
-			} else if (splitDirection == SplitDirection::TOP || splitDirection == SplitDirection::DOWN) {
-				if (splitDirection == SplitDirection::DOWN) {
-					if (firtshape->GetVertex(0).y > secshape->GetVertex(0).y) {
-						shouldSetFirstBodyAsDynamic = true;
-					}
-				} else {
-					if (firtshape->GetVertex(0).y < secshape->GetVertex(0).y) {
-						shouldSetFirstBodyAsDynamic = true;
-					}
+			} else {
+				if (firtShape->GetVertex(0).x < secondShape->GetVertex(0).x) {
+					shouldSetFirstBodyAsDynamic = true;
 				}
 			}
-			if(shouldSetFirstBodyAsDynamic){
+		} else if (splitDirection == SplitDirection::TOP || splitDirection == SplitDirection::DOWN) {
+			if (splitDirection == SplitDirection::DOWN) {
+				if (firtShape->GetVertex(0).y > secondShape->GetVertex(0).y) {
+					shouldSetFirstBodyAsDynamic = true;
+				}
+			} else {
+				if (firtShape->GetVertex(0).y < secondShape->GetVertex(0).y) {
+					shouldSetFirstBodyAsDynamic = true;
+				}
+			}
+		}
+		return shouldSetFirstBodyAsDynamic;
+	}
+
+	SplitBody decideBodyToSetAsDynamic(const b2Body* firstBody, const b2Body* secondBody, const SplitDirection& splitDirection){
+        b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
+        b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
+		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
+			if(shouldSetFirstBodyAsDynamic(firtshape, secshape,  splitDirection)){
 				return SplitBody::FIRST_BODY;
 			}else{
 				return SplitBody::SECOND_BODY;
@@ -162,7 +165,6 @@ public:
 		}else{
 			return SplitBody::NOT_SURE;
 		}
-
 	}
 
 	void setBodyTypes( std::pair<anax::Entity, anax::Entity> entityPair){
