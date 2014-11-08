@@ -15,6 +15,19 @@
 
 class PlayerControlsSystem::PlayerControlsSystemImpl{
 
+	enum class KeyPressed {
+		LEFT,
+		RIGHT
+	};
+
+	struct PlayerAction{
+		bool shouldApplyAction;
+		float force;
+		int keyPressedCount;
+		bool isWallJumped;
+	};
+
+
 public:
 	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY),
 								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released), m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released){
@@ -116,12 +129,12 @@ public:
 	}
 
 
-	void setupChangeDirectionBoost(SensorComponent& footSensor,  float dtSinceChangeInDirection, int keyPressCount, b2Body* player){
+	void setupChangeDirectionBoost(SensorComponent& footSensor,  float dtSinceChangeInDirection, sf::Time lastKeyPress, int keyPressCount, b2Body* player, KeyPressed keypressed){
 		float xvelocity = player->GetLinearVelocity().x;
 		if (footSensor.currentTotalContacts >= 1) {
-			if (dtSinceChangeInDirection < 500 && movedRight == 0 && xvelocity > 0 && !m_boostInAction) {
+			if (((keypressed == KeyPressed::LEFT && xvelocity > 0) || (keypressed == KeyPressed::RIGHT  && xvelocity < 0)) && !m_boostInAction && dtSinceChangeInDirection < 500 && keyPressCount == 0) {
 				m_boostInAction = true;
-				m_changeInDirectionTime = m_leftPressed;
+				m_changeInDirectionTime = lastKeyPress;
 				beginBoostVal = xvelocity;
 				frameIteration = 1.0f / 60.0f;
 			}
@@ -154,7 +167,7 @@ public:
 			m_leftPressed = m_clock.getElapsedTime();
 			float impulse = m_impulse;
 
-			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), movedRight, body);
+			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), m_leftPressed, movedRight, body, KeyPressed::LEFT);
 
 			if(m_boostInAction){
 				frameIteration += 1.0f/60.0f;
@@ -185,17 +198,7 @@ public:
 			float impulse = m_impulse;
 			m_rightPressed = m_clock.getElapsedTime();
 
-			if(sensorComp.currentTotalContacts >= 1) {
-
-				if((m_rightPressed - m_leftPressed).asMilliseconds() < 500 && movedLeft== 0 && body->GetLinearVelocity().x < 0 && !m_boostInAction) {
-					std::cout << "in right" <<std::endl;
-					m_boostInAction = true;
-					m_changeInDirectionTime = m_rightPressed;
-					beginBoostVal= body->GetLinearVelocity().x;
-					frameIteration = 1.0f/60.0f;
-				}
-
-			}
+			setupChangeDirectionBoost(sensorComp, ( m_rightPressed - m_leftPressed).asMilliseconds(), m_rightPressed, movedLeft, body, KeyPressed::RIGHT);
 
 
 			if(m_boostInAction){
