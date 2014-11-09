@@ -22,9 +22,10 @@ class PlayerControlsSystem::PlayerControlsSystemImpl{
 
 	struct PlayerAction{
 		bool shouldApplyAction;
-		float force;
-		int keyPressedCount;
+		b2Vec2 force;
+		int keyOppositePressedCount;
 		bool isWallJumped;
+		sf::Time lastActionTime;
 	};
 
 
@@ -87,6 +88,9 @@ public:
 	int movedRight = 0;
 	int m_jumpedCount = 0;
 
+	PlayerAction m_playerLeftAction;
+	PlayerAction m_playerRightAction;
+
 	void update(sf::RenderWindow& window, float dt, std::vector<anax::Entity>& entities) {
 
 		if(m_leftPressed.asMilliseconds() == 0){
@@ -141,6 +145,22 @@ public:
 		}
 	}
 
+	void applyForce(b2Body* playerBody, const PlayerAction& playerAction){
+		float xVelocity = playerBody->GetLinearVelocity().x ;
+		b2Vec2 playerCenter = playerBody->GetWorldCenter();
+		if(playerAction.shouldApplyAction) {
+			if(playerAction.isWallJumped && !m_boostInAction && playerAction.keyOppositePressedCount <= 0){
+				playerBody->ApplyForce( b2Vec2(playerAction.force.x, -80), playerCenter , true);
+				m_boostInAction = true;
+				m_changeInDirectionTime = playerAction.lastActionTime;
+				frameIteration = 1.0f/60.0f;
+				beginBoostVal = xVelocity;
+			}else{
+				playerBody->ApplyForce( playerAction.force, playerCenter , true);
+			}
+		}
+	}
+
 	void applyForce(b2Body* player,float impulse, int oppositeKeyPressedCount, bool isWalledJumped){
 		float xVelocity = player->GetLinearVelocity().x ;
 		b2Vec2 playerCenter = player->GetWorldCenter();
@@ -167,6 +187,9 @@ public:
 			m_leftPressed = m_clock.getElapsedTime();
 			float impulse = m_impulse;
 
+
+
+
 			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), m_leftPressed, movedRight, body, KeyPressed::LEFT);
 
 			if(m_boostInAction){
@@ -183,7 +206,14 @@ public:
 				}
 			}
 
-			applyForce(body, -std::abs(impulse), movedRight, m_isLeftWallJumpTriggered);
+			m_playerLeftAction.isWallJumped = m_isLeftWallJumpTriggered;
+			m_playerLeftAction.force = b2Vec2(-std::abs(impulse),0);
+			m_playerLeftAction.lastActionTime = m_leftPressed;
+			m_playerLeftAction.keyOppositePressedCount = movedRight;
+			m_playerLeftAction.shouldApplyAction = body->GetLinearVelocity().x >  -40.0f;
+
+			applyForce(body, m_playerLeftAction);
+
 			movedLeft++;
 		};
 	}
@@ -216,18 +246,13 @@ public:
 			}
 
 
-			if(body->GetLinearVelocity().x < 40.0f) {
+			m_playerRightAction.isWallJumped = m_isRightWallJumpTriggered;
+			m_playerRightAction.force = b2Vec2(std::abs(impulse),0);
+			m_playerRightAction.lastActionTime = m_rightPressed;
+			m_playerRightAction.keyOppositePressedCount = movedLeft;
+			m_playerRightAction.shouldApplyAction = body->GetLinearVelocity().x < 40.0f;
 
-				if(m_isRightWallJumpTriggered && !m_boostInAction){
-					body->ApplyForce( b2Vec2(std::abs(impulse),-80), body->GetWorldCenter() , true);
-					m_boostInAction = true;
-					m_changeInDirectionTime = m_leftPressed;
-					frameIteration = 1.0f/60.0f;
-					beginBoostVal = body->GetLinearVelocity().x;
-				}else{
-					body->ApplyForce( b2Vec2(std::abs(impulse),0.0f), body->GetWorldCenter() , true);
-				}
-			}
+			applyForce(body, m_playerRightAction);
 			movedRight++;
 		};
 	}
