@@ -54,14 +54,23 @@ void Game::init()
 
 void Game::update(float deltaTime) {
 
+
+	std::vector<sf::Event> events;
+    sf::Event event;
+    while (m_mainRenderWindow->pollEvent(event))
+    {
+    	sf::Event e = event;
+    	events.push_back(e);
+    }
+
 	sf::Vector2f p(m_cameraSystem.getView().getCenter());
-	m_mouseSplitterSystem.processMouseEventsForSplitter(*m_mainRenderWindow, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
+	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
     m_anaxWorld.refresh();
 
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
-    m_fixedTimeStepSystem.update(*m_mainRenderWindow, deltaTime, m_physicsInterpolator, m_playerControlsSystem);
+    m_fixedTimeStepSystem.update(events, deltaTime, m_physicsInterpolator, m_playerControlsSystem);
     m_b2Dsplitter.refreshEntityBodyTypes();
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);

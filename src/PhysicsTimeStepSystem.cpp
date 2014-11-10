@@ -23,7 +23,7 @@ public:
         m_world->SetDebugDraw(&box2dDEbugDrawer);
     }
 
-    void update(sf::RenderWindow& window, float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
+    void update(std::vector<sf::Event>& events, float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem){
         m_fixedTimestepAccumulator += dt/1000;
         const int steps = static_cast<int>(floor(m_fixedTimestepAccumulator / FIXED_TIMESTEP));
 
@@ -38,7 +38,7 @@ public:
     	for (int i = 0; i < clampedSteps; ++ i)
     	{
     		physicsInterpolator.resetComponents();
-    		controlSystem.update(window, dt);
+    		controlSystem.update(events, dt);
     		step(FIXED_TIMESTEP);
     	}
 
@@ -71,8 +71,8 @@ PhysicsTimeStepSystem::PhysicsTimeStepSystem(b2World& b2World) : m_impl(new Phys
 
 PhysicsTimeStepSystem::~PhysicsTimeStepSystem(){}
 
-void PhysicsTimeStepSystem::update(sf::RenderWindow& window, float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem) {
-	m_impl->update(window, dt, physicsInterpolator, controlSystem);
+void PhysicsTimeStepSystem::update(std::vector<sf::Event>& events, float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem) {
+	m_impl->update(events, dt, physicsInterpolator, controlSystem);
 }
 
 void PhysicsTimeStepSystem::setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer) {

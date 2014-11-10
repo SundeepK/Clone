@@ -31,11 +31,13 @@ class PlayerControlsSystem::PlayerControlsSystemImpl{
 
 public:
 	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY),
-								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released), m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released){
+								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released),
+								m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released), m_jumpReleased(PlayerControls::JUMP_KEY, ActionType::Released){
 		 m_actionController[PlayerState::MOVE_LEFT] = m_moveLeft ;
 	     m_actionController[PlayerState::MOVE_RIGHT] = m_moveRight ;
 		 m_actionController[PlayerState::JUMP] = m_jump ;
 		 m_actionController[PlayerState::MOVE_DOWN] = m_moveDown ;
+		 m_actionController[PlayerState::JUMP_RLEASED] = m_jumpReleased;
 //		 m_actionController[PlayerState::MOVE_LEFT_RELEASED] = m_moveLeftReleased ;
 //		 m_actionController[PlayerState::MOVE_RIGHT_RELEASED] = m_moveRightReleased ;
 
@@ -44,6 +46,8 @@ public:
 		 m_actionController.addCallback(PlayerState::JUMP,  playerJump());
 		 m_actionController.addCallback(PlayerState::MOVE_LEFT_RELEASED,  movePlayerLeftReleased());
 		 m_actionController.addCallback(PlayerState::MOVE_RIGHT_RELEASED,  movePlayerRightReleased());
+		 m_actionController.addCallback(PlayerState::JUMP_RLEASED,  jumpReleased());
+
 
 		// m_actionController.addCallback(PlayerState::MOVE_DOWN,  movePlayerDown());
 	}
@@ -54,6 +58,7 @@ public:
 	Action m_moveLeftReleased;
 	Action m_moveRightReleased;
 	Action m_moveRight;
+	Action m_jumpReleased;
 	Action m_jump;
 	Action m_moveDown;
 
@@ -72,6 +77,7 @@ public:
 	bool m_isLeftWallJumpTriggered;
 	bool m_isRightWallJumpTriggered;
 	bool m_isBoostInMidAir;
+	bool m_canJump = true;
 
 	ActionController<PlayerState, TemplateHasher<PlayerState>, anax::Entity&> m_actionController;
 	PlayerState m_currentPlayerState;
@@ -83,7 +89,7 @@ public:
 
 	const float m_impulse = 35.0f;
 	const float m_slowDownForce = 5.f;
-	const float m_jumpImpulse = 5.0f;
+	const float m_jumpImpulse = 20.0f;
 	const float m_wallJumpImpulse = 5.5f;
 	const float m_wallJumpForce = 4.0f;
 	int movedLeft = 0;
@@ -93,7 +99,7 @@ public:
 	PlayerAction m_playerLeftAction;
 	PlayerAction m_playerRightAction;
 
-	void update(sf::RenderWindow& window, float dt, std::vector<anax::Entity>& entities) {
+	void update(std::vector<sf::Event>& events, float dt, std::vector<anax::Entity>& entities) {
 
 		if(m_leftPressed.asMilliseconds() == 0){
 			m_leftPressed = m_clock.getElapsedTime();
@@ -117,6 +123,15 @@ public:
 			}
 	    }
 
+
+
+	    for(sf::Event event : events)
+	    {
+	        if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::JUMP_KEY){
+	        		m_canJump = true;
+	        		break;
+	        }
+	    }
 
 	    movedLeft = 0;
 	    movedRight = 0;
@@ -144,7 +159,7 @@ public:
 				beginBoostVal = xvelocity;
 				frameIteration = 1.0f / 60.0f;
 			}
-		}else{
+		}else if(!m_isLeftWallJumpTriggered && !m_isRightWallJumpTriggered){
 			if (((keypressed == KeyPressed::LEFT && xvelocity > 0) || (keypressed == KeyPressed::RIGHT  && xvelocity < 0)) && !m_boostInAction && dtSinceChangeInDirection < 500 && keyPressCount == 0) {
 				m_isBoostInMidAir = true;
 			}
@@ -275,6 +290,13 @@ public:
 		};
 	}
 
+	std::function<void (float,  anax::Entity& entity)> jumpReleased() {
+		 return [this](float,  anax::Entity& entity){
+			 m_canJump = true;
+			 std::cout << "jumpoed rleased" << std::endl;
+		};
+	}
+
 
 
 	std::function<void (float, anax::Entity& entity)> playerJump() {
@@ -289,13 +311,20 @@ public:
 			m_currentPlayerState = PlayerState::JUMP;
 
 			if(footSensor.currentTotalContacts >= 1){
-				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_wallJumpImpulse), body->GetWorldCenter() , true);
+				if(!m_canJump){
+					return;
+				}
+
+				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
+				m_canJump = false;
 			}else if(leftSensor.currentTotalContacts >= 1){
 				body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 				m_isLeftWallJumpTriggered = true;
+				m_canJump = false;
 			}else if(rightSensor.currentTotalContacts >= 1){
 				body->ApplyLinearImpulse( b2Vec2(-m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 				m_isRightWallJumpTriggered = true;
+				m_canJump = false;
 			}
 		};
 	}
@@ -316,9 +345,9 @@ PlayerControlsSystem::PlayerControlsSystem() : Base(anax::ComponentFilter().requ
 PlayerControlsSystem::~PlayerControlsSystem() {
 }
 
-void PlayerControlsSystem::update(sf::RenderWindow& window, float dt) {
+void PlayerControlsSystem::update(std::vector<sf::Event>& events, float dt) {
     auto entities = getEntities();
-    m_impl->update(window, dt, entities);
+    m_impl->update(events, dt, entities);
 }
 
 

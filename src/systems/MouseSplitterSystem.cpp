@@ -100,14 +100,10 @@ public:
 			rt.draw(m_sliceLine);
 		}
 
-		void processMouseEvents(sf::RenderWindow& App, sf::Vector2f cameraPos, std::vector<anax::Entity>& entites) {
+		void processMouseEvents(std::vector<sf::Event>& events, sf::Vector2f cameraPos, std::vector<anax::Entity>& entites) {
 			for (auto entity : entites) {
-		    sf::Event event;
-		    while( App.pollEvent(event)) {
-		        if(event.type == sf::Event::Closed){
-		                    App.close();
-		        }
-		        sf::Vector2f gg(App.getViewport(App.getView()).left, App.getViewport(App.getView()).top);
+		    	for(sf::Event event : events){
+		   //     sf::Vector2f gg(App.getViewport(App.getView()).left, App.getViewport(App.getView()).top);
 	    		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 	    		b2Body* body = physicsComponent.physicsBody;
 
@@ -125,9 +121,9 @@ MouseSplitterSystem::MouseSplitterSystem(B2dSplitter& b2dSplitter) : Base(anax::
 MouseSplitterSystem::~MouseSplitterSystem() {
 }
 
-void MouseSplitterSystem::processMouseEventsForSplitter(sf::RenderWindow& App, sf::Vector2f cameraPos) {
+void MouseSplitterSystem::processMouseEventsForSplitter(std::vector<sf::Event>& events, sf::Vector2f cameraPos) {
     auto entities = getEntities();
-	m_impl->processMouseEvents(App, cameraPos, entities);
+	m_impl->processMouseEvents(events, cameraPos, entities);
 }
 
 void MouseSplitterSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const {

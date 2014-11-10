@@ -15,7 +15,7 @@ class PlayerControlsSystem : public anax::System<PlayerControlsSystem> {
 		PlayerControlsSystem();
 	//	PlayerControlsSystem(std::unordered_map<PlayerState, sf::Keyboard::Key, std::hash<int>> playerControlsMap);
 		~PlayerControlsSystem();
-		void update(sf::RenderWindow& window, float dt);
+		void update(std::vector<sf::Event>& events, float dt);
 
 	private:
 

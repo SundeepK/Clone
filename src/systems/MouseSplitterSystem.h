@@ -15,7 +15,7 @@ public:
 	MouseSplitterSystem(B2dSplitter& wb2dSplitter);
 	~MouseSplitterSystem();
 
-	void processMouseEventsForSplitter(sf::RenderWindow& App, sf::Vector2f cameraPos);
+	void processMouseEventsForSplitter(std::vector<sf::Event>& events, sf::Vector2f cameraPos);
 
 private:
 
