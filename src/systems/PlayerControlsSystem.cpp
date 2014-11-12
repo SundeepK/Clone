@@ -76,8 +76,10 @@ public:
 	bool m_boostInAction;
 	bool m_isLeftWallJumpTriggered;
 	bool m_isRightWallJumpTriggered;
+	bool m_isJumpedTriggered;
 	bool m_isBoostInMidAir;
 	bool m_canJump = true;
+	int m_timesAppliedJumpReducer;
 
 	ActionController<PlayerState, TemplateHasher<PlayerState>, anax::Entity&> m_actionController;
 	PlayerState m_currentPlayerState;
@@ -89,12 +91,13 @@ public:
 
 	const float m_impulse = 35.0f;
 	const float m_slowDownForce = 5.f;
-	const float m_jumpImpulse = 20.0f;
-	const float m_wallJumpImpulse = 5.5f;
+	const float m_jumpImpulse = 30.0f;
+	const float m_wallJumpImpulse = 10.5f;
 	const float m_wallJumpForce = 4.0f;
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
+	b2Vec2 m_beforeJumpPosition;
 
 	PlayerAction m_playerLeftAction;
 	PlayerAction m_playerRightAction;
@@ -118,10 +121,39 @@ public:
 				auto &sensorComps = entity.getComponent<Sensor>();
 				auto sensor = sensorComps.sensors["FootSensor"];
 					if(sensor.currentTotalContacts >= 1){
-						body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
+							body->SetLinearVelocity(b2Vec2(0, body->GetLinearVelocity().y));
 					}
 			}
 	    }
+
+			for (auto entity : entities) {
+				auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+				b2Body* body = physicsComponent.physicsBody;
+				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
+				body->SetGravityScale(2);
+
+				auto &sensorComps = entity.getComponent<Sensor>();
+				auto sensor = sensorComps.sensors["FootSensor"];
+//				std::cout << "jumping velocity " << body->GetLinearVelocity().y  << std::endl;
+					if(sensor.currentTotalContacts < 1 && m_isJumpedTriggered){
+//							std::cout << "jumping velocity " << body->GetPosition().y - m_beforeJumpPosition.y << std::endl;
+							//std::cout << "jumping velocity " << body->GetLinearVelocity().y  << std::endl;
+
+						if((!m_isLeftWallJumpTriggered && !m_isRightWallJumpTriggered ) ){
+							if(body->GetLinearVelocity().y >= -5){
+//								body->ApplyLinearImpulse(b2Vec2(0, 3), body->GetWorldCenter(), true);
+//								m_timesAppliedJumpReducer++;
+//								if(m_timesAppliedJumpReducer > 1){
+//									m_isJumpedTriggered = false;
+//									m_timesAppliedJumpReducer = 0;
+//								}
+							}
+						}else{
+							m_isJumpedTriggered = false;
+							m_timesAppliedJumpReducer = 0;
+						}
+					}
+			}
 
 
 
@@ -139,6 +171,8 @@ public:
 	    		auto& playerStateComp = entity.getComponent<PlayerStateComponent>();
 	   			m_actionController.triggerCallbacks(dt, entity);
 	    		playerStateComp.playerState = m_currentPlayerState;
+
+
 	    }
 
 	    m_currentPlayerState = PlayerState::DEFAULT_STATE;
@@ -314,9 +348,10 @@ public:
 				if(!m_canJump){
 					return;
 				}
-
+				m_isJumpedTriggered = true;
 				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
 				m_canJump = false;
+				m_beforeJumpPosition = body->GetPosition();
 			}else if(leftSensor.currentTotalContacts >= 1){
 				body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 				m_isLeftWallJumpTriggered = true;
