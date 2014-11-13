@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="200" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="TileLayer" width="50" height="200">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJwDAAA7EMl/1nKt2h0MNI4L/vHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXvfvAx/R0aKjRUeLjhYdLTpadLToaNHRstSx0LLUsUBHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06Wu7IHueyIs0=
+  </data>
+ </layer>
+ <objectgroup name="StaticObjects" width="50" height="200">
+  <object x="2" y="6371" width="1592" height="24"/>
+  <object x="3" y="4" width="17" height="822"/>
+  <object x="2" y="831" width="22" height="803"/>
+  <object x="4" y="1646" width="29" height="814"/>
+  <object x="5" y="2469" width="17" height="760"/>
+  <object x="7" y="3236" width="17" height="760"/>
+  <object x="7" y="4007" width="20" height="799"/>
+  <object x="9" y="4816" width="23" height="721"/>
+  <object x="12" y="5547" width="22" height="811"/>
+  <object x="1373" y="3995" width="29" height="2367"/>
+ </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
+  <object x="439" y="5749">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+   <polygon points="-21,-1395 35,-1396 34,480 -16,481"/>
+  </object>
+  <object x="894" y="6145">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+   <polygon points="0,0 -53,2 -58,-1792 -1,-1790"/>
+  </object>
+  <object x="511" y="5728">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="right"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+   <polygon points="0,0 0,31 320,35 253,2"/>
+  </object>
+ </objectgroup>
+</map>

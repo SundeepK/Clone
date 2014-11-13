@@ -68,6 +68,7 @@ public:
 	sf::Time m_rightPressed;
 	sf::Time m_lastJumpTime;
 	sf::Time m_lastTimeOnGround;
+	sf::Time m_lastGroundToWallSlideTime;
 
 	float frameIteration = 1.0f/60.0f;
 	float beginBoostVal;
@@ -344,23 +345,34 @@ public:
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::JUMP;
 
-			if(footSensor.currentTotalContacts >= 1){
-				if(!m_canJump){
-					return;
-				}
-				m_isJumpedTriggered = true;
+
+
+
+			if(footSensor.currentTotalContacts >= 1 && (leftSensor.currentTotalContacts >= 1 || rightSensor.currentTotalContacts >= 1)){
 				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
-				m_canJump = false;
-				m_beforeJumpPosition = body->GetPosition();
-			}else if(leftSensor.currentTotalContacts >= 1){
-				body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
-				m_isLeftWallJumpTriggered = true;
-				m_canJump = false;
-			}else if(rightSensor.currentTotalContacts >= 1){
-				body->ApplyLinearImpulse( b2Vec2(-m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
-				m_isRightWallJumpTriggered = true;
-				m_canJump = false;
+				m_lastTimeOnGround = m_clock.getElapsedTime();
+			}else{
+				if(footSensor.currentTotalContacts >= 1) {
+					if(!m_canJump) {
+							return;
+						}
+
+					m_isJumpedTriggered = true;
+					body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
+					m_canJump = false;
+					m_beforeJumpPosition = body->GetPosition();
+				} else if(leftSensor.currentTotalContacts >= 1 &&  (( m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds() > 100 ) ) {
+					body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
+					m_isLeftWallJumpTriggered = true;
+					m_canJump = false;
+				} else if(rightSensor.currentTotalContacts >= 1 && ((m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds()  > 100)) {
+					body->ApplyLinearImpulse( b2Vec2(-m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
+					m_isRightWallJumpTriggered = true;
+					m_canJump = false;
+				}
 			}
+
+
 		};
 	}
 

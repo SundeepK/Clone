@@ -26,22 +26,21 @@ public:
 sf::Vector2f CameraSystem::CameraSystemImpl::getCameraPosition(std::vector<anax::Entity>& entities) {
 	sf::Vector2f cameraPositon = m_cameraCenterPos;
 
-	if(entities.size() > 0){
-	auto entity = *entities.begin();
-	auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-	b2Body* body = physicsComponent.physicsBody;
-	Vec position(body->GetPosition());
-	sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
+	if (entities.size() > 0) {
+		auto entity = *entities.begin();
+		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
+		b2Body* body = physicsComponent.physicsBody;
+		Vec position(body->GetPosition());
+		sf::Vector2f bodyPosInPix = position.mToPix().toSFMLv();
 
+		if (bodyPosInPix.x >= m_cameraCenterPos.x) {
+			cameraPositon.x = floor(bodyPosInPix.x);
+		}
 
-	if (bodyPosInPix.x >= m_cameraCenterPos.x) {
-		cameraPositon.x = floor(bodyPosInPix.x);
-	}
-
-	if (bodyPosInPix.y <= m_cameraCenterPos.y) {
-		cameraPositon.y = floor(bodyPosInPix.y);
-	}
-	}else{
+		if (bodyPosInPix.y <= m_cameraCenterPos.y || bodyPosInPix.y >= 800) {
+			cameraPositon.y = floor(bodyPosInPix.y);
+		}
+	} else {
 		cameraPositon = sf::Vector2f();
 	}
 
