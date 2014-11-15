@@ -58,6 +58,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
     auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
+  //  auto& fixtureMap = playerEntity.addComponent<FixtureMapComponent>();
 
     B2BoxBuilder builder(30,40);
     builder
@@ -95,9 +96,11 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     b2FixtureDef rightSensor;
     rightSensor.shape = &rightShape;
 
-    rightSensor.density = 1;
+    rightSensor.density = 0.3;
     rightSensor.restitution = 0.0f;
-    rightShape.SetAsBox(0.15, 0.15, b2Vec2(0.5,0), 0);
+    rightSensor.friction = 10.0f;
+
+    rightShape.SetAsBox(0.1, 0.6, b2Vec2(0.6,0), 0);
     rightSensor.isSensor = true;
     b2Fixture* rightSensorFixture = physComp.physicsBody->CreateFixture(&rightSensor);
     SensorComponent rightSensorComp;
@@ -111,9 +114,10 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     b2FixtureDef leftSensor;
     leftSensor.shape = &leftShape;
 
-    leftSensor.density = 1;
+    leftSensor.density = 0.3;
     leftSensor.restitution = 0.0f;
-    leftShape.SetAsBox(0.15, 0.15, b2Vec2(-0.5,0), 0);
+    leftSensor.friction = 10.0f;
+    leftShape.SetAsBox(0.1, 0.6, b2Vec2(-0.6,0), 0);
     leftSensor.isSensor = true;
     b2Fixture* leftSensorFixture = physComp.physicsBody->CreateFixture(&leftSensor);
     SensorComponent leftSensorComp;
@@ -122,6 +126,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("LeftSensor", leftSensorComp));
 
 
+    //left
 
 
     sf::RectangleShape rect(sf::Vector2f(20,20));
