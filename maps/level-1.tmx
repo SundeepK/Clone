@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="TileLayer" width="50" height="200">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENgEAQA8Fvig6g/5ZIyEkQLKcZybn3WGtt1/5iu9lf6GjR0aKjRUeLjhYdLTpadLToaLnrMLOZe9uUDgAAAAAAAAAAAAAAAAAAAAAAgLftXx94iI4WHS06WnS06GjR0aKjRUeLjpZJHRNaJnVMoKNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0t+5Cd2G18TQ==
+  </data>
+ </layer>
+ <objectgroup name="StaticObjects" width="50" height="200">
+  <object x="60" y="1" width="32" height="799"/>
+  <object x="96" y="635" width="1504" height="33"/>
+  <object x="1443" y="2" width="32" height="632"/>
+ </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
+  <object name="lowersplit" x="96" y="98" width="1343" height="65">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="left"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="98" y="258" width="1342" height="63">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="left"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="93" y="446" width="1123" height="66">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="left"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="planks.png"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
+  <object name="PlayerEndPoint" x="1406" y="65" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="129" y="609" width="29" height="26"/>
+ </objectgroup>
+</map>

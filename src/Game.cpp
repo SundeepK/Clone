@@ -15,8 +15,7 @@ void Game::init()
 {
 
 
-	m_entityLoader.loadWorldEntities(m_anaxWorld, *m_b2world);
-	m_tmxLevelLoader.loadLevel("level-1-test-tall.tmx", *m_b2world, m_anaxWorld);
+	m_tmxLevelLoader.loadLevel("level-1.tmx", *m_b2world, m_anaxWorld);
 
 	m_anaxWorld.addSystem(m_playerControlsSystem);
 	m_anaxWorld.addSystem(m_textureRectSystem);

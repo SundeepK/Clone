@@ -17,7 +17,7 @@
 class PlayerEntityLoader : public LuaEntityLoader {
 public:
 
-	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld, lua_State *myLuaState);
+	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  std::unordered_map<std::string, tmx::MapObject>& loadedMapData,  lua_State *myLuaState);
 
 };
 

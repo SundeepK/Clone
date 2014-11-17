@@ -11,14 +11,16 @@ extern "C"
 #include <luabind/luabind.hpp>
 #include <anax/World.hpp>
 #include <Box2D/Box2D.h>
+#include <unordered_map>
 #include <iostream>
+#include <tmx/MapObject.h>
 
 class LuaEntityLoader{
 
 public:
 
     virtual ~LuaEntityLoader(){}
-	virtual void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  lua_State *myLuaState) = 0;
+	virtual void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  std::unordered_map<std::string, tmx::MapObject>& loadedMapData,  lua_State *myLuaState) = 0;
 
 };
 

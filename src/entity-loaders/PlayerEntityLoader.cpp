@@ -1,6 +1,6 @@
 #include <entity-loaders/PlayerEntityLoader.h>
 
-void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, lua_State* luaState) {
+void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
 
 	luabind::module(luaState)[
 	luabind::class_<PhysicsComponent>("PhysicsComponent")
@@ -60,10 +60,12 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
   //  auto& fixtureMap = playerEntity.addComponent<FixtureMapComponent>();
 
+    auto startPositionVec = loadedMapData["PlayerStartPoint"].GetPosition();
+    std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
     B2BoxBuilder builder(30,40);
     builder
     .bodyType(b2_dynamicBody)
-    .setPosition(b2Vec2(30,30))
+    .setPosition(b2Vec2(startPositionVec.x,startPositionVec.y))
     .fixedRotation(true)
     .setRestitution(0.0f)
     .setDensity(1.0f);
@@ -88,7 +90,6 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     footSensorComp.sensors = footSensorFixture;
     footSensorComp.tag = "FootSensor";
     sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("FootSensor", footSensorComp));
-
 
 
     //right sensor
@@ -124,10 +125,6 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, l
     leftSensorComp.sensors = leftSensorFixture;
     leftSensorComp.tag = "LeftSensor";
     sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("LeftSensor", leftSensorComp));
-
-
-    //left
-
 
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));

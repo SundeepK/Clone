@@ -5,6 +5,8 @@ public:
 
 	std::unique_ptr<tmx::MapLoader> m_mapLoader;
 	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
+	WorldEntityLoader m_worldEntityLoader;
+
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory) : m_mapLoader(&mapDirectory) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
@@ -45,57 +47,89 @@ public:
     	return splitDirection->second;
 	}
 
-	void loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
-			for ( auto& object : mapObject) {
-				auto objectEntity = anaxWorld.createEntity();
-			    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
-			    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
-			    auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+	std::unordered_map<std::string, tmx::MapObject> loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
+		std::unordered_map<std::string, tmx::MapObject> mapObjects;
+		for (auto& object : mapObject) {
 
-		        if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
-		        		std::cout << "unable to load texture from tmx" << std::endl;
-		        texCoordsComp.image.flipVertically();
-		        texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
-
-		        texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
-		        std::cout << object.PolyPoints().size() << "points size" << std::endl;
-
-		        if(object.GetPropertyString("Body") == "dynamic"){
-			        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
-		        }else{
-			        physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
-		        }
-
-		        splitDirectionComp.splitDirection = parseSplitDirection(object.GetPropertyString("SplitDir"));
-
-		        objectEntity.activate();
+			if (!object.GetName().empty()) {
+				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
 			}
+
+			auto objectEntity = anaxWorld.createEntity();
+			auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
+			auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+
+			if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
+				std::cout << "unable to load texture from tmx" << std::endl;
+			texCoordsComp.image.flipVertically();
+			texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
+
+			texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
+			std::cout << object.PolyPoints().size() << "points size" << std::endl;
+
+			if (object.GetPropertyString("Body") == "dynamic") {
+				physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
+			} else {
+				physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
+			}
+
+			splitDirectionComp.splitDirection = parseSplitDirection(object.GetPropertyString("SplitDir"));
+
+			objectEntity.activate();
+		}
+		return mapObjects;
 	}
 
-	void loadStaticObjects(const tmx::MapObjects& mapObject, b2World& b2dworld) {
-		for ( auto& object : mapObject) {
+	std::unordered_map<std::string, tmx::MapObject> loadStaticObjects(const tmx::MapObjects& mapObject, b2World& b2dworld) {
+		std::unordered_map<std::string, tmx::MapObject> mapObjects;
+		for (auto& object : mapObject) {
+			if (!object.GetName().empty()) {
+				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
+			}
 			tmx::BodyCreator::Add(object, b2dworld);
 		}
+		return mapObjects;
 	}
 
-	void loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld){
+	std::unordered_map<std::string, tmx::MapObject> loadMiscMapObjects(const tmx::MapObjects& mapObject) {
+		std::unordered_map<std::string, tmx::MapObject> mapObjects;
+		for (auto& object : mapObject) {
+			if (!object.GetName().empty()) {
+				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
+			}
+		}
+		return mapObjects;
+	}
+
+
+	std::unordered_map<std::string, tmx::MapObject> loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld){
+		std::unordered_map<std::string, tmx::MapObject> mapObjects;
 		if (layer.name == "StaticObjects") {
-			loadStaticObjects(layer.objects, b2dworld);
+			auto objectsMap =  loadStaticObjects(layer.objects, b2dworld);
+			mapObjects.insert(objectsMap.begin(), objectsMap.end());
+		}else if (layer.name == "SplittableObjects") {
+			auto objectsMap =  loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
+			mapObjects.insert(objectsMap.begin(), objectsMap.end());
+		}else{
+			auto objectsMap =  loadMiscMapObjects(layer.objects);
+			mapObjects.insert(objectsMap.begin(), objectsMap.end());
 		}
-		if (layer.name == "SplittableObjects") {
-			loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
-		}
+		return mapObjects;
 	}
 
 	void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
 		m_mapLoader->Load(levelName);
 		 std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
+		 std::unordered_map<std::string, tmx::MapObject> loadedItems;
 		const std::string t = "TexCoords";
 		for ( auto& layer : layers) {
 			if(layer.visible){
-			   loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
+				auto objectsMap = loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
+				loadedItems.insert(objectsMap.begin(), objectsMap.end());
 			}
 		}
+		m_worldEntityLoader.loadWorldEntities(anaxWorld, b2dworld, loadedItems);
 	}
 
 };

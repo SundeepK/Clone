@@ -21,7 +21,7 @@ WorldEntityLoader::WorldEntityLoader()  {
 WorldEntityLoader::~WorldEntityLoader() {
 }
 
-void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld){
+void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData){
 
     lua_State *luaState = luaL_newstate();
 
@@ -45,7 +45,7 @@ void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2d
 
 
 	for(auto& entityLoader : m_entityLoaders) {
-		entityLoader->loadEntity(anaxWorld, box2dWorld, luaState);
+		entityLoader->loadEntity(anaxWorld, box2dWorld, loadedMapData, luaState);
 	}
 
     lua_close(luaState);

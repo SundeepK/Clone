@@ -59,7 +59,6 @@ class Game {
 		 CameraSystem m_cameraSystem;
 		 std::vector<b2Vec2> m_texs;
 		 ActionController<PlayerState, TemplateHasher<PlayerState>, b2Body*> m_actionController;
-		 WorldEntityLoader m_entityLoader;
 		 PlayerAnimationSystem m_playerAnimationSystem;
 		 std::vector<tmx::MapLayer> layers;
 		 std::unique_ptr<std::vector<b2Vec2*>> arrays;
