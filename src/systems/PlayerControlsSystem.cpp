@@ -139,26 +139,6 @@ public:
 				auto & rightSensor = entity.getComponent<Sensor>().sensors["RightSensor"];
 				auto & leftSensor = entity.getComponent<Sensor>().sensors["LeftSensor"];
 
-//				std::cout << "jumping velocity " << body->GetLinearVelocity().y  << std::endl;
-					if(sensor.currentTotalContacts < 1 && m_isJumpedTriggered){
-//							std::cout << "jumping velocity " << body->GetPosition().y - m_beforeJumpPosition.y << std::endl;
-							//std::cout << "jumping velocity " << body->GetLinearVelocity().y  << std::endl;
-
-						if((!m_isLeftWallJumpTriggered && !m_isRightWallJumpTriggered ) ){
-							if(body->GetLinearVelocity().y >= -5){
-//								body->ApplyLinearImpulse(b2Vec2(0, 3), body->GetWorldCenter(), true);
-//								m_timesAppliedJumpReducer++;
-//								if(m_timesAppliedJumpReducer > 1){
-//									m_isJumpedTriggered = false;
-//									m_timesAppliedJumpReducer = 0;
-//								}
-							}
-						}else{
-							m_isJumpedTriggered = false;
-							m_timesAppliedJumpReducer = 0;
-						}
-					}
-
 					if((m_clock.getElapsedTime() - m_lastWallJumpTime).asMilliseconds() > 20 && (rightSensor.currentTotalContacts >= 1 || leftSensor.currentTotalContacts >= 1) ){
 						body->SetLinearDamping(2);
 					}else{
@@ -342,7 +322,6 @@ public:
 
 	std::function<void (float,  anax::Entity& entity)> jumpReleased() {
 		 return [this](float,  anax::Entity& entity){
-			 m_jumpButtonReleased = true;
 			 std::cout << "jumpoed rleased" << std::endl;
 		};
 	}
@@ -356,16 +335,13 @@ public:
 			auto & rightSensor = entity.getComponent<Sensor>().sensors["RightSensor"];
 			auto & leftSensor = entity.getComponent<Sensor>().sensors["LeftSensor"];
 
-
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::JUMP;
 
-
-
-
-			if(footSensor.currentTotalContacts >= 1 && (leftSensor.currentTotalContacts >= 1 || rightSensor.currentTotalContacts >= 1)){
+			if(footSensor.currentTotalContacts >= 1 && (leftSensor.currentTotalContacts >= 1 || rightSensor.currentTotalContacts >= 1) && m_jumpButtonReleased){
 				body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
 				m_lastTimeOnGround = m_clock.getElapsedTime();
+				m_jumpButtonReleased = false;
 			}else{
 				if(footSensor.currentTotalContacts >= 1) {
 					if(!m_jumpButtonReleased) {
@@ -376,13 +352,13 @@ public:
 					body->ApplyLinearImpulse( b2Vec2(0.0f,-m_jumpImpulse), body->GetWorldCenter() , true);
 					m_jumpButtonReleased = false;
 					m_beforeJumpPosition = body->GetPosition();
-				} else if(leftSensor.currentTotalContacts >= 1 &&  (( m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds() > 300 )  ) {
+				} else if(leftSensor.currentTotalContacts >= 1 &&  (( m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds() > 300 ) && m_jumpButtonReleased ) {
 					body->SetLinearVelocity(b2Vec2(0,0));
 					body->ApplyLinearImpulse( b2Vec2(m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 					m_isLeftWallJumpTriggered = true;
 					m_jumpButtonReleased = false;
 					m_lastWallJumpTime = m_clock.getElapsedTime();
-				} else if(rightSensor.currentTotalContacts >= 1 && ((m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds()  > 300) ) {
+				} else if(rightSensor.currentTotalContacts >= 1 && ((m_clock.getElapsedTime() - m_lastTimeOnGround).asMilliseconds()  > 300)  && m_jumpButtonReleased ) {
 					body->SetLinearVelocity(b2Vec2(0,0));
 					body->ApplyLinearImpulse( b2Vec2(-m_wallJumpForce,-m_wallJumpImpulse), body->GetWorldCenter() , true);
 					m_isRightWallJumpTriggered = true;

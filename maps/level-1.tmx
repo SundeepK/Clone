@@ -14,7 +14,7 @@
   <object x="1443" y="2" width="32" height="632"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="96" y="98" width="1343" height="65">
+  <object name="lowersplit" x="96" y="98" width="1346" height="33">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="left"/>
@@ -22,7 +22,7 @@
     <property name="Texture" value="planks.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="98" y="258" width="1342" height="63">
+  <object name="lowersplit" x="98" y="258" width="1342" height="31">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="left"/>
@@ -30,7 +30,7 @@
     <property name="Texture" value="planks.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="93" y="446" width="1123" height="66">
+  <object name="lowersplit" x="93" y="446" width="1124" height="38">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="left"/>

@@ -101,7 +101,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     rightSensor.restitution = 0.0f;
     rightSensor.friction = 10.0f;
 
-    rightShape.SetAsBox(0.1, 0.6, b2Vec2(0.6,0), 0);
+    rightShape.SetAsBox(0.1, 0.3, b2Vec2(0.6,0), 0);
     rightSensor.isSensor = true;
     b2Fixture* rightSensorFixture = physComp.physicsBody->CreateFixture(&rightSensor);
     SensorComponent rightSensorComp;
@@ -118,7 +118,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     leftSensor.density = 0.3;
     leftSensor.restitution = 0.0f;
     leftSensor.friction = 10.0f;
-    leftShape.SetAsBox(0.1, 0.6, b2Vec2(-0.6,0), 0);
+    leftShape.SetAsBox(0.1, 0.3, b2Vec2(-0.6,0), 0);
     leftSensor.isSensor = true;
     b2Fixture* leftSensorFixture = physComp.physicsBody->CreateFixture(&leftSensor);
     SensorComponent leftSensorComp;
