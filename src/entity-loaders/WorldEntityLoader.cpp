@@ -21,12 +21,7 @@ WorldEntityLoader::WorldEntityLoader()  {
 WorldEntityLoader::~WorldEntityLoader() {
 }
 
-void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData){
-
-    lua_State *luaState = luaL_newstate();
-
-    luabind::open(luaState);
-	luaL_openlibs(luaState);
+void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State *luaState){
 
 	if(luaL_dofile(luaState, "lua-configs/playerConfig.lua")){
         printf("%s\n", lua_tostring(luaState, -1));
@@ -48,5 +43,4 @@ void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2d
 		entityLoader->loadEntity(anaxWorld, box2dWorld, loadedMapData, luaState);
 	}
 
-    lua_close(luaState);
 }

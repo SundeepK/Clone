@@ -14,7 +14,7 @@ public:
 	WorldEntityLoader();
 	virtual ~WorldEntityLoader();
 
-	void loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData);
+	void loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State *luaState);
 
 private:
 	std::vector<std::unique_ptr<LuaEntityLoader>> m_entityLoaders;

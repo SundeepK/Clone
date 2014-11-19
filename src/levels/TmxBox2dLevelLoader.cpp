@@ -1,12 +1,23 @@
 #include "TmxBox2dLevelLoader.h"
 
+extern "C"
+{
+	#include <lua5.1/lua.h>
+	#include <lua5.1/lualib.h>
+	#include <lua5.1/lauxlib.h>
+}
+
+#include <luabind/luabind.hpp>
+#include <luabind/object.hpp>
+
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
 
 	std::unique_ptr<tmx::MapLoader> m_mapLoader;
 	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
+	std::vector<std::string> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
-
+	int m_currentLevelIndex = 0;
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory) : m_mapLoader(&mapDirectory) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
@@ -119,9 +130,37 @@ public:
 	}
 
 	void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
-		m_mapLoader->Load(levelName);
-		 std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
-		 std::unordered_map<std::string, tmx::MapObject> loadedItems;
+
+	    lua_State *luaState = luaL_newstate();
+	    luabind::open(luaState);
+		luaL_openlibs(luaState);
+
+		if(luaL_dofile(luaState, "lua-configs/levelsConfig.lua")){
+	        printf("%s\n", lua_tostring(luaState, -1));
+		}
+
+		try {
+			luabind::object levels =  luabind::call_function<luabind::object>(luaState, "getLevelsToLoad");
+			for(int i = 1; ; i++){
+				if(levels[i]){
+				  std::string levelName =  luabind::object_cast<std::string>(levels[i]);
+				    std::cout << "level is" << levelName << std::endl;
+				  m_levelsToLoad.push_back(levelName);
+				}else{
+					break;
+				}
+			}
+		} catch (luabind::error& e) {
+		    std::string error = lua_tostring(e.state(), -1);
+		    std::cout << error << std::endl;
+		}
+
+		assert(m_levelsToLoad.size() > 1 && "No level names found");
+
+		m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex]);
+		m_currentLevelIndex++;
+		std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
+		std::unordered_map<std::string, tmx::MapObject> loadedItems;
 		const std::string t = "TexCoords";
 		for ( auto& layer : layers) {
 			if(layer.visible){
@@ -129,7 +168,9 @@ public:
 				loadedItems.insert(objectsMap.begin(), objectsMap.end());
 			}
 		}
-		m_worldEntityLoader.loadWorldEntities(anaxWorld, b2dworld, loadedItems);
+
+		m_worldEntityLoader.loadWorldEntities(anaxWorld, b2dworld, loadedItems, luaState);
+		lua_close(luaState);
 	}
 
 };
