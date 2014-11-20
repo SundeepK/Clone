@@ -129,12 +129,7 @@ public:
 		return mapObjects;
 	}
 
-	void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
-
-	    lua_State *luaState = luaL_newstate();
-	    luabind::open(luaState);
-		luaL_openlibs(luaState);
-
+	void loadLevelList(lua_State *luaState){
 		if(luaL_dofile(luaState, "lua-configs/levelsConfig.lua")){
 	        printf("%s\n", lua_tostring(luaState, -1));
 		}
@@ -156,6 +151,17 @@ public:
 		}
 
 		assert(m_levelsToLoad.size() > 1 && "No level names found");
+	}
+
+	void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
+
+	    lua_State *luaState = luaL_newstate();
+	    luabind::open(luaState);
+		luaL_openlibs(luaState);
+
+		if(m_levelsToLoad.size() <= 0 && m_currentLevelIndex <= 0){
+			loadLevelList(luaState);
+		}
 
 		m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex]);
 		m_currentLevelIndex++;

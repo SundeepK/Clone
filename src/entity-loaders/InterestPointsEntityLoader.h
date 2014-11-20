@@ -12,11 +12,9 @@
 class InterestPointsEntityLoader : public LuaEntityLoader {
 public:
 
-	InterestPointsEntityLoader() {
-	}
+	InterestPointsEntityLoader();
 
-	~InterestPointsEntityLoader() {
-	}
+	~InterestPointsEntityLoader();
 
 	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  std::unordered_map<std::string, tmx::MapObject>& loadedMapData,  lua_State *myLuaState);
 

@@ -1,9 +1,12 @@
+#include "InterestPointsEntityLoader.h"
+
 #include <entity-loaders/InterestPointsEntityLoader.h>
 #include <components/PhysicsComponent.h>
 
 class InterestPointsEntityLoader::InterestPointsEntityLoaderImpl{
 
 public:
+
 	InterestPointsEntityLoaderImpl(){
 	}
 
@@ -12,7 +15,7 @@ public:
 	}
 
 	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,
-			std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* myLuaState){
+			std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState){
 
 		tmx::MapObject endPointMapObject = loadedMapData["PlayerEndPoint"];
 
@@ -38,13 +41,19 @@ public:
 		endPointFixture.sensors = endPointBody->GetFixtureList();
 		endPointFixture.tag = "EndPointFixture";
 		sensorsComp.sensors.insert(std::pair<std::string, SensorComponent>(endPointFixture.tag, endPointFixture));
+		endPoint.activate();
 
 	}
 
 };
 
+InterestPointsEntityLoader::InterestPointsEntityLoader() : m_impl(new InterestPointsEntityLoaderImpl()) {
+}
+
+InterestPointsEntityLoader::~InterestPointsEntityLoader() {
+}
 
 void InterestPointsEntityLoader::loadEntity(anax::World& anaxWorld, b2World& box2dWorld,
-		std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* myLuaState) {
-
+		std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
+	m_impl->loadEntity(anaxWorld, box2dWorld, loadedMapData, luaState);
 }

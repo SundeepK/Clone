@@ -1,6 +1,7 @@
 #include "WorldEntityLoader.h"
 #include <vector>
 #include <entity-loaders/PlayerEntityLoader.h>
+#include <entity-loaders/InterestPointsEntityLoader.h>
 #include <components/PhysicsComponent.h>
 
 extern "C"
@@ -16,6 +17,8 @@ extern "C"
 WorldEntityLoader::WorldEntityLoader()  {
 
 	m_entityLoaders.push_back(std::unique_ptr<LuaEntityLoader>(new PlayerEntityLoader()));
+	m_entityLoaders.push_back(std::unique_ptr<LuaEntityLoader>(new InterestPointsEntityLoader()));
+
 }
 
 WorldEntityLoader::~WorldEntityLoader() {
