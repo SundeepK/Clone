@@ -26,6 +26,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_b2Dsplitter);
 	m_anaxWorld.addSystem(m_mouseSplitterSystem);
 	m_anaxWorld.addSystem(m_sensorSystem);
+	m_anaxWorld.addSystem(m_levelEndDetectSystem);
 
 
 
@@ -73,6 +74,7 @@ void Game::update(float deltaTime) {
     m_b2Dsplitter.refreshEntityBodyTypes();
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
+    m_levelEndDetectSystem.processEndLevel();
 }
 
 void Game::render() {

@@ -30,6 +30,7 @@
 #include <input-events/B2dSplitter.h>
 #include <systems/MouseSplitterSystem.h>
 #include <systems/SensorSystem.h>
+#include <systems/DetectLevelEndSystem.h>
 
 class Game {
 
@@ -66,6 +67,8 @@ class Game {
 		 B2dSplitter m_b2Dsplitter;
 		 MouseSplitterSystem m_mouseSplitterSystem;
 		 SensorSystem m_sensorSystem;
+		 DetectLevelEndSystem m_levelEndDetectSystem;
+
 
 };
 

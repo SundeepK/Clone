@@ -2,6 +2,8 @@
 
 #include <entity-loaders/InterestPointsEntityLoader.h>
 #include <components/PhysicsComponent.h>
+#include <components/EndPointCollisionTagComponent.h>
+#include <components/EndPointTagComponent.h>
 
 class InterestPointsEntityLoader::InterestPointsEntityLoaderImpl{
 
@@ -23,6 +25,8 @@ public:
 		auto& sensorsComp = endPoint.addComponent<Sensor>();
 
 		auto& physComp = endPoint.addComponent<PhysicsComponent>();
+		auto& endPointComp = endPoint.addComponent<EndPointCollisionTagComponent>();
+		auto& endPointTagComp = endPoint.addComponent<EndPointTagComponent>();
 
 		B2BoxBuilder builder(endPointMapObject.GetAABB().height, endPointMapObject.GetAABB().width);
 		builder

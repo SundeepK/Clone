@@ -9,6 +9,8 @@ public:
 	DetectLevelEndSystem();
 	virtual ~DetectLevelEndSystem();
 
+	void processEndLevel();
+
 private:
 
 	class DetectLevelEndSystemImpl;

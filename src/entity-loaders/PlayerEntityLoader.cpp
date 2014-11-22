@@ -1,4 +1,5 @@
 #include <entity-loaders/PlayerEntityLoader.h>
+#include <components/EndPointCollisionTagComponent.h>
 
 void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
 
@@ -54,6 +55,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
     auto& sensorsComp = playerEntity.addComponent<Sensor>();
+    auto& interestedInLevelEnd = playerEntity.addComponent<EndPointCollisionTagComponent>();
 
     //auto& textureRectComp = m_player.addComponent<TextureRectComponent>();
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
