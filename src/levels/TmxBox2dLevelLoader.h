@@ -5,6 +5,7 @@
 #include <tmx/MapLoader.h>
 #include <tmx/tmx2box2d.h>
 #include <anax/World.hpp>
+#include <anax/System.hpp>
 #include <sstream>
 #include <memory.h>
 #include <components/PhysicsComponent.h>
@@ -17,12 +18,12 @@
 #include <GL/glut.h>
 
 
-class TmxBox2dLevelLoader {
+class TmxBox2dLevelLoader :  public anax::System<TmxBox2dLevelLoader>{
 	public:
-		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory);
+		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld);
 		virtual ~TmxBox2dLevelLoader();
 
-		void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld);
+		void loadNextLevel();
 
 	private:
 

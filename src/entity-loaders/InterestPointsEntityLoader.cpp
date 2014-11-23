@@ -43,7 +43,7 @@ public:
 
 		SensorComponent endPointFixture;
 		endPointFixture.sensors = endPointBody->GetFixtureList();
-		endPointFixture.tag = "EndPointFixture";
+		endPointFixture.tag = "EndPointSensor";
 		sensorsComp.sensors.insert(std::pair<std::string, SensorComponent>(endPointFixture.tag, endPointFixture));
 		endPoint.activate();
 

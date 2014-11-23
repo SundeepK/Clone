@@ -9,17 +9,20 @@ extern "C"
 
 #include <luabind/luabind.hpp>
 #include <luabind/object.hpp>
+#include <components/PhysicsComponent.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
 
 	std::unique_ptr<tmx::MapLoader> m_mapLoader;
+	std::unique_ptr<b2World> m_box2dWorld;
+	std::unique_ptr<anax::World> m_anaxWorld;
 	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
 	std::vector<std::string> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
 	int m_currentLevelIndex = 0;
 
-	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory) : m_mapLoader(&mapDirectory) {
+	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory), m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
@@ -153,8 +156,7 @@ public:
 		assert(m_levelsToLoad.size() > 1 && "No level names found");
 	}
 
-	void loadLevel(std::string levelName, b2World& b2dworld, anax::World& anaxWorld) {
-
+	void loadNextLevel() {
 	    lua_State *luaState = luaL_newstate();
 	    luabind::open(luaState);
 		luaL_openlibs(luaState);
@@ -163,30 +165,45 @@ public:
 			loadLevelList(luaState);
 		}
 
-		m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex]);
-		m_currentLevelIndex++;
-		std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
-		std::unordered_map<std::string, tmx::MapObject> loadedItems;
-		const std::string t = "TexCoords";
-		for ( auto& layer : layers) {
-			if(layer.visible){
-				auto objectsMap = loadTmxLayerForLevel(layer, b2dworld, anaxWorld);
-				loadedItems.insert(objectsMap.begin(), objectsMap.end());
-			}
-		}
+		if(m_currentLevelIndex < m_levelsToLoad.size()){
 
-		m_worldEntityLoader.loadWorldEntities(anaxWorld, b2dworld, loadedItems, luaState);
+			auto entities = m_anaxWorld->getEntities();
+			std::cout << "total entities" << entities.size() << std::endl;
+			for(anax::Entity entity : entities){
+				if(entity.hasComponent<PhysicsComponent>()){
+					auto& physicsComp = entity.getComponent<PhysicsComponent>();
+					m_box2dWorld->DestroyBody(physicsComp.physicsBody);
+				}
+			}
+
+			m_anaxWorld->killEntities(entities);
+			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex]);
+			m_currentLevelIndex++;
+			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
+			std::unordered_map<std::string, tmx::MapObject> loadedItems;
+			const std::string t = "TexCoords";
+			for (auto& layer : layers) {
+				if (layer.visible) {
+					auto objectsMap = loadTmxLayerForLevel(layer, *m_box2dWorld, *m_anaxWorld);
+					loadedItems.insert(objectsMap.begin(), objectsMap.end());
+				}
+			}
+
+			m_worldEntityLoader.loadWorldEntities(*m_anaxWorld, *m_box2dWorld, loadedItems, luaState);
+		}
 		lua_close(luaState);
 	}
 
 };
 
-TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory) : m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory)) {
+TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : Base(anax::ComponentFilter()),
+		m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory, b2dworld, anaxWorld)) {
 }
 
 TmxBox2dLevelLoader::~TmxBox2dLevelLoader() {
 }
 
-void TmxBox2dLevelLoader::loadLevel(std::string levelName, b2World& b2dworld,anax::World& anaxWorld) {
-	m_impl->loadLevel(levelName, b2dworld, anaxWorld);
+void TmxBox2dLevelLoader::loadNextLevel() {
+	auto entities = getEntities();
+	m_impl->loadNextLevel();
 }

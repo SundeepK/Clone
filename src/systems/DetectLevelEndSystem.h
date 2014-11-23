@@ -3,10 +3,11 @@
 
 #include <memory>
 #include <anax/System.hpp>
+#include <levels/TmxBox2dLevelLoader.h>
 
 class DetectLevelEndSystem : public anax::System<DetectLevelEndSystem> {
 public:
-	DetectLevelEndSystem();
+	DetectLevelEndSystem(TmxBox2dLevelLoader& tmxMapLoader);
 	virtual ~DetectLevelEndSystem();
 
 	void processEndLevel();

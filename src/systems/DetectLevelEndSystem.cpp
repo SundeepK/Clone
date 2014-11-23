@@ -11,7 +11,9 @@ class DetectLevelEndSystem::DetectLevelEndSystemImpl{
 
 public:
 
-	DetectLevelEndSystemImpl(){
+	std::unique_ptr<TmxBox2dLevelLoader> m_tmxLevelLoader;
+
+	DetectLevelEndSystemImpl(TmxBox2dLevelLoader& tmxMapLoader) : m_tmxLevelLoader(&tmxMapLoader){
 
 	}
 
@@ -19,7 +21,7 @@ public:
 
 	}
 
-	void processLevelEndCollision(std::vector<anax::Entity> entities){
+	void processLevelEndCollision(std::vector<anax::Entity>& entities){
 		anax::Entity playerEntity;
 		anax::Entity endPointEntity;
 		for (auto entity : entities) {
@@ -37,10 +39,10 @@ public:
 		auto & footSensor = playerEntity.getComponent<Sensor>().sensors["FootSensor"];
 		auto & rightSensor = playerEntity.getComponent<Sensor>().sensors["RightSensor"];
 		auto & leftSensor = playerEntity.getComponent<Sensor>().sensors["LeftSensor"];
-		auto & endPointSensor = endPointEntity.getComponent<Sensor>().sensors["PlayerEndPoint"];
+		auto & endPointSensor = endPointEntity.getComponent<Sensor>().sensors["EndPointSensor"];
 
 		if((footSensor.currentTotalContacts >= 1 || rightSensor.currentTotalContacts >= 1  || leftSensor.currentTotalContacts >= 1 ) && endPointSensor.currentTotalContacts >= 1){
-			std::cout << "End level detected" << std::endl;
+			m_tmxLevelLoader->loadNextLevel();
 		}
 	}
 
@@ -48,7 +50,7 @@ public:
 };
 
 
-DetectLevelEndSystem::DetectLevelEndSystem() :  Base(anax::ComponentFilter().requires<Sensor, EndPointCollisionTagComponent>()), m_impl(new DetectLevelEndSystemImpl()) {
+DetectLevelEndSystem::DetectLevelEndSystem(TmxBox2dLevelLoader& tmxMapLoader) :  Base(anax::ComponentFilter().requires<Sensor, EndPointCollisionTagComponent>()), m_impl(new DetectLevelEndSystemImpl(tmxMapLoader)) {
 
 }
 

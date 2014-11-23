@@ -22,15 +22,7 @@
     <property name="Texture" value="planks.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="98" y="258" width="1342" height="31">
-   <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="planks.png"/>
-   </properties>
-  </object>
-  <object name="lowersplit" x="93" y="446" width="1124" height="38">
+  <object name="lowersplit" x="96" y="390" width="1124" height="38">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="left"/>
@@ -40,7 +32,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
-  <object name="PlayerEndPoint" x="604" y="601" width="31" height="31"/>
-  <object name="PlayerStartPoint" x="129" y="609" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="1406" y="65" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="1335" y="602" width="29" height="26"/>
  </objectgroup>
 </map>
