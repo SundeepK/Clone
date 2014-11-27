@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_motor_joint_def" kind="struct" language="C++" prot="public">
+    <compoundname>b2MotorJointDef</compoundname>
+    <basecompoundref refid="structb2_joint_def" prot="public" virt="non-virtual">b2JointDef</basecompoundref>
+    <includes refid="b2_motor_joint_8h" local="no">b2MotorJoint.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_motor_joint_def_1a2c957cffc2af66c6c8077c069b906bc4" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2MotorJointDef::linearOffset</definition>
+        <argsstring></argsstring>
+        <name>linearOffset</name>
+        <briefdescription>
+<para>Position of bodyB minus the position of bodyA, in bodyA&apos;s frame, in meters. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="41" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_motor_joint_def_1abdb42eff4aeff1d48038e084c57e1cb0" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2MotorJointDef::angularOffset</definition>
+        <argsstring></argsstring>
+        <name>angularOffset</name>
+        <briefdescription>
+<para>The bodyB angle minus bodyA angle in radians. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="44" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_motor_joint_def_1a2f66d1b99c654e112dc68e15375d5ee7" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2MotorJointDef::maxForce</definition>
+        <argsstring></argsstring>
+        <name>maxForce</name>
+        <briefdescription>
+<para>The maximum motor force in N. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="47" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_motor_joint_def_1afcf5dd58166917a4574d1f28f6bb3660" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2MotorJointDef::maxTorque</definition>
+        <argsstring></argsstring>
+        <name>maxTorque</name>
+        <briefdescription>
+<para>The maximum motor torque in N-m. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="50" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_motor_joint_def_1ab282afdb92d07ead23530f57fd0eb9ea" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2MotorJointDef::correctionFactor</definition>
+        <argsstring></argsstring>
+        <name>correctionFactor</name>
+        <briefdescription>
+<para>Position correction factor in the range [0,1]. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="53" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_motor_joint_def_1a70c6d6e66090cef696f401df8ce89898" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2MotorJointDef::b2MotorJointDef</definition>
+        <argsstring>()</argsstring>
+        <name>b2MotorJointDef</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="27" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="27" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_motor_joint_def_1a90eb924b6e04da8d75d9cefad0655960" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2MotorJointDef::Initialize</definition>
+        <argsstring>(b2Body *bodyA, b2Body *bodyB)</argsstring>
+        <name>Initialize</name>
+        <param>
+          <type><ref refid="classb2_body" kindref="compound">b2Body</ref> *</type>
+          <declname>bodyA</declname>
+        </param>
+        <param>
+          <type><ref refid="classb2_body" kindref="compound">b2Body</ref> *</type>
+          <declname>bodyB</declname>
+        </param>
+        <briefdescription>
+<para>Initialize the bodies and offsets using the current transforms. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="38" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.cpp" bodystart="35" bodyend="45"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Motor joint definition. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="423">
+        <label>b2MotorJointDef</label>
+        <link refid="structb2_motor_joint_def"/>
+        <childnode refid="424" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="424">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="425">
+        <label>b2MotorJointDef</label>
+        <link refid="structb2_motor_joint_def"/>
+        <childnode refid="426" relation="public-inheritance">
+        </childnode>
+        <childnode refid="428" relation="usage">
+          <edgelabel>linearOffset</edgelabel>
+        </childnode>
+      </node>
+      <node id="427">
+        <label>b2Body</label>
+        <link refid="classb2_body"/>
+      </node>
+      <node id="426">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+        <childnode refid="427" relation="usage">
+          <edgelabel>bodyA</edgelabel>
+          <edgelabel>bodyB</edgelabel>
+        </childnode>
+      </node>
+      <node id="428">
+        <label>b2Vec2</label>
+        <link refid="structb2_vec2"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" line="26" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h" bodystart="25" bodyend="54"/>
+    <listofallmembers>
+      <member refid="structb2_motor_joint_def_1abdb42eff4aeff1d48038e084c57e1cb0" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>angularOffset</name></member>
+      <member refid="structb2_joint_def_1a1fdb44829d4fd13c72edb1daacb72f89" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>b2JointDef</name></member>
+      <member refid="structb2_motor_joint_def_1a70c6d6e66090cef696f401df8ce89898" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>b2MotorJointDef</name></member>
+      <member refid="structb2_joint_def_1a8cd54c93da396be75a9788f2c6897f05" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>bodyA</name></member>
+      <member refid="structb2_joint_def_1aa4f4dee2fbcd12187b19506b60e68e3d" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>bodyB</name></member>
+      <member refid="structb2_joint_def_1aef099a1f89b64e230173b6016848ea9b" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>collideConnected</name></member>
+      <member refid="structb2_motor_joint_def_1ab282afdb92d07ead23530f57fd0eb9ea" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>correctionFactor</name></member>
+      <member refid="structb2_motor_joint_def_1a90eb924b6e04da8d75d9cefad0655960" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>Initialize</name></member>
+      <member refid="structb2_motor_joint_def_1a2c957cffc2af66c6c8077c069b906bc4" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>linearOffset</name></member>
+      <member refid="structb2_motor_joint_def_1a2f66d1b99c654e112dc68e15375d5ee7" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>maxForce</name></member>
+      <member refid="structb2_motor_joint_def_1afcf5dd58166917a4574d1f28f6bb3660" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>maxTorque</name></member>
+      <member refid="structb2_joint_def_1a470f2879b24adb05facbd49f338856fb" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>type</name></member>
+      <member refid="structb2_joint_def_1a07eb150daaaa52fc09c3bcf402b295fe" prot="public" virt="non-virtual"><scope>b2MotorJointDef</scope><name>userData</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

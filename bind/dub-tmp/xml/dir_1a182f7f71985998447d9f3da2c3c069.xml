@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="dir_1a182f7f71985998447d9f3da2c3c069" kind="dir">
+    <compoundname>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Rope</compoundname>
+    <innerfile refid="b2_rope_8cpp">b2Rope.cpp</innerfile>
+    <innerfile refid="b2_rope_8h">b2Rope.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Rope/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_world_ray_cast_wrapper" kind="struct" language="C++" prot="public">
+    <compoundname>b2WorldRayCastWrapper</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_world_ray_cast_wrapper_1a8bf380db0756a568bec076e549544145" prot="public" static="no" mutable="no">
+        <type>const <ref refid="classb2_broad_phase" kindref="compound">b2BroadPhase</ref> *</type>
+        <definition>const b2BroadPhase* b2WorldRayCastWrapper::broadPhase</definition>
+        <argsstring></argsstring>
+        <name>broadPhase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="1015" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="1015" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_world_ray_cast_wrapper_1a5e6d85af5ae2cda7a8da2306d6b86a3e" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_ray_cast_callback" kindref="compound">b2RayCastCallback</ref> *</type>
+        <definition>b2RayCastCallback* b2WorldRayCastWrapper::callback</definition>
+        <argsstring></argsstring>
+        <name>callback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="1016" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="1016" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_world_ray_cast_wrapper_1a336aa5b664c3cfea61b0e28066f796d4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2WorldRayCastWrapper::RayCastCallback</definition>
+        <argsstring>(const b2RayCastInput &amp;input, int32 proxyId)</argsstring>
+        <name>RayCastCallback</name>
+        <param>
+          <type>const <ref refid="structb2_ray_cast_input" kindref="compound">b2RayCastInput</ref> &amp;</type>
+          <declname>input</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>proxyId</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="996" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="996" bodyend="1013"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="675">
+        <label>b2BroadPhase</label>
+        <link refid="classb2_broad_phase"/>
+      </node>
+      <node id="673">
+        <label>b2WorldRayCastWrapper</label>
+        <link refid="structb2_world_ray_cast_wrapper"/>
+        <childnode refid="674" relation="usage">
+          <edgelabel>callback</edgelabel>
+        </childnode>
+        <childnode refid="675" relation="usage">
+          <edgelabel>broadPhase</edgelabel>
+        </childnode>
+      </node>
+      <node id="674">
+        <label>b2RayCastCallback</label>
+        <link refid="classb2_ray_cast_callback"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="995" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="994" bodyend="1017"/>
+    <listofallmembers>
+      <member refid="structb2_world_ray_cast_wrapper_1a8bf380db0756a568bec076e549544145" prot="public" virt="non-virtual"><scope>b2WorldRayCastWrapper</scope><name>broadPhase</name></member>
+      <member refid="structb2_world_ray_cast_wrapper_1a5e6d85af5ae2cda7a8da2306d6b86a3e" prot="public" virt="non-virtual"><scope>b2WorldRayCastWrapper</scope><name>callback</name></member>
+      <member refid="structb2_world_ray_cast_wrapper_1a336aa5b664c3cfea61b0e28066f796d4" prot="public" virt="non-virtual"><scope>b2WorldRayCastWrapper</scope><name>RayCastCallback</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

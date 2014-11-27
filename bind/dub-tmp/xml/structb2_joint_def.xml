@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_joint_def" kind="struct" language="C++" prot="public">
+    <compoundname>b2JointDef</compoundname>
+    <derivedcompoundref refid="structb2_distance_joint_def" prot="public" virt="non-virtual">b2DistanceJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_friction_joint_def" prot="public" virt="non-virtual">b2FrictionJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_gear_joint_def" prot="public" virt="non-virtual">b2GearJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_motor_joint_def" prot="public" virt="non-virtual">b2MotorJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_mouse_joint_def" prot="public" virt="non-virtual">b2MouseJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_prismatic_joint_def" prot="public" virt="non-virtual">b2PrismaticJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_pulley_joint_def" prot="public" virt="non-virtual">b2PulleyJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_revolute_joint_def" prot="public" virt="non-virtual">b2RevoluteJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_rope_joint_def" prot="public" virt="non-virtual">b2RopeJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_weld_joint_def" prot="public" virt="non-virtual">b2WeldJointDef</derivedcompoundref>
+    <derivedcompoundref refid="structb2_wheel_joint_def" prot="public" virt="non-virtual">b2WheelJointDef</derivedcompoundref>
+    <includes refid="b2_joint_8h" local="no">b2Joint.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_joint_def_1a470f2879b24adb05facbd49f338856fb" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_joint_8h_1a0bb202d8a286c888a11985b07b2272ab" kindref="member">b2JointType</ref></type>
+        <definition>b2JointType b2JointDef::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+<para>The joint type is set automatically for concrete joint types. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="86" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_def_1a07eb150daaaa52fc09c3bcf402b295fe" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* b2JointDef::userData</definition>
+        <argsstring></argsstring>
+        <name>userData</name>
+        <briefdescription>
+<para>Use this to attach application specific data to your joints. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="89" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_def_1a8cd54c93da396be75a9788f2c6897f05" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_body" kindref="compound">b2Body</ref> *</type>
+        <definition>b2Body* b2JointDef::bodyA</definition>
+        <argsstring></argsstring>
+        <name>bodyA</name>
+        <briefdescription>
+<para>The first attached body. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="92" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_def_1aa4f4dee2fbcd12187b19506b60e68e3d" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_body" kindref="compound">b2Body</ref> *</type>
+        <definition>b2Body* b2JointDef::bodyB</definition>
+        <argsstring></argsstring>
+        <name>bodyB</name>
+        <briefdescription>
+<para>The second attached body. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="95" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_def_1aef099a1f89b64e230173b6016848ea9b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool b2JointDef::collideConnected</definition>
+        <argsstring></argsstring>
+        <name>collideConnected</name>
+        <briefdescription>
+<para>Set this flag to true if the attached bodies should collide. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="98" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_joint_def_1a1fdb44829d4fd13c72edb1daacb72f89" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2JointDef::b2JointDef</definition>
+        <argsstring>()</argsstring>
+        <name>b2JointDef</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="76" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="76" bodyend="83"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Joint definitions are used to construct joints. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="386">
+        <label>b2RopeJointDef</label>
+        <link refid="structb2_rope_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="381">
+        <label>b2MotorJointDef</label>
+        <link refid="structb2_motor_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="378">
+        <label>b2DistanceJointDef</label>
+        <link refid="structb2_distance_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="384">
+        <label>b2PulleyJointDef</label>
+        <link refid="structb2_pulley_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="379">
+        <label>b2FrictionJointDef</label>
+        <link refid="structb2_friction_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="387">
+        <label>b2WeldJointDef</label>
+        <link refid="structb2_weld_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="377">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+      </node>
+      <node id="382">
+        <label>b2MouseJointDef</label>
+        <link refid="structb2_mouse_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="380">
+        <label>b2GearJointDef</label>
+        <link refid="structb2_gear_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="388">
+        <label>b2WheelJointDef</label>
+        <link refid="structb2_wheel_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="383">
+        <label>b2PrismaticJointDef</label>
+        <link refid="structb2_prismatic_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="385">
+        <label>b2RevoluteJointDef</label>
+        <link refid="structb2_revolute_joint_def"/>
+        <childnode refid="377" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="390">
+        <label>b2Body</label>
+        <link refid="classb2_body"/>
+      </node>
+      <node id="389">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+        <childnode refid="390" relation="usage">
+          <edgelabel>bodyA</edgelabel>
+          <edgelabel>bodyB</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="75" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="74" bodyend="99"/>
+    <listofallmembers>
+      <member refid="structb2_joint_def_1a1fdb44829d4fd13c72edb1daacb72f89" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>b2JointDef</name></member>
+      <member refid="structb2_joint_def_1a8cd54c93da396be75a9788f2c6897f05" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>bodyA</name></member>
+      <member refid="structb2_joint_def_1aa4f4dee2fbcd12187b19506b60e68e3d" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>bodyB</name></member>
+      <member refid="structb2_joint_def_1aef099a1f89b64e230173b6016848ea9b" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>collideConnected</name></member>
+      <member refid="structb2_joint_def_1a470f2879b24adb05facbd49f338856fb" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>type</name></member>
+      <member refid="structb2_joint_def_1a07eb150daaaa52fc09c3bcf402b295fe" prot="public" virt="non-virtual"><scope>b2JointDef</scope><name>userData</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

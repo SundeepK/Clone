@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_block" kind="struct" language="C++" prot="public">
+    <compoundname>b2Block</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_block_1a4b410d4fd7ad2a117c70776f60cb2738" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_block" kindref="compound">b2Block</ref> *</type>
+        <definition>b2Block* b2Block::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2BlockAllocator.cpp" line="52" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2BlockAllocator.cpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="4">
+        <label>b2Block</label>
+        <link refid="structb2_block"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2BlockAllocator.cpp" line="51" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2BlockAllocator.cpp" bodystart="50" bodyend="53"/>
+    <listofallmembers>
+      <member refid="structb2_block_1a4b410d4fd7ad2a117c70776f60cb2738" prot="public" virt="non-virtual"><scope>b2Block</scope><name>next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

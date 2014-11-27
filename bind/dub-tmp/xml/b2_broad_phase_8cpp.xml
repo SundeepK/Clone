@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_broad_phase_8cpp" kind="file" language="C++">
+    <compoundname>b2BroadPhase.cpp</compoundname>
+    <includes refid="b2_broad_phase_8h" local="no">Box2D/Collision/b2BroadPhase.h</includes>
+    <incdepgraph>
+      <node id="4">
+        <label>assert.h</label>
+      </node>
+      <node id="5">
+        <label>float.h</label>
+      </node>
+      <node id="6">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stddef.h</label>
+      </node>
+      <node id="12">
+        <label>memory.h</label>
+      </node>
+      <node id="9">
+        <label>limits.h</label>
+      </node>
+      <node id="11">
+        <label>Box2D/Common/b2GrowableStack.h</label>
+        <link refid="b2_growable_stack_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2_broad_phase_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="0">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.cpp</label>
+        <link refid="b2BroadPhase.cpp"/>
+        <childnode refid="1" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>Box2D/Collision/b2DynamicTree.h</label>
+        <link refid="b2_dynamic_tree_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>math.h</label>
+      </node>
+      <node id="2">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>algorithm</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.cpp"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_revolute_joint_8cpp" kind="file" language="C++">
+    <compoundname>b2RevoluteJoint.cpp</compoundname>
+    <includes refid="b2_revolute_joint_8h" local="no">Box2D/Dynamics/Joints/b2RevoluteJoint.h</includes>
+    <includes refid="b2_body_8h" local="no">Box2D/Dynamics/b2Body.h</includes>
+    <includes refid="b2_time_step_8h" local="no">Box2D/Dynamics/b2TimeStep.h</includes>
+    <incdepgraph>
+      <node id="1837">
+        <label>assert.h</label>
+      </node>
+      <node id="1838">
+        <label>float.h</label>
+      </node>
+      <node id="1831">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp</label>
+        <link refid="b2RevoluteJoint.cpp"/>
+        <childnode refid="1832" relation="include">
+        </childnode>
+        <childnode refid="1840" relation="include">
+        </childnode>
+        <childnode refid="1846" relation="include">
+        </childnode>
+      </node>
+      <node id="1846">
+        <label>Box2D/Dynamics/b2TimeStep.h</label>
+        <link refid="b2_time_step_8h"/>
+        <childnode refid="1834" relation="include">
+        </childnode>
+      </node>
+      <node id="1832">
+        <label>Box2D/Dynamics/Joints/b2RevoluteJoint.h</label>
+        <link refid="b2_revolute_joint_8h"/>
+        <childnode refid="1833" relation="include">
+        </childnode>
+      </node>
+      <node id="1843">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="1834" relation="include">
+        </childnode>
+        <childnode refid="1844" relation="include">
+        </childnode>
+      </node>
+      <node id="1836">
+        <label>stddef.h</label>
+      </node>
+      <node id="1844">
+        <label>limits.h</label>
+      </node>
+      <node id="1840">
+        <label>Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="1834" relation="include">
+        </childnode>
+        <childnode refid="1841" relation="include">
+        </childnode>
+        <childnode refid="1845" relation="include">
+        </childnode>
+      </node>
+      <node id="1839">
+        <label>math.h</label>
+      </node>
+      <node id="1835">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="1836" relation="include">
+        </childnode>
+        <childnode refid="1837" relation="include">
+        </childnode>
+        <childnode refid="1838" relation="include">
+        </childnode>
+      </node>
+      <node id="1842">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="1835" relation="include">
+        </childnode>
+      </node>
+      <node id="1834">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="1835" relation="include">
+        </childnode>
+        <childnode refid="1839" relation="include">
+        </childnode>
+      </node>
+      <node id="1841">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="1842" relation="include">
+        </childnode>
+        <childnode refid="1834" relation="include">
+        </childnode>
+        <childnode refid="1843" relation="include">
+        </childnode>
+      </node>
+      <node id="1833">
+        <label>Box2D/Dynamics/Joints/b2Joint.h</label>
+        <link refid="b2_joint_8h"/>
+        <childnode refid="1834" relation="include">
+        </childnode>
+      </node>
+      <node id="1845">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp"/>
+  </compounddef>
+</doxygen>

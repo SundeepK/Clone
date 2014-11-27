@@ -1,0 +1,948 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_collision_8h" kind="file" language="C++">
+    <compoundname>b2Collision.h</compoundname>
+    <includes refid="b2_math_8h" local="no">Box2D/Common/b2Math.h</includes>
+    <includes local="no">limits.h</includes>
+    <includedby refid="b2_broad_phase_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h</includedby>
+    <includedby refid="b2_collide_circle_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideCircle.cpp</includedby>
+    <includedby refid="b2_collide_edge_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp</includedby>
+    <includedby refid="b2_collide_polygon_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollidePolygon.cpp</includedby>
+    <includedby refid="b2_collision_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.cpp</includedby>
+    <includedby refid="b2_dynamic_tree_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2DynamicTree.h</includedby>
+    <includedby refid="b2_time_of_impact_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2TimeOfImpact.cpp</includedby>
+    <includedby refid="b2_shape_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2Shape.h</includedby>
+    <includedby refid="b2_fixture_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.cpp</includedby>
+    <includedby refid="b2_fixture_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.h</includedby>
+    <includedby refid="b2_world_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</includedby>
+    <includedby refid="b2_contact_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</includedby>
+    <includedby refid="b2_contact_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.h</includedby>
+    <includedby refid="b2_contact_solver_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.h</includedby>
+    <incdepgraph>
+      <node id="97">
+        <label>assert.h</label>
+      </node>
+      <node id="98">
+        <label>float.h</label>
+      </node>
+      <node id="93">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h</label>
+        <link refid="b2Collision.h"/>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+      </node>
+      <node id="96">
+        <label>stddef.h</label>
+      </node>
+      <node id="100">
+        <label>limits.h</label>
+      </node>
+      <node id="99">
+        <label>math.h</label>
+      </node>
+      <node id="95">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+      </node>
+      <node id="94">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="141">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h</label>
+        <link refid="b2_edge_and_circle_contact_8h"/>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="142" relation="include">
+        </childnode>
+      </node>
+      <node id="148">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.cpp</label>
+        <link refid="b2_polygon_contact_8cpp"/>
+      </node>
+      <node id="159">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2WeldJoint.cpp</label>
+        <link refid="b2_weld_joint_8cpp"/>
+      </node>
+      <node id="139">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h</label>
+        <link refid="b2_chain_and_polygon_contact_8h"/>
+        <childnode refid="126" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+      </node>
+      <node id="155">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp</label>
+        <link refid="b2_prismatic_joint_8cpp"/>
+      </node>
+      <node id="104">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.h</label>
+        <link refid="b2_contact_manager_8h"/>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="106" relation="include">
+        </childnode>
+      </node>
+      <node id="149">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Island.h</label>
+        <link refid="b2_island_8h"/>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+      </node>
+      <node id="143">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h</label>
+        <link refid="b2_edge_and_polygon_contact_8h"/>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="144" relation="include">
+        </childnode>
+      </node>
+      <node id="157">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp</label>
+        <link refid="b2_revolute_joint_8cpp"/>
+      </node>
+      <node id="110">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</label>
+        <link refid="b2_world_8cpp"/>
+      </node>
+      <node id="130">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2EdgeShape.cpp</label>
+        <link refid="b2_edge_shape_8cpp"/>
+      </node>
+      <node id="105">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp</label>
+        <link refid="b2_contact_manager_8cpp"/>
+      </node>
+      <node id="156">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2PulleyJoint.cpp</label>
+        <link refid="b2_pulley_joint_8cpp"/>
+      </node>
+      <node id="109">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Island.cpp</label>
+        <link refid="b2_island_8cpp"/>
+      </node>
+      <node id="115">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp</label>
+        <link refid="b2_collide_edge_8cpp"/>
+      </node>
+      <node id="123">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Distance.cpp</label>
+        <link refid="b2_distance_8cpp"/>
+      </node>
+      <node id="154">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MouseJoint.cpp</label>
+        <link refid="b2_mouse_joint_8cpp"/>
+      </node>
+      <node id="101">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h</label>
+        <link refid="b2Collision.h"/>
+        <childnode refid="102" relation="include">
+        </childnode>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+        <childnode refid="117" relation="include">
+        </childnode>
+        <childnode refid="118" relation="include">
+        </childnode>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="121" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="134" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="137" relation="include">
+        </childnode>
+        <childnode refid="161" relation="include">
+        </childnode>
+      </node>
+      <node id="135">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2WorldCallbacks.cpp</label>
+        <link refid="b2_world_callbacks_8cpp"/>
+      </node>
+      <node id="131">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2PolygonShape.h</label>
+        <link refid="b2_polygon_shape_8h"/>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="132" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+      </node>
+      <node id="161">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.h</label>
+        <link refid="b2_contact_solver_8h"/>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+      </node>
+      <node id="144">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp</label>
+        <link refid="b2_edge_and_polygon_contact_8cpp"/>
+      </node>
+      <node id="151">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2FrictionJoint.cpp</label>
+        <link refid="b2_friction_joint_8cpp"/>
+      </node>
+      <node id="142">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp</label>
+        <link refid="b2_edge_and_circle_contact_8cpp"/>
+      </node>
+      <node id="111">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</label>
+        <link refid="b2_contact_8cpp"/>
+      </node>
+      <node id="152">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2GearJoint.cpp</label>
+        <link refid="b2_gear_joint_8cpp"/>
+      </node>
+      <node id="116">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollidePolygon.cpp</label>
+        <link refid="b2_collide_polygon_8cpp"/>
+      </node>
+      <node id="112">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp</label>
+        <link refid="b2_contact_solver_8cpp"/>
+      </node>
+      <node id="132">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2PolygonShape.cpp</label>
+        <link refid="b2_polygon_shape_8cpp"/>
+      </node>
+      <node id="113">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.cpp</label>
+        <link refid="b2_joint_8cpp"/>
+      </node>
+      <node id="120">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2TimeOfImpact.cpp</label>
+        <link refid="b2_time_of_impact_8cpp"/>
+      </node>
+      <node id="126">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp</label>
+        <link refid="b2_chain_and_polygon_contact_8cpp"/>
+      </node>
+      <node id="153">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.cpp</label>
+        <link refid="b2_motor_joint_8cpp"/>
+      </node>
+      <node id="102">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2_broad_phase_8h"/>
+        <childnode refid="103" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+      </node>
+      <node id="119">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2DynamicTree.cpp</label>
+        <link refid="b2_dynamic_tree_8cpp"/>
+      </node>
+      <node id="133">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="134" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="149" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="136" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="148" relation="include">
+        </childnode>
+        <childnode refid="150" relation="include">
+        </childnode>
+        <childnode refid="151" relation="include">
+        </childnode>
+        <childnode refid="152" relation="include">
+        </childnode>
+        <childnode refid="113" relation="include">
+        </childnode>
+        <childnode refid="153" relation="include">
+        </childnode>
+        <childnode refid="154" relation="include">
+        </childnode>
+        <childnode refid="155" relation="include">
+        </childnode>
+        <childnode refid="156" relation="include">
+        </childnode>
+        <childnode refid="157" relation="include">
+        </childnode>
+        <childnode refid="158" relation="include">
+        </childnode>
+        <childnode refid="159" relation="include">
+        </childnode>
+        <childnode refid="160" relation="include">
+        </childnode>
+      </node>
+      <node id="140">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.h</label>
+        <link refid="b2_circle_contact_8h"/>
+        <childnode refid="136" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+      </node>
+      <node id="103">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.cpp</label>
+        <link refid="b2_broad_phase_8cpp"/>
+      </node>
+      <node id="114">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideCircle.cpp</label>
+        <link refid="b2_collide_circle_8cpp"/>
+      </node>
+      <node id="118">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2DynamicTree.h</label>
+        <link refid="b2_dynamic_tree_8h"/>
+        <childnode refid="102" relation="include">
+        </childnode>
+        <childnode refid="119" relation="include">
+        </childnode>
+      </node>
+      <node id="150">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2DistanceJoint.cpp</label>
+        <link refid="b2_distance_joint_8cpp"/>
+      </node>
+      <node id="137">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.h</label>
+        <link refid="b2_contact_8h"/>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="138" relation="include">
+        </childnode>
+        <childnode refid="139" relation="include">
+        </childnode>
+        <childnode refid="140" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="141" relation="include">
+        </childnode>
+        <childnode refid="143" relation="include">
+        </childnode>
+        <childnode refid="145" relation="include">
+        </childnode>
+        <childnode refid="147" relation="include">
+        </childnode>
+      </node>
+      <node id="108">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.cpp</label>
+        <link refid="b2_fixture_8cpp"/>
+      </node>
+      <node id="106">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.h</label>
+        <link refid="b2_world_8h"/>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="113" relation="include">
+        </childnode>
+      </node>
+      <node id="138">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h</label>
+        <link refid="b2_chain_and_circle_contact_8h"/>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+      </node>
+      <node id="146">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp</label>
+        <link refid="b2_polygon_and_circle_contact_8cpp"/>
+      </node>
+      <node id="117">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.cpp</label>
+        <link refid="b2_collision_8cpp"/>
+      </node>
+      <node id="160">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2WheelJoint.cpp</label>
+        <link refid="b2_wheel_joint_8cpp"/>
+      </node>
+      <node id="136">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.cpp</label>
+        <link refid="b2_circle_contact_8cpp"/>
+      </node>
+      <node id="124">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2ChainShape.cpp</label>
+        <link refid="b2_chain_shape_8cpp"/>
+      </node>
+      <node id="127">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2CircleShape.h</label>
+        <link refid="b2_circle_shape_8h"/>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="128" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+      </node>
+      <node id="125">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp</label>
+        <link refid="b2_chain_and_circle_contact_8cpp"/>
+      </node>
+      <node id="145">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</label>
+        <link refid="b2_polygon_and_circle_contact_8h"/>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="146" relation="include">
+        </childnode>
+      </node>
+      <node id="147">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.h</label>
+        <link refid="b2_polygon_contact_8h"/>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="148" relation="include">
+        </childnode>
+      </node>
+      <node id="107">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Body.cpp</label>
+        <link refid="b2_body_8cpp"/>
+      </node>
+      <node id="158">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.cpp</label>
+        <link refid="b2_rope_joint_8cpp"/>
+      </node>
+      <node id="122">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2ChainShape.h</label>
+        <link refid="b2_chain_shape_8h"/>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="124" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+      </node>
+      <node id="121">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="122" relation="include">
+        </childnode>
+        <childnode refid="127" relation="include">
+        </childnode>
+        <childnode refid="129" relation="include">
+        </childnode>
+        <childnode refid="131" relation="include">
+        </childnode>
+        <childnode refid="133" relation="include">
+        </childnode>
+        <childnode refid="134" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="137" relation="include">
+        </childnode>
+      </node>
+      <node id="129">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2EdgeShape.h</label>
+        <link refid="b2_edge_shape_8h"/>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="124" relation="include">
+        </childnode>
+        <childnode refid="130" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+      </node>
+      <node id="128">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp</label>
+        <link refid="b2_circle_shape_8cpp"/>
+      </node>
+      <node id="134">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.h</label>
+        <link refid="b2_fixture_8h"/>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="135" relation="include">
+        </childnode>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+        <childnode refid="136" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="137" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="142" relation="include">
+        </childnode>
+        <childnode refid="144" relation="include">
+        </childnode>
+        <childnode refid="146" relation="include">
+        </childnode>
+        <childnode refid="148" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structb2_contact_feature" prot="public">b2ContactFeature</innerclass>
+    <innerclass refid="unionb2_contact_i_d" prot="public">b2ContactID</innerclass>
+    <innerclass refid="structb2_manifold_point" prot="public">b2ManifoldPoint</innerclass>
+    <innerclass refid="structb2_manifold" prot="public">b2Manifold</innerclass>
+    <innerclass refid="structb2_world_manifold" prot="public">b2WorldManifold</innerclass>
+    <innerclass refid="structb2_clip_vertex" prot="public">b2ClipVertex</innerclass>
+    <innerclass refid="structb2_ray_cast_input" prot="public">b2RayCastInput</innerclass>
+    <innerclass refid="structb2_ray_cast_output" prot="public">b2RayCastOutput</innerclass>
+    <innerclass refid="structb2_a_a_b_b" prot="public">b2AABB</innerclass>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663d" prot="public" static="no">
+        <name>b2PointState</name>
+        <enumvalue id="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663da7ce77ce1a592f49d92939997976c217b" prot="public">
+          <name>b2_nullState</name>
+          <briefdescription>
+<para>point does not exist </para>          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663dac60dc479bee2089a695b37948179b3d4" prot="public">
+          <name>b2_addState</name>
+          <briefdescription>
+<para>point was added in the update </para>          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663dafb032f2175741fa95361e55d1c069e0a" prot="public">
+          <name>b2_persistState</name>
+          <briefdescription>
+<para>point persisted across the update </para>          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663da42ca6d7de57b948c8c895cd6f51ee8be" prot="public">
+          <name>b2_removeState</name>
+          <briefdescription>
+<para>point was removed in the update </para>          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>This is used for determining the state of contact points. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="127" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" bodystart="126" bodyend="132"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="b2_collision_8h_1a910fdc8a802b3cac220f2ee873109818" prot="public" static="no" mutable="no">
+        <type>const <ref refid="b2_settings_8h_1adde6aaee8457bee49c2a92621fe22b79" kindref="member">uint8</ref></type>
+        <definition>const uint8 b2_nullFeature</definition>
+        <argsstring></argsstring>
+        <name>b2_nullFeature</name>
+        <initializer>= UCHAR_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="34" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="b2_collision_8h_1a401e2747d276e9fbfd131989e02ff568" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2GetPointStates</definition>
+        <argsstring>(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints], const b2Manifold *manifold1, const b2Manifold *manifold2)</argsstring>
+        <name>b2GetPointStates</name>
+        <param>
+          <type><ref refid="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663d" kindref="member">b2PointState</ref></type>
+          <declname>state1</declname>
+          <array>[b2_maxManifoldPoints]</array>
+        </param>
+        <param>
+          <type><ref refid="b2_collision_8h_1a0a894e3715ce8c61b7958dd6e083663d" kindref="member">b2PointState</ref></type>
+          <declname>state2</declname>
+          <array>[b2_maxManifoldPoints]</array>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold1</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Compute the point states given two manifolds. The states pertain to the transition from manifold1 to manifold2. So state1 is either persist or remove while state2 is either add or persist. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="136" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.cpp" bodystart="88" bodyend="130"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1ab8a1bf2c6a9453307466f4870c1fa333" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2CollideCircles</definition>
+        <argsstring>(b2Manifold *manifold, const b2CircleShape *circleA, const b2Transform &amp;xfA, const b2CircleShape *circleB, const b2Transform &amp;xfB)</argsstring>
+        <name>b2CollideCircles</name>
+        <param>
+          <type><ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_circle_shape" kindref="compound">b2CircleShape</ref> *</type>
+          <declname>circleA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_circle_shape" kindref="compound">b2CircleShape</ref> *</type>
+          <declname>circleB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Compute the collision manifold between two circles. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="219" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideCircle.cpp" bodystart="23" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1a30da13c857596fbefa40b47c3e1e78d0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2CollidePolygonAndCircle</definition>
+        <argsstring>(b2Manifold *manifold, const b2PolygonShape *polygonA, const b2Transform &amp;xfA, const b2CircleShape *circleB, const b2Transform &amp;xfB)</argsstring>
+        <name>b2CollidePolygonAndCircle</name>
+        <param>
+          <type><ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_polygon_shape" kindref="compound">b2PolygonShape</ref> *</type>
+          <declname>polygonA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_circle_shape" kindref="compound">b2CircleShape</ref> *</type>
+          <declname>circleB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Compute the collision manifold between a polygon and a circle. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="224" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideCircle.cpp" bodystart="51" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1a2f7b9859479384c0e2cceb9e7744afcb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2CollidePolygons</definition>
+        <argsstring>(b2Manifold *manifold, const b2PolygonShape *polygonA, const b2Transform &amp;xfA, const b2PolygonShape *polygonB, const b2Transform &amp;xfB)</argsstring>
+        <name>b2CollidePolygons</name>
+        <param>
+          <type><ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_polygon_shape" kindref="compound">b2PolygonShape</ref> *</type>
+          <declname>polygonA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_polygon_shape" kindref="compound">b2PolygonShape</ref> *</type>
+          <declname>polygonB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Compute the collision manifold between two polygons. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="229" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollidePolygon.cpp" bodystart="116" bodyend="239"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1aee6f752fdf8c89152e824da12e944733" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2CollideEdgeAndCircle</definition>
+        <argsstring>(b2Manifold *manifold, const b2EdgeShape *polygonA, const b2Transform &amp;xfA, const b2CircleShape *circleB, const b2Transform &amp;xfB)</argsstring>
+        <name>b2CollideEdgeAndCircle</name>
+        <param>
+          <type><ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_edge_shape" kindref="compound">b2EdgeShape</ref> *</type>
+          <declname>polygonA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_circle_shape" kindref="compound">b2CircleShape</ref> *</type>
+          <declname>circleB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Compute the collision manifold between an edge and a circle. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="234" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="27" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1a5d0c5fab412d5ca886b1965666b16d99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2CollideEdgeAndPolygon</definition>
+        <argsstring>(b2Manifold *manifold, const b2EdgeShape *edgeA, const b2Transform &amp;xfA, const b2PolygonShape *circleB, const b2Transform &amp;xfB)</argsstring>
+        <name>b2CollideEdgeAndPolygon</name>
+        <param>
+          <type><ref refid="structb2_manifold" kindref="compound">b2Manifold</ref> *</type>
+          <declname>manifold</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_edge_shape" kindref="compound">b2EdgeShape</ref> *</type>
+          <declname>edgeA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_polygon_shape" kindref="compound">b2PolygonShape</ref> *</type>
+          <declname>circleB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Compute the collision manifold between an edge and a circle. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="239" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="692" bodyend="698"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1a8b36e651798f55f2533f9837462ded41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2ClipSegmentToLine</definition>
+        <argsstring>(b2ClipVertex vOut[2], const b2ClipVertex vIn[2], const b2Vec2 &amp;normal, float32 offset, int32 vertexIndexA)</argsstring>
+        <name>b2ClipSegmentToLine</name>
+        <param>
+          <type><ref refid="structb2_clip_vertex" kindref="compound">b2ClipVertex</ref></type>
+          <declname>vOut</declname>
+          <array>[2]</array>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_clip_vertex" kindref="compound">b2ClipVertex</ref></type>
+          <declname>vIn</declname>
+          <array>[2]</array>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_vec2" kindref="compound">b2Vec2</ref> &amp;</type>
+          <declname>normal</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>vertexIndexA</declname>
+        </param>
+        <briefdescription>
+<para>Clipping for contact manifolds. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="244" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.cpp" bodystart="201" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1ae7601420d0b42c1ee494e879dd2009a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool b2TestOverlap</definition>
+        <argsstring>(const b2Shape *shapeA, int32 indexA, const b2Shape *shapeB, int32 indexB, const b2Transform &amp;xfA, const b2Transform &amp;xfB)</argsstring>
+        <name>b2TestOverlap</name>
+        <param>
+          <type>const <ref refid="classb2_shape" kindref="compound">b2Shape</ref> *</type>
+          <declname>shapeA</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>indexA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="classb2_shape" kindref="compound">b2Shape</ref> *</type>
+          <declname>shapeB</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>indexB</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfA</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_transform" kindref="compound">b2Transform</ref> &amp;</type>
+          <declname>xfB</declname>
+        </param>
+        <briefdescription>
+<para>Determine if two generic shapes overlap. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="248" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.cpp" bodystart="233" bodyend="252"/>
+      </memberdef>
+      <memberdef kind="function" id="b2_collision_8h_1a3dea7a8a1115626c450a697f6c6bf97e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool b2TestOverlap</definition>
+        <argsstring>(const b2AABB &amp;a, const b2AABB &amp;b)</argsstring>
+        <name>b2TestOverlap</name>
+        <param>
+          <type>const <ref refid="structb2_a_a_b_b" kindref="compound">b2AABB</ref> &amp;</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_a_a_b_b" kindref="compound">b2AABB</ref> &amp;</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" line="262" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h" bodystart="262" bodyend="275"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Structures and functions used for computing contact points, distance queries, and TOI queries. </para>    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2Collision.h"/>
+  </compounddef>
+</doxygen>

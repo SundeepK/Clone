@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_world_query_wrapper" kind="struct" language="C++" prot="public">
+    <compoundname>b2WorldQueryWrapper</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_world_query_wrapper_1ab85c542cfaf43d2ecf31fcbfd8c0c792" prot="public" static="no" mutable="no">
+        <type>const <ref refid="classb2_broad_phase" kindref="compound">b2BroadPhase</ref> *</type>
+        <definition>const b2BroadPhase* b2WorldQueryWrapper::broadPhase</definition>
+        <argsstring></argsstring>
+        <name>broadPhase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="982" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="982" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_world_query_wrapper_1a3af9f06dfa228974fecabd2bb2b07d2e" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_query_callback" kindref="compound">b2QueryCallback</ref> *</type>
+        <definition>b2QueryCallback* b2WorldQueryWrapper::callback</definition>
+        <argsstring></argsstring>
+        <name>callback</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="983" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="983" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_world_query_wrapper_1a660a482e5a15b7f40a103b2dfb1711c1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool b2WorldQueryWrapper::QueryCallback</definition>
+        <argsstring>(int32 proxyId)</argsstring>
+        <name>QueryCallback</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>proxyId</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="976" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="976" bodyend="980"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="671">
+        <label>b2BroadPhase</label>
+        <link refid="classb2_broad_phase"/>
+      </node>
+      <node id="669">
+        <label>b2WorldQueryWrapper</label>
+        <link refid="structb2_world_query_wrapper"/>
+        <childnode refid="670" relation="usage">
+          <edgelabel>callback</edgelabel>
+        </childnode>
+        <childnode refid="671" relation="usage">
+          <edgelabel>broadPhase</edgelabel>
+        </childnode>
+      </node>
+      <node id="670">
+        <label>b2QueryCallback</label>
+        <link refid="classb2_query_callback"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" line="975" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp" bodystart="974" bodyend="984"/>
+    <listofallmembers>
+      <member refid="structb2_world_query_wrapper_1ab85c542cfaf43d2ecf31fcbfd8c0c792" prot="public" virt="non-virtual"><scope>b2WorldQueryWrapper</scope><name>broadPhase</name></member>
+      <member refid="structb2_world_query_wrapper_1a3af9f06dfa228974fecabd2bb2b07d2e" prot="public" virt="non-virtual"><scope>b2WorldQueryWrapper</scope><name>callback</name></member>
+      <member refid="structb2_world_query_wrapper_1a660a482e5a15b7f40a103b2dfb1711c1" prot="public" virt="non-virtual"><scope>b2WorldQueryWrapper</scope><name>QueryCallback</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

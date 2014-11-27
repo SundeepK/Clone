@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="dir_b6ab415197563cbfc001e3a85caf1399" kind="dir">
+    <compoundname>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics</compoundname>
+    <innerdir refid="dir_7ee61f960c611507b5e5a3a602e0ee85">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts</innerdir>
+    <innerdir refid="dir_17b422b13655aaed1082b6fcc06a626d">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints</innerdir>
+    <innerfile refid="b2_body_8cpp">b2Body.cpp</innerfile>
+    <innerfile refid="b2_body_8h">b2Body.h</innerfile>
+    <innerfile refid="b2_contact_manager_8cpp">b2ContactManager.cpp</innerfile>
+    <innerfile refid="b2_contact_manager_8h">b2ContactManager.h</innerfile>
+    <innerfile refid="b2_fixture_8cpp">b2Fixture.cpp</innerfile>
+    <innerfile refid="b2_fixture_8h">b2Fixture.h</innerfile>
+    <innerfile refid="b2_island_8cpp">b2Island.cpp</innerfile>
+    <innerfile refid="b2_island_8h">b2Island.h</innerfile>
+    <innerfile refid="b2_time_step_8h">b2TimeStep.h</innerfile>
+    <innerfile refid="b2_world_8cpp">b2World.cpp</innerfile>
+    <innerfile refid="b2_world_8h">b2World.h</innerfile>
+    <innerfile refid="b2_world_callbacks_8cpp">b2WorldCallbacks.cpp</innerfile>
+    <innerfile refid="b2_world_callbacks_8h">b2WorldCallbacks.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/"/>
+  </compounddef>
+</doxygen>

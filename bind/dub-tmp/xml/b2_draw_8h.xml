@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_draw_8h" kind="file" language="C++">
+    <compoundname>b2Draw.h</compoundname>
+    <includes refid="b2_math_8h" local="no">Box2D/Common/b2Math.h</includes>
+    <includedby refid="b2_draw_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Draw.cpp</includedby>
+    <includedby refid="b2_world_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</includedby>
+    <includedby refid="b2_rope_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Rope/b2Rope.cpp</includedby>
+    <incdepgraph>
+      <node id="545">
+        <label>assert.h</label>
+      </node>
+      <node id="546">
+        <label>float.h</label>
+      </node>
+      <node id="544">
+        <label>stddef.h</label>
+      </node>
+      <node id="547">
+        <label>math.h</label>
+      </node>
+      <node id="543">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="544" relation="include">
+        </childnode>
+        <childnode refid="545" relation="include">
+        </childnode>
+        <childnode refid="546" relation="include">
+        </childnode>
+      </node>
+      <node id="542">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="543" relation="include">
+        </childnode>
+        <childnode refid="547" relation="include">
+        </childnode>
+      </node>
+      <node id="541">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Draw.h</label>
+        <link refid="b2Draw.h"/>
+        <childnode refid="542" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="550">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</label>
+        <link refid="b2_world_8cpp"/>
+      </node>
+      <node id="549">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Draw.cpp</label>
+        <link refid="b2_draw_8cpp"/>
+      </node>
+      <node id="551">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Rope/b2Rope.cpp</label>
+        <link refid="b2_rope_8cpp"/>
+      </node>
+      <node id="548">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Draw.h</label>
+        <link refid="b2Draw.h"/>
+        <childnode refid="549" relation="include">
+        </childnode>
+        <childnode refid="550" relation="include">
+        </childnode>
+        <childnode refid="551" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structb2_color" prot="public">b2Color</innerclass>
+    <innerclass refid="classb2_draw" prot="public">b2Draw</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Draw.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_polygon_and_circle_contact_8h" kind="file" language="C++">
+    <compoundname>b2PolygonAndCircleContact.h</compoundname>
+    <includes refid="b2_contact_8h" local="no">Box2D/Dynamics/Contacts/b2Contact.h</includes>
+    <includedby refid="b2_contact_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</includedby>
+    <includedby refid="b2_polygon_and_circle_contact_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp</includedby>
+    <incdepgraph>
+      <node id="1508">
+        <label>assert.h</label>
+      </node>
+      <node id="1509">
+        <label>float.h</label>
+      </node>
+      <node id="1511">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="1505" relation="include">
+        </childnode>
+        <childnode refid="1512" relation="include">
+        </childnode>
+      </node>
+      <node id="1507">
+        <label>stddef.h</label>
+      </node>
+      <node id="1512">
+        <label>limits.h</label>
+      </node>
+      <node id="1516">
+        <label>Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="1505" relation="include">
+        </childnode>
+        <childnode refid="1513" relation="include">
+        </childnode>
+        <childnode refid="1517" relation="include">
+        </childnode>
+      </node>
+      <node id="1504">
+        <label>Box2D/Dynamics/Contacts/b2Contact.h</label>
+        <link refid="b2_contact_8h"/>
+        <childnode refid="1505" relation="include">
+        </childnode>
+        <childnode refid="1511" relation="include">
+        </childnode>
+        <childnode refid="1513" relation="include">
+        </childnode>
+        <childnode refid="1515" relation="include">
+        </childnode>
+      </node>
+      <node id="1510">
+        <label>math.h</label>
+      </node>
+      <node id="1503">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</label>
+        <link refid="b2PolygonAndCircleContact.h"/>
+        <childnode refid="1504" relation="include">
+        </childnode>
+      </node>
+      <node id="1506">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="1507" relation="include">
+        </childnode>
+        <childnode refid="1508" relation="include">
+        </childnode>
+        <childnode refid="1509" relation="include">
+        </childnode>
+      </node>
+      <node id="1514">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="1506" relation="include">
+        </childnode>
+      </node>
+      <node id="1505">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="1506" relation="include">
+        </childnode>
+        <childnode refid="1510" relation="include">
+        </childnode>
+      </node>
+      <node id="1513">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="1514" relation="include">
+        </childnode>
+        <childnode refid="1505" relation="include">
+        </childnode>
+        <childnode refid="1511" relation="include">
+        </childnode>
+      </node>
+      <node id="1515">
+        <label>Box2D/Dynamics/b2Fixture.h</label>
+        <link refid="b2_fixture_8h"/>
+        <childnode refid="1516" relation="include">
+        </childnode>
+        <childnode refid="1511" relation="include">
+        </childnode>
+        <childnode refid="1513" relation="include">
+        </childnode>
+      </node>
+      <node id="1517">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1519">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</label>
+        <link refid="b2_contact_8cpp"/>
+      </node>
+      <node id="1520">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp</label>
+        <link refid="b2_polygon_and_circle_contact_8cpp"/>
+      </node>
+      <node id="1518">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</label>
+        <link refid="b2PolygonAndCircleContact.h"/>
+        <childnode refid="1519" relation="include">
+        </childnode>
+        <childnode refid="1520" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classb2_polygon_and_circle_contact" prot="public">b2PolygonAndCircleContact</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h"/>
+  </compounddef>
+</doxygen>

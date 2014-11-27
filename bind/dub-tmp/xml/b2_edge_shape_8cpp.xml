@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_edge_shape_8cpp" kind="file" language="C++">
+    <compoundname>b2EdgeShape.cpp</compoundname>
+    <includes refid="b2_edge_shape_8h" local="no">Box2D/Collision/Shapes/b2EdgeShape.h</includes>
+    <includes local="no">new</includes>
+    <incdepgraph>
+      <node id="339">
+        <label>assert.h</label>
+      </node>
+      <node id="340">
+        <label>float.h</label>
+      </node>
+      <node id="333">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2EdgeShape.cpp</label>
+        <link refid="b2EdgeShape.cpp"/>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="345" relation="include">
+        </childnode>
+      </node>
+      <node id="343">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="341" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+      </node>
+      <node id="338">
+        <label>stddef.h</label>
+      </node>
+      <node id="344">
+        <label>limits.h</label>
+      </node>
+      <node id="345">
+        <label>new</label>
+      </node>
+      <node id="342">
+        <label>math.h</label>
+      </node>
+      <node id="337">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="338" relation="include">
+        </childnode>
+        <childnode refid="339" relation="include">
+        </childnode>
+        <childnode refid="340" relation="include">
+        </childnode>
+      </node>
+      <node id="336">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="337" relation="include">
+        </childnode>
+      </node>
+      <node id="341">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="337" relation="include">
+        </childnode>
+        <childnode refid="342" relation="include">
+        </childnode>
+      </node>
+      <node id="335">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="341" relation="include">
+        </childnode>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="334">
+        <label>Box2D/Collision/Shapes/b2EdgeShape.h</label>
+        <link refid="b2_edge_shape_8h"/>
+        <childnode refid="335" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2EdgeShape.cpp"/>
+  </compounddef>
+</doxygen>

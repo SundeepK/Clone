@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_pair" kind="struct" language="C++" prot="public">
+    <compoundname>b2Pair</compoundname>
+    <includes refid="b2_broad_phase_8h" local="no">b2BroadPhase.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_pair_1abae3df5e877cf0c4611334e3eec4b84c" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2Pair::proxyIdA</definition>
+        <argsstring></argsstring>
+        <name>proxyIdA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" line="29" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_pair_1af2bd888ccb34535ab9126497349da749" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2Pair::proxyIdB</definition>
+        <argsstring></argsstring>
+        <name>proxyIdB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" line="30" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" line="28" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" bodystart="27" bodyend="31"/>
+    <listofallmembers>
+      <member refid="structb2_pair_1abae3df5e877cf0c4611334e3eec4b84c" prot="public" virt="non-virtual"><scope>b2Pair</scope><name>proxyIdA</name></member>
+      <member refid="structb2_pair_1af2bd888ccb34535ab9126497349da749" prot="public" virt="non-virtual"><scope>b2Pair</scope><name>proxyIdB</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

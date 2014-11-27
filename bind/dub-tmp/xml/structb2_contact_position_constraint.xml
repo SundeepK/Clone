@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_contact_position_constraint" kind="struct" language="C++" prot="public">
+    <compoundname>b2ContactPositionConstraint</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a926e69accc91aeb346176f12cc33116c" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2ContactPositionConstraint::localPoints[b2_maxManifoldPoints]</definition>
+        <argsstring>[b2_maxManifoldPoints]</argsstring>
+        <name>localPoints</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="31" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a34e0ee4de75f5d08725f159fa969e02a" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2ContactPositionConstraint::localNormal</definition>
+        <argsstring></argsstring>
+        <name>localNormal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="32" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1aa5984e40b01a6f06a6698d79d727a14e" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2ContactPositionConstraint::localPoint</definition>
+        <argsstring></argsstring>
+        <name>localPoint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="33" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1aafc38d3d582370dd5ac476646ba6a4fa" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2ContactPositionConstraint::indexA</definition>
+        <argsstring></argsstring>
+        <name>indexA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="34" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a81752f3923bf4e4fe27d58f3add0fbdb" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2ContactPositionConstraint::indexB</definition>
+        <argsstring></argsstring>
+        <name>indexB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="35" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a63b1e39720ddd9d6af863cbe8ea9008a" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::invMassA</definition>
+        <argsstring></argsstring>
+        <name>invMassA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="36" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1af47ccd76270c1acd6ae18685ab87ae36" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::invMassB</definition>
+        <argsstring></argsstring>
+        <name>invMassB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="36" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a3c0ff098c54e3c3bfed4470c4f62c4ee" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2ContactPositionConstraint::localCenterA</definition>
+        <argsstring></argsstring>
+        <name>localCenterA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="37" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1acf14c9cfcf37ae1c89d0e4bc6c2d3ac2" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2ContactPositionConstraint::localCenterB</definition>
+        <argsstring></argsstring>
+        <name>localCenterB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="37" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1aaf92ebfd9ee6f7734199e7cf65441fdb" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::invIA</definition>
+        <argsstring></argsstring>
+        <name>invIA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="38" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a942566765748c8daf934a051457f4b0f" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::invIB</definition>
+        <argsstring></argsstring>
+        <name>invIB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="38" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a09f96db1c3fe5ede24395e2431e95103" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_manifold_1aa9c347e2ff2e27ee820a926efbb33e12" kindref="member">b2Manifold::Type</ref></type>
+        <definition>b2Manifold::Type b2ContactPositionConstraint::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="39" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1ae75232327a6d37b0c36c2a8e12ef08b2" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::radiusA</definition>
+        <argsstring></argsstring>
+        <name>radiusA</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="40" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a066db66f0b944b92c2666271e88e4540" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2ContactPositionConstraint::radiusB</definition>
+        <argsstring></argsstring>
+        <name>radiusB</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="40" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_contact_position_constraint_1a98c9f0e1e7041ed2b15370ed713b84fc" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2ContactPositionConstraint::pointCount</definition>
+        <argsstring></argsstring>
+        <name>pointCount</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="41" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="154">
+        <label>b2ContactPositionConstraint</label>
+        <link refid="structb2_contact_position_constraint"/>
+        <childnode refid="155" relation="usage">
+          <edgelabel>localCenterA</edgelabel>
+          <edgelabel>localCenterB</edgelabel>
+          <edgelabel>localPoint</edgelabel>
+          <edgelabel>localPoints</edgelabel>
+          <edgelabel>localNormal</edgelabel>
+        </childnode>
+      </node>
+      <node id="155">
+        <label>b2Vec2</label>
+        <link refid="structb2_vec2"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" line="30" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp" bodystart="29" bodyend="42"/>
+    <listofallmembers>
+      <member refid="structb2_contact_position_constraint_1aafc38d3d582370dd5ac476646ba6a4fa" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>indexA</name></member>
+      <member refid="structb2_contact_position_constraint_1a81752f3923bf4e4fe27d58f3add0fbdb" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>indexB</name></member>
+      <member refid="structb2_contact_position_constraint_1aaf92ebfd9ee6f7734199e7cf65441fdb" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>invIA</name></member>
+      <member refid="structb2_contact_position_constraint_1a942566765748c8daf934a051457f4b0f" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>invIB</name></member>
+      <member refid="structb2_contact_position_constraint_1a63b1e39720ddd9d6af863cbe8ea9008a" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>invMassA</name></member>
+      <member refid="structb2_contact_position_constraint_1af47ccd76270c1acd6ae18685ab87ae36" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>invMassB</name></member>
+      <member refid="structb2_contact_position_constraint_1a3c0ff098c54e3c3bfed4470c4f62c4ee" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>localCenterA</name></member>
+      <member refid="structb2_contact_position_constraint_1acf14c9cfcf37ae1c89d0e4bc6c2d3ac2" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>localCenterB</name></member>
+      <member refid="structb2_contact_position_constraint_1a34e0ee4de75f5d08725f159fa969e02a" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>localNormal</name></member>
+      <member refid="structb2_contact_position_constraint_1aa5984e40b01a6f06a6698d79d727a14e" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>localPoint</name></member>
+      <member refid="structb2_contact_position_constraint_1a926e69accc91aeb346176f12cc33116c" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>localPoints</name></member>
+      <member refid="structb2_contact_position_constraint_1a98c9f0e1e7041ed2b15370ed713b84fc" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>pointCount</name></member>
+      <member refid="structb2_contact_position_constraint_1ae75232327a6d37b0c36c2a8e12ef08b2" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>radiusA</name></member>
+      <member refid="structb2_contact_position_constraint_1a066db66f0b944b92c2666271e88e4540" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>radiusB</name></member>
+      <member refid="structb2_contact_position_constraint_1a09f96db1c3fe5ede24395e2431e95103" prot="public" virt="non-virtual"><scope>b2ContactPositionConstraint</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

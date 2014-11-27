@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_joint_edge" kind="struct" language="C++" prot="public">
+    <compoundname>b2JointEdge</compoundname>
+    <includes refid="b2_joint_8h" local="no">b2Joint.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_joint_edge_1a64aef21fb91211871de8796baecccb95" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_body" kindref="compound">b2Body</ref> *</type>
+        <definition>b2Body* b2JointEdge::other</definition>
+        <argsstring></argsstring>
+        <name>other</name>
+        <briefdescription>
+<para>provides quick access to the other body attached. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="67" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_edge_1ab5bac5d495af1280c50271f56a221503" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_joint" kindref="compound">b2Joint</ref> *</type>
+        <definition>b2Joint* b2JointEdge::joint</definition>
+        <argsstring></argsstring>
+        <name>joint</name>
+        <briefdescription>
+<para>the joint </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="68" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_edge_1acc3621e38d9664db2805e0fc29d71335" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_joint_edge" kindref="compound">b2JointEdge</ref> *</type>
+        <definition>b2JointEdge* b2JointEdge::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+<para>the previous joint edge in the body&apos;s joint list </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="69" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_joint_edge_1a3d17286bc697bb620ee151e4cd07438c" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_joint_edge" kindref="compound">b2JointEdge</ref> *</type>
+        <definition>b2JointEdge* b2JointEdge::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+<para>the next joint edge in the body&apos;s joint list </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="70" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>A joint edge is used to connect bodies and joints together in a joint graph where each body is a node and each joint is an edge. A joint edge belongs to a doubly linked list maintained in each attached body. Each joint has two joint nodes, one for each attached body. </para>    </detaileddescription>
+    <collaborationgraph>
+      <node id="393">
+        <label>b2Body</label>
+        <link refid="classb2_body"/>
+      </node>
+      <node id="392">
+        <label>b2JointEdge</label>
+        <link refid="structb2_joint_edge"/>
+        <childnode refid="393" relation="usage">
+          <edgelabel>other</edgelabel>
+        </childnode>
+        <childnode refid="392" relation="usage">
+          <edgelabel>prev</edgelabel>
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="394" relation="usage">
+          <edgelabel>joint</edgelabel>
+        </childnode>
+      </node>
+      <node id="394">
+        <label>b2Joint</label>
+        <link refid="classb2_joint"/>
+        <childnode refid="393" relation="usage">
+          <edgelabel>m_bodyA</edgelabel>
+          <edgelabel>m_bodyB</edgelabel>
+        </childnode>
+        <childnode refid="392" relation="usage">
+          <edgelabel>m_edgeB</edgelabel>
+          <edgelabel>m_edgeA</edgelabel>
+        </childnode>
+        <childnode refid="394" relation="usage">
+          <edgelabel>m_prev</edgelabel>
+          <edgelabel>m_next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" line="66" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.h" bodystart="65" bodyend="71"/>
+    <listofallmembers>
+      <member refid="structb2_joint_edge_1ab5bac5d495af1280c50271f56a221503" prot="public" virt="non-virtual"><scope>b2JointEdge</scope><name>joint</name></member>
+      <member refid="structb2_joint_edge_1a3d17286bc697bb620ee151e4cd07438c" prot="public" virt="non-virtual"><scope>b2JointEdge</scope><name>next</name></member>
+      <member refid="structb2_joint_edge_1a64aef21fb91211871de8796baecccb95" prot="public" virt="non-virtual"><scope>b2JointEdge</scope><name>other</name></member>
+      <member refid="structb2_joint_edge_1acc3621e38d9664db2805e0fc29d71335" prot="public" virt="non-virtual"><scope>b2JointEdge</scope><name>prev</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

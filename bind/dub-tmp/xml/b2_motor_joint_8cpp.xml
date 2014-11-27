@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_motor_joint_8cpp" kind="file" language="C++">
+    <compoundname>b2MotorJoint.cpp</compoundname>
+    <includes refid="b2_motor_joint_8h" local="no">Box2D/Dynamics/Joints/b2MotorJoint.h</includes>
+    <includes refid="b2_body_8h" local="no">Box2D/Dynamics/b2Body.h</includes>
+    <includes refid="b2_time_step_8h" local="no">Box2D/Dynamics/b2TimeStep.h</includes>
+    <incdepgraph>
+      <node id="1718">
+        <label>Box2D/Dynamics/Joints/b2MotorJoint.h</label>
+        <link refid="b2_motor_joint_8h"/>
+        <childnode refid="1719" relation="include">
+        </childnode>
+      </node>
+      <node id="1723">
+        <label>assert.h</label>
+      </node>
+      <node id="1724">
+        <label>float.h</label>
+      </node>
+      <node id="1732">
+        <label>Box2D/Dynamics/b2TimeStep.h</label>
+        <link refid="b2_time_step_8h"/>
+        <childnode refid="1720" relation="include">
+        </childnode>
+      </node>
+      <node id="1729">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="1720" relation="include">
+        </childnode>
+        <childnode refid="1730" relation="include">
+        </childnode>
+      </node>
+      <node id="1722">
+        <label>stddef.h</label>
+      </node>
+      <node id="1730">
+        <label>limits.h</label>
+      </node>
+      <node id="1717">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.cpp</label>
+        <link refid="b2MotorJoint.cpp"/>
+        <childnode refid="1718" relation="include">
+        </childnode>
+        <childnode refid="1726" relation="include">
+        </childnode>
+        <childnode refid="1732" relation="include">
+        </childnode>
+      </node>
+      <node id="1726">
+        <label>Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="1720" relation="include">
+        </childnode>
+        <childnode refid="1727" relation="include">
+        </childnode>
+        <childnode refid="1731" relation="include">
+        </childnode>
+      </node>
+      <node id="1725">
+        <label>math.h</label>
+      </node>
+      <node id="1721">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="1722" relation="include">
+        </childnode>
+        <childnode refid="1723" relation="include">
+        </childnode>
+        <childnode refid="1724" relation="include">
+        </childnode>
+      </node>
+      <node id="1728">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="1721" relation="include">
+        </childnode>
+      </node>
+      <node id="1720">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="1721" relation="include">
+        </childnode>
+        <childnode refid="1725" relation="include">
+        </childnode>
+      </node>
+      <node id="1727">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="1728" relation="include">
+        </childnode>
+        <childnode refid="1720" relation="include">
+        </childnode>
+        <childnode refid="1729" relation="include">
+        </childnode>
+      </node>
+      <node id="1719">
+        <label>Box2D/Dynamics/Joints/b2Joint.h</label>
+        <link refid="b2_joint_8h"/>
+        <childnode refid="1720" relation="include">
+        </childnode>
+      </node>
+      <node id="1731">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.cpp"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_broad_phase_8h" kind="file" language="C++">
+    <compoundname>b2BroadPhase.h</compoundname>
+    <includes refid="b2_settings_8h" local="no">Box2D/Common/b2Settings.h</includes>
+    <includes refid="b2_collision_8h" local="no">Box2D/Collision/b2Collision.h</includes>
+    <includes refid="b2_dynamic_tree_8h" local="no">Box2D/Collision/b2DynamicTree.h</includes>
+    <includes local="no">algorithm</includes>
+    <includedby refid="b2_broad_phase_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.cpp</includedby>
+    <includedby refid="b2_contact_manager_8h" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.h</includedby>
+    <includedby refid="b2_fixture_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.cpp</includedby>
+    <includedby refid="b2_world_8cpp" local="no">/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</includedby>
+    <incdepgraph>
+      <node id="18">
+        <label>assert.h</label>
+      </node>
+      <node id="19">
+        <label>float.h</label>
+      </node>
+      <node id="20">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>stddef.h</label>
+      </node>
+      <node id="26">
+        <label>memory.h</label>
+      </node>
+      <node id="23">
+        <label>limits.h</label>
+      </node>
+      <node id="25">
+        <label>Box2D/Common/b2GrowableStack.h</label>
+        <link refid="b2_growable_stack_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2BroadPhase.h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>Box2D/Collision/b2DynamicTree.h</label>
+        <link refid="b2_dynamic_tree_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>math.h</label>
+      </node>
+      <node id="16">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>algorithm</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="30">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.h</label>
+        <link refid="b2_contact_manager_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.cpp</label>
+        <link refid="b2_world_8cpp"/>
+      </node>
+      <node id="31">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp</label>
+        <link refid="b2_contact_manager_8cpp"/>
+      </node>
+      <node id="35">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Island.cpp</label>
+        <link refid="b2_island_8cpp"/>
+      </node>
+      <node id="37">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</label>
+        <link refid="b2_contact_8cpp"/>
+      </node>
+      <node id="38">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.cpp</label>
+        <link refid="b2_contact_solver_8cpp"/>
+      </node>
+      <node id="39">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2Joint.cpp</label>
+        <link refid="b2_joint_8cpp"/>
+      </node>
+      <node id="28">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2BroadPhase.h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.cpp</label>
+        <link refid="b2_broad_phase_8cpp"/>
+      </node>
+      <node id="34">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Fixture.cpp</label>
+        <link refid="b2_fixture_8cpp"/>
+      </node>
+      <node id="32">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2World.h</label>
+        <link refid="b2_world_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2Body.cpp</label>
+        <link refid="b2_body_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structb2_pair" prot="public">b2Pair</innerclass>
+    <innerclass refid="classb2_broad_phase" prot="public">b2BroadPhase</innerclass>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="b2_broad_phase_8h_1ad6d75f0819dcf1b88933300ae0430934" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool b2PairLessThan</definition>
+        <argsstring>(const b2Pair &amp;pair1, const b2Pair &amp;pair2)</argsstring>
+        <name>b2PairLessThan</name>
+        <param>
+          <type>const <ref refid="structb2_pair" kindref="compound">b2Pair</ref> &amp;</type>
+          <declname>pair1</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_pair" kindref="compound">b2Pair</ref> &amp;</type>
+          <declname>pair2</declname>
+        </param>
+        <briefdescription>
+<para>This is used to sort pairs. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" line="132" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h" bodystart="132" bodyend="145"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2BroadPhase.h"/>
+  </compounddef>
+</doxygen>

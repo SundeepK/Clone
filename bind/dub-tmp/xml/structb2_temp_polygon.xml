@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_temp_polygon" kind="struct" language="C++" prot="public">
+    <compoundname>b2TempPolygon</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_temp_polygon_1a7351a98f6052d1fce66e11bfc5b98a3a" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2TempPolygon::vertices[b2_maxPolygonVertices]</definition>
+        <argsstring>[b2_maxPolygonVertices]</argsstring>
+        <name>vertices</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" line="172" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_temp_polygon_1a45b9db5dcbcb66170029e9a2f524fc6a" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2TempPolygon::normals[b2_maxPolygonVertices]</definition>
+        <argsstring>[b2_maxPolygonVertices]</argsstring>
+        <name>normals</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" line="173" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_temp_polygon_1a5b08379f676f8498190c398d9ec3d0a5" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+        <definition>int32 b2TempPolygon::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" line="174" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="602">
+        <label>b2TempPolygon</label>
+        <link refid="structb2_temp_polygon"/>
+        <childnode refid="603" relation="usage">
+          <edgelabel>normals</edgelabel>
+          <edgelabel>vertices</edgelabel>
+        </childnode>
+      </node>
+      <node id="603">
+        <label>b2Vec2</label>
+        <link refid="structb2_vec2"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" line="171" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/b2CollideEdge.cpp" bodystart="170" bodyend="175"/>
+    <listofallmembers>
+      <member refid="structb2_temp_polygon_1a5b08379f676f8498190c398d9ec3d0a5" prot="public" virt="non-virtual"><scope>b2TempPolygon</scope><name>count</name></member>
+      <member refid="structb2_temp_polygon_1a45b9db5dcbcb66170029e9a2f524fc6a" prot="public" virt="non-virtual"><scope>b2TempPolygon</scope><name>normals</name></member>
+      <member refid="structb2_temp_polygon_1a7351a98f6052d1fce66e11bfc5b98a3a" prot="public" virt="non-virtual"><scope>b2TempPolygon</scope><name>vertices</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

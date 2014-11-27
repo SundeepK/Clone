@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_contact_8cpp" kind="file" language="C++">
+    <compoundname>b2Contact.cpp</compoundname>
+    <includes refid="b2_contact_8h" local="no">Box2D/Dynamics/Contacts/b2Contact.h</includes>
+    <includes refid="b2_circle_contact_8h" local="no">Box2D/Dynamics/Contacts/b2CircleContact.h</includes>
+    <includes refid="b2_polygon_and_circle_contact_8h" local="no">Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</includes>
+    <includes refid="b2_polygon_contact_8h" local="no">Box2D/Dynamics/Contacts/b2PolygonContact.h</includes>
+    <includes refid="b2_edge_and_circle_contact_8h" local="no">Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h</includes>
+    <includes refid="b2_edge_and_polygon_contact_8h" local="no">Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h</includes>
+    <includes refid="b2_chain_and_circle_contact_8h" local="no">Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h</includes>
+    <includes refid="b2_chain_and_polygon_contact_8h" local="no">Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h</includes>
+    <includes refid="b2_contact_solver_8h" local="no">Box2D/Dynamics/Contacts/b2ContactSolver.h</includes>
+    <includes refid="b2_collision_8h" local="no">Box2D/Collision/b2Collision.h</includes>
+    <includes refid="b2_time_of_impact_8h" local="no">Box2D/Collision/b2TimeOfImpact.h</includes>
+    <includes refid="b2_shape_8h" local="no">Box2D/Collision/Shapes/b2Shape.h</includes>
+    <includes refid="b2_block_allocator_8h" local="no">Box2D/Common/b2BlockAllocator.h</includes>
+    <includes refid="b2_body_8h" local="no">Box2D/Dynamics/b2Body.h</includes>
+    <includes refid="b2_fixture_8h" local="no">Box2D/Dynamics/b2Fixture.h</includes>
+    <includes refid="b2_world_8h" local="no">Box2D/Dynamics/b2World.h</includes>
+    <incdepgraph>
+      <node id="1317">
+        <label>Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h</label>
+        <link refid="b2_edge_and_circle_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1320">
+        <label>Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h</label>
+        <link refid="b2_chain_and_polygon_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1327">
+        <label>Box2D/Dynamics/b2ContactManager.h</label>
+        <link refid="b2_contact_manager_8h"/>
+        <childnode refid="1328" relation="include">
+        </childnode>
+      </node>
+      <node id="1304">
+        <label>assert.h</label>
+      </node>
+      <node id="1318">
+        <label>Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h</label>
+        <link refid="b2_edge_and_polygon_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1305">
+        <label>float.h</label>
+      </node>
+      <node id="1333">
+        <label>Box2D/Dynamics/b2WorldCallbacks.h</label>
+        <link refid="b2_world_callbacks_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+      </node>
+      <node id="1322">
+        <label>Box2D/Dynamics/b2TimeStep.h</label>
+        <link refid="b2_time_step_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+      </node>
+      <node id="1324">
+        <label>Box2D/Collision/b2Distance.h</label>
+        <link refid="b2_distance_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+      </node>
+      <node id="1307">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1308" relation="include">
+        </childnode>
+      </node>
+      <node id="1321">
+        <label>Box2D/Dynamics/Contacts/b2ContactSolver.h</label>
+        <link refid="b2_contact_solver_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1322" relation="include">
+        </childnode>
+      </node>
+      <node id="1303">
+        <label>stddef.h</label>
+      </node>
+      <node id="1331">
+        <label>memory.h</label>
+      </node>
+      <node id="1299">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp</label>
+        <link refid="b2Contact.cpp"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+        <childnode refid="1314" relation="include">
+        </childnode>
+        <childnode refid="1315" relation="include">
+        </childnode>
+        <childnode refid="1316" relation="include">
+        </childnode>
+        <childnode refid="1317" relation="include">
+        </childnode>
+        <childnode refid="1318" relation="include">
+        </childnode>
+        <childnode refid="1319" relation="include">
+        </childnode>
+        <childnode refid="1320" relation="include">
+        </childnode>
+        <childnode refid="1321" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1323" relation="include">
+        </childnode>
+        <childnode refid="1309" relation="include">
+        </childnode>
+        <childnode refid="1310" relation="include">
+        </childnode>
+        <childnode refid="1312" relation="include">
+        </childnode>
+        <childnode refid="1311" relation="include">
+        </childnode>
+        <childnode refid="1325" relation="include">
+        </childnode>
+      </node>
+      <node id="1308">
+        <label>limits.h</label>
+      </node>
+      <node id="1323">
+        <label>Box2D/Collision/b2TimeOfImpact.h</label>
+        <link refid="b2_time_of_impact_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1324" relation="include">
+        </childnode>
+      </node>
+      <node id="1330">
+        <label>Box2D/Common/b2GrowableStack.h</label>
+        <link refid="b2_growable_stack_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+        <childnode refid="1331" relation="include">
+        </childnode>
+      </node>
+      <node id="1328">
+        <label>Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2_broad_phase_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1329" relation="include">
+        </childnode>
+        <childnode refid="1332" relation="include">
+        </childnode>
+      </node>
+      <node id="1312">
+        <label>Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1309" relation="include">
+        </childnode>
+        <childnode refid="1313" relation="include">
+        </childnode>
+      </node>
+      <node id="1314">
+        <label>Box2D/Dynamics/Contacts/b2CircleContact.h</label>
+        <link refid="b2_circle_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1329">
+        <label>Box2D/Collision/b2DynamicTree.h</label>
+        <link refid="b2_dynamic_tree_8h"/>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1330" relation="include">
+        </childnode>
+      </node>
+      <node id="1300">
+        <label>Box2D/Dynamics/Contacts/b2Contact.h</label>
+        <link refid="b2_contact_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1309" relation="include">
+        </childnode>
+        <childnode refid="1311" relation="include">
+        </childnode>
+      </node>
+      <node id="1325">
+        <label>Box2D/Dynamics/b2World.h</label>
+        <link refid="b2_world_8h"/>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1310" relation="include">
+        </childnode>
+        <childnode refid="1326" relation="include">
+        </childnode>
+        <childnode refid="1327" relation="include">
+        </childnode>
+        <childnode refid="1333" relation="include">
+        </childnode>
+        <childnode refid="1322" relation="include">
+        </childnode>
+      </node>
+      <node id="1319">
+        <label>Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h</label>
+        <link refid="b2_chain_and_circle_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1306">
+        <label>math.h</label>
+      </node>
+      <node id="1326">
+        <label>Box2D/Common/b2StackAllocator.h</label>
+        <link refid="b2_stack_allocator_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+      </node>
+      <node id="1315">
+        <label>Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h</label>
+        <link refid="b2_polygon_and_circle_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1316">
+        <label>Box2D/Dynamics/Contacts/b2PolygonContact.h</label>
+        <link refid="b2_polygon_contact_8h"/>
+        <childnode refid="1300" relation="include">
+        </childnode>
+      </node>
+      <node id="1302">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="1303" relation="include">
+        </childnode>
+        <childnode refid="1304" relation="include">
+        </childnode>
+        <childnode refid="1305" relation="include">
+        </childnode>
+      </node>
+      <node id="1310">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+      </node>
+      <node id="1301">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="1302" relation="include">
+        </childnode>
+        <childnode refid="1306" relation="include">
+        </childnode>
+      </node>
+      <node id="1332">
+        <label>algorithm</label>
+      </node>
+      <node id="1309">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="1310" relation="include">
+        </childnode>
+        <childnode refid="1301" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+      </node>
+      <node id="1311">
+        <label>Box2D/Dynamics/b2Fixture.h</label>
+        <link refid="b2_fixture_8h"/>
+        <childnode refid="1312" relation="include">
+        </childnode>
+        <childnode refid="1307" relation="include">
+        </childnode>
+        <childnode refid="1309" relation="include">
+        </childnode>
+      </node>
+      <node id="1313">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Contacts/b2Contact.cpp"/>
+  </compounddef>
+</doxygen>

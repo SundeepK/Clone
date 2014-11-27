@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_rope_joint_def" kind="struct" language="C++" prot="public">
+    <compoundname>b2RopeJointDef</compoundname>
+    <basecompoundref refid="structb2_joint_def" prot="public" virt="non-virtual">b2JointDef</basecompoundref>
+    <includes refid="b2_rope_joint_8h" local="no">b2RopeJoint.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_rope_joint_def_1ab680fcc3cd44741a7a824ddff86ff01e" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2RopeJointDef::localAnchorA</definition>
+        <argsstring></argsstring>
+        <name>localAnchorA</name>
+        <briefdescription>
+<para>The local anchor point relative to bodyA&apos;s origin. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" line="39" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_rope_joint_def_1a3271da0e4027e25546aa6a81e8fbe4e2" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2RopeJointDef::localAnchorB</definition>
+        <argsstring></argsstring>
+        <name>localAnchorB</name>
+        <briefdescription>
+<para>The local anchor point relative to bodyB&apos;s origin. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" line="42" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_rope_joint_def_1a6efdcae22e2bdcfc3aae62da1a5f0d69" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2RopeJointDef::maxLength</definition>
+        <argsstring></argsstring>
+        <name>maxLength</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>The maximum length of the rope. Warning: this must be larger than b2_linearSlop or the joint will have no effect. </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" line="47" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_rope_joint_def_1abb2efd3b2edbd4df73dbbc32a2f01f92" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2RopeJointDef::b2RopeJointDef</definition>
+        <argsstring>()</argsstring>
+        <name>b2RopeJointDef</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" line="30" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" bodystart="30" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Rope joint definition. This requires two body anchor points and a maximum lengths. Note: by default the connected objects will not collide. see collideConnected in <ref refid="structb2_joint_def" kindref="compound">b2JointDef</ref>. </para>    </detaileddescription>
+    <inheritancegraph>
+      <node id="560">
+        <label>b2RopeJointDef</label>
+        <link refid="structb2_rope_joint_def"/>
+        <childnode refid="561" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="561">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="562">
+        <label>b2RopeJointDef</label>
+        <link refid="structb2_rope_joint_def"/>
+        <childnode refid="563" relation="public-inheritance">
+        </childnode>
+        <childnode refid="565" relation="usage">
+          <edgelabel>localAnchorA</edgelabel>
+          <edgelabel>localAnchorB</edgelabel>
+        </childnode>
+      </node>
+      <node id="564">
+        <label>b2Body</label>
+        <link refid="classb2_body"/>
+      </node>
+      <node id="563">
+        <label>b2JointDef</label>
+        <link refid="structb2_joint_def"/>
+        <childnode refid="564" relation="usage">
+          <edgelabel>bodyA</edgelabel>
+          <edgelabel>bodyB</edgelabel>
+        </childnode>
+      </node>
+      <node id="565">
+        <label>b2Vec2</label>
+        <link refid="structb2_vec2"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" line="29" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h" bodystart="28" bodyend="48"/>
+    <listofallmembers>
+      <member refid="structb2_joint_def_1a1fdb44829d4fd13c72edb1daacb72f89" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>b2JointDef</name></member>
+      <member refid="structb2_rope_joint_def_1abb2efd3b2edbd4df73dbbc32a2f01f92" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>b2RopeJointDef</name></member>
+      <member refid="structb2_joint_def_1a8cd54c93da396be75a9788f2c6897f05" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>bodyA</name></member>
+      <member refid="structb2_joint_def_1aa4f4dee2fbcd12187b19506b60e68e3d" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>bodyB</name></member>
+      <member refid="structb2_joint_def_1aef099a1f89b64e230173b6016848ea9b" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>collideConnected</name></member>
+      <member refid="structb2_rope_joint_def_1ab680fcc3cd44741a7a824ddff86ff01e" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>localAnchorA</name></member>
+      <member refid="structb2_rope_joint_def_1a3271da0e4027e25546aa6a81e8fbe4e2" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>localAnchorB</name></member>
+      <member refid="structb2_rope_joint_def_1a6efdcae22e2bdcfc3aae62da1a5f0d69" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>maxLength</name></member>
+      <member refid="structb2_joint_def_1a470f2879b24adb05facbd49f338856fb" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>type</name></member>
+      <member refid="structb2_joint_def_1a07eb150daaaa52fc09c3bcf402b295fe" prot="public" virt="non-virtual"><scope>b2RopeJointDef</scope><name>userData</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

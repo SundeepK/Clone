@@ -166,9 +166,7 @@ public:
 		}
 
 		if(m_currentLevelIndex < m_levelsToLoad.size()){
-
 			auto entities = m_anaxWorld->getEntities();
-			std::cout << "total entities" << entities.size() << std::endl;
 			for(anax::Entity entity : entities){
 				if(entity.hasComponent<PhysicsComponent>()){
 					auto& physicsComp = entity.getComponent<PhysicsComponent>();

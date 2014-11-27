@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_contact_manager_8cpp" kind="file" language="C++">
+    <compoundname>b2ContactManager.cpp</compoundname>
+    <includes refid="b2_contact_manager_8h" local="no">Box2D/Dynamics/b2ContactManager.h</includes>
+    <includes refid="b2_body_8h" local="no">Box2D/Dynamics/b2Body.h</includes>
+    <includes refid="b2_fixture_8h" local="no">Box2D/Dynamics/b2Fixture.h</includes>
+    <includes refid="b2_world_callbacks_8h" local="no">Box2D/Dynamics/b2WorldCallbacks.h</includes>
+    <includes refid="b2_contact_8h" local="no">Box2D/Dynamics/Contacts/b2Contact.h</includes>
+    <incdepgraph>
+      <node id="894">
+        <label>Box2D/Dynamics/b2ContactManager.h</label>
+        <link refid="b2_contact_manager_8h"/>
+        <childnode refid="895" relation="include">
+        </childnode>
+      </node>
+      <node id="898">
+        <label>assert.h</label>
+      </node>
+      <node id="899">
+        <label>float.h</label>
+      </node>
+      <node id="893">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp</label>
+        <link refid="b2ContactManager.cpp"/>
+        <childnode refid="894" relation="include">
+        </childnode>
+        <childnode refid="908" relation="include">
+        </childnode>
+        <childnode refid="912" relation="include">
+        </childnode>
+        <childnode refid="913" relation="include">
+        </childnode>
+        <childnode refid="914" relation="include">
+        </childnode>
+      </node>
+      <node id="913">
+        <label>Box2D/Dynamics/b2WorldCallbacks.h</label>
+        <link refid="b2_world_callbacks_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+      </node>
+      <node id="900">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="901" relation="include">
+        </childnode>
+        <childnode refid="903" relation="include">
+        </childnode>
+      </node>
+      <node id="897">
+        <label>stddef.h</label>
+      </node>
+      <node id="906">
+        <label>memory.h</label>
+      </node>
+      <node id="903">
+        <label>limits.h</label>
+      </node>
+      <node id="905">
+        <label>Box2D/Common/b2GrowableStack.h</label>
+        <link refid="b2_growable_stack_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+        <childnode refid="906" relation="include">
+        </childnode>
+      </node>
+      <node id="895">
+        <label>Box2D/Collision/b2BroadPhase.h</label>
+        <link refid="b2_broad_phase_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+        <childnode refid="900" relation="include">
+        </childnode>
+        <childnode refid="904" relation="include">
+        </childnode>
+        <childnode refid="907" relation="include">
+        </childnode>
+      </node>
+      <node id="908">
+        <label>Box2D/Dynamics/b2Body.h</label>
+        <link refid="b2_body_8h"/>
+        <childnode refid="901" relation="include">
+        </childnode>
+        <childnode refid="909" relation="include">
+        </childnode>
+        <childnode refid="911" relation="include">
+        </childnode>
+      </node>
+      <node id="904">
+        <label>Box2D/Collision/b2DynamicTree.h</label>
+        <link refid="b2_dynamic_tree_8h"/>
+        <childnode refid="900" relation="include">
+        </childnode>
+        <childnode refid="905" relation="include">
+        </childnode>
+      </node>
+      <node id="914">
+        <label>Box2D/Dynamics/Contacts/b2Contact.h</label>
+        <link refid="b2_contact_8h"/>
+        <childnode refid="901" relation="include">
+        </childnode>
+        <childnode refid="900" relation="include">
+        </childnode>
+        <childnode refid="909" relation="include">
+        </childnode>
+        <childnode refid="912" relation="include">
+        </childnode>
+      </node>
+      <node id="902">
+        <label>math.h</label>
+      </node>
+      <node id="896">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="897" relation="include">
+        </childnode>
+        <childnode refid="898" relation="include">
+        </childnode>
+        <childnode refid="899" relation="include">
+        </childnode>
+      </node>
+      <node id="910">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+      </node>
+      <node id="901">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+        <childnode refid="902" relation="include">
+        </childnode>
+      </node>
+      <node id="907">
+        <label>algorithm</label>
+      </node>
+      <node id="909">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="910" relation="include">
+        </childnode>
+        <childnode refid="901" relation="include">
+        </childnode>
+        <childnode refid="900" relation="include">
+        </childnode>
+      </node>
+      <node id="912">
+        <label>Box2D/Dynamics/b2Fixture.h</label>
+        <link refid="b2_fixture_8h"/>
+        <childnode refid="908" relation="include">
+        </childnode>
+        <childnode refid="900" relation="include">
+        </childnode>
+        <childnode refid="909" relation="include">
+        </childnode>
+      </node>
+      <node id="911">
+        <label>memory</label>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="b2_contact_manager_8cpp_1a83faed8ad8fae9cc4f1f33adf9d8f059" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_contact_filter" kindref="compound">b2ContactFilter</ref></type>
+        <definition>b2ContactFilter b2_defaultFilter</definition>
+        <argsstring></argsstring>
+        <name>b2_defaultFilter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp" line="25" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="b2_contact_manager_8cpp_1a336c28acc24c6a88a7d38c1bfd3a79da" prot="public" static="no" mutable="no">
+        <type><ref refid="classb2_contact_listener" kindref="compound">b2ContactListener</ref></type>
+        <definition>b2ContactListener b2_defaultListener</definition>
+        <argsstring></argsstring>
+        <name>b2_defaultListener</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp" line="26" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Dynamics/b2ContactManager.cpp"/>
+  </compounddef>
+</doxygen>

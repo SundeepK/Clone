@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_circle_shape_8cpp" kind="file" language="C++">
+    <compoundname>b2CircleShape.cpp</compoundname>
+    <includes refid="b2_circle_shape_8h" local="no">Box2D/Collision/Shapes/b2CircleShape.h</includes>
+    <includes local="no">new</includes>
+    <incdepgraph>
+      <node id="306">
+        <label>assert.h</label>
+      </node>
+      <node id="307">
+        <label>float.h</label>
+      </node>
+      <node id="310">
+        <label>Box2D/Collision/b2Collision.h</label>
+        <link refid="b2_collision_8h"/>
+        <childnode refid="308" relation="include">
+        </childnode>
+        <childnode refid="311" relation="include">
+        </childnode>
+      </node>
+      <node id="305">
+        <label>stddef.h</label>
+      </node>
+      <node id="311">
+        <label>limits.h</label>
+      </node>
+      <node id="312">
+        <label>new</label>
+      </node>
+      <node id="309">
+        <label>math.h</label>
+      </node>
+      <node id="301">
+        <label>Box2D/Collision/Shapes/b2CircleShape.h</label>
+        <link refid="b2_circle_shape_8h"/>
+        <childnode refid="302" relation="include">
+        </childnode>
+      </node>
+      <node id="304">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="305" relation="include">
+        </childnode>
+        <childnode refid="306" relation="include">
+        </childnode>
+        <childnode refid="307" relation="include">
+        </childnode>
+      </node>
+      <node id="303">
+        <label>Box2D/Common/b2BlockAllocator.h</label>
+        <link refid="b2_block_allocator_8h"/>
+        <childnode refid="304" relation="include">
+        </childnode>
+      </node>
+      <node id="308">
+        <label>Box2D/Common/b2Math.h</label>
+        <link refid="b2_math_8h"/>
+        <childnode refid="304" relation="include">
+        </childnode>
+        <childnode refid="309" relation="include">
+        </childnode>
+      </node>
+      <node id="302">
+        <label>Box2D/Collision/Shapes/b2Shape.h</label>
+        <link refid="b2_shape_8h"/>
+        <childnode refid="303" relation="include">
+        </childnode>
+        <childnode refid="308" relation="include">
+        </childnode>
+        <childnode refid="310" relation="include">
+        </childnode>
+      </node>
+      <node id="300">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp</label>
+        <link refid="b2CircleShape.cpp"/>
+        <childnode refid="301" relation="include">
+        </childnode>
+        <childnode refid="312" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp"/>
+  </compounddef>
+</doxygen>

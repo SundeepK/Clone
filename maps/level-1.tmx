@@ -14,33 +14,17 @@
   <object x="1443" y="2" width="32" height="632"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="96" y="98" width="1346" height="33">
+  <object name="lowersplit" x="320" y="64" width="28" height="222">
    <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="planks.png"/>
-   </properties>
-  </object>
-  <object name="lowersplit" x="98" y="258" width="1342" height="31">
-   <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="planks.png"/>
-   </properties>
-  </object>
-  <object name="lowersplit" x="93" y="446" width="1124" height="38">
-   <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
+    <property name="Body" value="dynamic"/>
+    <property name="SplitDir" value="down"/>
     <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
     <property name="Texture" value="planks.png"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
-  <object name="PlayerEndPoint" x="604" y="601" width="31" height="31"/>
+  <object name="PlayerEndPoint" x="1390" y="597" width="31" height="31"/>
   <object name="PlayerStartPoint" x="129" y="609" width="29" height="26"/>
  </objectgroup>
 </map>

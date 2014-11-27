@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="dir_f5cac171b170ace9f8e5215456e0d161" kind="dir">
+    <compoundname>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common</compoundname>
+    <innerfile refid="b2_block_allocator_8cpp">b2BlockAllocator.cpp</innerfile>
+    <innerfile refid="b2_block_allocator_8h">b2BlockAllocator.h</innerfile>
+    <innerfile refid="b2_draw_8cpp">b2Draw.cpp</innerfile>
+    <innerfile refid="b2_draw_8h">b2Draw.h</innerfile>
+    <innerfile refid="b2_growable_stack_8h">b2GrowableStack.h</innerfile>
+    <innerfile refid="b2_math_8cpp">b2Math.cpp</innerfile>
+    <innerfile refid="b2_math_8h">b2Math.h</innerfile>
+    <innerfile refid="b2_settings_8cpp">b2Settings.cpp</innerfile>
+    <innerfile refid="b2_settings_8h">b2Settings.h</innerfile>
+    <innerfile refid="b2_stack_allocator_8cpp">b2StackAllocator.cpp</innerfile>
+    <innerfile refid="b2_stack_allocator_8h">b2StackAllocator.h</innerfile>
+    <innerfile refid="b2_timer_8cpp">b2Timer.cpp</innerfile>
+    <innerfile refid="b2_timer_8h">b2Timer.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/"/>
+  </compounddef>
+</doxygen>

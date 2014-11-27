@@ -149,7 +149,7 @@ LUALIB_API void luaL_checkany (lua_State *L, int narg) {
 }
 
 
-LUALIB_API const char *luaL_checklstring (lua_State *L, int narg, size_t *len) {
+LUALIB_API char *luaL_checklstring (lua_State *L, int narg, size_t *len) {
   const char *s = lua_tolstring(L, narg, len);
   if (!s) tag_error(L, narg, LUA_TSTRING);
   return s;

@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_vec2" kind="struct" language="C++" prot="public">
+    <compoundname>b2Vec2</compoundname>
+    <includes refid="b2_math_8h" local="no">b2Math.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_vec2_1a07021c1c08c547868e3cce9c9ef2ea71" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="140" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_vec2_1a880f573a9efe402ec207e9d132cb2a43" prot="public" static="no" mutable="no">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="140" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_vec2_1a9171b31deb83af96872f99689939a12f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2Vec2::b2Vec2</definition>
+        <argsstring>()</argsstring>
+        <name>b2Vec2</name>
+        <briefdescription>
+<para>Default constructor does nothing (for performance). </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="56" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="56" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1aa8a2f026420a84bbbc62f3a3de2041d6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2Vec2::b2Vec2</definition>
+        <argsstring>(float32 x, float32 y)</argsstring>
+        <name>b2Vec2</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+<para>Construct using coordinates. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="59" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="59" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a5c6cbe27cfb29c6dbb29b9a3285b88d0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Vec2::SetZero</definition>
+        <argsstring>()</argsstring>
+        <name>SetZero</name>
+        <briefdescription>
+<para>Set this vector to all zeros. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="62" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a4d61640a645e470a50b451307d8e94c3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Vec2::Set</definition>
+        <argsstring>(float32 x_, float32 y_)</argsstring>
+        <name>Set</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>x_</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>y_</declname>
+        </param>
+        <briefdescription>
+<para>Set this vector to some specified coordinates. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="65" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="65" bodyend="65"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1ab1f648091d3cba00b4c132758fcf4450" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2Vec2::operator-</definition>
+        <argsstring>() const </argsstring>
+        <name>operator-</name>
+        <briefdescription>
+<para>Negate this vector. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="68" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="68" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a9cb67b5f755b82d40673337a3652d81f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::operator()</definition>
+        <argsstring>(int32 i) const </argsstring>
+        <name>operator()</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Read from and indexed element. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="71" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="71" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a50b39580d9f479e17b23ce3cb8efbac6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref> &amp;</type>
+        <definition>float32&amp; b2Vec2::operator()</definition>
+        <argsstring>(int32 i)</argsstring>
+        <name>operator()</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1a43d43196463bde49cb067f5c20ab8481" kindref="member">int32</ref></type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+<para>Write to an indexed element. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="77" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="77" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a590789342e22ac1e7f9c1a63a2778b6d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Vec2::operator+=</definition>
+        <argsstring>(const b2Vec2 &amp;v)</argsstring>
+        <name>operator+=</name>
+        <param>
+          <type>const <ref refid="structb2_vec2" kindref="compound">b2Vec2</ref> &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Add a vector to this vector. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="83" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="83" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a6b48cab4695a979ae40b7613aedc8b17" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Vec2::operator-=</definition>
+        <argsstring>(const b2Vec2 &amp;v)</argsstring>
+        <name>operator-=</name>
+        <param>
+          <type>const <ref refid="structb2_vec2" kindref="compound">b2Vec2</ref> &amp;</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+<para>Subtract a vector from this vector. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="89" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="89" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a7097696dce578322928f4535b34f1c6b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Vec2::operator*=</definition>
+        <argsstring>(float32 a)</argsstring>
+        <name>operator*=</name>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+<para>Multiply this vector by a scalar. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="95" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="95" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1afb1c498214b88874fcb07eb6322374da" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::Length</definition>
+        <argsstring>() const </argsstring>
+        <name>Length</name>
+        <briefdescription>
+<para>Get the length of this vector (the norm). </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="101" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="101" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1af66641b887488490e2168bfafc5a7e36" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::LengthSquared</definition>
+        <argsstring>() const </argsstring>
+        <name>LengthSquared</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Get the length squared. For performance, use this instead of <ref refid="structb2_vec2_1afb1c498214b88874fcb07eb6322374da" kindref="member">b2Vec2::Length</ref> (if possible). </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="108" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="108" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1adda78c92f318fe53d8a53f9b5cfd8e41" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+        <definition>float32 b2Vec2::Normalize</definition>
+        <argsstring>()</argsstring>
+        <name>Normalize</name>
+        <briefdescription>
+<para>Convert this vector into a unit vector. Returns the length. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="114" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="114" bodyend="126"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1aafb971cf7cc726f91fc3a8215fb0aa17" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool b2Vec2::IsValid</definition>
+        <argsstring>() const </argsstring>
+        <name>IsValid</name>
+        <briefdescription>
+<para>Does this vector contain finite coordinates? </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="129" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="129" bodyend="132"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_vec2_1a8f2c6e60cb5898bc239801bd19e2d619" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2Vec2::Skew</definition>
+        <argsstring>() const </argsstring>
+        <name>Skew</name>
+        <briefdescription>
+<para>Get the skew vector such that dot(skew_vec, other) == cross(vec, other) </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="135" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="135" bodyend="138"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>A 2D column vector. </para>    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="54" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="53" bodyend="141"/>
+    <listofallmembers>
+      <member refid="structb2_vec2_1a9171b31deb83af96872f99689939a12f" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>b2Vec2</name></member>
+      <member refid="structb2_vec2_1aa8a2f026420a84bbbc62f3a3de2041d6" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>b2Vec2</name></member>
+      <member refid="structb2_vec2_1aafb971cf7cc726f91fc3a8215fb0aa17" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>IsValid</name></member>
+      <member refid="structb2_vec2_1afb1c498214b88874fcb07eb6322374da" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>Length</name></member>
+      <member refid="structb2_vec2_1af66641b887488490e2168bfafc5a7e36" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>LengthSquared</name></member>
+      <member refid="structb2_vec2_1adda78c92f318fe53d8a53f9b5cfd8e41" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>Normalize</name></member>
+      <member refid="structb2_vec2_1a9cb67b5f755b82d40673337a3652d81f" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator()</name></member>
+      <member refid="structb2_vec2_1a50b39580d9f479e17b23ce3cb8efbac6" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator()</name></member>
+      <member refid="structb2_vec2_1a7097696dce578322928f4535b34f1c6b" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator*=</name></member>
+      <member refid="structb2_vec2_1a590789342e22ac1e7f9c1a63a2778b6d" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator+=</name></member>
+      <member refid="structb2_vec2_1ab1f648091d3cba00b4c132758fcf4450" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator-</name></member>
+      <member refid="structb2_vec2_1a6b48cab4695a979ae40b7613aedc8b17" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>operator-=</name></member>
+      <member refid="structb2_vec2_1a4d61640a645e470a50b451307d8e94c3" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>Set</name></member>
+      <member refid="structb2_vec2_1a5c6cbe27cfb29c6dbb29b9a3285b88d0" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>SetZero</name></member>
+      <member refid="structb2_vec2_1a8f2c6e60cb5898bc239801bd19e2d619" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>Skew</name></member>
+      <member refid="structb2_vec2_1a07021c1c08c547868e3cce9c9ef2ea71" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>x</name></member>
+      <member refid="structb2_vec2_1a880f573a9efe402ec207e9d132cb2a43" prot="public" virt="non-virtual"><scope>b2Vec2</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

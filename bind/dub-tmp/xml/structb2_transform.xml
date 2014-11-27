@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="structb2_transform" kind="struct" language="C++" prot="public">
+    <compoundname>b2Transform</compoundname>
+    <includes refid="b2_math_8h" local="no">b2Math.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structb2_transform_1a9eeeb643a016c29a4d389e480ba6c628" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_vec2" kindref="compound">b2Vec2</ref></type>
+        <definition>b2Vec2 b2Transform::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="372" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="372" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structb2_transform_1ae4aaac23f32686e165138c4e5dc4ce85" prot="public" static="no" mutable="no">
+        <type><ref refid="structb2_rot" kindref="compound">b2Rot</ref></type>
+        <definition>b2Rot b2Transform::q</definition>
+        <argsstring></argsstring>
+        <name>q</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="373" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="373" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structb2_transform_1a765a2e5c692a2e1d05c7a5441019373d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2Transform::b2Transform</definition>
+        <argsstring>()</argsstring>
+        <name>b2Transform</name>
+        <briefdescription>
+<para>The default constructor does nothing. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="353" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="353" bodyend="353"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_transform_1a823e190e4810e35e8100f4414d0bef62" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>b2Transform::b2Transform</definition>
+        <argsstring>(const b2Vec2 &amp;position, const b2Rot &amp;rotation)</argsstring>
+        <name>b2Transform</name>
+        <param>
+          <type>const <ref refid="structb2_vec2" kindref="compound">b2Vec2</ref> &amp;</type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structb2_rot" kindref="compound">b2Rot</ref> &amp;</type>
+          <declname>rotation</declname>
+        </param>
+        <briefdescription>
+<para>Initialize using a position vector and a rotation. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="356" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="356" bodyend="356"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_transform_1af92af4ec6833552b1b22a6ca6d4f5644" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Transform::SetIdentity</definition>
+        <argsstring>()</argsstring>
+        <name>SetIdentity</name>
+        <briefdescription>
+<para>Set this to the identity transform. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="359" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="359" bodyend="363"/>
+      </memberdef>
+      <memberdef kind="function" id="structb2_transform_1a4db696a0b3fada95f95cde3e7e85ced9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void b2Transform::Set</definition>
+        <argsstring>(const b2Vec2 &amp;position, float32 angle)</argsstring>
+        <name>Set</name>
+        <param>
+          <type>const <ref refid="structb2_vec2" kindref="compound">b2Vec2</ref> &amp;</type>
+          <declname>position</declname>
+        </param>
+        <param>
+          <type><ref refid="b2_settings_8h_1aacdc525d6f7bddb3ae95d5c311bd06a1" kindref="member">float32</ref></type>
+          <declname>angle</declname>
+        </param>
+        <briefdescription>
+<para>Set this based on the position and angle. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="366" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="366" bodyend="370"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>A transform contains translation and rotation. It is used to represent the position and orientation of rigid frames. </para>    </detaileddescription>
+    <collaborationgraph>
+      <node id="616">
+        <label>b2Transform</label>
+        <link refid="structb2_transform"/>
+        <childnode refid="617" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+        <childnode refid="618" relation="usage">
+          <edgelabel>q</edgelabel>
+        </childnode>
+      </node>
+      <node id="617">
+        <label>b2Vec2</label>
+        <link refid="structb2_vec2"/>
+      </node>
+      <node id="618">
+        <label>b2Rot</label>
+        <link refid="structb2_rot"/>
+      </node>
+    </collaborationgraph>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" line="351" column="1" bodyfile="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Math.h" bodystart="350" bodyend="374"/>
+    <listofallmembers>
+      <member refid="structb2_transform_1a765a2e5c692a2e1d05c7a5441019373d" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>b2Transform</name></member>
+      <member refid="structb2_transform_1a823e190e4810e35e8100f4414d0bef62" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>b2Transform</name></member>
+      <member refid="structb2_transform_1a9eeeb643a016c29a4d389e480ba6c628" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>p</name></member>
+      <member refid="structb2_transform_1ae4aaac23f32686e165138c4e5dc4ce85" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>q</name></member>
+      <member refid="structb2_transform_1a4db696a0b3fada95f95cde3e7e85ced9" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>Set</name></member>
+      <member refid="structb2_transform_1af92af4ec6833552b1b22a6ca6d4f5644" prot="public" virt="non-virtual"><scope>b2Transform</scope><name>SetIdentity</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

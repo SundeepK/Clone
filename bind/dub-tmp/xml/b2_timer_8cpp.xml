@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.8">
+  <compounddef id="b2_timer_8cpp" kind="file" language="C++">
+    <compoundname>b2Timer.cpp</compoundname>
+    <includes refid="b2_timer_8h" local="no">Box2D/Common/b2Timer.h</includes>
+    <incdepgraph>
+      <node id="803">
+        <label>assert.h</label>
+      </node>
+      <node id="804">
+        <label>float.h</label>
+      </node>
+      <node id="802">
+        <label>stddef.h</label>
+      </node>
+      <node id="800">
+        <label>Box2D/Common/b2Timer.h</label>
+        <link refid="b2_timer_8h"/>
+        <childnode refid="801" relation="include">
+        </childnode>
+      </node>
+      <node id="801">
+        <label>Box2D/Common/b2Settings.h</label>
+        <link refid="b2_settings_8h"/>
+        <childnode refid="802" relation="include">
+        </childnode>
+        <childnode refid="803" relation="include">
+        </childnode>
+        <childnode refid="804" relation="include">
+        </childnode>
+      </node>
+      <node id="799">
+        <label>/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Timer.cpp</label>
+        <link refid="b2Timer.cpp"/>
+        <childnode refid="800" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/media/sundeep/3 tb Vol/code/Clone-game-repo/Clone-game/vendor/Box2D/Box2D/Common/b2Timer.cpp"/>
+  </compounddef>
+</doxygen>
