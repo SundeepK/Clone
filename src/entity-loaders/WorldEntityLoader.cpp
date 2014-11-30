@@ -13,6 +13,7 @@ extern "C"
 
 #include <luabind/luabind.hpp>
 #include <iostream>
+#include <game-objects/Rope.h>
 
 WorldEntityLoader::WorldEntityLoader()  {
 
@@ -26,9 +27,9 @@ WorldEntityLoader::~WorldEntityLoader() {
 
 void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State *luaState){
 
-	if(luaL_dofile(luaState, "lua-configs/playerConfig.lua")){
-        printf("%s\n", lua_tostring(luaState, -1));
-	}
+
+	Rope rope;
+	rope.createRope(box2dWorld, anaxWorld);
 
 	luabind::module(luaState)[
 	luabind::class_<b2Vec2>("b2Vec2")

@@ -1,3 +1,4 @@
+
 function loadPhysicsComp(playerComp)
 	playerComp.previousAngle = 10
 	playerComp.previousPosition = b2Vec2(40,10)
@@ -65,3 +66,4 @@ function addFrames(animation,  y, xFirst,  xLast, duration, shouldFlip)
 		end
 	end
 end
+

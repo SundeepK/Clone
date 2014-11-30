@@ -1,7 +1,13 @@
 #include <entity-loaders/PlayerEntityLoader.h>
 #include <components/EndPointCollisionTagComponent.h>
+#include <lua-exports/ExportBox2d.h>
+
 
 void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
+
+	if(luaL_dofile(luaState, "lua-configs/playerConfig.lua")){
+        printf("%s\n", lua_tostring(luaState, -1));
+	}
 
 	luabind::module(luaState)[
 	luabind::class_<PhysicsComponent>("PhysicsComponent")
@@ -63,13 +69,17 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
   //  auto& fixtureMap = playerEntity.addComponent<FixtureMapComponent>();
 
     auto startPositionVec = loadedMapData["PlayerStartPoint"].GetPosition();
-    std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
+   // std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
+
+    uint16 playerBitMask = 0x0003;
+
     B2BoxBuilder builder(30,40);
     builder
     .bodyType(b2_dynamicBody)
     .setPosition(b2Vec2(startPositionVec.x,startPositionVec.y))
     .fixedRotation(true)
     .setRestitution(0.0f)
+    .setcategoryBits(playerBitMask)
     .setDensity(1.0f);
     b2Body* playerBody = builder.build(b2dWorld);
     playerBody->ApplyLinearImpulse( b2Vec2(0.1f,0.1f), playerBody->GetWorldCenter(), true);
@@ -87,6 +97,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     footSensor.restitution = 0.0f;
     footShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
     footSensor.isSensor = true;
+    footSensor.filter.categoryBits = playerBitMask;
     b2Fixture* footSensorFixture = physComp.physicsBody->CreateFixture(&footSensor);
     SensorComponent footSensorComp;
     footSensorComp.sensors = footSensorFixture;
@@ -102,6 +113,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     rightSensor.density = 0.3;
     rightSensor.restitution = 0.0f;
     rightSensor.friction = 10.0f;
+    rightSensor.filter.categoryBits = playerBitMask;
+
 
     rightShape.SetAsBox(0.1, 0.3, b2Vec2(0.6,0), 0);
     rightSensor.isSensor = true;
@@ -116,6 +129,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     b2PolygonShape leftShape;
     b2FixtureDef leftSensor;
     leftSensor.shape = &leftShape;
+    leftSensor.filter.categoryBits = playerBitMask;
 
     leftSensor.density = 0.3;
     leftSensor.restitution = 0.0f;
@@ -144,6 +158,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
 	   // luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
 	    luabind::call_function<void>(luaState, "loadAnimations", &animationComp);
+
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);
 	    std::cout << error << std::endl;

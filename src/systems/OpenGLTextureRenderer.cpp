@@ -24,6 +24,10 @@ void OpenGLTextureRenderer::OpenGLTextureRendererImpl::render(std::vector<anax::
 		auto& physicsComp = entity.getComponent<PhysicsComponent>();
 
 		auto& texCoordsVec = texCoordsComp.textCoords;
+
+		if(texCoordsVec.size() <= 0)
+			continue;
+
 		b2Body* body = physicsComp.physicsBody;
 
 		glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);
