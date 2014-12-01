@@ -19,16 +19,19 @@ public:
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
+			bd.type = b2_staticBody;
+			bd.position = b2Vec2(20.0f, 0.0f);
+			b2PolygonShape shape;
+			shape.SetAsBox(2.0f, 0.5f);
+			b2FixtureDef fd;
+			fd.shape = &shape;
 			ground = m_world.CreateBody(&bd);
-			bd.position = b2Vec2(40.0f, 10.0f);
-			b2EdgeShape shape;
-			shape.Set(b2Vec2(40.0f, 10.0f), b2Vec2(80.0f, 10.0f));
-			ground->CreateFixture(&shape, 0.0f);
+			ground->CreateFixture(&fd);
 		}
 
 		{
 			b2PolygonShape shape;
-			shape.SetAsBox(0.5f, 0.125f);
+			shape.SetAsBox(0.1f, 0.5f);
 
 			b2FixtureDef fd;
 			fd.shape = &shape;
@@ -40,22 +43,23 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-			const int32 N = 30;
-			const float32 y = 5.0f;
-			m_ropeDef.localAnchorA.Set(0.0f, y);
+			const int32 N = 10;
+			const float32 x = 20.0f;
+			m_ropeDef.localAnchorA.Set(0.0f, x);
 
 			b2Body* prevBody = ground;
-			for (int32 i = 20; i < N; ++i) {
+			for (int32 yVal = 0; yVal < N; ++yVal) {
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
-				bd.position.Set(0.5f + 1.0f * i, y);
-				if (i == N - 1) {
+				bd.position.Set(x,  yVal);
+				if (yVal == N - 1) {
 					shape.SetAsBox(1.5f, 1.5f);
 					fd.density = 1.0f;
 					fd.filter.maskBits = 0x0003;
-					bd.position.Set(1.0f * i, y);
-					bd.linearDamping = 10.0f;
-					bd.angularDamping = 100.0f;
+					bd.position.Set(x,   yVal);
+//					bd.linearDamping = 2.0f;
+//					bd.angularDamping = 10.0f;
+					//bd.fixedRotation = true;
 				}
 
 				b2Body* body = m_world.CreateBody(&bd);
@@ -67,7 +71,7 @@ public:
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 				auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
 
-				b2Vec2 anchor(float32(i), y);
+				b2Vec2 anchor(x, float32(yVal) - 0.5f);
 				jd.Initialize(prevBody, body, anchor);
 				m_world.CreateJoint(&jd);
 
