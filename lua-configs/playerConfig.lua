@@ -1,3 +1,11 @@
+function testBox()
+
+	local shape = b2PolygonShape();
+	shape:SetAsBox(2.0, 0.5);
+
+	local b = b2BodyDef()
+	b.position = b2Vec2(40,10)
+end
 
 function loadPhysicsComp(playerComp)
 	playerComp.previousAngle = 10

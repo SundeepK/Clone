@@ -6,16 +6,18 @@
 class Rope::RopeImpl {
 
 public:
-	RopeImpl() {
+	RopeImpl(b2World& world, anax::World& anaxWorld) :  m_world(world),  m_anaxWorld(anaxWorld), m_rope(NULL) {
 	}
 
 	~RopeImpl() {
 	}
 
+	b2World& m_world;
+	anax::World& m_anaxWorld;
 	b2RopeJointDef m_ropeDef;
 	b2Joint* m_rope;
 
-	void createRope(b2World& m_world, anax::World& anaxWorld) {
+	void createRope() {
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
@@ -66,7 +68,7 @@ public:
 
 				body->CreateFixture(&fd);
 
-				auto objectEntity = anaxWorld.createEntity();
+				auto objectEntity = m_anaxWorld.createEntity();
 				auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 				auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
@@ -96,14 +98,14 @@ public:
 
 };
 
-Rope::Rope() :
-		m_impl(new RopeImpl()) {
+Rope::Rope(b2World& box2dWorld, anax::World& anaxWorld) :
+		m_impl(new RopeImpl(box2dWorld, anaxWorld)) {
 
 }
 
 Rope::~Rope() {
 }
 
-void Rope::createRope(b2World& box2dWorld, anax::World& anaxWorld) {
-	m_impl->createRope(box2dWorld, anaxWorld);
+void Rope::createRope() {
+	m_impl->createRope();
 }

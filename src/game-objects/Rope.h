@@ -8,10 +8,10 @@
 
 class Rope {
 public:
-	Rope();
+	Rope(b2World& box2dWorld, anax::World& anaxWorld);
 	~Rope();
 
-	void createRope(b2World& box2dWorld,  anax::World& anaxWorld);
+	void createRope();
 
 private:
 	class RopeImpl;

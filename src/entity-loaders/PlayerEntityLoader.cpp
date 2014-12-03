@@ -9,6 +9,62 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
         printf("%s\n", lua_tostring(luaState, -1));
 	}
 
+//	ExportBox2d exportBox2d;
+//	exportBox2d.exportToLua(luaState);
+
+	luabind::module(luaState)[
+		luabind::class_<b2BodyType>("b2BodyType")
+		        .enum_("constants")
+		        [
+		         luabind::value("b2_staticBody", b2_staticBody),
+		         luabind::value("b2_kinematicBody", b2_kinematicBody),
+		         luabind::value("b2_dynamicBody", b2_dynamicBody)
+		        ]
+	];
+
+
+	luabind::module(luaState)[
+		luabind::class_<b2FixtureDef>("b2FixtureDef")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("shape", &b2FixtureDef::shape)
+	   	.def_readwrite("friction", &b2FixtureDef::friction)
+	   	.def_readwrite("restitution", &b2FixtureDef::restitution)
+	   	.def_readwrite("density", &b2FixtureDef::density)
+	   	.def_readwrite("isSensor", &b2FixtureDef::isSensor)
+	    .def_readwrite("filter", &b2FixtureDef::filter)
+	];
+
+	luabind::module(luaState)[
+		luabind::class_<b2PolygonShape>("b2PolygonShape")
+	    .def(luabind::constructor<>())
+	    .def("GetChildCount", &b2PolygonShape::GetChildCount)
+	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy) ) &b2PolygonShape::SetAsBox)
+	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy, const b2Vec2& center, float32 angle) ) &b2PolygonShape::SetAsBox)
+	    .def("TestPoint", (void (b2PolygonShape::*) (const b2Transform& transform, const b2Vec2& p) ) &b2PolygonShape::TestPoint)
+	    .def("ComputeAABB", (void (b2PolygonShape::*) (b2AABB* aabb, const b2Transform& transform, int32 childIndex) ) &b2PolygonShape::ComputeAABB)
+	    .def("GetVertexCount", (void (b2PolygonShape::*) () ) &b2PolygonShape::GetVertexCount)
+	    .def("GetVertex", (const b2Vec2& (b2PolygonShape::*) (int32 index) ) &b2PolygonShape::GetVertexCount)
+	    .def("Validate", &b2PolygonShape::Validate)
+    ];
+
+	luabind::module(luaState)[
+		luabind::class_<b2BodyDef>("b2BodyDef")
+	      .def(luabind::constructor<>())
+	      .def_readwrite("position", &b2BodyDef::position)
+	      .def_readwrite("angle", &b2BodyDef::position)
+	      .def_readwrite("linearVelocity", &b2BodyDef::linearVelocity)
+	      .def_readwrite("angularVelocity", &b2BodyDef::angularVelocity)
+	      .def_readwrite("linearDamping", &b2BodyDef::linearDamping)
+	      .def_readwrite("angularDamping", &b2BodyDef::angularDamping)
+	      .def_readwrite("allowSleep", &b2BodyDef::allowSleep)
+	      .def_readwrite("awake", &b2BodyDef::awake)
+	      .def_readwrite("fixedRotation", &b2BodyDef::fixedRotation)
+	      .def_readwrite("bullet", &b2BodyDef::bullet)
+	      .def_readwrite("type", &b2BodyDef::type)
+	      .def_readwrite("active", &b2BodyDef::active)
+	      .def_readwrite("gravityScale", &b2BodyDef::gravityScale)
+	];
+
 	luabind::module(luaState)[
 	luabind::class_<PhysicsComponent>("PhysicsComponent")
 	      .def(luabind::constructor<>())
@@ -158,6 +214,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
 	   // luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
 	    luabind::call_function<void>(luaState, "loadAnimations", &animationComp);
+	    luabind::call_function<void>(luaState, "testBox");
+
 
 	} catch (luabind::error& e) {
 	    std::string error = lua_tostring(e.state(), -1);
