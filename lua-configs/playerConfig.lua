@@ -1,10 +1,15 @@
 function testBox()
 
-	local shape = b2PolygonShape();
-	shape:SetAsBox(2.0, 0.5);
+  local anchorBodyDef = b2BodyDef()
+  anchorBodyDef.position = b2Vec2(20.0, 0.0)
+  
+	local anchorShape = b2PolygonShape()
+	anchorShape:SetAsBox(2.0, 0.5)
 
-	local b = b2BodyDef()
-	b.position = b2Vec2(40,10)
+	local anchorFixDef = b2FixtureDef()
+	anchorFixDef.shape = anchorShape
+
+
 end
 
 function loadPhysicsComp(playerComp)

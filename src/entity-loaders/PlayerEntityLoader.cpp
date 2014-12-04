@@ -23,6 +23,106 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	];
 
 
+
+	luabind::module(luaState)[
+		luabind::class_<b2Body>("b2Body")
+	    .def("CreateFixture", (b2Fixture* (b2Body::*) (const b2FixtureDef* def)) &b2Body::CreateFixture)
+	    .def("CreateFixture", (b2Fixture* (b2Body::*) (const b2Shape* shape, float32 density)) &b2Body::CreateFixture)
+	    .def("DestroyFixture", (void (b2Body::*) (b2Fixture* fixture)) &b2Body::DestroyFixture)
+	    .def("SetTransform", (void (b2Body::*) (const b2Vec2& position, float32 angle)) &b2Body::SetTransform)
+	    .def("GetTransform", &b2Body::GetTransform)
+	    .def("GetPosition", (const b2Vec2& (b2Body::*) ()) &b2Body::GetPosition)
+	    .def("GetAngle", (float32 (b2Body::*) ()) &b2Body::GetAngle)
+	    .def("GetWorldCenter", (const b2Vec2&  (b2Body::*) ()) &b2Body::GetWorldCenter)
+	    .def("GetLocalCenter", (const b2Vec2&  (b2Body::*) ()) &b2Body::GetLocalCenter)
+	    .def("SetLinearVelocity", (void (b2Body::*) (const b2Vec2& v)) &b2Body::GetLinearVelocity)
+	    .def("GetLinearVelocity", (const b2Vec2& (b2Body::*) ()) &b2Body::GetWorldCenter)
+	    .def("GetAngularVelocity", (float32 (b2Body::*) ()) &b2Body::GetAngularVelocity)
+	    .def("ApplyForce", (void (b2Body::*) (const b2Vec2& force, const b2Vec2& point, bool wake)) &b2Body::ApplyForce)
+	    .def("ApplyForceToCenter", (void (b2Body::*) (const b2Vec2& force, bool wake)) &b2Body::ApplyForceToCenter)
+	    .def("ApplyTorque", (void (b2Body::*) (float32 torque, bool wake)) &b2Body::ApplyTorque)
+	    .def("ApplyLinearImpulse", (void (b2Body::*) (const b2Vec2& impulse, const b2Vec2& point, bool wake)) &b2Body::ApplyLinearImpulse)
+	    .def("ApplyAngularImpulse", (void (b2Body::*) (float32 impulse, bool wake)) &b2Body::ApplyAngularImpulse)
+	    .def("GetMass", (float32 (b2Body::*) ()) &b2Body::GetMass)
+	    .def("GetMassData", (void (b2Body::*) (b2MassData* data)) &b2Body::GetMassData)
+	    .def("SetMassData", (float32 (b2Body::*) (const b2MassData* data)) &b2Body::SetMassData)
+	    .def("ResetMassData", (float32 (b2Body::*) ()) &b2Body::ResetMassData)
+	    .def("GetWorldPoint", (b2Vec2 (b2Body::*) (const b2Vec2& localPoint)) &b2Body::GetWorldPoint)
+	    .def("GetWorldVector", (float32 (b2Body::*) ()) &b2Body::GetWorldVector)
+	    .def("GetInertia", (b2Vec2 (b2Body::*) (const b2Vec2& localVector)) &b2Body::GetInertia)
+	    .def("GetLocalPoint", (b2Vec2 (b2Body::*) (const b2Vec2& worldPoint)) &b2Body::GetLocalPoint)
+	    .def("GetLocalVector", (b2Vec2 (b2Body::*) (const b2Vec2& worldVector)) &b2Body::GetLocalVector)
+	    .def("GetLinearVelocityFromWorldPoint", (b2Vec2 (b2Body::*) (const b2Vec2& worldPoint)) &b2Body::GetLinearVelocityFromWorldPoint)
+	    .def("GetLinearVelocityFromLocalPoint", (b2Vec2 (b2Body::*) (const b2Vec2& localPoint)) &b2Body::GetLinearVelocityFromLocalPoint)
+	    .def("GetLinearDamping", (float32 (b2Body::*) ()) &b2Body::GetLinearDamping)
+	    .def("SetLinearDamping", (void (b2Body::*) (float32 linearDamping)) &b2Body::SetLinearDamping)
+	    .def("GetAngularDamping", (float32 (b2Body::*) ()) &b2Body::GetAngularDamping)
+	    .def("SetAngularDamping", (void (b2Body::*) (float32 angularDamping)) &b2Body::SetAngularDamping)
+	    .def("GetGravityScale", (float32 (b2Body::*) ()) &b2Body::GetGravityScale)
+	    .def("SetGravityScale", (void (b2Body::*) (float32 scale)) &b2Body::SetGravityScale)
+	    .def("SetType", (void (b2Body::*) (b2BodyType type)) &b2Body::SetType)
+	    .def("GetType", (float32 (b2Body::*) ()) &b2Body::GetType)
+	    .def("GetInertia", (b2BodyType (b2Body::*) ()) &b2Body::GetInertia)
+	    .def("SetBullet", (void (b2Body::*) (bool flag)) &b2Body::SetBullet)
+	    .def("IsBullet", (bool (b2Body::*) ()) &b2Body::IsBullet)
+	    .def("SetSleepingAllowed", (void (b2Body::*) (bool flag)) &b2Body::SetSleepingAllowed)
+	    .def("IsSleepingAllowed", (bool (b2Body::*) ()) &b2Body::IsSleepingAllowed)
+	    .def("SetAwake", (void (b2Body::*) (bool flag)) &b2Body::SetAwake)
+	    .def("IsAwake", (bool (b2Body::*) ()) &b2Body::IsAwake)
+	    .def("SetActive", (b2BodyType (b2Body::*) (bool flag)) &b2Body::SetActive)
+	    .def("IsActive", (bool (b2Body::*) ()) &b2Body::IsActive)
+	    .def("SetFixedRotation", (void (b2Body::*) (bool flag)) &b2Body::SetFixedRotation)
+	    .def("IsFixedRotation", (bool (b2Body::*) ()) &b2Body::IsFixedRotation)
+	    .def("GetFixtureList", ( b2Fixture* (b2Body::*) ()) &b2Body::GetFixtureList)
+	    .def("GetJointList", ( b2JointEdge* (b2Body::*) ()) &b2Body::GetJointList)
+	    .def("GetContactList", ( b2ContactEdge* (b2Body::*) ()) &b2Body::GetContactList)
+	    .def("Dump", ( void  (b2Body::*) ()) &b2Body::Dump)
+	];
+
+
+	luabind::module(luaState)[
+		luabind::class_<b2World>("b2World")
+	    .def(luabind::constructor<const b2Vec2&>())
+	    .def_readwrite("CreateBody", (b2Body* (b2World::*) (const b2BodyDef* def)) &b2World::CreateBody)
+	    .def_readwrite("DestroyBody", (void (b2World::*) (b2Body* body)) &b2World::DestroyBody)
+	    .def_readwrite("CreateJoint", (b2Joint* (b2World::*) (const b2JointDef* def)) &b2World::CreateJoint)
+	    .def_readwrite("DestroyJoint", (void (b2World::*) (b2Joint* joint)) &b2World::DestroyJoint)
+	];
+
+
+	luabind::module(luaState)[
+		luabind::class_<b2RevoluteJointDef>("b2RevoluteJointDef")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("localAnchorA", &b2RevoluteJointDef::localAnchorA)
+	   	.def_readwrite("localAnchorB", &b2RevoluteJointDef::localAnchorB)
+	   	.def_readwrite("referenceAngle", &b2RevoluteJointDef::referenceAngle)
+	   	.def_readwrite("enableLimit", &b2RevoluteJointDef::enableLimit)
+	   	.def_readwrite("lowerAngle", &b2RevoluteJointDef::lowerAngle)
+	    .def_readwrite("upperAngle", &b2RevoluteJointDef::upperAngle)
+	    .def_readwrite("enableMotor", &b2RevoluteJointDef::enableMotor)
+	    .def_readwrite("motorSpeed", &b2RevoluteJointDef::motorSpeed)
+	    .def_readwrite("maxMotorTorque", &b2RevoluteJointDef::maxMotorTorque)
+	    .def("Initialize", (void (b2RevoluteJointDef::*) (b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor)) &b2RevoluteJointDef::Initialize)
+
+	];
+
+	luabind::module(luaState)[
+	   luabind::class_<b2Shape>("b2Shape")
+	];
+
+	luabind::module(luaState)[
+		luabind::class_<b2PolygonShape, luabind::bases<b2Shape>>("b2PolygonShape")
+	    .def(luabind::constructor<>())
+	    .def("GetChildCount", &b2PolygonShape::GetChildCount)
+	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy) ) &b2PolygonShape::SetAsBox)
+	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy, const b2Vec2& center, float32 angle) ) &b2PolygonShape::SetAsBox)
+	    .def("TestPoint", (void (b2PolygonShape::*) (const b2Transform& transform, const b2Vec2& p) ) &b2PolygonShape::TestPoint)
+	    .def("ComputeAABB", (void (b2PolygonShape::*) (b2AABB* aabb, const b2Transform& transform, int32 childIndex) ) &b2PolygonShape::ComputeAABB)
+	    .def("GetVertexCount", (void (b2PolygonShape::*) () ) &b2PolygonShape::GetVertexCount)
+	    .def("GetVertex", (const b2Vec2& (b2PolygonShape::*) (int32 index) ) &b2PolygonShape::GetVertexCount)
+	    .def("Validate", &b2PolygonShape::Validate)
+    ];
+
 	luabind::module(luaState)[
 		luabind::class_<b2FixtureDef>("b2FixtureDef")
 	    .def(luabind::constructor<>())
@@ -34,18 +134,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	    .def_readwrite("filter", &b2FixtureDef::filter)
 	];
 
-	luabind::module(luaState)[
-		luabind::class_<b2PolygonShape>("b2PolygonShape")
-	    .def(luabind::constructor<>())
-	    .def("GetChildCount", &b2PolygonShape::GetChildCount)
-	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy) ) &b2PolygonShape::SetAsBox)
-	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy, const b2Vec2& center, float32 angle) ) &b2PolygonShape::SetAsBox)
-	    .def("TestPoint", (void (b2PolygonShape::*) (const b2Transform& transform, const b2Vec2& p) ) &b2PolygonShape::TestPoint)
-	    .def("ComputeAABB", (void (b2PolygonShape::*) (b2AABB* aabb, const b2Transform& transform, int32 childIndex) ) &b2PolygonShape::ComputeAABB)
-	    .def("GetVertexCount", (void (b2PolygonShape::*) () ) &b2PolygonShape::GetVertexCount)
-	    .def("GetVertex", (const b2Vec2& (b2PolygonShape::*) (int32 index) ) &b2PolygonShape::GetVertexCount)
-	    .def("Validate", &b2PolygonShape::Validate)
-    ];
+
 
 	luabind::module(luaState)[
 		luabind::class_<b2BodyDef>("b2BodyDef")
