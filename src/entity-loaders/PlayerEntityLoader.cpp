@@ -1,7 +1,8 @@
 #include <entity-loaders/PlayerEntityLoader.h>
 #include <components/EndPointCollisionTagComponent.h>
 #include <lua-exports/ExportBox2d.h>
-
+#include <boost/scoped_ptr.hpp>
+#include <lua-exports/B2WorldProxy.h>
 
 void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
 
@@ -11,6 +12,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 
 //	ExportBox2d exportBox2d;
 //	exportBox2d.exportToLua(luaState);
+
+	B2WorldProxy box2dWorldProxy(b2dWorld);
 
 	luabind::module(luaState)[
 		luabind::class_<b2BodyType>("b2BodyType")
@@ -89,6 +92,12 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	    .def_readwrite("DestroyJoint", (void (b2World::*) (b2Joint* joint)) &b2World::DestroyJoint)
 	];
 
+	luabind::module(luaState)[
+		luabind::class_<B2WorldProxy>("B2WorldProxy")
+	    .def(luabind::constructor<b2World&>())
+	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
+	];
+
 
 	luabind::module(luaState)[
 		luabind::class_<b2RevoluteJointDef>("b2RevoluteJointDef")
@@ -107,11 +116,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	];
 
 	luabind::module(luaState)[
-	   luabind::class_<b2Shape>("b2Shape")
-	];
-
-	luabind::module(luaState)[
-		luabind::class_<b2PolygonShape, luabind::bases<b2Shape>>("b2PolygonShape")
+	    luabind::class_<b2Shape>("b2Shape"),
+		luabind::class_<b2PolygonShape, b2Shape>("b2PolygonShape")
 	    .def(luabind::constructor<>())
 	    .def("GetChildCount", &b2PolygonShape::GetChildCount)
 	    .def("SetAsBox", (void (b2PolygonShape::*) (float32 hx, float32 hy) ) &b2PolygonShape::SetAsBox)
@@ -300,6 +306,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 //    rect.setTexture(&textureRectComp.texture);
 
 	try {
+	    luabind::call_function<void>(luaState, "init", &box2dWorldProxy);
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
 	   // luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
 	    luabind::call_function<void>(luaState, "loadAnimations", &animationComp);

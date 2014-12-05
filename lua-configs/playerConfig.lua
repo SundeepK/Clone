@@ -1,14 +1,18 @@
+function init(b2worldProxy)
+  box2dWorldProxy = b2worldProxy
+end
+
 function testBox()
 
   local anchorBodyDef = b2BodyDef()
-  anchorBodyDef.position = b2Vec2(20.0, 0.0)
+  anchorBodyDef.position = b2Vec2(3.0, 10.0)
   
 	local anchorShape = b2PolygonShape()
 	anchorShape:SetAsBox(2.0, 0.5)
 
 	local anchorFixDef = b2FixtureDef()
-	anchorFixDef.shape = anchorShape
-
+  
+  local body = box2dWorldProxy:createNewBody(anchorBodyDef, anchorShape, anchorFixDef)	
 
 end
 
