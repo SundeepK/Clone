@@ -25,6 +25,26 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 		        ]
 	];
 
+	luabind::module(luaState)[
+		luabind::class_<b2JointType>("b2JointType")
+		        .enum_("constants")
+		        [
+		         luabind::value("e_unknownJoint", e_unknownJoint),
+		         luabind::value("e_revoluteJoint", e_revoluteJoint),
+		         luabind::value("e_prismaticJoint", e_prismaticJoint),
+				 luabind::value("e_distanceJoint", e_distanceJoint),
+				 luabind::value("e_pulleyJoint", e_pulleyJoint),
+				 luabind::value("e_mouseJoint", e_mouseJoint),
+			     luabind::value("e_gearJoint", e_gearJoint),
+				 luabind::value("e_wheelJoint", e_wheelJoint),
+				 luabind::value("e_weldJoint", e_weldJoint),
+				 luabind::value("e_frictionJoint", e_frictionJoint),
+				 luabind::value("e_ropeJoint", e_ropeJoint),
+				 luabind::value("e_frictionJoint", e_frictionJoint),
+				 luabind::value("e_motorJoint", e_motorJoint)
+
+		        ]
+	];
 
 
 	luabind::module(luaState)[
@@ -96,11 +116,21 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 		luabind::class_<B2WorldProxy>("B2WorldProxy")
 	    .def(luabind::constructor<b2World&>())
 	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
+	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
 	];
 
+	luabind::module(luaState)[
+		luabind::class_<b2JointDef>("b2JointDef")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("type", &b2JointDef::type)
+	   	.def_readwrite("bodyA", &b2JointDef::bodyA)
+	   	.def_readwrite("bodyA", &b2JointDef::bodyB)
+	   	.def_readwrite("collideConnected", &b2JointDef::collideConnected)
+
+	];
 
 	luabind::module(luaState)[
-		luabind::class_<b2RevoluteJointDef>("b2RevoluteJointDef")
+		luabind::class_<b2RevoluteJointDef, b2JointDef>("b2RevoluteJointDef")
 	    .def(luabind::constructor<>())
 	    .def_readwrite("localAnchorA", &b2RevoluteJointDef::localAnchorA)
 	   	.def_readwrite("localAnchorB", &b2RevoluteJointDef::localAnchorB)
@@ -115,15 +145,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 
 	];
 
-	luabind::module(luaState)[
-		luabind::class_<b2JointDef>("b2JointDef")
-	    .def(luabind::constructor<>())
-	    .def_readwrite("type", &b2JointDef::type)
-	   	.def_readwrite("bodyA", &b2JointDef::bodyA)
-	   	.def_readwrite("bodyA", &b2JointDef::bodyB)
-	   	.def_readwrite("collideConnected", &b2JointDef::collideConnected)
 
-	];
 
 	luabind::module(luaState)[
 		luabind::class_<b2Filter>("b2Filter")

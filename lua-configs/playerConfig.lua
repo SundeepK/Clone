@@ -5,10 +5,9 @@ end
 function testBox()
  
   local  ropeDef = b2RopeJointDef();
-  
  
   local anchorBodyDef = b2BodyDef()
-  anchorBodyDef.position = b2Vec2(8.0, 10.0)
+  anchorBodyDef.position = b2Vec2(8.0, 0.0)
   
 	local anchorShape = b2PolygonShape()
 	anchorShape:SetAsBox(2.0, 0.5)
@@ -24,17 +23,48 @@ function testBox()
   local chainFixture = b2FixtureDef()
   chainFixture.density = 20.0
   chainFixture.friction = 0.2
-  chainFixture.filter.categoryBits = 0x0001
-  chainFixture.filter.maskBits =  (0xff - 0x0003);
+  --chainFixture.filter.categoryBits = 0x0001
+--  chainFixture.filter.maskBits =  (0xff - 0x0003);
   
   local chainJoint =  b2RevoluteJointDef();
   chainJoint.collideConnected = false;  
   
   local maxChains = 10
-  local startingX = 20.0
+  local x = 8.0
   
+  ropeDef.localAnchorA = b2Vec2(0.0, x)
   
-
+  local prevBody = ropeAnchor
+  prevBody:SetAngularDamping(1.0)
+  for y = 0, maxChains, 1 do
+      local chainBodyDef = b2BodyDef()
+      chainBodyDef.angularDamping = 1.0
+      chainBodyDef.type = b2BodyType.b2_dynamicBody
+      chainBodyDef.position = b2Vec2(x, y)
+      if y == (maxChains) then
+        chainBodyDef.position = b2Vec2(x, y)
+        chainShape:SetAsBox(1.5, 1.5)
+       -- chainFixture.filter.maskbits = 0x0003
+        chainFixture.density = 1.0
+      end     
+     local chainBody = box2dWorldProxy:createNewBody(chainBodyDef, chainShape, chainFixture)     
+     local anchor = b2Vec2(x, y - 0.5)     
+     chainJoint:Initialize(prevBody, chainBody, anchor)
+    
+     local b = box2dWorldProxy:createJoint(chainJoint)  
+     print("im here lua")
+     
+     prevBody = chainBody
+     
+  end
+  
+   ropeDef.localAnchorB = b2Vec2(0.0, 0.0)
+   local extraLength = 0.01;
+   ropeDef.maxLength = maxChains - 1.0 + extraLength;
+   ropeDef.bodyB = prevBody;
+   ropeDef.bodyA = ropeAnchor;
+   --box2dWorldProxy:createJoint(ropeDef)
+    
 end
 
 function loadPhysicsComp(playerComp)
