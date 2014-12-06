@@ -116,6 +116,33 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	];
 
 	luabind::module(luaState)[
+		luabind::class_<b2JointDef>("b2JointDef")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("type", &b2JointDef::type)
+	   	.def_readwrite("bodyA", &b2JointDef::bodyA)
+	   	.def_readwrite("bodyA", &b2JointDef::bodyB)
+	   	.def_readwrite("collideConnected", &b2JointDef::collideConnected)
+
+	];
+
+	luabind::module(luaState)[
+		luabind::class_<b2Filter>("b2Filter")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("categoryBits", &b2Filter::categoryBits)
+	   	.def_readwrite("maskBits", &b2Filter::maskBits)
+	   	.def_readwrite("groupIndex", &b2Filter::groupIndex)
+	];
+
+	luabind::module(luaState)[
+		luabind::class_<b2RopeJointDef, b2JointDef>("b2RopeJointDef")
+	    .def(luabind::constructor<>())
+	    .def_readwrite("localAnchorA", &b2RopeJointDef::localAnchorA)
+	   	.def_readwrite("localAnchorB", &b2RopeJointDef::localAnchorB)
+	   	.def_readwrite("maxLength", &b2RopeJointDef::maxLength)
+	];
+
+
+	luabind::module(luaState)[
 	    luabind::class_<b2Shape>("b2Shape"),
 		luabind::class_<b2PolygonShape, b2Shape>("b2PolygonShape")
 	    .def(luabind::constructor<>())

@@ -3,16 +3,37 @@ function init(b2worldProxy)
 end
 
 function testBox()
-
+ 
+  local  ropeDef = b2RopeJointDef();
+  
+ 
   local anchorBodyDef = b2BodyDef()
-  anchorBodyDef.position = b2Vec2(3.0, 10.0)
+  anchorBodyDef.position = b2Vec2(8.0, 10.0)
   
 	local anchorShape = b2PolygonShape()
 	anchorShape:SetAsBox(2.0, 0.5)
 
 	local anchorFixDef = b2FixtureDef()
   
-  local body = box2dWorldProxy:createNewBody(anchorBodyDef, anchorShape, anchorFixDef)	
+  local ropeAnchor = box2dWorldProxy:createNewBody(anchorBodyDef, anchorShape, anchorFixDef)	
+ 
+ --generate chain 
+  local chainShape = b2PolygonShape()
+  chainShape:SetAsBox(0.1, 0.5);
+  
+  local chainFixture = b2FixtureDef()
+  chainFixture.density = 20.0
+  chainFixture.friction = 0.2
+  chainFixture.filter.categoryBits = 0x0001
+  chainFixture.filter.maskBits =  (0xff - 0x0003);
+  
+  local chainJoint =  b2RevoluteJointDef();
+  chainJoint.collideConnected = false;  
+  
+  local maxChains = 10
+  local startingX = 20.0
+  
+  
 
 end
 
