@@ -2,7 +2,7 @@
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <components/SplitDirectionComponent.h>
-
+#include <iostream>
 class Rope::RopeImpl {
 
 public:
@@ -40,7 +40,7 @@ public:
 			fd.density = 20.0f;
 			fd.friction = 0.2f;
 			fd.filter.categoryBits = 0x0001;
-			fd.filter.maskBits =  ~0x0003;
+			fd.filter.maskBits =  0xff - 0x0003;
 
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
@@ -67,6 +67,7 @@ public:
 				b2Body* body = m_world.CreateBody(&bd);
 
 				body->CreateFixture(&fd);
+				std::cout << "rope: "   <<  fd.filter.maskBits <<std::endl;
 
 				auto objectEntity = m_anaxWorld.createEntity();
 				auto& texCoordsComp = objectEntity.addComponent<Texcoords>();

@@ -11,23 +11,44 @@ public:
 
 	}
 
-
+	b2Joint* rope;
 	b2World& m_box2dWorld;
+	b2RopeJointDef ropeDef;
 
 	b2Body* createNewBody(b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture){
 		fixture.shape = &shape;
-		bodyDef.angularDamping = 1;
 		b2Body* body = m_box2dWorld.CreateBody(&bodyDef);
 		body->CreateFixture(&fixture);
+		std::cout << "im here! c++: b2RopeJointDef"   <<  fixture.filter.maskBits <<std::endl;
+
 		return body;
 	}
 
 
-	b2Joint* createJoint(b2JointDef* joint) {
-		b2Joint* d = m_box2dWorld.CreateJoint(joint);
-		std::cout << "im here! c++: " << d->GetBodyA()->GetAngularDamping()  << std::endl;
+	b2Joint* createJoint(b2RevoluteJointDef& joint) {
+		b2Joint* d = m_box2dWorld.CreateJoint(&joint);
+		std::cout << "im here! c++: "   << std::endl;
 		return d;
 	}
+
+	b2Joint* ropeJoint(b2RopeJointDef& joint) {
+
+		ropeDef.localAnchorA = joint.localAnchorA;
+
+		ropeDef.localAnchorB.SetZero();
+
+		float32 extraLength = 0.01f;
+		ropeDef.maxLength = joint.maxLength;
+		ropeDef.bodyB = joint.bodyB;
+
+		ropeDef.bodyA = joint.bodyA;
+
+		rope = m_box2dWorld.CreateJoint(&ropeDef);
+		std::cout << "im here! c++: b2RopeJointDef"   <<  ropeDef.localAnchorA.x <<std::endl;
+
+		return NULL;
+	}
+
 
 };
 
@@ -43,6 +64,10 @@ b2Body* B2WorldProxy::createNewBody(b2BodyDef& bodyDef, b2PolygonShape& shape, b
 }
 
 void B2WorldProxy::createJoint(b2RevoluteJointDef& joint) {
-	m_impl->createJoint(&joint);
+	m_impl->createJoint(joint);
 
+}
+
+void B2WorldProxy::ropeJoint(b2RopeJointDef& joint) {
+	m_impl->ropeJoint(joint);
 }

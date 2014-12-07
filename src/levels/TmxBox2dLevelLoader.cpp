@@ -133,7 +133,7 @@ public:
 	}
 
 	void loadLevelList(lua_State *luaState){
-		if(luaL_dofile(luaState, "lua-configs/levelsConfig.lua")){
+		if(luaL_dofile(luaState, "lua-scripts/levelsConfig.lua")){
 	        printf("%s\n", lua_tostring(luaState, -1));
 		}
 
