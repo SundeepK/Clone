@@ -18,7 +18,7 @@ public:
 	std::unique_ptr<b2World> m_box2dWorld;
 	std::unique_ptr<anax::World> m_anaxWorld;
 	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
-	std::vector<std::string> m_levelsToLoad;
+	std::vector<LevelObject> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
 	int m_currentLevelIndex = 0;
 
@@ -141,8 +141,8 @@ public:
 			luabind::object levels =  luabind::call_function<luabind::object>(luaState, "getLevelsToLoad");
 			for(int i = 1; ; i++){
 				if(levels[i]){
-				  std::string levelName =  luabind::object_cast<std::string>(levels[i]);
-				    std::cout << "level is" << levelName << std::endl;
+					LevelObject levelName =  luabind::object_cast<LevelObject>(levels[i]);
+				    std::cout << "level is" << levelName.levelMapName<< std::endl;
 				  m_levelsToLoad.push_back(levelName);
 				}else{
 					break;
@@ -161,6 +161,13 @@ public:
 	    luabind::open(luaState);
 		luaL_openlibs(luaState);
 
+		luabind::module(luaState)[
+		luabind::class_<LevelObject>("LevelObject")
+		      .def(luabind::constructor<>())
+		      .def_readwrite("levelMapName", &LevelObject::levelMapName)
+		      .def_readwrite("scriptName", &LevelObject::scriptName)
+		];
+
 		if(m_levelsToLoad.size() <= 0 && m_currentLevelIndex <= 0){
 			loadLevelList(luaState);
 		}
@@ -175,7 +182,7 @@ public:
 			}
 
 			m_anaxWorld->killEntities(entities);
-			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex]);
+			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
 			m_currentLevelIndex++;
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 			std::unordered_map<std::string, tmx::MapObject> loadedItems;

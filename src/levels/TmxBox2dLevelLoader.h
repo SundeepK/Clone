@@ -18,6 +18,11 @@
 #include <GL/glut.h>
 
 
+struct LevelObject{
+	std::string levelMapName;
+	std::string scriptName;
+};
+
 class TmxBox2dLevelLoader :  public anax::System<TmxBox2dLevelLoader>{
 	public:
 		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld);
