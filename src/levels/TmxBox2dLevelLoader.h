@@ -29,6 +29,7 @@ class TmxBox2dLevelLoader :  public anax::System<TmxBox2dLevelLoader>{
 		virtual ~TmxBox2dLevelLoader();
 
 		void loadNextLevel();
+		void update();
 
 	private:
 

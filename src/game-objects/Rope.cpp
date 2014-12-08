@@ -17,7 +17,7 @@ public:
 	b2RopeJointDef m_ropeDef;
 	b2Joint* m_rope;
 
-	void createRope() {
+	b2Body* createRope() {
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
@@ -30,7 +30,7 @@ public:
 			ground = m_world.CreateBody(&bd);
 			ground->CreateFixture(&fd);
 		}
-
+		b2Body* prevBody = ground;
 		{
 			b2PolygonShape shape;
 			shape.SetAsBox(0.1f, 0.5f);
@@ -49,7 +49,6 @@ public:
 			const float32 x = 20.0f;
 			m_ropeDef.localAnchorA.Set(0.0f, x);
 
-			b2Body* prevBody = ground;
 			for (int32 yVal = 0; yVal < N; ++yVal) {
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
@@ -95,6 +94,7 @@ public:
 			m_ropeDef.bodyA = ground;
 			m_rope = m_world.CreateJoint(&m_ropeDef);
 		}
+		return prevBody;
 	}
 
 };
@@ -107,6 +107,6 @@ Rope::Rope(b2World& box2dWorld, anax::World& anaxWorld) :
 Rope::~Rope() {
 }
 
-void Rope::createRope() {
-	m_impl->createRope();
+b2Body* Rope::createRope() {
+	return m_impl->createRope();
 }

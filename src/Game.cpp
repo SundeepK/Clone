@@ -74,6 +74,7 @@ void Game::update(float deltaTime) {
     m_b2Dsplitter.refreshEntityBodyTypes();
     m_cameraSystem.update();
     m_playerAnimationSystem.update(deltaTime);
+    m_tmxLevelLoader.update();
     m_levelEndDetectSystem.processEndLevel();
 }
 

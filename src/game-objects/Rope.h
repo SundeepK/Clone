@@ -11,7 +11,7 @@ public:
 	Rope(b2World& box2dWorld, anax::World& anaxWorld);
 	~Rope();
 
-	void createRope();
+	b2Body* createRope();
 
 private:
 	class RopeImpl;

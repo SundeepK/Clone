@@ -27,10 +27,6 @@ WorldEntityLoader::~WorldEntityLoader() {
 
 void WorldEntityLoader::loadWorldEntities(anax::World& anaxWorld, b2World& box2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State *luaState){
 
-
-	Rope rope(box2dWorld, anaxWorld);
-	rope.createRope();
-
 	luabind::module(luaState)[
 	luabind::class_<b2Vec2>("b2Vec2")
 		.def(luabind::constructor<float32, float32>())

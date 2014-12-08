@@ -10,6 +10,7 @@ extern "C"
 #include <luabind/luabind.hpp>
 #include <luabind/object.hpp>
 #include <components/PhysicsComponent.h>
+#include <levels/Level1.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -20,9 +21,12 @@ public:
 	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
 	std::vector<LevelObject> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
+	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
 	int m_currentLevelIndex = 0;
+	Level1 level1;
 
-	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory), m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld) {
+	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
+			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
@@ -193,11 +197,17 @@ public:
 					loadedItems.insert(objectsMap.begin(), objectsMap.end());
 				}
 			}
-
+			m_levelObjects = loadedItems;
 			m_worldEntityLoader.loadWorldEntities(*m_anaxWorld, *m_box2dWorld, loadedItems, luaState);
 		}
 		lua_close(luaState);
+		level1.loadLevel(m_levelObjects);
 	}
+
+	void update() {
+		level1.updateLevel();
+	}
+
 
 };
 
@@ -211,4 +221,8 @@ TmxBox2dLevelLoader::~TmxBox2dLevelLoader() {
 void TmxBox2dLevelLoader::loadNextLevel() {
 	auto entities = getEntities();
 	m_impl->loadNextLevel();
+}
+
+void TmxBox2dLevelLoader::update() {
+	m_impl->update();
 }
