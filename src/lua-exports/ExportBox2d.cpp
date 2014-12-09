@@ -41,6 +41,11 @@ public:
 		 		        ]
 		 	];
 
+		 	luabind::module(luaState)[
+		 			 		luabind::class_<b2Contact>("b2Contact")
+		 			 	    .def("GetFixtureA", (b2Fixture* (b2Contact::*) ()) &b2Contact::GetFixtureA)
+		 			 	    .def("GetFixtureB", (b2Fixture* (b2Contact::*) ()) &b2Contact::GetFixtureB)
+		 	];
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2Body>("b2Body")

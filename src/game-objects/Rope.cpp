@@ -3,6 +3,8 @@
 #include <components/Texcoords.h>
 #include <components/SplitDirectionComponent.h>
 #include <iostream>
+#include <game-objects/GameObjectTag.h>
+
 class Rope::RopeImpl {
 
 public:
@@ -56,7 +58,8 @@ public:
 				if (yVal == N - 1) {
 					shape.SetAsBox(1.5f, 1.5f);
 					fd.density = 1.0f;
-					fd.filter.maskBits = 0x0003;
+					fd.filter.categoryBits = GameObjectTag::ROPE_BOX;
+					fd.filter.maskBits = GameObjectTag::DYNAMIC_OBJECT;
 					bd.position.Set(x,   yVal);
 //					bd.linearDamping = 2.0f;
 //					bd.angularDamping = 10.0f;

@@ -16,7 +16,7 @@
 #include <entity-loaders/WorldEntityLoader.h>
 #include <SFML/OpenGL.hpp>
 #include <GL/glut.h>
-
+#include <systems/SensorSystem.h>
 
 struct LevelObject{
 	std::string levelMapName;
@@ -25,7 +25,7 @@ struct LevelObject{
 
 class TmxBox2dLevelLoader :  public anax::System<TmxBox2dLevelLoader>{
 	public:
-		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld);
+		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor);
 		virtual ~TmxBox2dLevelLoader();
 
 		void loadNextLevel();

@@ -25,8 +25,8 @@ public:
 	int m_currentLevelIndex = 0;
 	Level1 level1;
 
-	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
-			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld) {
+	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor) : m_mapLoader(&mapDirectory),
+			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld, sensor) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
@@ -211,8 +211,8 @@ public:
 
 };
 
-TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : Base(anax::ComponentFilter()),
-		m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory, b2dworld, anaxWorld)) {
+TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor) : Base(anax::ComponentFilter()),
+		m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory, b2dworld, anaxWorld, sensor)) {
 }
 
 TmxBox2dLevelLoader::~TmxBox2dLevelLoader() {

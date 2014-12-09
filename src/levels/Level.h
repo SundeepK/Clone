@@ -11,7 +11,7 @@ extern "C"
 
 #include <luabind/luabind.hpp>
 
-class Level {
+class Level :  public b2ContactListener {
 public:
 	Level() {
 
@@ -23,7 +23,6 @@ public:
 	virtual void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) = 0;
 	virtual void updateLevel() = 0;
 	virtual void endLevel() = 0;
-
 
 };
 

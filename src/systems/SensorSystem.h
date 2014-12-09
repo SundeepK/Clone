@@ -12,6 +12,7 @@ public:
 
     void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
+    void registerb2ContactListener(b2ContactListener*);
 
 private:
 
