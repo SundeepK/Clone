@@ -1,6 +1,7 @@
 #include <levels/Level1.h>
 #include <lua-exports/ExportBox2d.h>
 #include <game-objects/Rope.h>
+#include <lua-exports/B2WorldProxy.h>
 
 class Level1::Level1Impl {
 
@@ -8,18 +9,17 @@ public:
 	lua_State* m_luaState;
 	std::unique_ptr<b2World> m_box2dWorld;
 	std::unique_ptr<anax::World> m_anaxWorld;
+	B2WorldProxy box2dWorldProxy;
 
-
-	Level1Impl(b2World& b2dworld, anax::World& anaxWorld, Box2dLis& lis) :
-			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld) {
-		if (luaL_dofile(m_luaState, "lua-scripts/levels/level1.lua")) {
-			printf("%s\n", lua_tostring(m_luaState, -1));
-		}
-
+	Level1Impl(b2World& b2dworld, anax::World& anaxWorld) :
+			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), box2dWorldProxy(b2dworld) {
 		m_luaState = luaL_newstate();
 		luabind::open(m_luaState);
 		luaL_openlibs(m_luaState);
-		lis.setLua(m_luaState);
+
+		if (luaL_dofile(m_luaState, "lua-scripts/levels/level1.lua")) {
+			printf("%s\n", lua_tostring(m_luaState, -1));
+		}
 	}
 
 	~Level1Impl() {
@@ -27,7 +27,6 @@ public:
 	}
 
 	void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
-
 
 		ExportBox2d exportBox2d;
 		exportBox2d.exportToLua(m_luaState);
@@ -67,7 +66,7 @@ public:
 
 	void endContact(b2Contact* contact) {
 		try {
-			luabind::call_function<void>(m_luaState, "beginCollision");
+			luabind::call_function<void>(m_luaState, "endCollision");
 		} catch (luabind::error& e) {
 			std::string error = lua_tostring(e.state(), -1);
 			std::cout << error << std::endl;
@@ -76,9 +75,8 @@ public:
 
 };
 
-Level1::Level1(b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor) :
-		m_impl(new Level1Impl(b2dworld, anaxWorld, m_lis)) {
-	sensor.registerb2ContactListener(&m_lis);
+Level1::Level1(b2World& b2dworld, anax::World& anaxWorld) :
+		m_impl(new Level1Impl(b2dworld, anaxWorld)) {
 }
 
 Level1::~Level1() {

@@ -23,14 +23,15 @@ struct LevelObject{
 	std::string scriptName;
 };
 
-class TmxBox2dLevelLoader :  public anax::System<TmxBox2dLevelLoader>{
+class TmxBox2dLevelLoader :   public b2ContactListener,  public anax::System<TmxBox2dLevelLoader>{
 	public:
 		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor);
 		virtual ~TmxBox2dLevelLoader();
 
 		void loadNextLevel();
 		void update();
-
+		 void BeginContact(b2Contact* contact);
+		 void EndContact(b2Contact* contact);
 	private:
 
 		class TmxBox2dLevelLoaderImpl;

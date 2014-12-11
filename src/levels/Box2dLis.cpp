@@ -9,6 +9,8 @@ Box2dLis::~Box2dLis() {
 }
 
 void Box2dLis::BeginContact(b2Contact* contact) {
+	std::cout << "begion c++" << std::endl;
+
 	try {
 		luabind::call_function<void>(m_luaState, "beginCollision");
 	} catch (luabind::error& e) {

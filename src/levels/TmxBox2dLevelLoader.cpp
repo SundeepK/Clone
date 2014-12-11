@@ -25,8 +25,8 @@ public:
 	int m_currentLevelIndex = 0;
 	Level1 level1;
 
-	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor) : m_mapLoader(&mapDirectory),
-			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld, sensor) {
+	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
+			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld) {
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
@@ -208,11 +208,21 @@ public:
 		level1.updateLevel();
 	}
 
+	void BeginContact(b2Contact* contact) {
+		level1.BeginContact(contact);
+
+	}
+
+	void EndContact(b2Contact* contact) {
+		level1.EndContact(contact);
+
+	}
+
 
 };
 
 TmxBox2dLevelLoader::TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor) : Base(anax::ComponentFilter()),
-		m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory, b2dworld, anaxWorld, sensor)) {
+		m_impl(new TmxBox2dLevelLoaderImpl(mapDirectory, b2dworld, anaxWorld)) {
 }
 
 TmxBox2dLevelLoader::~TmxBox2dLevelLoader() {
@@ -225,4 +235,14 @@ void TmxBox2dLevelLoader::loadNextLevel() {
 
 void TmxBox2dLevelLoader::update() {
 	m_impl->update();
+}
+
+void TmxBox2dLevelLoader::BeginContact(b2Contact* contact) {
+	m_impl->BeginContact(contact);
+
+}
+
+void TmxBox2dLevelLoader::EndContact(b2Contact* contact) {
+	m_impl->EndContact(contact);
+
 }

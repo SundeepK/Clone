@@ -14,7 +14,7 @@
 
 class Level1 : public Level{
 public:
-	 Level1(b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor);
+	 Level1(b2World& b2dworld, anax::World& anaxWorld);
 	 ~Level1();
 
 	 void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects);
@@ -25,8 +25,6 @@ public:
 	 void EndContact(b2Contact* contact);
 
 private:
-	 Box2dLis m_lis;
-
 	 class Level1Impl;
 	 std::unique_ptr<Level1Impl> m_impl;
 

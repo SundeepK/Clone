@@ -13,6 +13,7 @@
 #include <PhysicsTimeStepSystem.h>
 #include <B2BoxBuilder.h>
 #include <components/SensorComponent.h>
+#include <lua-exports/B2WorldProxy.h>
 
 class PlayerEntityLoader : public LuaEntityLoader {
 public:

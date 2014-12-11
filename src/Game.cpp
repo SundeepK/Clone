@@ -14,7 +14,7 @@ Game::~Game() {
 void Game::init()
 {
 
-
+	m_sensorSystem.registerb2ContactListener(&m_tmxLevelLoader);
 	m_tmxLevelLoader.loadNextLevel();
 
 	m_anaxWorld.addSystem(m_playerControlsSystem);
