@@ -40,6 +40,12 @@ public:
 		luabind::globals(m_luaState)["RopeBox"] = ropeBox;
 		luabind::globals(m_luaState)["testi"] = 1;
 
+		try {
+			luabind::call_function<void>(m_luaState, "init", &box2dWorldProxy);
+		} catch (luabind::error& e) {
+			std::string error = lua_tostring(e.state(), -1);
+			std::cout << error << std::endl;
+		}
 	}
 
 	void updateLevel() {
@@ -57,7 +63,7 @@ public:
 
 	void beginContact(b2Contact* contact) {
 		try {
-			luabind::call_function<void>(m_luaState, "beginCollision");
+			luabind::call_function<void>(m_luaState, "beginCollision", contact);
 		} catch (luabind::error& e) {
 			std::string error = lua_tostring(e.state(), -1);
 			std::cout << error << std::endl;
@@ -66,7 +72,7 @@ public:
 
 	void endContact(b2Contact* contact) {
 		try {
-			luabind::call_function<void>(m_luaState, "endCollision");
+			luabind::call_function<void>(m_luaState, "endCollision", contact);
 		} catch (luabind::error& e) {
 			std::string error = lua_tostring(e.state(), -1);
 			std::cout << error << std::endl;

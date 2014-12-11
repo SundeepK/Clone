@@ -1,6 +1,7 @@
 #include <lua-exports/ExportBox2d.h>
 #include <Box2D/Box2D.h>
 #include <lua-exports/B2WorldProxy.h>
+#include <game-objects/GameObjectTag.h>
 
 class ExportBox2d::ExportBox2dImpl{
 
@@ -10,6 +11,19 @@ public:
 	~ExportBox2dImpl(){}
 
 	 void exportToLua(lua_State *luaState){
+
+
+			luabind::module(luaState)[
+			luabind::class_<b2Vec2>("b2Vec2")
+				.def(luabind::constructor<float32, float32>())
+			];
+
+			luabind::module(luaState)[
+			luabind::class_<std::vector<b2Vec2>>("vectorOfb2Vec2")
+				 .def(luabind::constructor<>())
+				 .def("push_back",  static_cast<void (std::vector<b2Vec2>::*)(const b2Vec2&)>(&std::vector<b2Vec2>::push_back))
+			];
+
 		 luabind::module(luaState)[
 		 		luabind::class_<b2BodyType>("b2BodyType")
 		 		        .enum_("constants")
@@ -17,6 +31,16 @@ public:
 		 		         luabind::value("b2_staticBody", b2_staticBody),
 		 		         luabind::value("b2_kinematicBody", b2_kinematicBody),
 		 		         luabind::value("b2_dynamicBody", b2_dynamicBody)
+		 		        ]
+		 	];
+
+		 luabind::module(luaState)[
+		 		luabind::class_<GameObjectTag>("GameObjectTag")
+		 		        .enum_("constants")
+		 		        [
+		 		         luabind::value("DYNAMIC_OBJECT", GameObjectTag::DYNAMIC_OBJECT),
+		 		         luabind::value("SWITCH", GameObjectTag::SWITCH),
+		 		         luabind::value("ROPE_BOX", GameObjectTag::ROPE_BOX)
 		 		        ]
 		 	];
 
@@ -43,9 +67,22 @@ public:
 
 		 	luabind::module(luaState)[
 		 			 		luabind::class_<b2Contact>("b2Contact")
-		 			 	    .def("GetFixtureA", (b2Fixture* (b2Contact::*) ()) &b2Contact::GetFixtureA)
-		 			 	    .def("GetFixtureB", (b2Fixture* (b2Contact::*) ()) &b2Contact::GetFixtureB)
+		 			 	    .def("GetFixtureA", (const b2Fixture* (b2Contact::*) () const) &b2Contact::GetFixtureA)
+		 			 	    .def("GetFixtureB", (const b2Fixture* (b2Contact::*) () const) &b2Contact::GetFixtureB)
+		 				    .def("GetFixtureAConst", ( b2Fixture* (b2Contact::*) () ) &b2Contact::GetFixtureA)
+		 					.def("GetFixtureBConst", ( b2Fixture* (b2Contact::*) () ) &b2Contact::GetFixtureB)
+		 			 	    .def("GetFriction", (float32 (b2Contact::*) () const) &b2Contact::GetFriction)
+
 		 	];
+
+		 	luabind::module(luaState)[
+			 			 luabind::class_<b2Fixture>("b2Fixture")
+			 			 .def("GetBody", (b2Body* (b2Fixture::*) ()) &b2Fixture::GetBody)
+			 			 .def("GetBodyConst", (const b2Body* (b2Fixture::*) () const) &b2Fixture::GetBody)
+			 			 .def("CreateFixture", (bool (b2Fixture::*) () const) &b2Fixture::IsSensor)
+
+			 	];
+
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2Body>("b2Body")
