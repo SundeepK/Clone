@@ -75,12 +75,13 @@ public:
 
 		 	];
 
+
 		 	luabind::module(luaState)[
 			 			 luabind::class_<b2Fixture>("b2Fixture")
 			 			 .def("GetBody", (b2Body* (b2Fixture::*) ()) &b2Fixture::GetBody)
 			 			 .def("GetBodyConst", (const b2Body* (b2Fixture::*) () const) &b2Fixture::GetBody)
 			 			 .def("CreateFixture", (bool (b2Fixture::*) () const) &b2Fixture::IsSensor)
-
+		 			 	 .def("GetFriction", (const b2Filter& (b2Fixture::*) () const) &b2Fixture::GetFilterData)
 			 	];
 
 
@@ -155,7 +156,7 @@ public:
 		 	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
 		 	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
 		 	    .def("ropeJoint", (void (B2WorldProxy::*) (b2RopeJointDef& joint)) &B2WorldProxy::ropeJoint)
-
+		 	    .def("UuidOf", (std::string (B2WorldProxy::*) (b2Body* body)) &B2WorldProxy::UuidOf)
 		 	];
 
 		 	luabind::module(luaState)[

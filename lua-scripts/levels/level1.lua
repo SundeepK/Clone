@@ -11,7 +11,8 @@ function init(b2worldProxy)
 
   local switchFixture = b2FixtureDef()
   
-  switchBody = box2dWorldProxy:createNewBody(switchDef, switchShape, switchFixture)  
+  local switchBody = box2dWorldProxy:createNewBody(switchDef, switchShape, switchFixture)  
+  switchBodyId = box2dWorldProxy:UuidOf(switchBody)
     
 end
 
@@ -20,9 +21,12 @@ end
 
 function beginCollision(b2Contact)
   
-   bodyA =  b2Contact:GetFixtureAConst()
-   b = bodyA:GetBody()
-  print(b:GetAngle())
+  local bodyAFixture =  b2Contact:GetFixtureAConst()  
+  local bodyBFixture =  b2Contact:GetFixtureBConst()
+  
+  if (box2dWorldProxy:UuidOf(bodyAFixture:GetBody()) == switchBodyId or box2dWorldProxy:UuidOf(bodyBFixture:GetBody()) == switchBodyId ) then
+    print("colision with switch")
+  end
   
 end
 

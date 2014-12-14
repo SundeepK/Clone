@@ -1,5 +1,6 @@
 #include <lua-exports/B2WorldProxy.h>
 #include <iostream>
+#include <UUIDGenerator.h>
 class B2WorldProxy::B2WorldProxyImpl{
 
 public:
@@ -20,7 +21,7 @@ public:
 		b2Body* body = m_box2dWorld.CreateBody(&bodyDef);
 		body->CreateFixture(&fixture);
 		std::cout << "im here! c++: b2RopeJointDef"   <<  fixture.filter.maskBits <<std::endl;
-
+		body->SetUserData(new std::string(UUIDGenerator::createUuid())); //TODO Manage this better, just here to get things working
 		return body;
 	}
 
@@ -49,6 +50,16 @@ public:
 		return NULL;
 	}
 
+	std::string UuidOf(b2Body* body) {
+		void* userData = body->GetUserData();
+		if(userData){
+			std::string* uuid = static_cast<std::string*>(userData);
+			std::string s = *uuid;
+			return s;
+		}else{
+			return "";
+		}
+	}
 
 };
 
@@ -70,4 +81,8 @@ void B2WorldProxy::createJoint(b2RevoluteJointDef& joint) {
 
 void B2WorldProxy::ropeJoint(b2RopeJointDef& joint) {
 	m_impl->ropeJoint(joint);
+}
+
+std::string B2WorldProxy::UuidOf(b2Body* body) {
+	return m_impl->UuidOf(body);
 }

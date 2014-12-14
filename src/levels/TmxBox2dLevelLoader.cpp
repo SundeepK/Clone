@@ -181,6 +181,7 @@ public:
 			for(anax::Entity entity : entities){
 				if(entity.hasComponent<PhysicsComponent>()){
 					auto& physicsComp = entity.getComponent<PhysicsComponent>();
+					delete(physicsComp.physicsBody->GetUserData());
 					m_box2dWorld->DestroyBody(physicsComp.physicsBody);
 				}
 			}

@@ -12,6 +12,7 @@ public:
 	b2Body* createNewBody(b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture);
 	void createJoint(b2RevoluteJointDef& joint);
 	void ropeJoint(b2RopeJointDef& joint);
+	std::string UuidOf(b2Body* body);
 
 
 
