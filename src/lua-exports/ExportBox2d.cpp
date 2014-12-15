@@ -157,6 +157,8 @@ public:
 		 	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
 		 	    .def("ropeJoint", (void (B2WorldProxy::*) (b2RopeJointDef& joint)) &B2WorldProxy::ropeJoint)
 		 	    .def("UuidOf", (std::string (B2WorldProxy::*) (b2Body* body)) &B2WorldProxy::UuidOf)
+		 	    .def("addFixture", (b2Fixture* (B2WorldProxy::*) (b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::addFixture)
+
 		 	];
 
 		 	luabind::module(luaState)[

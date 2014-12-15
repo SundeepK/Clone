@@ -57,8 +57,15 @@ public:
 			std::string s = *uuid;
 			return s;
 		}else{
-			return "";
+			std::string uuid = UUIDGenerator::createUuid();
+			body->SetUserData(new std::string(uuid)); //TODO Manage this better, just here to get things working
+			return uuid;
 		}
+	}
+
+	b2Fixture* addFixture(b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture) {
+	  fixture.shape = & shape;
+	  return body->CreateFixture(&fixture);
 	}
 
 };
@@ -85,4 +92,8 @@ void B2WorldProxy::ropeJoint(b2RopeJointDef& joint) {
 
 std::string B2WorldProxy::UuidOf(b2Body* body) {
 	return m_impl->UuidOf(body);
+}
+
+b2Fixture* B2WorldProxy::addFixture(b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture) {
+	return m_impl->addFixture(body, shape, fixture);
 }
