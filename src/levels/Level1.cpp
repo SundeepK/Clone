@@ -20,6 +20,7 @@ public:
 		if (luaL_dofile(m_luaState, "lua-scripts/levels/level1.lua")) {
 			printf("%s\n", lua_tostring(m_luaState, -1));
 		}
+
 	}
 
 	~Level1Impl() {
