@@ -8,7 +8,7 @@
 #include <components/PlayerStateComponent.h>
 #include <components/Texcoords.h>
 #include <components/Sensors.h>
-#include <Thor/Animation.hpp>
+#include <Thor/Animations.hpp>
 #include <B2Builder.h>
 #include <PhysicsTimeStepSystem.h>
 #include <B2BoxBuilder.h>

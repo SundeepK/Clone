@@ -4,7 +4,7 @@
 
 #include <anax/Component.hpp>
 #include <SFML/Graphics.hpp>
-#include <Thor/Animation.hpp>
+#include <Thor/Animations.hpp>
 
 class AnimationComponent  : public anax::Component<AnimationComponent> {
 

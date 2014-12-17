@@ -2,9 +2,9 @@
 
 extern "C"
 {
-	#include <lua5.1/lua.h>
-	#include <lua5.1/lualib.h>
-	#include <lua5.1/lauxlib.h>
+	#include <lua-5.1/src/lua.h>
+	#include <lua-5.1/src/lualib.h>
+	#include <lua-5.1/src/lauxlib.h>
 }
 
 #include <luabind/luabind.hpp>
