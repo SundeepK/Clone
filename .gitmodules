@@ -7,6 +7,3 @@
 [submodule "anax"]
 	path = anax
 	url = https://github.com/SundeepK/anax.git
-[submodule "splitter/splitter"]
-	path = splitter/splitter
-	url = https://github.com/SundeepK/Splitter.git
