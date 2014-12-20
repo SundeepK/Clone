@@ -23,19 +23,14 @@ function beginCollision(b2Contact)
   local bodyAId = box2dWorldProxy:UuidOf(bodyAFixture:GetBody())
   local bodyBId = box2dWorldProxy:UuidOf(bodyBFixture:GetBody())
   local ropeBoxId = box2dWorldProxy:UuidOf(RopeBox) 
-  
-  print((bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX))
-  
+
   if (bodyAId == switchBodyId or bodyBId == switchBodyId) then
-          print("in if condition")
-    local isswitchAAndBRope = (bodyAId == switchBodyId) and (bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)
-    local isswitchBAndARope = (bodyBId == switchBodyId) and (bitwise:band(bodyBFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX) 
-    
-    if(isswitchBAndARope  ) then
-        print("RopeBox colliding with switch")
-    end
+    if (bodyBId == switchBodyId and (bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) or
+     ((bodyAId == switchBodyId) and (bitwise:band(bodyBFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) then
+      print("RopeBox colliding with switch")
+    end  
   end
-  
+ 
 end
 
 
