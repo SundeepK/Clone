@@ -2,6 +2,7 @@
 #include <lua-exports/ExportBox2d.h>
 #include <game-objects/Rope.h>
 #include <lua-exports/B2WorldProxy.h>
+#include <utilities/Bitwise.h>
 
 class Level1::Level1Impl {
 

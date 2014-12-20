@@ -2,6 +2,7 @@
 #include <Box2D/Box2D.h>
 #include <lua-exports/B2WorldProxy.h>
 #include <game-objects/GameObjectTag.h>
+#include <utilities/Bitwise.h>
 
 class ExportBox2d::ExportBox2dImpl{
 
@@ -33,6 +34,7 @@ public:
 		 		         luabind::value("b2_dynamicBody", b2_dynamicBody)
 		 		        ]
 		 	];
+
 
 		 luabind::module(luaState)[
 		 		luabind::class_<GameObjectTag>("GameObjectTag")
@@ -81,7 +83,7 @@ public:
 			 			 .def("GetBody", (b2Body* (b2Fixture::*) ()) &b2Fixture::GetBody)
 			 			 .def("GetBodyConst", (const b2Body* (b2Fixture::*) () const) &b2Fixture::GetBody)
 			 			 .def("CreateFixture", (bool (b2Fixture::*) () const) &b2Fixture::IsSensor)
-		 			 	 .def("GetFriction", (const b2Filter& (b2Fixture::*) () const) &b2Fixture::GetFilterData)
+		 			 	 .def("GetFilterData", (const b2Filter& (b2Fixture::*) () const) &b2Fixture::GetFilterData)
 			 	];
 
 
@@ -140,6 +142,11 @@ public:
 		 	    .def("Dump", ( void  (b2Body::*) ()) &b2Body::Dump)
 		 	];
 
+		 	luabind::module(luaState)[
+			 		luabind::class_<Bitwise>("Bitwise")
+			 	    .def(luabind::constructor<>())
+			 	    .def("band", (uint16 (Bitwise::*) (uint16 a, uint16 b)) &Bitwise::band)
+			 	];
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2World>("b2World")

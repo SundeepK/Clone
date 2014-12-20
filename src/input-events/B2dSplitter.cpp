@@ -96,6 +96,8 @@ public:
 	void  createNewSplitBody(B2BoxBuilder& newSplitB2bodyBuilder,b2Body* oldBodyToSplit, anax::Entity& entity, std::vector<anax::Entity>& entitiesToFill){
 		m_bodiesToKill.insert(oldBodyToSplit);
 		m_entitiesToKill.insert(entity);
+		b2Fixture* fixture = oldBodyToSplit->GetFixtureList();
+		newSplitB2bodyBuilder.setcategoryBits(fixture->GetFilterData().categoryBits);
 		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world);
 		entitiesToFill.push_back(createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, entity));
 	}

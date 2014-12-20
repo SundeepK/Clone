@@ -5,6 +5,7 @@ function init(b2worldProxy)
 
   box2dWorldProxy = b2worldProxy
   switchBodyId = switch.createSwitchBody(box2dWorldProxy)
+  bitwise = Bitwise()
   
 --  switch.createSwitchBody() 
 end
@@ -22,9 +23,15 @@ function beginCollision(b2Contact)
   local bodyAId = box2dWorldProxy:UuidOf(bodyAFixture:GetBody())
   local bodyBId = box2dWorldProxy:UuidOf(bodyBFixture:GetBody())
   local ropeBoxId = box2dWorldProxy:UuidOf(RopeBox) 
- 
+  
+  print((bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX))
+  
   if (bodyAId == switchBodyId or bodyBId == switchBodyId) then
-    if((bodyAId == switchBodyId) and (bodyBId == ropeBoxId) or (bodyAId == ropeBoxId) and (bodyBId == switchBodyId) ) then
+          print("in if condition")
+    local isswitchAAndBRope = (bodyAId == switchBodyId) and (bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)
+    local isswitchBAndARope = (bodyBId == switchBodyId) and (bitwise:band(bodyBFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX) 
+    
+    if(isswitchBAndARope  ) then
         print("RopeBox colliding with switch")
     end
   end
