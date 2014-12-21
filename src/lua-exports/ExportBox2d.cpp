@@ -17,6 +17,8 @@ public:
 			luabind::module(luaState)[
 			luabind::class_<b2Vec2>("b2Vec2")
 				.def(luabind::constructor<float32, float32>())
+		 	   	.def_readwrite("x", &b2Vec2::x)
+		 	   	.def_readwrite("y", &b2Vec2::y)
 			];
 
 			luabind::module(luaState)[
@@ -98,7 +100,7 @@ public:
 		 	    .def("GetAngle", (float32 (b2Body::*) ()) &b2Body::GetAngle)
 		 	    .def("GetWorldCenter", (const b2Vec2&  (b2Body::*) ()) &b2Body::GetWorldCenter)
 		 	    .def("GetLocalCenter", (const b2Vec2&  (b2Body::*) ()) &b2Body::GetLocalCenter)
-		 	    .def("SetLinearVelocity", (void (b2Body::*) (const b2Vec2& v)) &b2Body::GetLinearVelocity)
+		 	    .def("SetLinearVelocity", (void (b2Body::*) (const b2Vec2& v)) &b2Body::SetLinearVelocity)
 		 	    .def("GetLinearVelocity", (const b2Vec2& (b2Body::*) ()) &b2Body::GetWorldCenter)
 		 	    .def("GetAngularVelocity", (float32 (b2Body::*) ()) &b2Body::GetAngularVelocity)
 		 	    .def("ApplyForce", (void (b2Body::*) (const b2Vec2& force, const b2Vec2& point, bool wake)) &b2Body::ApplyForce)
