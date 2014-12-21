@@ -3,6 +3,7 @@
 #include <game-objects/Rope.h>
 #include <lua-exports/B2WorldProxy.h>
 #include <utilities/Bitwise.h>
+#include <SFML/System.hpp>
 
 class Level1::Level1Impl {
 
@@ -32,6 +33,20 @@ public:
 
 		ExportBox2d exportBox2d;
 		exportBox2d.exportToLua(m_luaState);
+
+		luabind::module(m_luaState)[
+		luabind::class_<sf::Time>("sf_Time")
+		      .def(luabind::constructor<>())
+			  .def("asSeconds",  &sf::Time::asSeconds)
+			  .def("asMilliseconds",  &sf::Time::asMilliseconds)
+
+		];
+
+		luabind::module(m_luaState)[
+		luabind::class_<sf::Clock>("sf_Clock")
+		      .def(luabind::constructor<>())
+			  .def("getElapsedTime",  &sf::Clock::getElapsedTime)
+		];
 
 		Rope rope(*m_box2dWorld, *m_anaxWorld);
 		b2Body* ropeBox = rope.createRope();

@@ -33,6 +33,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	luabind::class_<sf::Time>("sf_Time")
 	      .def(luabind::constructor<>())
 		  .def("asSeconds",  &sf::Time::asSeconds)
+		  .def("asMilliseconds",  &sf::Time::asMilliseconds)
+
 	];
 
 	luabind::module(luaState)[
