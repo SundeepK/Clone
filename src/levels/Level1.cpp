@@ -114,7 +114,6 @@ public:
 				b2Fixture* fixtureToCompare = physicsComp.physicsBody->GetFixtureList();
 				while(fixtureToCompare){
 					if(fixtureToCompare == contact->GetFixtureA() || fixtureToCompare == contact->GetFixtureB()){
-						std::cout << "about to mark as deleted" << std::endl;
 						return true;
 					}
 					fixtureToCompare = fixtureToCompare->GetNext();
@@ -125,7 +124,6 @@ public:
 	}
 
 	void filterContacts(b2Contact* contact,  const char* luaScriptFunctionName){
-		if (!shouldIgnore(contact)) {
 			for (auto fixture : m_fixturesInterestedInCollisions) {
 				if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()) {
 					try {
@@ -137,7 +135,6 @@ public:
 					}
 				}
 			}
-		}
 	}
 
 	void beginContact(b2Contact* contact) {
