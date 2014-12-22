@@ -20,8 +20,8 @@ local function createSwitchBody(box2dWorldProxy)
   switchTopSensorFixture.restitution = 0.0
   switchTopSensorFixture.isSensor = true
   
-  box2dWorldProxy:addFixture(switchBody, switchShape, switchTopSensorFixture )
-  return box2dWorldProxy:UuidOf(switchBody)
+  local topCollisionFixture = box2dWorldProxy:addFixture(switchBody, switchShape, switchTopSensorFixture )
+  return {switchid = box2dWorldProxy:UuidOf(switchBody), body = switchBody, collisionFixture = topCollisionFixture} 
 end
 
 switch.createSwitchBody = createSwitchBody

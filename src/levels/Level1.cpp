@@ -1,9 +1,17 @@
+extern "C"
+{
+	#include <lua-5.1/src/lua.h>
+	#include <lua-5.1/src/lualib.h>
+	#include <lua-5.1/src/lauxlib.h>
+}
+
 #include <levels/Level1.h>
 #include <lua-exports/ExportBox2d.h>
 #include <game-objects/Rope.h>
 #include <lua-exports/B2WorldProxy.h>
 #include <utilities/Bitwise.h>
 #include <SFML/System.hpp>
+#include <luabind/luabind.hpp>
 
 class Level1::Level1Impl {
 
@@ -12,6 +20,7 @@ public:
 	std::unique_ptr<b2World> m_box2dWorld;
 	std::unique_ptr<anax::World> m_anaxWorld;
 	B2WorldProxy box2dWorldProxy;
+	std::vector<b2Fixture*> m_fixturesInterestedInCollisions;
 
 	Level1Impl(b2World& b2dworld, anax::World& anaxWorld) :
 			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), box2dWorldProxy(b2dworld) {
@@ -63,6 +72,22 @@ public:
 			std::string error = lua_tostring(e.state(), -1);
 			std::cout << error << std::endl;
 		}
+
+		try {
+			luabind::object levels =  luabind::call_function<luabind::object>(m_luaState, "getFixturesInterestedInCollisions");
+			for(int i = 1; ; i++){
+				if(levels[i]){
+					b2Fixture* collisionFixture =  luabind::object_cast<b2Fixture*>(levels[i]);
+				    m_fixturesInterestedInCollisions.push_back(collisionFixture);
+
+				}else{
+					break;
+				}
+			}
+		} catch (luabind::error& e) {
+		    std::string error = lua_tostring(e.state(), -1);
+		    std::cout << error << std::endl;
+		}
 	}
 
 	void updateLevel() {
@@ -79,20 +104,30 @@ public:
 	}
 
 	void beginContact(b2Contact* contact) {
-		try {
-			luabind::call_function<void>(m_luaState, "beginCollision", contact);
-		} catch (luabind::error& e) {
-			std::string error = lua_tostring(e.state(), -1);
-			std::cout << error << std::endl;
+		for (auto fixture : m_fixturesInterestedInCollisions) {
+			if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()  ) {
+				try {
+					luabind::call_function<void>(m_luaState, "beginCollision",
+							contact);
+				} catch (luabind::error& e) {
+					std::string error = lua_tostring(e.state(), -1);
+					std::cout << error << std::endl;
+				}
+			}
 		}
 	}
 
 	void endContact(b2Contact* contact) {
-		try {
-			luabind::call_function<void>(m_luaState, "endCollision", contact);
-		} catch (luabind::error& e) {
-			std::string error = lua_tostring(e.state(), -1);
-			std::cout << error << std::endl;
+		for (auto fixture : m_fixturesInterestedInCollisions) {
+			if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()  ) {
+				try {
+					luabind::call_function<void>(m_luaState, "endCollision",
+							contact);
+				} catch (luabind::error& e) {
+					std::string error = lua_tostring(e.state(), -1);
+					std::cout << error << std::endl;
+				}
+			}
 		}
 	}
 

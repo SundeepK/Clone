@@ -145,6 +145,15 @@ public:
 		 	];
 
 		 	luabind::module(luaState)[
+			 		luabind::class_<b2ContactEdge>("b2ContactEdge")
+			 	    .def(luabind::constructor<>())
+			 	    .def_readwrite("other", &b2ContactEdge::other)
+			 	    .def_readwrite("contact", &b2ContactEdge::contact)
+			 	    .def_readwrite("prev", &b2ContactEdge::prev)
+			 	    .def_readwrite("next", &b2ContactEdge::next)
+			 	];
+
+		 	luabind::module(luaState)[
 			 		luabind::class_<Bitwise>("Bitwise")
 			 	    .def(luabind::constructor<>())
 			 	    .def("band", (uint16 (Bitwise::*) (uint16 a, uint16 b)) &Bitwise::band)
