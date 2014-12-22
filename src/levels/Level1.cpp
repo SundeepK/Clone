@@ -12,6 +12,9 @@ extern "C"
 #include <utilities/Bitwise.h>
 #include <SFML/System.hpp>
 #include <luabind/luabind.hpp>
+#include <components/IgnoreCollisionComponent.h>
+#include <components/PhysicsComponent.h>
+#include <iostream>
 
 class Level1::Level1Impl {
 
@@ -103,15 +106,35 @@ public:
 		lua_close(m_luaState);
 	}
 
+	bool shouldIgnore(b2Contact* contact){
+		anax::World::EntityArray entities = m_anaxWorld->getEntities();
+		for(auto entity : entities){
+			if(entity.isValid() && entity.hasComponent<PhysicsComponent>() && entity.hasComponent<IgnoreCollisionComponent>()){
+				auto& physicsComp = entity.getComponent<PhysicsComponent>();
+				b2Fixture* fixtureToCompare = physicsComp.physicsBody->GetFixtureList();
+				while(fixtureToCompare){
+					if(fixtureToCompare == contact->GetFixtureA() || fixtureToCompare == contact->GetFixtureB()){
+						std::cout << "about to mark as deleted" << std::endl;
+						return true;
+					}
+					fixtureToCompare = fixtureToCompare->GetNext();
+				}
+			}
+		}
+		return false;
+	}
+
 	void filterContacts(b2Contact* contact,  const char* luaScriptFunctionName){
-		for (auto fixture : m_fixturesInterestedInCollisions) {
-			if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()  ) {
-				try {
-					luabind::call_function<void>(m_luaState, luaScriptFunctionName,
-							contact);
-				} catch (luabind::error& e) {
-					std::string error = lua_tostring(e.state(), -1);
-					std::cout << error << std::endl;
+		if (!shouldIgnore(contact)) {
+			for (auto fixture : m_fixturesInterestedInCollisions) {
+				if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()) {
+					try {
+						luabind::call_function<void>(m_luaState,
+								luaScriptFunctionName, contact);
+					} catch (luabind::error& e) {
+						std::string error = lua_tostring(e.state(), -1);
+						std::cout << error << std::endl;
+					}
 				}
 			}
 		}

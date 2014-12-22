@@ -31,6 +31,7 @@
 #include <systems/MouseSplitterSystem.h>
 #include <systems/SensorSystem.h>
 #include <systems/DetectLevelEndSystem.h>
+#include <systems/FilterCollisionsSystem.h>
 
 class Game {
 
@@ -68,6 +69,7 @@ class Game {
 		 MouseSplitterSystem m_mouseSplitterSystem;
 		 SensorSystem m_sensorSystem;
 		 DetectLevelEndSystem m_levelEndDetectSystem;
+		 FilterCollisionsSystem m_filterCollisionsSystem;
 
 
 };

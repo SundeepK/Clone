@@ -27,7 +27,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_mouseSplitterSystem);
 	m_anaxWorld.addSystem(m_sensorSystem);
 	m_anaxWorld.addSystem(m_levelEndDetectSystem);
-
+	m_anaxWorld.addSystem(m_filterCollisionsSystem);
 
 
 	glDisable(GL_LIGHTING);
@@ -65,8 +65,8 @@ void Game::update(float deltaTime) {
 
 	sf::Vector2f p(m_cameraSystem.getView().getCenter());
 	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
-    m_anaxWorld.refresh();
-
+    m_filterCollisionsSystem.filterCollisions();
+	m_anaxWorld.refresh();
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);

@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <opengl/TextureLoader.h>
 #include <components/SplitDirectionComponent.h>
+#include <components/IgnoreCollisionComponent.h>
 #include <iostream>
 #include <algorithm>
 #include <functional>
@@ -34,6 +35,7 @@ struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Ent
 };
 
 class B2dSplitter::B2dSplitterImpl{
+	sf::Clock m_clock;
 
 public:
 
@@ -80,6 +82,10 @@ public:
 	    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 	    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 	    auto& splitdirection = objectEntity.addComponent<SplitDirectionComponent>();
+	    auto& ignoreCollisionFilter = objectEntity.addComponent<IgnoreCollisionComponent>();
+
+	    ignoreCollisionFilter.reason = IgnoreCollisionReason::NEW_SPLIT_BODY;
+	    ignoreCollisionFilter.timeIgnoreCollisionAdded = m_clock.getElapsedTime();
 
 	    splitdirection.splitDirection = oldSplitDirection.splitDirection;
 	    physComp.physicsBody = newSplitBody;
