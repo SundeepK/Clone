@@ -103,11 +103,11 @@ public:
 		lua_close(m_luaState);
 	}
 
-	void beginContact(b2Contact* contact) {
+	void filterContacts(b2Contact* contact,  const char* luaScriptFunctionName){
 		for (auto fixture : m_fixturesInterestedInCollisions) {
 			if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()  ) {
 				try {
-					luabind::call_function<void>(m_luaState, "beginCollision",
+					luabind::call_function<void>(m_luaState, luaScriptFunctionName,
 							contact);
 				} catch (luabind::error& e) {
 					std::string error = lua_tostring(e.state(), -1);
@@ -117,18 +117,12 @@ public:
 		}
 	}
 
+	void beginContact(b2Contact* contact) {
+		filterContacts(contact, "beginCollision");
+	}
+
 	void endContact(b2Contact* contact) {
-		for (auto fixture : m_fixturesInterestedInCollisions) {
-			if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()  ) {
-				try {
-					luabind::call_function<void>(m_luaState, "endCollision",
-							contact);
-				} catch (luabind::error& e) {
-					std::string error = lua_tostring(e.state(), -1);
-					std::cout << error << std::endl;
-				}
-			}
-		}
+		filterContacts(contact, "endCollision");
 	}
 
 };
