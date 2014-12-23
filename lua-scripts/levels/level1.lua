@@ -41,10 +41,6 @@ function isBodyCollidingWith(b2ContactEdge, gameObject, count)
   end 
 end
 
-function update() 
- print(totalMass)
-  --movePlatforms()
-end
 
 function updateCollisions()
  local v = switch1.body:GetContactList()
@@ -78,6 +74,81 @@ function movePlatforms()
 end
 
 
+function addUpAllMass(b2ContactEdge, gameObject, mass)
+  if b2ContactEdge == nil then
+    return mass
+  else
+    if (bitwise:band(b2ContactEdge.other:GetFixtureList():GetFilterData().categoryBits, gameObject)  == gameObject) then
+      mass = mass + b2ContactEdge.other:GetMass()
+    end
+      return addUpAllMass(b2ContactEdge.next, gameObject, mass)
+  end 
+end
+
+
+--function addUpAllMassOfAll(b2ContactEdge, gameObject, foundBodies)
+--  if b2ContactEdge == nil then
+--    return foundBodies
+--  else
+--    local edge = b2ContactEdge
+--    while(edge ~= nil) do
+--      if (bitwise:band(edge.other:GetFixtureList():GetFilterData().categoryBits, gameObject)  == gameObject) then
+--        foundBodies[box2dWorldProxy:UuidOf(b2ContactEdge.other)] = edge.other:GetMass()
+--      end      
+--       edge = edge.next
+--    end
+--    local anotherEdge = b2ContactEdge.other:GetContactList()
+--    while (anotherEdge ~= nil) do
+--        if(foundBodies[box2dWorldProxy:UuidOf(anotherEdge.other)] == nil) then
+--        return addUpAllMassOfAll(anotherEdge.other:GetContactList(), gameObject, foundBodies)
+--        end
+--        anotherEdge = anotherEdge.next
+--    end
+--  end
+--end
+
+function addUpAllMassOfAll(b2ContactEdge, gameObject, foundBodies)
+  if b2ContactEdge == nil then
+    return foundBodies
+  end
+  local edge = b2ContactEdge
+  while(edge ~= nil) do
+    if (bitwise:band(edge.other:GetFixtureList():GetFilterData().categoryBits, gameObject)  == gameObject and foundBodies[box2dWorldProxy:UuidOf(edge.other)] == nil) then
+      foundBodies[box2dWorldProxy:UuidOf(edge.other)] = edge.other:GetMass()
+      print("going in")
+      return addUpAllMassOfAll(edge.other:GetContactList(),gameObject, foundBodies)
+    end
+    edge = edge.next
+  end
+end
+
+function addUpMass(body)
+  local edge = body:GetContactList()
+  if (edge == nil) then
+    return 0
+  end
+
+  local total = edge.other:GetMass()
+  local foundBodies = {}
+  while(edge ~= nil) do
+   addUpAllMassOfAll(edge.other:GetContactList(),GameObjectTag.ROPE_BOX,foundBodies)
+   edge = edge.next
+  end
+  for k, v in pairs(movingPlatform1Data) do 
+    total = total + v
+  end
+  return total
+end
+
+
+function update() 
+    -- totalMass = addUpMass(switch1.body)
+
+--    local Mass = addUpAllMass(switch1.body:GetContactList(), bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX, 0)
+--    print(Mass)
+ --print(totalMass)
+  --movePlatforms()
+end
 
 function beginCollision(b2Contact)
   
@@ -86,14 +157,23 @@ function beginCollision(b2Contact)
   
   local bodyAId = box2dWorldProxy:UuidOf(bodyAFixture:GetBody())
   local bodyBId = box2dWorldProxy:UuidOf(bodyBFixture:GetBody())
-  print(bodyAFixture:GetBody():GetMass())
+  
   if (bodyAId == switchBodyId or bodyBId == switchBodyId) then
     if (bodyBId == switchBodyId and (bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) then
-      totalMass = totalMass + bodyAFixture:GetBody():GetMass()
+      print("mass A", bodyAFixture:GetBody():GetMass())
+         -- print("mass to add", addUpAllMass(switch1.body:GetContactList(),GameObjectTag.ROPE_BOX,bodyAFixture:GetBody():GetMass()))
+--      totalMass = addUpAllMass(switch1.body:GetContactList(), GameObjectTag.ROPE_BOX, 0)
+        totalMass = addUpMass(switch1.body)
+
     elseif ((bodyAId == switchBodyId) and (bitwise:band(bodyBFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) then
-      totalMass = totalMass + bodyBFixture:GetBody():GetMass()
+          print("mass A", bodyBFixture:GetBody():GetMass())
+    
+          --    print("mass to add", addUpAllMass(bodyAFixture:GetBody():GetContactList(),GameObjectTag.ROPE_BOX,bodyAFixture:GetBody():GetMass()))
+--      totalMass = addUpAllMass(switch1.body:GetContactList(), GameObjectTag.ROPE_BOX, 0)
+        totalMass = addUpMass(switch1.body)
     end
   end
+  print("total mass", totalMass)
 end
 
 
@@ -106,13 +186,58 @@ function endCollision(b2Contact)
   local bodyAId = box2dWorldProxy:UuidOf(bodyAFixture:GetBody())
   local bodyBId = box2dWorldProxy:UuidOf(bodyBFixture:GetBody())
 
-
   if (bodyAId == switchBodyId or bodyBId == switchBodyId) then
     if (bodyBId == switchBodyId and (bitwise:band(bodyAFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) then
-      totalMass = totalMass - bodyAFixture:GetBody():GetMass()
+    
     elseif ((bodyAId == switchBodyId) and (bitwise:band(bodyBFixture:GetFilterData().categoryBits,GameObjectTag.ROPE_BOX) == GameObjectTag.ROPE_BOX)) then
-      totalMass = totalMass - bodyBFixture:GetBody():GetMass()
+    
     end
   end
 end
+
+
+--b2Body* ground = NULL;
+--    {
+--      b2BodyDef bd;
+--      ground = m_world->CreateBody(&bd);
+--
+--      b2EdgeShape shape;
+--      shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+--      ground->CreateFixture(&shape, 0.0f);
+--    }
+--
+--    {
+--      b2PolygonShape shape;
+--      shape.SetAsBox(2.0f, 0.5f);
+--
+--      b2BodyDef bd;
+--      bd.type = b2_dynamicBody;
+--      bd.allowSleep = false;
+--      b2Body* body = m_world->CreateBody(&bd);
+--      body->CreateFixture(&shape, 5.0f);
+--
+--      shape.SetAsBox(5.0f, 5.0f);
+--      bd.position.Set(0.0f, 10.0f);
+--      b2Body* body2 = m_world->CreateBody(&bd);
+--      body2->CreateFixture(&shape, 5.0f);
+--
+--      b2PrismaticJointDef pjd;
+--
+--      // Bouncy limit
+--      b2Vec2 axis(0.0f, 1.0f);
+--      axis.Normalize();
+--      pjd.Initialize(ground, body, b2Vec2(0.0f, 0.0f), axis);
+--
+--      // Non-bouncy limit
+--      //pjd.Initialize(ground, body, b2Vec2(-10.0f, 10.0f), b2Vec2(1.0f, 0.0f));
+--
+--      pjd.motorSpeed = 10.0f;
+--      pjd.maxMotorForce = 1000.0f;
+--      pjd.enableMotor = true;
+--      pjd.lowerTranslation = 0.0f;
+--      pjd.upperTranslation = 20.0f;
+--      pjd.enableLimit = true;
+--
+--      m_joint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);
+--    }
 

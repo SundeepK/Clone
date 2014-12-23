@@ -16,7 +16,7 @@ local function createSwitchBody(box2dWorldProxy)
   switchShape:SetAsBox(1.5, 0.2, b2Vec2(0.0,-0.5), 0)
   
   local switchTopSensorFixture = b2FixtureDef()
-  switchTopSensorFixture.density = 0.3
+  switchTopSensorFixture.density = 0
   switchTopSensorFixture.restitution = 0.0
   switchTopSensorFixture.isSensor = true
   
