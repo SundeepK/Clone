@@ -19,6 +19,7 @@ public:
 				.def(luabind::constructor<float32, float32>())
 		 	   	.def_readwrite("x", &b2Vec2::x)
 		 	   	.def_readwrite("y", &b2Vec2::y)
+				.def("Normalize", ( float32 (b2Vec2::*) () ) &b2Vec2::Normalize)
 			];
 
 			luabind::module(luaState)[
@@ -172,7 +173,9 @@ public:
 		 		luabind::class_<B2WorldProxy>("B2WorldProxy")
 		 	    .def(luabind::constructor<b2World&>())
 		 	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
+		 	    .def("createEdgeNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createEdgeNewBody)
 		 	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
+		 	    .def("createPrismaticJoint", (void (B2WorldProxy::*) (b2PrismaticJointDef& joint)) &B2WorldProxy::createPrismaticJoint)
 		 	    .def("ropeJoint", (void (B2WorldProxy::*) (b2RopeJointDef& joint)) &B2WorldProxy::ropeJoint)
 		 	    .def("UuidOf", (std::string (B2WorldProxy::*) (b2Body* body)) &B2WorldProxy::UuidOf)
 		 	    .def("addFixture", (b2Fixture* (B2WorldProxy::*) (b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::addFixture)
@@ -186,8 +189,31 @@ public:
 		 	   	.def_readwrite("bodyA", &b2JointDef::bodyA)
 		 	   	.def_readwrite("bodyA", &b2JointDef::bodyB)
 		 	   	.def_readwrite("collideConnected", &b2JointDef::collideConnected)
-
 		 	];
+
+		 	luabind::module(luaState)[
+		 		luabind::class_<b2PrismaticJointDef>("b2PrismaticJointDef")
+		 	    .def(luabind::constructor<>())
+		 	    .def_readwrite("localAnchorA", &b2PrismaticJointDef::localAnchorA)
+		 	    .def_readwrite("localAnchorB", &b2PrismaticJointDef::localAnchorB)
+		 	    .def_readwrite("localAxisA", &b2PrismaticJointDef::localAxisA)
+		 	    .def_readwrite("referenceAngle", &b2PrismaticJointDef::referenceAngle)
+		 	    .def_readwrite("enableLimit", &b2PrismaticJointDef::enableLimit)
+		 	    .def_readwrite("lowerTranslation", &b2PrismaticJointDef::lowerTranslation)
+		 	    .def_readwrite("upperTranslation", &b2PrismaticJointDef::upperTranslation)
+		 	    .def_readwrite("enableMotor", &b2PrismaticJointDef::enableMotor)
+		 	    .def_readwrite("maxMotorForce", &b2PrismaticJointDef::maxMotorForce)
+		 	    .def_readwrite("motorSpeed", &b2PrismaticJointDef::motorSpeed)
+		 	    .def("Initialize", (void (b2PrismaticJointDef::*) (b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor, const b2Vec2& axis) ) &b2PrismaticJointDef::Initialize)
+		 	];
+
+
+		 	luabind::module(luaState)[
+		 		luabind::class_<b2EdgeShape>("b2EdgeShape")
+		 	    .def(luabind::constructor<>())
+		 	    .def("Set", (void (b2EdgeShape::*) (const b2Vec2& v1, const b2Vec2& v2) )  &b2EdgeShape::Set)
+				];
+
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2RevoluteJointDef, b2JointDef>("b2RevoluteJointDef")

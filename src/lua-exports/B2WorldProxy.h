@@ -14,6 +14,8 @@ public:
 	void ropeJoint(b2RopeJointDef& joint);
 	std::string UuidOf(b2Body* body);
 	b2Fixture* addFixture(b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture);
+	void createPrismaticJoint(b2PrismaticJointDef& joint);
+	b2Body* createEdgeNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture);
 
 
 private:

@@ -1,5 +1,6 @@
 local switch = require("lua-scripts.levels.game-objects.switch")
 local moveablePlatorm = require("lua-scripts.levels.game-objects.moveablePlatform")
+local prismaticButton = require("lua-scripts.levels.game-objects.prismaticButton")
 
 --print(package.path)
 local platformData = {}
@@ -22,6 +23,8 @@ function init(b2worldProxy)
          {body = movingPlatform1Body, startTime = clock:getElapsedTime():asMilliseconds(), 
         maxTime = 500, linearVelocity = b2Vec2(0.0, 10.0)}
         canMoveDown = true
+        
+  --prismaticButon = prismaticButton.createPrismaticButton(box2dWorldProxy)
 --  switch.createSwitchBody() 
 end
 

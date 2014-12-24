@@ -20,7 +20,14 @@ public:
 		fixture.shape = &shape;
 		b2Body* body = m_box2dWorld.CreateBody(&bodyDef);
 		body->CreateFixture(&fixture);
-		std::cout << "im here! c++: b2RopeJointDef"   <<  fixture.filter.maskBits <<std::endl;
+		body->SetUserData(new std::string(UUIDGenerator::createUuid())); //TODO Manage this better, just here to get things working
+		return body;
+	}
+
+	b2Body* createNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture){
+		fixture.shape = &shape;
+		b2Body* body = m_box2dWorld.CreateBody(&bodyDef);
+		body->CreateFixture(&fixture);
 		body->SetUserData(new std::string(UUIDGenerator::createUuid())); //TODO Manage this better, just here to get things working
 		return body;
 	}
@@ -28,9 +35,15 @@ public:
 
 	b2Joint* createJoint(b2RevoluteJointDef& joint) {
 		b2Joint* d = m_box2dWorld.CreateJoint(&joint);
-		std::cout << "im here! c++: "   << std::endl;
 		return d;
 	}
+
+	b2Joint* createJoint(b2PrismaticJointDef& joint) {
+		b2Joint* d = m_box2dWorld.CreateJoint(&joint);
+		std::cout << "prismatic joint! c++: "   << std::endl;
+		return d;
+	}
+
 
 	b2Joint* ropeJoint(b2RopeJointDef& joint) {
 
@@ -45,7 +58,6 @@ public:
 		ropeDef.bodyA = joint.bodyA;
 
 		rope = m_box2dWorld.CreateJoint(&ropeDef);
-		std::cout << "im here! c++: b2RopeJointDef"   <<  ropeDef.localAnchorA.x <<std::endl;
 
 		return NULL;
 	}
@@ -96,4 +108,13 @@ std::string B2WorldProxy::UuidOf(b2Body* body) {
 
 b2Fixture* B2WorldProxy::addFixture(b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture) {
 	return m_impl->addFixture(body, shape, fixture);
+}
+
+void B2WorldProxy::createPrismaticJoint(b2PrismaticJointDef& joint) {
+	m_impl->createJoint(joint);
+}
+
+b2Body* B2WorldProxy::createEdgeNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape,
+		b2FixtureDef& fixture) {
+	return m_impl->createNewBody(bodyDef, shape, fixture);
 }
