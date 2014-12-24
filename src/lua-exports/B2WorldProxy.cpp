@@ -38,10 +38,8 @@ public:
 		return d;
 	}
 
-	b2Joint* createJoint(b2PrismaticJointDef& joint) {
-		b2Joint* d = m_box2dWorld.CreateJoint(&joint);
-		std::cout << "prismatic joint! c++: "   << std::endl;
-		return d;
+	b2PrismaticJoint* createJoint(b2PrismaticJointDef& joint) {
+		return static_cast<b2PrismaticJoint*>(m_box2dWorld.CreateJoint(&joint));
 	}
 
 
@@ -110,8 +108,8 @@ b2Fixture* B2WorldProxy::addFixture(b2Body* body, b2PolygonShape& shape, b2Fixtu
 	return m_impl->addFixture(body, shape, fixture);
 }
 
-void B2WorldProxy::createPrismaticJoint(b2PrismaticJointDef& joint) {
-	m_impl->createJoint(joint);
+b2PrismaticJoint* B2WorldProxy::createPrismaticJoint(b2PrismaticJointDef& joint) {
+	return m_impl->createJoint(joint);
 }
 
 b2Body* B2WorldProxy::createEdgeNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape,

@@ -61,74 +61,10 @@ public:
 			  .def("getElapsedTime",  &sf::Clock::getElapsedTime)
 		];
 
-
-
-		b2Body* ground = NULL;
-				{
-					b2BodyDef bd;
-					bd.position.Set(35.0f, 20.0f);
-					ground = m_box2dWorld->CreateBody(&bd);
-
-					b2PolygonShape shape;
-					shape.SetAsBox(1.0f, 0.5f);
-					ground->CreateFixture(&shape, 1.0f);
-				}
-
-				{
-					b2PolygonShape shape;
-					shape.SetAsBox(1.0f, 0.5f);
-
-					b2BodyDef bd;
-					bd.type = b2_dynamicBody;
-					bd.allowSleep = false;
-					bd.position.Set(35.0f, 17.0f);
-					b2Body* body = m_box2dWorld->CreateBody(&bd);
-					body->CreateFixture(&shape, 1.0f);
-
-					bd.position.Set(35.0f, 7.0f);
-					shape.SetAsBox(0.5f, 0.5f);
-
-					b2Body* body2 = m_box2dWorld->CreateBody(&bd);
-					b2FixtureDef fixture;
-					fixture.shape = &shape;
-					fixture.density = 1.0f;
-					body2->CreateFixture(&fixture);
-
-					b2PrismaticJointDef pjd;
-
-					// Bouncy limit
-					b2Vec2 axis(0.0f, 1.0f);
-					axis.Normalize();
-
-//					pjd.bodyA = body;
-//					pjd.bodyB = ground;
-//					pjd.localAnchorA.Set(0.0f, 0.0f);
-//					pjd.localAnchorB.Set(0.0f, 0.0f);
-//					pjd.localAxisA.Set(0.0f, 1.0f);
-//					pjd.localAxisA.Normalize();
-
-					pjd.Initialize(body, ground, body->GetWorldCenter(), axis);
-
-					// Non-bouncy limit
-					//pjd.Initialize(ground, body, b2Vec2(-10.0f, 10.0f), b2Vec2(1.0f, 0.0f));
-
-					pjd.motorSpeed = 1.0f;
-					pjd.maxMotorForce = 160.0f;
-					pjd.enableMotor = true;
-					pjd.lowerTranslation = -2.0f;
-					pjd.upperTranslation = 0.0f;
-					pjd.enableLimit = true;
-
-					m_joint = (b2PrismaticJoint*)m_box2dWorld->CreateJoint(&pjd);
-				}
-
-
 		Rope rope(*m_box2dWorld, *m_anaxWorld);
 		b2Body* ropeBox = rope.createRope();
 		std::cout << ropeBox->GetPosition().x << std::endl;
 
-//		luabind::object table = luabind::newtable( m_luaState );
-//		table[ "RopeBox" ] = ropeBox;
 		luabind::globals(m_luaState)["RopeBox"] = ropeBox;
 		luabind::globals(m_luaState)["testi"] = 1;
 

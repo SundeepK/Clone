@@ -168,7 +168,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 	    luabind::call_function<void>(luaState, "loadPhysicsComp", &physComp);
 	   // luabind::call_function<void>(luaState, "loadTexCoords", &texCoordsComp);
 	    luabind::call_function<void>(luaState, "loadAnimations", &animationComp);
-	    luabind::call_function<void>(luaState, "testBox");
+	  //  luabind::call_function<void>(luaState, "testBox");
 
 
 	} catch (luabind::error& e) {

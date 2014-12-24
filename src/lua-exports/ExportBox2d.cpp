@@ -175,12 +175,78 @@ public:
 		 	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
 		 	    .def("createEdgeNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createEdgeNewBody)
 		 	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
-		 	    .def("createPrismaticJoint", (void (B2WorldProxy::*) (b2PrismaticJointDef& joint)) &B2WorldProxy::createPrismaticJoint)
+		 	    .def("createPrismaticJoint", (b2PrismaticJoint* (B2WorldProxy::*) (b2PrismaticJointDef& joint)) &B2WorldProxy::createPrismaticJoint)
 		 	    .def("ropeJoint", (void (B2WorldProxy::*) (b2RopeJointDef& joint)) &B2WorldProxy::ropeJoint)
 		 	    .def("UuidOf", (std::string (B2WorldProxy::*) (b2Body* body)) &B2WorldProxy::UuidOf)
 		 	    .def("addFixture", (b2Fixture* (B2WorldProxy::*) (b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::addFixture)
 
 		 	];
+
+		 	luabind::module(luaState)[
+		 		luabind::class_<b2PrismaticJoint>("b2PrismaticJoint")
+		 	    .def("GetJointTranslation", (float32 (b2PrismaticJoint::*) ()) &b2PrismaticJoint::GetJointTranslation)
+
+		 	];
+
+//			b2Vec2 GetAnchorA() const;
+//			b2Vec2 GetAnchorB() const;
+//
+//			b2Vec2 GetReactionForce(float32 inv_dt) const;
+//			float32 GetReactionTorque(float32 inv_dt) const;
+//
+//			/// The local anchor point relative to bodyA's origin.
+//			const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
+//
+//			/// The local anchor point relative to bodyB's origin.
+//			const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+//
+//			/// The local joint axis relative to bodyA.
+//			const b2Vec2& GetLocalAxisA() const { return m_localXAxisA; }
+//
+//			/// Get the reference angle.
+//			float32 GetReferenceAngle() const { return m_referenceAngle; }
+//
+//			/// Get the current joint translation, usually in meters.
+//			float32 GetJointTranslation() const;
+//
+//			/// Get the current joint translation speed, usually in meters per second.
+//			float32 GetJointSpeed() const;
+//
+//			/// Is the joint limit enabled?
+//			bool IsLimitEnabled() const;
+//
+//			/// Enable/disable the joint limit.
+//			void EnableLimit(bool flag);
+//
+//			/// Get the lower joint limit, usually in meters.
+//			float32 GetLowerLimit() const;
+//
+//			/// Get the upper joint limit, usually in meters.
+//			float32 GetUpperLimit() const;
+//
+//			/// Set the joint limits, usually in meters.
+//			void SetLimits(float32 lower, float32 upper);
+//
+//			/// Is the joint motor enabled?
+//			bool IsMotorEnabled() const;
+//
+//			/// Enable/disable the joint motor.
+//			void EnableMotor(bool flag);
+//
+//			/// Set the motor speed, usually in meters per second.
+//			void SetMotorSpeed(float32 speed);
+//
+//			/// Get the motor speed, usually in meters per second.
+//			float32 GetMotorSpeed() const;
+//
+//			/// Set the maximum motor force, usually in N.
+//			void SetMaxMotorForce(float32 force);
+//			float32 GetMaxMotorForce() const { return m_maxMotorForce; }
+//
+//			/// Get the current motor force given the inverse time step, usually in N.
+//			float32 GetMotorForce(float32 inv_dt) const;
+
+
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2JointDef>("b2JointDef")
@@ -263,6 +329,7 @@ public:
 		 	    .def("GetVertex", (const b2Vec2& (b2PolygonShape::*) (int32 index) ) &b2PolygonShape::GetVertexCount)
 		 	    .def("Validate", &b2PolygonShape::Validate)
 		     ];
+
 
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2FixtureDef>("b2FixtureDef")
