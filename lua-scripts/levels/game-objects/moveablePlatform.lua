@@ -6,7 +6,6 @@ local function new(position,shape)
 end
 
 function moveableBody:createBody(box2dWorldProxy)
-  print(self.position.x)
   local moveableBodyDef = b2BodyDef()
   moveableBodyDef.position = self.position
   moveableBodyDef.type = b2BodyType.b2_kinematicBody

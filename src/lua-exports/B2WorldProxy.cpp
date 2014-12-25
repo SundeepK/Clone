@@ -1,6 +1,8 @@
 #include <lua-exports/B2WorldProxy.h>
 #include <iostream>
 #include <UUIDGenerator.h>
+#include <tmx/MapLoader.h>
+#include <tmx/tmx2box2d.h>
 class B2WorldProxy::B2WorldProxyImpl{
 
 public:
@@ -78,6 +80,10 @@ public:
 	  return body->CreateFixture(&fixture);
 	}
 
+	b2Body* createBodyFromMapObject(tmx::MapObject& mapObject, b2BodyType bodyType){
+		return tmx::BodyCreator::Add(mapObject, m_box2dWorld, bodyType);
+	}
+
 };
 
 
@@ -115,4 +121,9 @@ b2PrismaticJoint* B2WorldProxy::createPrismaticJoint(b2PrismaticJointDef& joint)
 b2Body* B2WorldProxy::createEdgeNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape,
 		b2FixtureDef& fixture) {
 	return m_impl->createNewBody(bodyDef, shape, fixture);
+}
+
+b2Body* B2WorldProxy::createBodyFromMapObject(tmx::MapObject& mapObject,
+		b2BodyType bodyType) {
+	return m_impl->createBodyFromMapObject(mapObject, bodyType);
 }

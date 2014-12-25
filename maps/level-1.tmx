@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="50" height="60" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
   <image source="diffuse.png" width="512" height="320"/>
  </tileset>
  <layer name="TileLayer" width="50" height="200">
   <data encoding="base64" compression="zlib">
-   eJztz7ENgEAQA8Fvig6g/5ZIyEkQLKcZybn3WGtt1/5iu9lf6GjR0aKjRUeLjhYdLTpadLToaLnrMLOZe9uUDgAAAAAAAAAAAAAAAAAAAAAAgLftXx94iI4WHS06WnS06GjR0aKjRUeLjpZJHRNaJnVMoKNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0t+5Cd2G18TQ==
+   eJztz8EJwDAAA7EMl/1nKt2h0MNI4L/vHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXvfvAx/R0aKjRUeLjhYdLTpadLToaNHRstSx0LLUsUBHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06Wu7IHueyIs0=
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
-  <object x="60" y="1" width="32" height="799"/>
-  <object x="96" y="635" width="1504" height="33"/>
-  <object x="1443" y="2" width="32" height="632"/>
+  <object x="3" y="1107" width="32" height="799"/>
+  <object x="37" y="1759" width="922" height="34"/>
+  <object x="928" y="1" width="31" height="1214"/>
+  <object x="1247" y="193" width="33" height="831"/>
+  <object x="1248" y="163" width="309" height="28"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="320" y="64" width="28" height="222">
+  <object name="lowersplit" x="290" y="1183" width="28" height="222">
    <properties>
     <property name="Body" value="dynamic"/>
     <property name="SplitDir" value="down"/>
@@ -24,7 +26,14 @@
   </object>
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
-  <object name="PlayerEndPoint" x="1390" y="597" width="31" height="31"/>
-  <object name="PlayerStartPoint" x="129" y="609" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="1348" y="125" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="72" y="1715" width="29" height="26"/>
+ </objectgroup>
+ <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25">
+  <object name="MovingPlatform1" type="MovingPlatform" x="1247" y="1058" width="31" height="439">
+   <properties>
+    <property name="Body" value="kinematic"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

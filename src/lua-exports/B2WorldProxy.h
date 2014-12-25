@@ -2,6 +2,7 @@
 #define B2WORLDPROXY_H_
 
 #include <Box2D/Box2D.h>
+#include <tmx/MapObject.h>
 #include <memory.h>
 
 class B2WorldProxy {
@@ -16,6 +17,8 @@ public:
 	b2Fixture* addFixture(b2Body* body, b2PolygonShape& shape, b2FixtureDef& fixture);
 	b2PrismaticJoint* createPrismaticJoint(b2PrismaticJointDef& joint);
 	b2Body* createEdgeNewBody(b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture);
+	b2Body* createBodyFromMapObject(tmx::MapObject& mapObject, b2BodyType bodyType);
+
 
 
 private:

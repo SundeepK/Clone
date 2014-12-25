@@ -173,6 +173,7 @@ public:
 		 		luabind::class_<B2WorldProxy>("B2WorldProxy")
 		 	    .def(luabind::constructor<b2World&>())
 		 	    .def("createNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2PolygonShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createNewBody)
+		 	    .def("createBodyFromMapObject", (b2Body* (B2WorldProxy::*) (tmx::MapObject& mapObject, b2BodyType bodyType)) &B2WorldProxy::createBodyFromMapObject)
 		 	    .def("createEdgeNewBody", (b2Body* (B2WorldProxy::*) (b2BodyDef& bodyDef, b2EdgeShape& shape, b2FixtureDef& fixture)) &B2WorldProxy::createEdgeNewBody)
 		 	    .def("createJoint", (void (B2WorldProxy::*) (b2RevoluteJointDef& joint)) &B2WorldProxy::createJoint)
 		 	    .def("createPrismaticJoint", (b2PrismaticJoint* (B2WorldProxy::*) (b2PrismaticJointDef& joint)) &B2WorldProxy::createPrismaticJoint)

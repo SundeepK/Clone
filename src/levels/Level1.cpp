@@ -15,6 +15,8 @@ extern "C"
 #include <components/IgnoreCollisionComponent.h>
 #include <components/PhysicsComponent.h>
 #include <iostream>
+#include <tmx/MapLoader.h>
+#include <tmx/tmx2box2d.h>
 
 class Level1::Level1Impl {
 
@@ -46,6 +48,34 @@ public:
 
 		ExportBox2d exportBox2d;
 		exportBox2d.exportToLua(m_luaState);
+ 	   // .def("GetLocalPoint", (b2Vec2 (b2Body::*) (const b2Vec2& worldPoint)) &b2Body::GetLocalPoint)
+
+
+		luabind::module(m_luaState)[
+		luabind::class_<sf::Vector2f>("sf_Vector2f")
+		      .def(luabind::constructor<>())
+			  .def_readwrite("x", &sf::Vector2f::x)
+			  .def_readwrite("y", &sf::Vector2f::y)
+		];
+
+		luabind::module(m_luaState)[
+			luabind::class_<sf::FloatRect>("sf_FloatRect")
+			      .def(luabind::constructor<>())
+				  .def_readwrite("left", &sf::FloatRect::left)
+				  .def_readwrite("top", &sf::FloatRect::top)
+				  .def_readwrite("width", &sf::FloatRect::width)
+				  .def_readwrite("height", &sf::FloatRect::height)
+
+			];
+
+		luabind::module(m_luaState)[
+		luabind::class_<tmx::MapObject>("tmx_MapObject")
+		      .def(luabind::constructor<>())
+			  .def("GetPropertyString", (std::string (tmx::MapObject::*) (const std::string& name) ) &tmx::MapObject::GetPropertyString)
+			  .def("GetPosition",  (sf::Vector2f (tmx::MapObject::*) () const ) &tmx::MapObject::GetPosition)
+			  .def("GetCentre",  (sf::Vector2f (tmx::MapObject::*) () const ) &tmx::MapObject::GetCentre)
+			  .def("GetAABB",  (sf::FloatRect (tmx::MapObject::*) () const ) &tmx::MapObject::GetAABB)
+		];
 
 		luabind::module(m_luaState)[
 		luabind::class_<sf::Time>("sf_Time")
@@ -66,13 +96,23 @@ public:
 		std::cout << ropeBox->GetPosition().x << std::endl;
 
 		luabind::globals(m_luaState)["RopeBox"] = ropeBox;
-		luabind::globals(m_luaState)["testi"] = 1;
 
 		try {
 			luabind::call_function<void>(m_luaState, "init", &box2dWorldProxy);
 		} catch (luabind::error& e) {
 			std::string error = lua_tostring(e.state(), -1);
 			std::cout << error << std::endl;
+		}
+
+		for(auto iterator = levelObjects.begin(); iterator != levelObjects.end(); iterator++) {
+			std::string name = iterator->first;
+			tmx::MapObject mapObject = iterator->second;
+			try {
+				luabind::call_function<void>(m_luaState, "loadMapObject", name,  mapObject);
+			} catch (luabind::error& e) {
+				std::string error = lua_tostring(e.state(), -1);
+				std::cout << error << std::endl;
+			}
 		}
 
 		try {
