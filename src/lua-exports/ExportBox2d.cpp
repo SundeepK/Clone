@@ -185,6 +185,7 @@ public:
 		 	luabind::module(luaState)[
 		 		luabind::class_<b2PrismaticJoint>("b2PrismaticJoint")
 		 	    .def("GetJointTranslation", (float32 (b2PrismaticJoint::*) ()) &b2PrismaticJoint::GetJointTranslation)
+		 	    .def("GetJointSpeed", (float32 (b2PrismaticJoint::*) ()) &b2PrismaticJoint::GetJointSpeed)
 
 		 	];
 

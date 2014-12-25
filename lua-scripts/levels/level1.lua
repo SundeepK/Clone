@@ -21,6 +21,7 @@ function init(b2worldProxy)
     motorSpeed = 2.0
   }
   prismaticButton1 = prismaticButton.createPrismaticButton(box2dWorldProxy, prismaticOptions)
+  lastTranslation =  prismaticButton1.joint:GetJointTranslation()
 end
 
 function getFixturesInterestedInCollisions()
@@ -41,7 +42,20 @@ end
 
 
 function update()
-  print(prismaticButton1.joint:GetJointTranslation())
+  translation = math.abs(prismaticButton1.joint:GetJointTranslation())
+  local direction = -1
+  if(translation > lastTranslation) then
+    direction = 1
+  end
+  lastTranslation = translation
+    print(translation)
+   if(translation >= 0.1 and movingPlatform1Body:GetPosition().y < 15) then
+        movingPlatform1Body:SetLinearVelocity(b2Vec2(0, 2))
+   elseif(translation <= 2 and movingPlatform1Body:GetPosition().y > 10) then
+        movingPlatform1Body:SetLinearVelocity(b2Vec2(0, -2))
+   else
+      movingPlatform1Body:SetLinearVelocity(b2Vec2(0, 0))
+   end
 end
 
 function beginCollision(b2Contact)
