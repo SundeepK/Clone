@@ -10,8 +10,8 @@ function init(b2worldProxy)
   box2dWorldProxy = b2worldProxy
 
   local prismaticOptions =   {
-    groundPosition = b2Vec2(20.0, 20.0),
-    buttonPosition = b2Vec2(20.0, 17.0),
+    groundPosition = b2Vec2(20.0, 58.0),
+    buttonPosition = b2Vec2(20.0, 55.0),
     shape = b2Vec2(1.0, 0.5),
     motorSpeed = 2.0
   }
@@ -28,10 +28,11 @@ function loadMapObject(objectName, mapObject)
 end
 
 function loadMovingPlatform(mapObject)
-  local position = mapObject:GetPosition()
-  position.x = position.x / 30
-   position.y = position.y / 30
   local pbody = box2dWorldProxy:createBodyFromMapObject(mapObject, b2BodyType.b2_kinematicBody)
+  local x = math.floor(pbody:GetPosition().x) 
+  local y = math.floor(pbody:GetPosition().y) 
+  local position = b2Vec2(x,y)
+
   verticalMovingPlatform1 = {body = pbody, originalPosition = position}
 end
 
@@ -64,10 +65,9 @@ function movePlatform()
   lastTranslation = translation
   local movingPlatform1Body = verticalMovingPlatform1.body
   local originalMovingPlatform1Position = verticalMovingPlatform1.originalPosition
-  print("current position", movingPlatform1Body:GetPosition().y, originalMovingPlatform1Position.y)
-   if(translation >= 0.1 and movingPlatform1Body:GetPosition().y < originalMovingPlatform1Position.y) then
+   if(translation >= 0.1 and movingPlatform1Body:GetPosition().y <= originalMovingPlatform1Position.y + 5) then
         movingPlatform1Body:SetLinearVelocity(b2Vec2(0, 4))
-   elseif(translation <= 2 and movingPlatform1Body:GetPosition().y > (originalMovingPlatform1Position.y + 5)) then
+   elseif(translation <= 2 and movingPlatform1Body:GetPosition().y >= (originalMovingPlatform1Position.y)) then
         movingPlatform1Body:SetLinearVelocity(b2Vec2(0, -4))
    else
       movingPlatform1Body:SetLinearVelocity(b2Vec2(0, 0))

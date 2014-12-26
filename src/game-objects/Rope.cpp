@@ -24,7 +24,7 @@ public:
 		{
 			b2BodyDef bd;
 			bd.type = b2_staticBody;
-			bd.position = b2Vec2(20.0f, 0.0f);
+			bd.position = b2Vec2(20.0f, 40.0f);
 			b2PolygonShape shape;
 			shape.SetAsBox(2.0f, 0.5f);
 			b2FixtureDef fd;
@@ -47,11 +47,11 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-			const int32 N = 10;
+			const int32 N = 50;
 			const float32 x = 20.0f;
 			m_ropeDef.localAnchorA.Set(0.0f, x);
 
-			for (int32 yVal = 0; yVal < N; ++yVal) {
+			for (int32 yVal = 40; yVal < N; ++yVal) {
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
 				bd.position.Set(x,  yVal);
