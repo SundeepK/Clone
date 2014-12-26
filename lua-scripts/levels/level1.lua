@@ -7,18 +7,10 @@ local loadMapObjectFunctions = {}
 
 function init(b2worldProxy) 
   clock = sf_Clock()
-  box2dWorldProxy = b2worldProxy
-
-  local prismaticOptions =   {
-    groundPosition = b2Vec2(20.0, 58.0),
-    buttonPosition = b2Vec2(20.0, 55.0),
-    shape = b2Vec2(1.0, 0.5),
-    motorSpeed = 2.0
-  }
-  prismaticButton1 = prismaticButton.createPrismaticButton(box2dWorldProxy, prismaticOptions)
-  lastTranslation =  prismaticButton1.joint:GetJointTranslation()
-  
+  box2dWorldProxy = b2worldProxy  
   loadMapObjectFunctions["MovingPlatform1"] = { func = loadMovingPlatform}
+  loadMapObjectFunctions["PrismaticButton1"] = { func = loadPrismaticButton1}
+  
 end
 
 function loadMapObject(objectName, mapObject) 
@@ -32,9 +24,21 @@ function loadMovingPlatform(mapObject)
   local x = math.floor(pbody:GetPosition().x) 
   local y = math.floor(pbody:GetPosition().y) 
   local position = b2Vec2(x,y)
-
   verticalMovingPlatform1 = {body = pbody, originalPosition = position}
 end
+
+function loadPrismaticButton1(mapObject)
+  local prismaticOptions =   {
+    groundPosition = b2Vec2(mapObject:GetPosition().x/30, mapObject:GetPosition().y/30),
+    buttonPosition = b2Vec2(mapObject:GetPosition().x/30, (mapObject:GetPosition().y/30)-3),
+    shape = b2Vec2(1.0, 0.5),
+    motorSpeed = 2.0
+  }
+  prismaticButton1 = prismaticButton.createPrismaticButton(box2dWorldProxy, prismaticOptions)
+  lastTranslation =  prismaticButton1.joint:GetJointTranslation()
+end
+
+
 
 function getFixturesInterestedInCollisions()
   return collisionFixtures

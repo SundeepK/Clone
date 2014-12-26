@@ -35,5 +35,6 @@
     <property name="Body" value="kinematic"/>
    </properties>
   </object>
+  <object name="PrismaticButton1" x="605" y="1761" width="64" height="32"/>
  </objectgroup>
 </map>
