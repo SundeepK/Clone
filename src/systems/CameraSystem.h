@@ -10,9 +10,8 @@ class CameraSystem : public sf::Drawable, public anax::System<CameraSystem>{
 	public:
 		CameraSystem(int width, int height);
 		~CameraSystem();
-		void update();
+		void update(sf::RenderWindow& window, sf::Vector2u  mapSize);
 		void updateOpenglCamera();
-		sf::Vector2f getCamerPos();
 		sf::View getView();
 
 	private:

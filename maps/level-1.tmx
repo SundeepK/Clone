@@ -37,4 +37,7 @@
   </object>
   <object name="PrismaticButton1" x="605" y="1761" width="64" height="32"/>
  </objectgroup>
+ <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
+  <object name="RopeBox" x="607" y="1215" width="35" height="35"/>
+ </objectgroup>
 </map>

@@ -11,6 +11,8 @@ extern "C"
 #include <luabind/object.hpp>
 #include <components/PhysicsComponent.h>
 #include <levels/Level1.h>
+#include <game-objects/Rope.h>
+#include <game-objects/GameEntityCreator.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -24,6 +26,7 @@ public:
 	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
 	int m_currentLevelIndex = 0;
 	Level1 level1;
+	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
 			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld) {
@@ -31,6 +34,8 @@ public:
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
 		m_splitDirectionMap["down"] = SplitDirection::DOWN;
+
+		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new Rope());
 	}
 
 	~TmxBox2dLevelLoaderImpl() {}
@@ -121,6 +126,18 @@ public:
 	}
 
 
+	void loadEntities(const tmx::MapObjects& mapObject){
+		for (auto& object : mapObject) {
+			std::string entityName = object.GetName();
+			if ( m_entityCreators.find(entityName) != m_entityCreators.end() ) {
+				m_entityCreators[entityName]->createEntity(object, *m_box2dWorld, *m_anaxWorld);
+			}else{
+				std::cout << "No entity creator found for name: " << entityName << std::endl;
+			}
+		}
+	}
+
+
 	std::unordered_map<std::string, tmx::MapObject> loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld){
 		std::unordered_map<std::string, tmx::MapObject> mapObjects;
 		if (layer.name == "StaticObjects") {
@@ -129,6 +146,8 @@ public:
 		}else if (layer.name == "SplittableObjects") {
 			auto objectsMap =  loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
 			mapObjects.insert(objectsMap.begin(), objectsMap.end());
+		}else if(layer.name == "Entities"){
+			loadEntities(layer.objects);
 		}else{
 			auto objectsMap =  loadMiscMapObjects(layer.objects);
 			mapObjects.insert(objectsMap.begin(), objectsMap.end());
@@ -219,6 +238,11 @@ public:
 
 	}
 
+	sf::Vector2u getMapSize(){
+		return m_mapLoader->GetMapSize();
+	}
+
+
 
 };
 
@@ -246,4 +270,8 @@ void TmxBox2dLevelLoader::BeginContact(b2Contact* contact) {
 void TmxBox2dLevelLoader::EndContact(b2Contact* contact) {
 	m_impl->EndContact(contact);
 
+}
+
+sf::Vector2u TmxBox2dLevelLoader::getMapSize() {
+	return m_impl->getMapSize();
 }

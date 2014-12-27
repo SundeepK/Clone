@@ -30,8 +30,9 @@ class TmxBox2dLevelLoader :   public b2ContactListener,  public anax::System<Tmx
 
 		void loadNextLevel();
 		void update();
-		 void BeginContact(b2Contact* contact);
-		 void EndContact(b2Contact* contact);
+		void BeginContact(b2Contact* contact);
+		void EndContact(b2Contact* contact);
+		sf::Vector2u getMapSize();
 	private:
 
 		class TmxBox2dLevelLoaderImpl;

@@ -5,12 +5,14 @@
 #include <Box2D/Box2D.h>
 #include <anax/World.hpp>
 #include <anax/System.hpp>
+#include <game-objects/GameEntityCreator.h>
 
-class Rope {
+class Rope : public GameEntityCreator  {
 public:
-	Rope(b2World& box2dWorld, anax::World& anaxWorld);
+	Rope();
 	~Rope();
 
+	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
 	b2Body* createRope();
 
 private:

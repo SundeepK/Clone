@@ -91,12 +91,6 @@ public:
 			  .def("getElapsedTime",  &sf::Clock::getElapsedTime)
 		];
 
-		Rope rope(*m_box2dWorld, *m_anaxWorld);
-		b2Body* ropeBox = rope.createRope();
-		std::cout << ropeBox->GetPosition().x << std::endl;
-
-		luabind::globals(m_luaState)["RopeBox"] = ropeBox;
-
 		try {
 			luabind::call_function<void>(m_luaState, "init", &box2dWorldProxy);
 		} catch (luabind::error& e) {

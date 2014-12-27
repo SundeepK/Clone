@@ -72,7 +72,7 @@ void Game::update(float deltaTime) {
   //  m_box2dWorld.step(deltaTime);
     m_fixedTimeStepSystem.update(events, deltaTime, m_physicsInterpolator, m_playerControlsSystem);
     m_b2Dsplitter.refreshEntityBodyTypes();
-    m_cameraSystem.update();
+    m_cameraSystem.update(*m_mainRenderWindow, m_tmxLevelLoader.getMapSize());
     m_playerAnimationSystem.update(deltaTime);
     m_tmxLevelLoader.update();
     m_levelEndDetectSystem.processEndLevel();
