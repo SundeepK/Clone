@@ -4,6 +4,7 @@ extern "C"
 	#include <lua-5.1/src/lualib.h>
 	#include <lua-5.1/src/lauxlib.h>
 }
+#include <luabind/luabind.hpp>
 
 #include <levels/Level1.h>
 #include <lua-exports/ExportBox2d.h>
@@ -11,12 +12,12 @@ extern "C"
 #include <lua-exports/B2WorldProxy.h>
 #include <utilities/Bitwise.h>
 #include <SFML/System.hpp>
-#include <luabind/luabind.hpp>
 #include <components/IgnoreCollisionComponent.h>
 #include <components/PhysicsComponent.h>
 #include <iostream>
 #include <tmx/MapLoader.h>
 #include <tmx/tmx2box2d.h>
+#include <lua-exports/ExportSFML.h>
 
 class Level1::Level1Impl {
 
@@ -48,48 +49,10 @@ public:
 
 		ExportBox2d exportBox2d;
 		exportBox2d.exportToLua(m_luaState);
- 	   // .def("GetLocalPoint", (b2Vec2 (b2Body::*) (const b2Vec2& worldPoint)) &b2Body::GetLocalPoint)
 
+		ExportSFML exportSFML;
+		exportSFML.exportToLua(m_luaState);
 
-		luabind::module(m_luaState)[
-		luabind::class_<sf::Vector2f>("sf_Vector2f")
-		      .def(luabind::constructor<>())
-			  .def_readwrite("x", &sf::Vector2f::x)
-			  .def_readwrite("y", &sf::Vector2f::y)
-		];
-
-		luabind::module(m_luaState)[
-			luabind::class_<sf::FloatRect>("sf_FloatRect")
-			      .def(luabind::constructor<>())
-				  .def_readwrite("left", &sf::FloatRect::left)
-				  .def_readwrite("top", &sf::FloatRect::top)
-				  .def_readwrite("width", &sf::FloatRect::width)
-				  .def_readwrite("height", &sf::FloatRect::height)
-
-			];
-
-		luabind::module(m_luaState)[
-		luabind::class_<tmx::MapObject>("tmx_MapObject")
-		      .def(luabind::constructor<>())
-			  .def("GetPropertyString", (std::string (tmx::MapObject::*) (const std::string& name) ) &tmx::MapObject::GetPropertyString)
-			  .def("GetPosition",  (sf::Vector2f (tmx::MapObject::*) () const ) &tmx::MapObject::GetPosition)
-			  .def("GetCentre",  (sf::Vector2f (tmx::MapObject::*) () const ) &tmx::MapObject::GetCentre)
-			  .def("GetAABB",  (sf::FloatRect (tmx::MapObject::*) () const ) &tmx::MapObject::GetAABB)
-		];
-
-		luabind::module(m_luaState)[
-		luabind::class_<sf::Time>("sf_Time")
-		      .def(luabind::constructor<>())
-			  .def("asSeconds",  &sf::Time::asSeconds)
-			  .def("asMilliseconds",  &sf::Time::asMilliseconds)
-
-		];
-
-		luabind::module(m_luaState)[
-		luabind::class_<sf::Clock>("sf_Clock")
-		      .def(luabind::constructor<>())
-			  .def("getElapsedTime",  &sf::Clock::getElapsedTime)
-		];
 
 		try {
 			luabind::call_function<void>(m_luaState, "init", &box2dWorldProxy);
