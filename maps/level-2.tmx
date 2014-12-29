@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="50" height="40" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
   <image source="diffuse.png" width="512" height="320"/>
  </tileset>
  <layer name="TileLayer" width="50" height="200">
   <data encoding="base64" compression="zlib">
-   eJztz7ENgEAQA8Fvig6g/5ZIyEkQLKcZybn3WGtt1/5iu9lf6GjR0aKjRUeLjhYdLTpadLToaLnrMLOZe9uUDgAAAAAAAAAAAAAAAAAAAAAAgLftXx94iI4WHS06WnS06GjR0aKjRUeLjpZJHRNaJnVMoKNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0t+5Cd2G18TQ==
+   eJzt1cEJwDAMBME05Q7Sf00hLZgEL2IG9L99aV0zrNMDPqKjRUeLjhYdLTpadLToaNHRoqNFR4uOlrV5NcVNO3S06GjR0aLjP1N+8w4dLTpapnQAAAAAAAAAAAAAAAAAAADA6z494CM6WnS06GjR0aKjRUeLjhYdLTpaJnVMaJnUMYGOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tNxD7gE7ojB3
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
-  <object x="60" y="1" width="32" height="799"/>
-  <object x="96" y="635" width="1504" height="33"/>
-  <object x="1443" y="2" width="32" height="632"/>
- </objectgroup>
- <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="96" y="98" width="1346" height="33">
+  <object x="1" y="-4" width="27" height="1283"/>
+  <object x="37" y="1759" width="922" height="34"/>
+  <object x="33" y="772" width="411" height="29"/>
+  <object x="635" y="-22" width="32" height="754">
    <properties>
     <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="planks.png"/>
+    <property name="SplitDir" value="down"/>
    </properties>
   </object>
-  <object name="lowersplit" x="96" y="390" width="1124" height="38">
+  <object x="992" y="-4" width="34" height="736">
    <properties>
     <property name="Body" value="static"/>
-    <property name="SplitDir" value="left"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="planks.png"/>
+    <property name="SplitDIr" value="down"/>
    </properties>
   </object>
+  <object x="1187" y="1055" width="411" height="29"/>
+  <object name="Boulder" x="699" y="13" width="231" height="206">
+   <ellipse/>
+  </object>
  </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200"/>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
-  <object name="PlayerEndPoint" x="1406" y="65" width="31" height="31"/>
-  <object name="PlayerStartPoint" x="1335" y="602" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="1538" y="1021" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="66" y="708" width="29" height="26"/>
+ </objectgroup>
+ <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
+  <object name="Rope" x="654" y="225" width="357" height="11"/>
+  <object name="Rope" x="444" y="785" width="1167" height="16"/>
  </objectgroup>
 </map>
