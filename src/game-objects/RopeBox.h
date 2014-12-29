@@ -1,5 +1,5 @@
-#ifndef ROPE_H_
-#define ROPE_H_
+#ifndef SRC_GAME_OBJECTS_ROPEBOX_H_
+#define SRC_GAME_OBJECTS_ROPEBOX_H_
 
 #include <memory.h>
 #include <Box2D/Box2D.h>
@@ -7,10 +7,10 @@
 #include <anax/System.hpp>
 #include <game-objects/GameEntityCreator.h>
 
-class Rope : public GameEntityCreator  {
+class RopeBox : public GameEntityCreator  {
 public:
-	Rope();
-	~Rope();
+	RopeBox();
+	~RopeBox();
 
 	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
 	b2Body* createRope();
@@ -20,4 +20,6 @@ private:
 	std::auto_ptr<RopeImpl> m_impl;
 };
 
-#endif /* ROPE_H_ */
+
+
+#endif /* SRC_GAME_OBJECTS_ROPEBOX_H_ */

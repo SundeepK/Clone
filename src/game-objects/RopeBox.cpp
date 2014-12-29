@@ -1,11 +1,11 @@
-#include <game-objects/Rope.h>
+#include <game-objects/RopeBox.h>
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <components/SplitDirectionComponent.h>
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
 
-class Rope::RopeImpl {
+class RopeBox::RopeImpl {
 
 public:
 
@@ -104,14 +104,14 @@ public:
 
 };
 
-Rope::Rope() :
+RopeBox::RopeBox() :
 		m_impl(new RopeImpl()) {
 
 }
 
-Rope::~Rope() {
+RopeBox::~RopeBox() {
 }
 
-void Rope::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+void RopeBox::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }

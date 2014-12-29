@@ -8,7 +8,6 @@ extern "C"
 
 #include <levels/Level1.h>
 #include <lua-exports/ExportBox2d.h>
-#include <game-objects/Rope.h>
 #include <lua-exports/B2WorldProxy.h>
 #include <utilities/Bitwise.h>
 #include <SFML/System.hpp>

@@ -13,7 +13,6 @@ extern "C"
 
 #include <luabind/luabind.hpp>
 #include <iostream>
-#include <game-objects/Rope.h>
 
 WorldEntityLoader::WorldEntityLoader()  {
 

@@ -11,7 +11,7 @@ extern "C"
 #include <luabind/object.hpp>
 #include <components/PhysicsComponent.h>
 #include <levels/Level1.h>
-#include <game-objects/Rope.h>
+#include <game-objects/RopeBox.h>
 #include <game-objects/GameEntityCreator.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
@@ -35,7 +35,7 @@ public:
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
 		m_splitDirectionMap["down"] = SplitDirection::DOWN;
 
-		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new Rope());
+		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
 	}
 
 	~TmxBox2dLevelLoaderImpl() {}

@@ -29,7 +29,6 @@ sf::Vector2f getCameraPosition(std::vector<anax::Entity>& entities, sf::RenderWi
 			b2Body* body = physicsComponent.physicsBody;
 			Vec position(body->GetPosition());
 			sf::Vector2i windowPix = window.mapCoordsToPixel(position.mToPix().toSFMLv());
-			std::cout << "windowpix: x" << windowPix.x  <<  " ,y: " << windowPix.y << std::endl;
 			sf::Vector2f bodyPosInPix = (position.mToPix().toSFMLv());
 
 			if (bodyPosInPix.x >= m_cameraCenterPos.x) {
