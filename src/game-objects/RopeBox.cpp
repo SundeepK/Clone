@@ -5,14 +5,14 @@
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
 
-class RopeBox::RopeImpl {
+class RopeBox::RopeBoxImpl {
 
 public:
 
-	RopeImpl()  {
+	RopeBoxImpl()  {
 	}
 
-	~RopeImpl() {
+	~RopeBoxImpl() {
 	}
 
 	b2RopeJointDef m_ropeDef;
@@ -105,7 +105,7 @@ public:
 };
 
 RopeBox::RopeBox() :
-		m_impl(new RopeImpl()) {
+		m_impl(new RopeBoxImpl()) {
 
 }
 
