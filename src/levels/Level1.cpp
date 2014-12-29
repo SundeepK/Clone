@@ -71,30 +71,30 @@ public:
 			}
 		}
 
-		try {
-			luabind::object levels =  luabind::call_function<luabind::object>(m_luaState, "getFixturesInterestedInCollisions");
-			for(int i = 1; ; i++){
-				if(levels[i]){
-					b2Fixture* collisionFixture =  luabind::object_cast<b2Fixture*>(levels[i]);
-				    m_fixturesInterestedInCollisions.push_back(collisionFixture);
-
-				}else{
-					break;
-				}
-			}
-		} catch (luabind::error& e) {
-		    std::string error = lua_tostring(e.state(), -1);
-		    std::cout << error << std::endl;
-		}
+//		try {
+//			luabind::object levels =  luabind::call_function<luabind::object>(m_luaState, "getFixturesInterestedInCollisions");
+//			for(int i = 1; ; i++){
+//				if(levels[i]){
+//					b2Fixture* collisionFixture =  luabind::object_cast<b2Fixture*>(levels[i]);
+//				    m_fixturesInterestedInCollisions.push_back(collisionFixture);
+//
+//				}else{
+//					break;
+//				}
+//			}
+//		} catch (luabind::error& e) {
+//		    std::string error = lua_tostring(e.state(), -1);
+//		    std::cout << error << std::endl;
+//		}
 	}
 
 	void updateLevel() {
-		try {
-			luabind::call_function<void>(m_luaState, "update");
-		} catch (luabind::error& e) {
-			std::string error = lua_tostring(e.state(), -1);
-			std::cout << error << std::endl;
-		}
+//		try {
+//			luabind::call_function<void>(m_luaState, "update");
+//		} catch (luabind::error& e) {
+//			std::string error = lua_tostring(e.state(), -1);
+//			std::cout << error << std::endl;
+//		}
 	}
 
 	void endLevel() {
@@ -103,18 +103,18 @@ public:
 
 	bool shouldIgnore(b2Contact* contact){
 		anax::World::EntityArray entities = m_anaxWorld->getEntities();
-		for(auto entity : entities){
-			if(entity.isValid() && entity.hasComponent<PhysicsComponent>() && entity.hasComponent<IgnoreCollisionComponent>()){
-				auto& physicsComp = entity.getComponent<PhysicsComponent>();
-				b2Fixture* fixtureToCompare = physicsComp.physicsBody->GetFixtureList();
-				while(fixtureToCompare){
-					if(fixtureToCompare == contact->GetFixtureA() || fixtureToCompare == contact->GetFixtureB()){
-						return true;
-					}
-					fixtureToCompare = fixtureToCompare->GetNext();
-				}
-			}
-		}
+//		for(auto entity : entities){
+//			if(entity.isValid() && entity.hasComponent<PhysicsComponent>() && entity.hasComponent<IgnoreCollisionComponent>()){
+//				auto& physicsComp = entity.getComponent<PhysicsComponent>();
+//				b2Fixture* fixtureToCompare = physicsComp.physicsBody->GetFixtureList();
+//				while(fixtureToCompare){
+//					if(fixtureToCompare == contact->GetFixtureA() || fixtureToCompare == contact->GetFixtureB()){
+//						return true;
+//					}
+//					fixtureToCompare = fixtureToCompare->GetNext();
+//				}
+//			}
+//		}
 		return false;
 	}
 
@@ -133,11 +133,11 @@ public:
 	}
 
 	void beginContact(b2Contact* contact) {
-		filterContacts(contact, "beginCollision");
+		//filterContacts(contact, "beginCollision");
 	}
 
 	void endContact(b2Contact* contact) {
-		filterContacts(contact, "endCollision");
+	//	filterContacts(contact, "endCollision");
 	}
 
 };

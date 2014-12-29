@@ -13,7 +13,7 @@ extern "C"
 #include <levels/Level1.h>
 #include <game-objects/RopeBox.h>
 #include <game-objects/GameEntityCreator.h>
-
+#include <game-objects/Rope.h>
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
 
@@ -36,6 +36,8 @@ public:
 		m_splitDirectionMap["down"] = SplitDirection::DOWN;
 
 		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
+		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
+
 	}
 
 	~TmxBox2dLevelLoaderImpl() {}

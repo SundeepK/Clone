@@ -35,7 +35,7 @@
   <object name="PlayerStartPoint" x="66" y="708" width="29" height="26"/>
  </objectgroup>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
-  <object name="Rope" x="654" y="225" width="357" height="11"/>
+  <object name="Rope" x="120" y="33" width="169" height="11"/>
   <object name="Rope" x="444" y="785" width="1167" height="16"/>
  </objectgroup>
 </map>

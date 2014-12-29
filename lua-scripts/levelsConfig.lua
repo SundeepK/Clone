@@ -7,5 +7,5 @@ function getLevelsToLoad()
   level2.levelMapName = "level-2.tmx" 
   level2.scriptName = "level-2.lua"
 	
-	return {level1, level2}
+	return {level2, level1}
 end
