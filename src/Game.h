@@ -32,6 +32,7 @@
 #include <systems/SensorSystem.h>
 #include <systems/DetectLevelEndSystem.h>
 #include <systems/FilterCollisionsSystem.h>
+#include <systems/BreakableJointSystem.h>
 
 class Game {
 
@@ -70,6 +71,7 @@ class Game {
 		 SensorSystem m_sensorSystem;
 		 DetectLevelEndSystem m_levelEndDetectSystem;
 		 FilterCollisionsSystem m_filterCollisionsSystem;
+		 BreakableJointSystem m_breakableJointSystem;
 
 
 };

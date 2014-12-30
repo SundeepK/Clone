@@ -25,12 +25,6 @@
    </properties>
   </object>
   <object x="1187" y="1055" width="411" height="29"/>
-  <object name="Boulder" x="699" y="13" width="231" height="206">
-   <properties>
-    <property name="Body" value="dynamic"/>
-   </properties>
-   <ellipse/>
-  </object>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200"/>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
@@ -40,5 +34,11 @@
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
   <object name="Rope" x="662" y="238" width="334" height="13"/>
   <object name="Rope" x="444" y="785" width="1167" height="16"/>
+  <object name="Boulder" x="741" y="8" width="188" height="172">
+   <properties>
+    <property name="Body" value="dynamic"/>
+   </properties>
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

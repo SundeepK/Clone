@@ -2,6 +2,7 @@
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <components/SplitDirectionComponent.h>
+#include <components/BreakableJointComponent.h>
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
 #include <math.h>
@@ -14,7 +15,7 @@ public:
 	b2RopeJointDef m_ropeDef;
 
 
-	b2Body* createGround(b2Vec2 position,  b2World& box2dWorld){
+	b2Body* createStartingBody(b2Vec2 position,  b2World& box2dWorld){
 		b2BodyDef bd;
 		bd.type = b2_staticBody;
 		bd.position = position;
@@ -32,6 +33,7 @@ public:
 		fd.shape = &shape;
 		fd.density = 20.0f;
 		fd.friction = 0.2f;
+		fd.filter.categoryBits = GameObjectTag::ROPE_SEGMENT;
 		return fd;
 	}
 
@@ -39,8 +41,8 @@ public:
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
 		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + mapObject.GetAABB().width, mapObject.GetPosition().y));
 
-		b2Body* ground = createGround(statingPosition, box2dWorld);
-		b2Body* prevBody = ground;
+		b2Body* firstBodyToJoinWith = createStartingBody(statingPosition, box2dWorld);
+		b2Body* prevBody = firstBodyToJoinWith;
 		{
 			b2PolygonShape shape;
 			shape.SetAsBox(0.5f, 0.125f);
@@ -64,13 +66,15 @@ public:
 				}
 
 				b2Body* body = box2dWorld.CreateBody(&bd);
-
 				body->CreateFixture(&fd);
 
 				auto objectEntity = anaxWorld.createEntity();
 				auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 				auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+				auto& breakableJointComp = objectEntity.addComponent<BreakableJointComponent>();
+				breakableJointComp.maxWeight = 1 ;
+
 
 				b2Vec2 anchor( statingPosition.x + xVal  , statingPosition.y );
 				jd.Initialize(prevBody, body, anchor);

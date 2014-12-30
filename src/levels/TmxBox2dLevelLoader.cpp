@@ -14,6 +14,8 @@ extern "C"
 #include <game-objects/RopeBox.h>
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Rope.h>
+#include <game-objects/Boulder.h>
+
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
 
@@ -37,6 +39,8 @@ public:
 
 		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
 		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
+		m_entityCreators["Boulder"] = std::unique_ptr<GameEntityCreator>(new Boulder());
+
 
 	}
 
