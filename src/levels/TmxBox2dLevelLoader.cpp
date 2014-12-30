@@ -106,13 +106,19 @@ public:
 		return mapObjects;
 	}
 
-	std::unordered_map<std::string, tmx::MapObject> loadStaticObjects(const tmx::MapObjects& mapObject, b2World& b2dworld) {
+	std::unordered_map<std::string, tmx::MapObject> loadStaticObjects(tmx::MapObjects& mapObject, b2World& b2dworld) {
 		std::unordered_map<std::string, tmx::MapObject> mapObjects;
 		for (auto& object : mapObject) {
 			if (!object.GetName().empty()) {
 				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
 			}
-			tmx::BodyCreator::Add(object, b2dworld);
+
+			if (object.GetPropertyString("Body") == "dynamic") {
+				 tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
+			} else {
+				 tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
+			}
+
 		}
 		return mapObjects;
 	}
