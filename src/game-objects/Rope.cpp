@@ -4,7 +4,7 @@
 #include <components/SplitDirectionComponent.h>
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
-
+#include <math.h>
 class Rope::RopeImpl{
 
 public:
@@ -32,14 +32,12 @@ public:
 		fd.shape = &shape;
 		fd.density = 20.0f;
 		fd.friction = 0.2f;
-		fd.filter.categoryBits = 0x0001;
-		fd.filter.maskBits = 0xff - 0x0003;
 		return fd;
 	}
 
 	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
-		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + mapObject.GetAABB().width, mapObject.GetPosition().y + mapObject.GetAABB().height));
+		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + mapObject.GetAABB().width, mapObject.GetPosition().y));
 
 		b2Body* ground = createGround(statingPosition, box2dWorld);
 		b2Body* prevBody = ground;
@@ -52,17 +50,12 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-//			const int32 N = statingPosition.x + 5;
-			const int32 N = (mapObject.GetAABB().width / 30) / (1.0f ) + 1;
+			const int32 N = ceilf((mapObject.GetAABB().width / 30) / (1.0f )) + 1;
 
-			const float32 y = statingPosition.y;
-//			m_ropeDef.localAnchorA.Set(0.0f, x);
-
-			std::cout << "n" << N << std::endl;
-			for (int32 xVal = (statingPosition.x); xVal < N; ++xVal) {
+			for (int32 xVal = 1; xVal < N; ++xVal) {
 				b2BodyDef bd;
 				bd.type = b2_dynamicBody;
-				bd.position.Set(xVal + 2, y );
+				bd.position.Set(statingPosition.x + xVal , statingPosition.y );
 				if (xVal == N - 1) {
 					bd.type = b2_staticBody;
 					shape.SetAsBox(0.1f, 0.1f);
@@ -79,7 +72,7 @@ public:
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 				auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
 
-				b2Vec2 anchor(xVal + 2 , float32(y) );
+				b2Vec2 anchor( statingPosition.x + xVal  , statingPosition.y );
 				jd.Initialize(prevBody, body, anchor);
 				box2dWorld.CreateJoint(&jd);
 
@@ -89,17 +82,10 @@ public:
 				prevBody = body;
 			}
 
-		//	m_ropeDef.localAnchorB.SetZero();
-
-			float32 extraLength = 0.01f;
-			//m_ropeDef.maxLength = N - 1.0f + extraLength;
-		//	m_ropeDef.bodyB = prevBody;
 		}
 
-		{
-		//	m_ropeDef.bodyA = ground;
-		//	box2dWorld.CreateJoint(&m_ropeDef);
-		}
+
+
 	}
 
 
