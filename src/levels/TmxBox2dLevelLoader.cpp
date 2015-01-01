@@ -26,7 +26,7 @@ public:
 	std::vector<LevelObject> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
 	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
-	int m_currentLevelIndex = 0;
+	unsigned int m_currentLevelIndex = 0;
 	std::unique_ptr<LuaScriptLevel> luaScriptLevel;
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
 
@@ -209,15 +209,10 @@ public:
 
 		if(m_currentLevelIndex < m_levelsToLoad.size()){
 			auto entities = m_anaxWorld->getEntities();
-			for(anax::Entity entity : entities){
-				if(entity.hasComponent<PhysicsComponent>()){
-					auto& physicsComp = entity.getComponent<PhysicsComponent>();
-					delete(physicsComp.physicsBody->GetUserData());
-					m_box2dWorld->DestroyBody(physicsComp.physicsBody);
-				}
-			}
+			deleteEntitiesWithPhysicsComponents(entities);
+			deleteAllBox2dBodies();
+			deleteAllEntities(entities);
 
-			m_anaxWorld->killEntities(entities);
 			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 			std::unordered_map<std::string, tmx::MapObject> loadedItems;
@@ -236,6 +231,28 @@ public:
 		luaScriptLevel->loadLevel(m_levelObjects);
 		m_currentLevelIndex++;
 
+	}
+
+	void deleteAllBox2dBodies() {
+		b2Body* box2dBody = m_box2dWorld->GetBodyList();
+		while (box2dBody) {
+			m_box2dWorld->DestroyBody(box2dBody);
+			box2dBody = box2dBody->GetNext();
+		}
+	}
+
+	void deleteEntitiesWithPhysicsComponents(std::vector<anax::Entity>& entities){
+		for(anax::Entity entity : entities){
+			if(entity.hasComponent<PhysicsComponent>()){
+				auto& physicsComp = entity.getComponent<PhysicsComponent>();
+				delete(physicsComp.physicsBody->GetUserData());
+				m_box2dWorld->DestroyBody(physicsComp.physicsBody);
+			}
+		}
+	}
+
+	void deleteAllEntities(std::vector<anax::Entity>& entities){
+		m_anaxWorld->killEntities(entities);
 	}
 
 	void update() {
