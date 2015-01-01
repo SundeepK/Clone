@@ -18,40 +18,36 @@ extern "C"
 #include <tmx/tmx2box2d.h>
 #include <lua-exports/ExportSFML.h>
 
-class Level1::Level1Impl {
+class LuaScriptLevel::LuaScriptLevelImpl {
 
 public:
 	lua_State* m_luaState;
-	std::unique_ptr<b2World> m_box2dWorld;
-	std::unique_ptr<anax::World> m_anaxWorld;
 	B2WorldProxy box2dWorldProxy;
 	std::vector<b2Fixture*> m_fixturesInterestedInCollisions;
-	b2PrismaticJoint* m_joint;
 
-	Level1Impl(b2World& b2dworld, anax::World& anaxWorld) :
-			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), box2dWorldProxy(b2dworld) {
+	LuaScriptLevelImpl(b2World& b2dworld, std::string levelScriptName) : box2dWorldProxy(b2dworld) {
 		m_luaState = luaL_newstate();
 		luabind::open(m_luaState);
 		luaL_openlibs(m_luaState);
-
-		if (luaL_dofile(m_luaState, "lua-scripts/levels/level1.lua")) {
+		std::string scriptPath = "lua-scripts/levels/" + levelScriptName;
+		if (luaL_dofile(m_luaState, scriptPath.c_str())) {
 			printf("%s\n", lua_tostring(m_luaState, -1));
 		}
-
-	}
-
-	~Level1Impl() {
-
-	}
-
-	void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
 
 		ExportBox2d exportBox2d;
 		exportBox2d.exportToLua(m_luaState);
 
 		ExportSFML exportSFML;
 		exportSFML.exportToLua(m_luaState);
+	}
 
+	~LuaScriptLevelImpl() {
+		lua_close(m_luaState);
+		std::cout << "deleted lua state" << std::endl;
+	}
+
+	void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
+		std::cout << "loadlelve in c++" << std::endl;
 
 		try {
 			luabind::call_function<void>(m_luaState, "init", &box2dWorldProxy);
@@ -71,30 +67,30 @@ public:
 			}
 		}
 
-//		try {
-//			luabind::object levels =  luabind::call_function<luabind::object>(m_luaState, "getFixturesInterestedInCollisions");
-//			for(int i = 1; ; i++){
-//				if(levels[i]){
-//					b2Fixture* collisionFixture =  luabind::object_cast<b2Fixture*>(levels[i]);
-//				    m_fixturesInterestedInCollisions.push_back(collisionFixture);
-//
-//				}else{
-//					break;
-//				}
-//			}
-//		} catch (luabind::error& e) {
-//		    std::string error = lua_tostring(e.state(), -1);
-//		    std::cout << error << std::endl;
-//		}
+		try {
+			luabind::object levels =  luabind::call_function<luabind::object>(m_luaState, "getFixturesInterestedInCollisions");
+			for(int i = 1; ; i++){
+				if(levels[i]){
+					b2Fixture* collisionFixture =  luabind::object_cast<b2Fixture*>(levels[i]);
+				    m_fixturesInterestedInCollisions.push_back(collisionFixture);
+
+				}else{
+					break;
+				}
+			}
+		} catch (luabind::error& e) {
+		    std::string error = lua_tostring(e.state(), -1);
+		    std::cout << error << std::endl;
+		}
 	}
 
 	void updateLevel() {
-//		try {
-//			luabind::call_function<void>(m_luaState, "update");
-//		} catch (luabind::error& e) {
-//			std::string error = lua_tostring(e.state(), -1);
-//			std::cout << error << std::endl;
-//		}
+		try {
+			luabind::call_function<void>(m_luaState, "update");
+		} catch (luabind::error& e) {
+			std::string error = lua_tostring(e.state(), -1);
+			std::cout << error << std::endl;
+		}
 	}
 
 	void endLevel() {
@@ -102,7 +98,7 @@ public:
 	}
 
 	bool shouldIgnore(b2Contact* contact){
-		anax::World::EntityArray entities = m_anaxWorld->getEntities();
+//		anax::World::EntityArray entities = m_anaxWorld.getEntities();
 //		for(auto entity : entities){
 //			if(entity.isValid() && entity.hasComponent<PhysicsComponent>() && entity.hasComponent<IgnoreCollisionComponent>()){
 //				auto& physicsComp = entity.getComponent<PhysicsComponent>();
@@ -142,29 +138,29 @@ public:
 
 };
 
-Level1::Level1(b2World& b2dworld, anax::World& anaxWorld) :
-		m_impl(new Level1Impl(b2dworld, anaxWorld)) {
+LuaScriptLevel::LuaScriptLevel(b2World& b2dworld, std::string luaScriptLevel) :
+		m_impl(new LuaScriptLevelImpl(b2dworld, luaScriptLevel)) {
 }
 
-Level1::~Level1() {
+LuaScriptLevel::~LuaScriptLevel() {
 }
 
-void Level1::loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
+void LuaScriptLevel::loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
 	m_impl->loadLevel(levelObjects);
 }
 
-void Level1::updateLevel() {
+void LuaScriptLevel::updateLevel() {
 	m_impl->updateLevel();
 }
 
-void Level1::endLevel() {
+void LuaScriptLevel::endLevel() {
 	m_impl->endLevel();
 }
 
-void Level1::BeginContact(b2Contact* contact) {
+void LuaScriptLevel::BeginContact(b2Contact* contact) {
 	m_impl->beginContact(contact);
 }
 
-void Level1::EndContact(b2Contact* contact) {
+void LuaScriptLevel::EndContact(b2Contact* contact) {
 	m_impl->endContact(contact);
 }

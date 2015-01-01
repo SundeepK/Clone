@@ -24,7 +24,7 @@ public:
 				while (jointEdge) {
 					count++;
 					b2Vec2 reactionforce = jointEdge->joint->GetReactionForce(inverseDt);
-					std::cout << "count val: " << count << " force: " << reactionforce.LengthSquared() << std::endl;
+//					std::cout << "count val: " << count << " force: " << reactionforce.LengthSquared() << std::endl;
 					if (!std::isnan(reactionforce.LengthSquared()) && isinff(reactionforce.LengthSquared()) == 0 && reactionforce.LengthSquared() > 70) {
 						m_box2dWorld->DestroyJoint(jointEdge->joint);
 						//entity.removeComponent<BreakableJointComponent>();
@@ -38,7 +38,6 @@ public:
 	void BeginContact(std::vector<anax::Entity>& entities, b2Contact* contact) {
 		auto fixtureA = contact->GetFixtureA();
 		auto fixtureB = contact->GetFixtureB();
-		std::cout << "in begining boulder" << std::endl;
 
 		auto filterDataA = fixtureA->GetFilterData();
 		auto filterDataB = fixtureB->GetFilterData();

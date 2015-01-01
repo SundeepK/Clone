@@ -5,7 +5,7 @@
  </tileset>
  <layer name="TileLayer" width="50" height="200">
   <data encoding="base64" compression="zlib">
-   eJzt1cEJwDAMBME05Q7Sf00hLZgEL2IG9L99aV0zrNMDPqKjRUeLjhYdLTpadLToaNHRoqNFR4uOlrV5NcVNO3S06GjR0aLjP1N+8w4dLTpapnQAAAAAAAAAAAAAAAAAAADA6z494CM6WnS06GjR0aKjRUeLjhYdLTpaJnVMaJnUMYGOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tNxD7gE7ojB3
+   eJzt1bENgDAQBEGacgf0XxM9WEYsrxnp8t/EXtcM6+sDDtHRoqNFR4uOFh0tOlp0tOho0dGio0VHy9pcTfGmHTpadLToaNHxnil/8w4dLTpadt+G2k60AgAAAAAAAAAAAAAAAAAA8H/31wccoqNFR4uOFh0tOlp0tOho0dGio2VSx4SWSR0T6GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUfLPWQPTu88RA==
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
@@ -25,6 +25,7 @@
    </properties>
   </object>
   <object x="1187" y="1055" width="411" height="29"/>
+  <object x="32" y="1253" width="1567" height="26"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200"/>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">

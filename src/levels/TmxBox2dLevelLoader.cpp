@@ -27,11 +27,11 @@ public:
 	WorldEntityLoader m_worldEntityLoader;
 	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
 	int m_currentLevelIndex = 0;
-	Level1 level1;
+	std::unique_ptr<LuaScriptLevel> luaScriptLevel;
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
-			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld), level1(b2dworld, anaxWorld) {
+			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld){
 		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
@@ -219,7 +219,6 @@ public:
 
 			m_anaxWorld->killEntities(entities);
 			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
-			m_currentLevelIndex++;
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 			std::unordered_map<std::string, tmx::MapObject> loadedItems;
 			const std::string t = "TexCoords";
@@ -233,20 +232,23 @@ public:
 			m_worldEntityLoader.loadWorldEntities(*m_anaxWorld, *m_box2dWorld, loadedItems, luaState);
 		}
 		lua_close(luaState);
-		level1.loadLevel(m_levelObjects);
+		luaScriptLevel.reset(new LuaScriptLevel(*m_box2dWorld, m_levelsToLoad[m_currentLevelIndex].scriptName));
+		luaScriptLevel->loadLevel(m_levelObjects);
+		m_currentLevelIndex++;
+
 	}
 
 	void update() {
-		level1.updateLevel();
+		luaScriptLevel->updateLevel();
 	}
 
 	void BeginContact(b2Contact* contact) {
-		level1.BeginContact(contact);
+		luaScriptLevel->BeginContact(contact);
 
 	}
 
 	void EndContact(b2Contact* contact) {
-		level1.EndContact(contact);
+		luaScriptLevel->EndContact(contact);
 
 	}
 

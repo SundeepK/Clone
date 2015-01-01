@@ -6,11 +6,12 @@ local collisionFixtures = {}
 local loadMapObjectFunctions = {}
 
 function init(b2worldProxy) 
+  print("init in lua")
+
   clock = sf_Clock()
   box2dWorldProxy = b2worldProxy  
   loadMapObjectFunctions["MovingPlatform1"] = { func = loadMovingPlatform}
   loadMapObjectFunctions["PrismaticButton1"] = { func = loadPrismaticButton1}
-  
 end
 
 function loadMapObject(objectName, mapObject) 

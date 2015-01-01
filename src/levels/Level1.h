@@ -12,10 +12,10 @@
 #include <systems/SensorSystem.h>
 #include <levels/Box2dLis.h>
 
-class Level1 : public Level{
+class LuaScriptLevel : public Level{
 public:
-	 Level1(b2World& b2dworld, anax::World& anaxWorld);
-	 ~Level1();
+	 LuaScriptLevel(b2World& b2dworld, std::string luaScriptLevel);
+	 ~LuaScriptLevel();
 
 	 void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects);
 	 void updateLevel();
@@ -25,8 +25,8 @@ public:
 	 void EndContact(b2Contact* contact);
 
 private:
-	 class Level1Impl;
-	 std::unique_ptr<Level1Impl> m_impl;
+	 class LuaScriptLevelImpl;
+	 std::unique_ptr<LuaScriptLevelImpl> m_impl;
 
 };
 

@@ -1,11 +1,11 @@
 function getLevelsToLoad()
 	local level1 = LevelObject()
 	level1.levelMapName = "level-1.tmx" 
-	level1.scriptName = "level-1.lua"
+	level1.scriptName = "level1.lua"
 	
 	local level2 = LevelObject()
   level2.levelMapName = "level-2.tmx" 
-  level2.scriptName = "level-2.lua"
+  level2.scriptName = "level2.lua"
 	
-	return {level2, level1}
+	return {level1, level2}
 end
