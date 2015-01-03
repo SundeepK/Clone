@@ -1,5 +1,5 @@
 #include <opengl/TextureLoader.h>
-
+#include <iostream>
 TextureLoader::TextureLoader() {
 }
 
@@ -16,4 +16,15 @@ GLuint TextureLoader::loadAsOpenglTexture(GLuint& gluint, sf::Image& image) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 				GL_LINEAR_MIPMAP_LINEAR);
 		return gluint;
+}
+
+
+GLuint TextureLoader::checkError(const char *context)
+{
+  GLuint err = glGetError();
+  if (err > 0 )  {
+    std::cout << "0x" << std::hex << err << " glGetError() in " << context
+    << std::endl;
+  }
+  return err;
 }

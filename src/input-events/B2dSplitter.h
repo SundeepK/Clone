@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <splitter/Splitter.h>
+#include <Splitter.h>
 #include <anax/anax.hpp>
 #include <Box2D/Box2D.h>
 #include <memory.h>

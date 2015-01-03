@@ -12,7 +12,7 @@ class Texcoords : public anax::Component<Texcoords>{
 	public:
 	    std::vector<b2Vec2> textCoords;
         sf::Image image;
-		GLuint texture;
+		GLuint texture = 0;
 };
 
 

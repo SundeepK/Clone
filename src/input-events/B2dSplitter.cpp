@@ -1,5 +1,5 @@
 #include "B2dSplitter.h"
-#include <splitter/TextureMapper.h>
+#include <TextureMapper.h>
 #include <components/PhysicsComponent.h>
 #include <components/Texcoords.h>
 #include <vector>

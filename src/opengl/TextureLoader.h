@@ -14,6 +14,8 @@ public:
 
     static GLuint loadAsOpenglTexture(Texcoords* texCoords);
     static GLuint loadAsOpenglTexture(GLuint& gluint, sf::Image& image);
+    static GLuint checkError(const char *context);
+
 
 };
 
