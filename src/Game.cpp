@@ -87,7 +87,7 @@ void Game::render() {
 	m_mainRenderWindow->setActive(true);
 
 	//TODO draw more sfml stuff here
-	m_mainRenderWindow->pushGLStates();
+	//m_mainRenderWindow->pushGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
 	m_mainRenderWindow->draw(m_cameraSystem);
 	sf::Vector2f p(m_cameraSystem.getView().getViewport().left, m_cameraSystem.getView().getViewport().top);
@@ -96,15 +96,15 @@ void Game::render() {
 	m_mainRenderWindow->draw(m_textureRectSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
 	m_fixedTimeStepSystem.drawDebug();
-	m_mainRenderWindow->popGLStates();
+	//m_mainRenderWindow->popGLStates();
 
 	//TODO draw opengl stuff here
 	glClear(GL_DEPTH_BUFFER_BIT);
-	//glLoadIdentity();
+	glLoadIdentity();
     glColor3f(1.0f,1.0f,1.0f);
-    glPushMatrix();
-    m_cameraSystem.updateOpenglCamera();
+  //  glPushMatrix();
+   // m_cameraSystem.updateOpenglCamera();
 	m_openglTextureRenderer.render();
-	glPopMatrix();
+//	glPopMatrix();
 
 }
