@@ -84,25 +84,25 @@ void Game::update(float deltaTime) {
 }
 
 void Game::render() {
+
 	//TODO draw opengl stuff here
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	m_openglTextureRenderer.render();
 
 	//TODO sfml stuff here
-	glPushAttrib(GL_TRANSFORM_BIT | GL_VIEWPORT_BIT);
+	glPushAttrib(GL_CURRENT_BIT | GL_TRANSFORM_BIT | GL_VIEWPORT_BIT);
 	TextureLoader::checkError("glPushAttrib");
-	glPushMatrix();
-	TextureLoader::checkError("glPushMatrix");
-//    m_mainRenderWindow->pushGLStates()
+   	glPushMatrix();
+
 	m_mainRenderWindow->resetGLStates();
 	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
 //	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
 	m_fixedTimeStepSystem.drawDebug();
-//	m_mainRenderWindow->popGLStates();
-	glPopMatrix();
+
 	glPopAttrib();
+	glPopMatrix();
 
 	m_mainRenderWindow->display();
 
