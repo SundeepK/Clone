@@ -10,7 +10,6 @@
 #include <components/PhysicsComponent.h>
 #include <anax/Component.hpp>
 #include <SFML/OpenGL.hpp>
-#include <GL/glut.h>
 #include <vector>
 #include <iostream>
 

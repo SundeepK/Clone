@@ -56,7 +56,7 @@ class Game {
 		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;
-		 TextureRectRenderSystem m_textureRectSystem;
+		 TextureRectRenderSystem m_animationSystem;
 		 OpenGLTextureRenderer m_openglTextureRenderer;
 		 PhysicsInterpolatorSystem m_physicsInterpolator;
 		 CameraSystem m_cameraSystem;

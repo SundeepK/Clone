@@ -45,7 +45,6 @@ int main()
        float dt = clock.restart().asMilliseconds();
        game.update(dt);
        game.render();
-       mainRenderWindow.display();
     }
 }
 

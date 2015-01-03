@@ -20,7 +20,7 @@ void Game::init()
 	m_tmxLevelLoader.loadNextLevel();
 
 	m_anaxWorld.addSystem(m_playerControlsSystem);
-	m_anaxWorld.addSystem(m_textureRectSystem);
+	m_anaxWorld.addSystem(m_animationSystem);
 	m_anaxWorld.addSystem(m_openglTextureRenderer);
 	m_anaxWorld.addSystem(m_physicsInterpolator);
 	m_anaxWorld.addSystem(m_playerAnimationSystem);
@@ -87,24 +87,20 @@ void Game::render() {
 	m_mainRenderWindow->setActive(true);
 
 	//TODO draw more sfml stuff here
-	//m_mainRenderWindow->pushGLStates();
 	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
+//	m_mainRenderWindow->pushGLStates();
 	m_mainRenderWindow->draw(m_cameraSystem);
-	sf::Vector2f p(m_cameraSystem.getView().getViewport().left, m_cameraSystem.getView().getViewport().top);
-
 	m_mainRenderWindow->draw(m_mapLoader);
-	m_mainRenderWindow->draw(m_textureRectSystem);
+	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
 	m_fixedTimeStepSystem.drawDebug();
-	//m_mainRenderWindow->popGLStates();
+//	m_mainRenderWindow->popGLStates();
 
 	//TODO draw opengl stuff here
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-    glColor3f(1.0f,1.0f,1.0f);
-  //  glPushMatrix();
    // m_cameraSystem.updateOpenglCamera();
 	m_openglTextureRenderer.render();
-//	glPopMatrix();
+
+	m_mainRenderWindow->display();
 
 }
