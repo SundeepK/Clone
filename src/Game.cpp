@@ -49,7 +49,7 @@ void Game::init()
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glClearDepth(1.0f);                  // Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);             // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);
@@ -84,22 +84,25 @@ void Game::update(float deltaTime) {
 }
 
 void Game::render() {
-	m_mainRenderWindow->setActive(true);
+	//TODO draw opengl stuff here
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	m_openglTextureRenderer.render();
 
-	//TODO draw more sfml stuff here
-	m_mainRenderWindow->clear(sf::Color(50, 50, 50));
-//	m_mainRenderWindow->pushGLStates();
+	//TODO sfml stuff here
+	glPushAttrib(GL_TRANSFORM_BIT | GL_VIEWPORT_BIT);
+	TextureLoader::checkError("glPushAttrib");
+	glPushMatrix();
+	TextureLoader::checkError("glPushMatrix");
+//    m_mainRenderWindow->pushGLStates()
+	m_mainRenderWindow->resetGLStates();
 	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
-	m_mainRenderWindow->draw(m_animationSystem);
+//	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
 	m_fixedTimeStepSystem.drawDebug();
 //	m_mainRenderWindow->popGLStates();
-
-	//TODO draw opengl stuff here
-	glClear(GL_DEPTH_BUFFER_BIT);
-   // m_cameraSystem.updateOpenglCamera();
-	m_openglTextureRenderer.render();
+	glPopMatrix();
+	glPopAttrib();
 
 	m_mainRenderWindow->display();
 

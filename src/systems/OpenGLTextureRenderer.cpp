@@ -31,7 +31,7 @@ void OpenGLTextureRenderer::OpenGLTextureRendererImpl::render(std::vector<anax::
 		b2Body* body = physicsComp.physicsBody;
 
 		glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);
-		TextureLoader::checkError("glBindTexture");
+				TextureLoader::checkError("glBindTexture");
 
 //		glDisableClientState(GL_NORMAL_ARRAY);
 //		TextureLoader::checkError("glDisableClientState");
@@ -46,32 +46,24 @@ void OpenGLTextureRenderer::OpenGLTextureRendererImpl::render(std::vector<anax::
 		}
 
 		glPushMatrix();
-		TextureLoader::checkError("glPushMatrix");
 
 //		b2Vec2 center = physicsComp.smoothedPosition;
 		b2Vec2 center = (body->GetPosition());
 
 		float angle = body->GetAngle();
 		glTranslatef(static_cast<float>(floor(center.x * M2P)), static_cast<float>(floor(center.y * M2P)), 0.0f);
-		TextureLoader::checkError("glTranslatef");
-
 		glRotatef(angle * 180.0 / M_PI, 0, 0, 1);
-		TextureLoader::checkError("glRotatef");
-
 
 		glBegin(GL_POLYGON); //begin drawing of polygon
-		TextureLoader::checkError("glBegin");
 		for (int i = 0; i < shape->GetVertexCount(); i++) {
-				glTexCoord2d(texCoordsVec[i].x, texCoordsVec[i].y);
-				TextureLoader::checkError("glTexCoord2d");
-
+			glTexCoord2d(texCoordsVec[i].x, texCoordsVec[i].y);
 			glVertex2f(floor(points[i].x * M2P), floor(points[i].y * M2P));
-			TextureLoader::checkError("glVertex2f");
-
-//			std::cout << "x: " << floor(points[i].x * M2P) << " y: " << floor(points[i].y * M2P) << std::endl;
 		}
 		glEnd(); //end drawing of polygon
 		glPopMatrix();
+
+		TextureLoader::checkError("gen");
+
 	}
 }
 
