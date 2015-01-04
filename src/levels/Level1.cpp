@@ -24,29 +24,42 @@ public:
 	lua_State* m_luaState;
 	B2WorldProxy box2dWorldProxy;
 	std::vector<b2Fixture*> m_fixturesInterestedInCollisions;
+	bool shouldCallScript = false;
 
 	LuaScriptLevelImpl(b2World& b2dworld, std::string levelScriptName) : box2dWorldProxy(b2dworld) {
 		m_luaState = luaL_newstate();
 		luabind::open(m_luaState);
 		luaL_openlibs(m_luaState);
-		std::string scriptPath = "lua-scripts/levels/" + levelScriptName;
-		if (luaL_dofile(m_luaState, scriptPath.c_str())) {
-			printf("%s\n", lua_tostring(m_luaState, -1));
+
+		if(!levelScriptName.empty()){
+			shouldCallScript = true;
+
+			std::string scriptPath = "lua-scripts/levels/" + levelScriptName;
+			if (luaL_dofile(m_luaState, scriptPath.c_str())) {
+				printf("%s\n", lua_tostring(m_luaState, -1));
+			}
+
+			ExportBox2d exportBox2d;
+			exportBox2d.exportToLua(m_luaState);
+
+			ExportSFML exportSFML;
+			exportSFML.exportToLua(m_luaState);
 		}
 
-		ExportBox2d exportBox2d;
-		exportBox2d.exportToLua(m_luaState);
 
-		ExportSFML exportSFML;
-		exportSFML.exportToLua(m_luaState);
 	}
 
 	~LuaScriptLevelImpl() {
+
 		lua_close(m_luaState);
 		std::cout << "deleted lua state" << std::endl;
 	}
 
 	void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
+
+		if(!shouldCallScript)
+			return;
+
 		std::cout << "loadlelve in c++" << std::endl;
 
 		try {
@@ -85,6 +98,9 @@ public:
 	}
 
 	void updateLevel() {
+		if(!shouldCallScript)
+			return;
+
 		try {
 			luabind::call_function<void>(m_luaState, "update");
 		} catch (luabind::error& e) {
@@ -115,6 +131,9 @@ public:
 	}
 
 	void filterContacts(b2Contact* contact,  const char* luaScriptFunctionName){
+		if(!shouldCallScript)
+			return;
+
 			for (auto fixture : m_fixturesInterestedInCollisions) {
 				if (fixture == contact->GetFixtureA() || fixture == contact->GetFixtureB()) {
 					try {

@@ -190,12 +190,18 @@ public:
 		b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 		b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 
-		SplitBody bodyToSetAsDynamic = decideBodyToSetAsDynamic(firstBody, secondBody, firstSplitDir.splitDirection);
-		if(bodyToSetAsDynamic == SplitBody::FIRST_BODY){
+		if (firstSplitDir.splitDirection == SplitDirection::NONE) {
 			firstBody->SetType(b2_dynamicBody);
-		}else if(bodyToSetAsDynamic == SplitBody::SECOND_BODY){
 			secondBody->SetType(b2_dynamicBody);
+		} else {
+			SplitBody bodyToSetAsDynamic = decideBodyToSetAsDynamic(firstBody, secondBody, firstSplitDir.splitDirection);
+			if (bodyToSetAsDynamic == SplitBody::FIRST_BODY) {
+				firstBody->SetType(b2_dynamicBody);
+			} else if (bodyToSetAsDynamic == SplitBody::SECOND_BODY) {
+				secondBody->SetType(b2_dynamicBody);
+			}
 		}
+
 	}
 
 	void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* body, std::vector<anax::Entity>& entities) {

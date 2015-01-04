@@ -7,7 +7,8 @@ enum class SplitDirection {
 		RIGHT,
 		LEFT,
 		TOP,
-		DOWN
+		DOWN,
+		NONE
 };
 
 

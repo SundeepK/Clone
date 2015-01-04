@@ -19,7 +19,7 @@ public:
 	std::unique_ptr<B2dSplitter> m_b2dSplitter;
     bool isleftPressed = false;
     sf::VertexArray m_sliceLine;
-    const float SPLITTER_LENGTH_LIMIT = 170;
+    const float SPLITTER_LENGTH_LIMIT = 200;
 
     sf::Vector2f getSplitterVec(const sf::Vector2f& playerPos, const sf::Vector2f& mousePos){
 		sf::Vector2f splitterVec = mousePos;
@@ -89,7 +89,6 @@ public:
 
 
 		void performBox2dSplit(const sf::Event& event,  sf::Vector2f cameraPos, b2Body* playerBody){
-
 			Vec playerPos(playerBody->GetPosition());
 			onLeftClick(event, cameraPos, playerPos.mToPix().toSFMLv());
 //		    processLeftMousePressed(event, cameraPos);

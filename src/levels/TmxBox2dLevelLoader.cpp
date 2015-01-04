@@ -15,6 +15,8 @@ extern "C"
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Rope.h>
 #include <game-objects/Boulder.h>
+#include <boost/algorithm/string.hpp>
+
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -36,6 +38,8 @@ public:
 		m_splitDirectionMap["left"] = SplitDirection::LEFT;
 		m_splitDirectionMap["top"] =  SplitDirection::TOP;
 		m_splitDirectionMap["down"] = SplitDirection::DOWN;
+		m_splitDirectionMap["none"] = SplitDirection::NONE;
+
 
 		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
 		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
@@ -67,6 +71,7 @@ public:
 
 
 	SplitDirection parseSplitDirection(std::string direction){
+		boost::algorithm::to_lower(direction);
 		auto splitDirection =  m_splitDirectionMap.find(direction);
 		std::cout << "dir: " << direction << std::endl;
     	assert (
@@ -90,7 +95,7 @@ public:
 			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
 
 			if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
-				std::cout << "unable to load texture from tmx" << std::endl;
+				std::cout << "unable to load texture from tmx: " <<  object.GetPropertyString("Texture") << std::endl;
 			texCoordsComp.image.flipVertically();
 			texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="60" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="TileLayer" width="50" height="200">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJwDAAA7EMl/1nKt2h0MNI4L/vHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXvfvAx/R0aKjRUeLjhYdLTpadLToaNHRstSx0LLUsUBHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06Wu7IHueyIs0=
+  </data>
+ </layer>
+ <objectgroup name="StaticObjects" width="50" height="200">
+  <object x="70" y="854" width="167" height="34"/>
+  <object x="1453" y="163" width="153" height="30"/>
+  <object x="292" y="16" width="988" height="15"/>
+ </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
+  <object name="lowersplit" x="288" y="35" width="45" height="583">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="1229" y="33" width="45" height="1062">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="581" y="33" width="45" height="1062">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="916" y="30" width="45" height="1062">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
+  <object name="PlayerEndPoint" x="1562" y="130" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="139" y="827" width="29" height="26"/>
+ </objectgroup>
+ <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25"/>
+ <objectgroup color="#ffaa00" name="Entities" width="50" height="60"/>
+</map>

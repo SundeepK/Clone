@@ -1,11 +1,15 @@
 function getLevelsToLoad()
-	local level1 = LevelObject()
-	level1.levelMapName = "level-1.tmx" 
-	level1.scriptName = "level1.lua"
-	
-	local level2 = LevelObject()
-  level2.levelMapName = "level-2.tmx" 
-  level2.scriptName = "level2.lua"
-	
-	return {level1, level2}
+
+	return {
+	      createLevel("level-3.tmx", ""),
+	      createLevel("level-1.tmx", "level1.lua"), 
+	      createLevel("level-2.tmx", "emptyLevelScript.lua")
+	      }
+end
+
+function createLevel(mapName, scriptName) 
+  local level = LevelObject()
+  level.levelMapName = mapName 
+  level.scriptName = scriptName
+  return level
 end
