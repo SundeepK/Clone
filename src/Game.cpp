@@ -4,7 +4,7 @@
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
 		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, 1280, 800)),
-		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld){
+		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld), m_ninjaSenseDetector(box2dWorld){
 	box2dWorld.SetContactListener(&m_sensorSystem);
 }
 
@@ -30,6 +30,8 @@ void Game::init()
 	m_anaxWorld.addSystem(m_sensorSystem);
 	m_anaxWorld.addSystem(m_levelEndDetectSystem);
 	m_anaxWorld.addSystem(m_breakableJointSystem);
+	//m_anaxWorld.addSystem(m_ninjaSenseDetector);
+
 
 	//m_anaxWorld.addSystem(m_filterCollisionsSystem);
 
@@ -80,6 +82,7 @@ void Game::update(float deltaTime) {
     m_tmxLevelLoader.update();
     m_levelEndDetectSystem.processEndLevel();
     m_breakableJointSystem.update(1/deltaTime);
+   // m_ninjaSenseDetector.checkForEntitiesAffectedByNinjaSense();
 }
 
 void Game::render() {
@@ -100,6 +103,7 @@ void Game::render() {
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
+	//m_mainRenderWindow->draw(m_ninjaSenseDetector);
 	m_fixedTimeStepSystem.drawDebug();
 //	m_mainRenderWindow->popGLStates();
 

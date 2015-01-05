@@ -4,9 +4,11 @@
 #include <components/PlayerTagComponent.h>
 #include <tmx/tmx2box2d.h>
 #include <SFML/Graphics.hpp>
+#include <components/PhysicsComponent.h>
 
 class NinjaSenseDetector::NinjaSenseDetectorImpl{
 
+public:
 	b2World m_b2world;
 	NinjaSenseEntityTagger m_ninjaSenseEntityTagger;
 	sf::RectangleShape m_ninjaSenseAABB;
@@ -23,19 +25,25 @@ class NinjaSenseDetector::NinjaSenseDetectorImpl{
 	    b2AABB aabb;
 	    aabb.lowerBound = b2Vec2(center.x - 5, center.y - 5);
 	    aabb.upperBound = b2Vec2(center.x + 5, center.y + 5);
-		m_b2world.QueryAABB(&m_ninjaSenseEntityTagger, aabb);
+		//m_b2world.QueryAABB(&m_ninjaSenseEntityTagger, aabb);
 
-		sf::Vector2 sfCenter = tmx::BoxToSfVec(b2Vec2(center.x - 5, center.y + 5));
+		sf::Vector2f sfCenter = tmx::BoxToSfVec(b2Vec2(center.x - 5, center.y + 5));
 		m_ninjaSenseAABB.setPosition(sfCenter.x, sfCenter.y);
+		m_ninjaSenseAABB.setSize(sf::Vector2f(30 * 5, 30 * 5));
+		m_ninjaSenseAABB.setFillColor(sf::Color::Green);
 
+	}
+
+	void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+		rt.draw(m_ninjaSenseAABB, states);
 	}
 
 };
 
-NinjaSenseDetector::NinjaSenseDetector(b2World& b2world) : m_impl(new NinjaSenseDetector(b2world)) {
+NinjaSenseDetector::NinjaSenseDetector(b2World& b2world) : Base(anax::ComponentFilter().requires<PlayerTagComponent>()), m_impl(new NinjaSenseDetector(b2world)) {
 }
 
-NinjaSenseDetector::~NinjaSenseDetector() : Base(anax::ComponentFilter().requires<PlayerTagComponent>()) {
+NinjaSenseDetector::~NinjaSenseDetector(){
 }
 
 void NinjaSenseDetector::checkForEntitiesAffectedByNinjaSense() {
@@ -43,3 +51,8 @@ void NinjaSenseDetector::checkForEntitiesAffectedByNinjaSense() {
 	m_impl->checkForEntitiesAffectedByNinjaSense();
 
 }
+
+void NinjaSenseDetector::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+	m_impl->draw(rt, states);
+}
+

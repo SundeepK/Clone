@@ -33,6 +33,7 @@
 #include <systems/DetectLevelEndSystem.h>
 #include <systems/FilterCollisionsSystem.h>
 #include <systems/BreakableJointSystem.h>
+#include <systems/NinjaSenseDetector.h>
 
 class Game {
 
@@ -72,6 +73,7 @@ class Game {
 		 DetectLevelEndSystem m_levelEndDetectSystem;
 		 FilterCollisionsSystem m_filterCollisionsSystem;
 		 BreakableJointSystem m_breakableJointSystem;
+		 NinjaSenseDetector m_ninjaSenseDetector;
 
 
 };

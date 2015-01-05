@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <anax/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 
 class NinjaSenseDetector : public anax::System<NinjaSenseDetector> , public sf::Drawable {
 public:
@@ -13,6 +15,9 @@ public:
 
 
 private:
+
+    void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
+
 
 	class NinjaSenseDetectorImpl;
 	std::unique_ptr<NinjaSenseDetector> m_impl;

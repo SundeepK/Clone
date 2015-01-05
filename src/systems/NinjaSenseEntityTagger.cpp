@@ -1,10 +1,13 @@
 #include <systems/NinjaSenseEntityTagger.h>
 #include <vector>
 #include <components/NinjaSenseComponent.h>
+#include <components/Texcoords.h>
+#include <components/SplitDirectionComponent.h>
+#include <components/PhysicsComponent.h>
 
 class NinjaSenseEntityTagger::NinjaSenseEntityTaggerImpl{
 
-
+public:
 	NinjaSenseEntityTaggerImpl(){
 	}
 
