@@ -151,6 +151,18 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     leftSensorComp.tag = "LeftSensor";
     sensorsComp.sensors.insert(std::pair<std::string,SensorComponent>("LeftSensor", leftSensorComp));
 
+    //ninja Sense AABB
+    b2PolygonShape aabbShape;
+    b2FixtureDef aabbFixtureDef;
+    aabbFixtureDef.shape = &aabbShape;
+
+    aabbFixtureDef.density = 0.0;
+    aabbFixtureDef.restitution = 0.0f;
+    aabbFixtureDef.friction = 0.0f;
+    aabbShape.SetAsBox(5.5, 5.5, b2Vec2(0,0), 0);
+    aabbFixtureDef.isSensor = true;
+    b2Fixture* aabbFixture = physComp.physicsBody->CreateFixture(&aabbFixtureDef);
+
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
 
@@ -162,6 +174,9 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 //    textureRectComp.rect = rect;
 //    textureRectComp.texture = texture;
 //    rect.setTexture(&textureRectComp.texture);
+
+
+
 
 	try {
 	    luabind::call_function<void>(luaState, "init", &box2dWorldProxy);
@@ -182,3 +197,4 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 
 	playerEntity.activate();
 }
+

@@ -20,7 +20,7 @@ private:
 
 
 	class NinjaSenseDetectorImpl;
-	std::unique_ptr<NinjaSenseDetector> m_impl;
+	std::unique_ptr<NinjaSenseDetectorImpl> m_impl;
 
 };
 

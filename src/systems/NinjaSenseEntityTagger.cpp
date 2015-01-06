@@ -4,6 +4,7 @@
 #include <components/Texcoords.h>
 #include <components/SplitDirectionComponent.h>
 #include <components/PhysicsComponent.h>
+#include <iostream>
 
 class NinjaSenseEntityTagger::NinjaSenseEntityTaggerImpl{
 
@@ -15,13 +16,15 @@ public:
 	}
 
 	bool ReportFixture(b2Fixture* fixture, std::vector<anax::Entity> entities) {
+	 	std::cout << "in report" << std::endl;
 		for(auto entity : entities){
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			b2Body* body = physicsComponent.physicsBody;
 			//we always assume body only has one fixture
 			//TODO do we need to iterate all body fixture?
 			if(fixture == body->GetFixtureList()){
-			 	entity.addComponent<NinjaSenseComponent>();
+			 //	entity.addComponent<NinjaSenseComponent>();
+			 	std::cout << "setting component" << std::endl;
 			}
 		}
 		return true;

@@ -30,7 +30,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_sensorSystem);
 	m_anaxWorld.addSystem(m_levelEndDetectSystem);
 	m_anaxWorld.addSystem(m_breakableJointSystem);
-	//m_anaxWorld.addSystem(m_ninjaSenseDetector);
+	m_anaxWorld.addSystem(m_ninjaSenseDetector);
 
 
 	//m_anaxWorld.addSystem(m_filterCollisionsSystem);
@@ -82,7 +82,7 @@ void Game::update(float deltaTime) {
     m_tmxLevelLoader.update();
     m_levelEndDetectSystem.processEndLevel();
     m_breakableJointSystem.update(1/deltaTime);
-   // m_ninjaSenseDetector.checkForEntitiesAffectedByNinjaSense();
+    m_ninjaSenseDetector.checkForEntitiesAffectedByNinjaSense();
 }
 
 void Game::render() {
@@ -103,7 +103,7 @@ void Game::render() {
 	m_mainRenderWindow->draw(m_mapLoader);
 	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
-	//m_mainRenderWindow->draw(m_ninjaSenseDetector);
+	m_mainRenderWindow->draw(m_ninjaSenseDetector);
 	m_fixedTimeStepSystem.drawDebug();
 //	m_mainRenderWindow->popGLStates();
 

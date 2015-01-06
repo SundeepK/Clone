@@ -2,12 +2,13 @@
 #define SRC_COMPONENTS_NINJASENSECOMPONENT_H_
 
 #include <anax/Component.hpp>
-
+#include <Box2D/Box2D.h>
 //brief tag class for now
 class NinjaSenseComponent  : public anax::Component<NinjaSenseComponent> {
 
-	public:
+public:
 
+	b2Fixture* ninjaSenseFixture;
 };
 
 
