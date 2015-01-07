@@ -34,6 +34,7 @@
 #include <systems/FilterCollisionsSystem.h>
 #include <systems/BreakableJointSystem.h>
 #include <systems/NinjaSenseDetector.h>
+#include <systems/NinjaSenseEntityTagger.h>
 
 class Game {
 
@@ -73,6 +74,7 @@ class Game {
 		 DetectLevelEndSystem m_levelEndDetectSystem;
 		 FilterCollisionsSystem m_filterCollisionsSystem;
 		 BreakableJointSystem m_breakableJointSystem;
+		 NinjaSenseEntityTagger m_ninjaSenseEntityTagger;
 		 NinjaSenseDetector m_ninjaSenseDetector;
 
 

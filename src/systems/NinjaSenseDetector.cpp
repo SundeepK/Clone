@@ -11,11 +11,11 @@ class NinjaSenseDetector::NinjaSenseDetectorImpl{
 
 public:
 	std::unique_ptr<b2World> m_b2world;
-	NinjaSenseEntityTagger m_ninjaSenseEntityTagger;
+	std::unique_ptr<NinjaSenseEntityTagger> m_ninjaSenseEntityTagger;
 	sf::RectangleShape m_ninjaSenseAABB;
 	static const int SIZE = 350;
 
-	NinjaSenseDetectorImpl(b2World& b2world) : m_b2world(&b2world) {}
+	NinjaSenseDetectorImpl(b2World& b2world, NinjaSenseEntityTagger& ninjaSenseEntityTrigger) : m_b2world(&b2world), m_ninjaSenseEntityTagger(&ninjaSenseEntityTrigger) {}
 	~NinjaSenseDetectorImpl(){}
 
 	void checkForEntitiesAffectedByNinjaSense(std::vector<anax::Entity>& entities) {
@@ -32,7 +32,7 @@ public:
 		m_ninjaSenseAABB.setSize(tmx::BoxToSfVec(b2Vec2(ninjaSense.ninjaSenseRectSize.x * 2, ninjaSense.ninjaSenseRectSize.y *2)));
 		m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30));
 
-		m_b2world->QueryAABB(&m_ninjaSenseEntityTagger, aabb);
+		m_b2world->QueryAABB(m_ninjaSenseEntityTagger.get(), aabb);
 
 	}
 
@@ -42,7 +42,7 @@ public:
 
 };
 
-NinjaSenseDetector::NinjaSenseDetector(b2World& b2world) : Base(anax::ComponentFilter().requires<PlayerTagComponent, NinjaSenseComponent>()), m_impl(new NinjaSenseDetectorImpl(b2world)) {
+NinjaSenseDetector::NinjaSenseDetector(b2World& b2world, NinjaSenseEntityTagger& ninjaSenseEntityTrigger) : Base(anax::ComponentFilter().requires<PlayerTagComponent, NinjaSenseComponent>()), m_impl(new NinjaSenseDetectorImpl(b2world, ninjaSenseEntityTrigger)) {
 }
 
 NinjaSenseDetector::~NinjaSenseDetector(){

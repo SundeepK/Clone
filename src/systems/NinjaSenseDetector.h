@@ -5,10 +5,11 @@
 #include <anax/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
+#include <systems/NinjaSenseEntityTagger.h>
 
 class NinjaSenseDetector : public anax::System<NinjaSenseDetector> , public sf::Drawable {
 public:
-	NinjaSenseDetector(b2World& b2world);
+	NinjaSenseDetector(b2World& b2world, NinjaSenseEntityTagger& ninjaSenseEntityTrigger);
 	~NinjaSenseDetector();
 
 	void checkForEntitiesAffectedByNinjaSense();
