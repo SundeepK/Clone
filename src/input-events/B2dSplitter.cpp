@@ -195,28 +195,28 @@ public:
 			firstBody->SetType(b2_dynamicBody);
 			secondBody->SetType(b2_dynamicBody);
 
-			firstBody->ApplyForceToCenter(b2Vec2(10, 10), true);
-			firstBody->SetGravityScale(0.2f);
-			firstBody->SetLinearDamping(10.0f);
-
-			secondBody->ApplyForceToCenter(b2Vec2(10, 10), true);
-			secondBody->SetGravityScale(0.2f);
-			secondBody->SetLinearDamping(10.0f);
+//			firstBody->ApplyForceToCenter(b2Vec2(10, 10), true);
+//			firstBody->SetGravityScale(0.2f);
+//			firstBody->SetLinearDamping(10.0f);
+//
+//			secondBody->ApplyForceToCenter(b2Vec2(10, 10), true);
+//			secondBody->SetGravityScale(0.2f);
+//			secondBody->SetLinearDamping(10.0f);
 
 		} else {
 			SplitBody bodyToSetAsDynamic = decideBodyToSetAsDynamic(firstBody, secondBody, firstSplitDir.splitDirection);
 			if (bodyToSetAsDynamic == SplitBody::FIRST_BODY) {
 				firstBody->SetType(b2_dynamicBody);
-				firstBody->ApplyForceToCenter(b2Vec2(10, 10), true);
-				firstBody->SetGravityScale(0.2f);
-				firstBody->SetLinearDamping(10.0f);
+//				firstBody->ApplyForceToCenter(b2Vec2(10, 10), true);
+//				firstBody->SetGravityScale(0.2f);
+//				firstBody->SetLinearDamping(10.0f);
 
 
 			} else if (bodyToSetAsDynamic == SplitBody::SECOND_BODY) {
 				secondBody->SetType(b2_dynamicBody);
-				secondBody->ApplyForceToCenter(b2Vec2(10, 10), true);
-				secondBody->SetGravityScale(0.2f);
-				secondBody->SetLinearDamping(10.0f);
+//				secondBody->ApplyForceToCenter(b2Vec2(10, 10), true);
+//				secondBody->SetGravityScale(0.2f);
+//				secondBody->SetLinearDamping(10.0f);
 
 
 			}

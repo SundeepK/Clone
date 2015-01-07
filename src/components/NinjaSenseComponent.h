@@ -9,6 +9,7 @@ class NinjaSenseComponent  : public anax::Component<NinjaSenseComponent> {
 public:
 
 	b2Fixture* ninjaSenseFixture;
+	b2Vec2 ninjaSenseRectSize;
 };
 
 

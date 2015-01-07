@@ -5,6 +5,7 @@
 #include <components/SplitDirectionComponent.h>
 #include <components/PhysicsComponent.h>
 #include <iostream>
+#include <game-objects/GameObjectTag.h>
 
 class NinjaSenseEntityTagger::NinjaSenseEntityTaggerImpl{
 
@@ -15,21 +16,18 @@ public:
 	~NinjaSenseEntityTaggerImpl() {
 	}
 
-	bool ReportFixture(b2Fixture* fixture, std::vector<anax::Entity> entities) {
-	 	std::cout << "in report" << std::endl;
-		for(auto entity : entities){
-			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
-			b2Body* body = physicsComponent.physicsBody;
-			//we always assume body only has one fixture
-			//TODO do we need to iterate all body fixture?
-			if(fixture == body->GetFixtureList()){
+	bool ReportFixture(b2Fixture* fixture, std::vector<anax::Entity>& entities) {
+		if(fixture->GetFilterData().categoryBits == GameObjectTag::SPLITTABLE_OBJECT){
+			b2Body* body = fixture->GetBody();
+			b2Vec2 velocity = body->GetLinearVelocity();
+			body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			body->SetGravityScale(0.0f);
+			body->SetAngularDamping(100.0f);
 			 //	entity.addComponent<NinjaSenseComponent>();
-			 	std::cout << "setting component" << std::endl;
-			}
+			 std::cout << "setting component" << std::endl;
 		}
 		return true;
 	}
-
 
 };
 

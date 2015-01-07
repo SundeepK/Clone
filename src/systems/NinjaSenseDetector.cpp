@@ -5,6 +5,7 @@
 #include <tmx/tmx2box2d.h>
 #include <SFML/Graphics.hpp>
 #include <components/PhysicsComponent.h>
+#include <components/NinjaSenseComponent.h>
 
 class NinjaSenseDetector::NinjaSenseDetectorImpl{
 
@@ -18,28 +19,20 @@ public:
 	~NinjaSenseDetectorImpl(){}
 
 	void checkForEntitiesAffectedByNinjaSense(std::vector<anax::Entity>& entities) {
-
+		//we only have one entity here which is the player
 		auto playerEntity = entities[0];
 	    auto& physicsComp = playerEntity.getComponent<PhysicsComponent>();
-	    b2Body* body = physicsComp.physicsBody;
-	    b2Vec2 center = body->GetWorldCenter();
+	    auto& ninjaSense =  playerEntity.getComponent<NinjaSenseComponent>();
 
-	    int centerPoint = (SIZE/2)/30;
-	    sf::Vector2f sfSize(centerPoint,centerPoint);
-		sf::Vector2f sfCenter = tmx::BoxToSfVec(b2Vec2(center.x - sfSize.x, center.y - sfSize.y));
+	    b2AABB aabb = ninjaSense.ninjaSenseFixture->GetAABB(0);
 
-		m_ninjaSenseAABB.setPosition(sfCenter.x, sfCenter.y);
-		m_ninjaSenseAABB.setSize(sf::Vector2f(SIZE, SIZE));
+		sf::Vector2f drawableNinjaSensePos = tmx::BoxToSfVec(b2Vec2(aabb.lowerBound.x, aabb.lowerBound.y ));
+
+		m_ninjaSenseAABB.setPosition(drawableNinjaSensePos.x, drawableNinjaSensePos.y);
+		m_ninjaSenseAABB.setSize(tmx::BoxToSfVec(b2Vec2(ninjaSense.ninjaSenseRectSize.x * 2, ninjaSense.ninjaSenseRectSize.y *2)));
 		m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30));
 
-	    b2AABB aabb;
-	    aabb.lowerBound = tmx::SfToBoxVec(sf::Vector2f(m_ninjaSenseAABB.getPosition().x, m_ninjaSenseAABB.getPosition().y + SIZE));
-	    aabb.upperBound = tmx::SfToBoxVec(sf::Vector2f(m_ninjaSenseAABB.getPosition().x + SIZE, m_ninjaSenseAABB.getPosition().y));
-
-//	    aabb.lowerBound = b2Vec2(center.x - 5, center.y - 5);
-//	    aabb.upperBound = b2Vec2(center.x + 5, center.y + 5);
 		m_b2world->QueryAABB(&m_ninjaSenseEntityTagger, aabb);
-
 
 	}
 
@@ -49,7 +42,7 @@ public:
 
 };
 
-NinjaSenseDetector::NinjaSenseDetector(b2World& b2world) : Base(anax::ComponentFilter().requires<PlayerTagComponent>()), m_impl(new NinjaSenseDetectorImpl(b2world)) {
+NinjaSenseDetector::NinjaSenseDetector(b2World& b2world) : Base(anax::ComponentFilter().requires<PlayerTagComponent, NinjaSenseComponent>()), m_impl(new NinjaSenseDetectorImpl(b2world)) {
 }
 
 NinjaSenseDetector::~NinjaSenseDetector(){

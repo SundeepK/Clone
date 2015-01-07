@@ -16,6 +16,7 @@ extern "C"
 #include <game-objects/Rope.h>
 #include <game-objects/Boulder.h>
 #include <boost/algorithm/string.hpp>
+#include <game-objects/GameObjectTag.h>
 
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
@@ -107,6 +108,10 @@ public:
 			} else {
 				physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
 			}
+
+			b2Filter filter;
+			filter.categoryBits = GameObjectTag::SPLITTABLE_OBJECT;;
+			physComp.physicsBody->GetFixtureList()->SetFilterData(filter);
 
 			splitDirectionComp.splitDirection = parseSplitDirection(object.GetPropertyString("SplitDir"));
 

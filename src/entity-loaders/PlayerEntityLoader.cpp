@@ -3,6 +3,8 @@
 #include <lua-exports/ExportBox2d.h>
 #include <boost/scoped_ptr.hpp>
 #include <lua-exports/B2WorldProxy.h>
+#include <components/NinjaSenseComponent.h>
+#include <game-objects/GameObjectTag.h>
 
 void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
 
@@ -76,6 +78,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     auto& physComp = playerEntity.addComponent<PhysicsComponent>();
     auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
   //  auto& fixtureMap = playerEntity.addComponent<FixtureMapComponent>();
+    auto& ninjaSense = playerEntity.addComponent<NinjaSenseComponent>();
+
 
     auto startPositionVec = loadedMapData["PlayerStartPoint"].GetPosition();
    // std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
@@ -162,6 +166,11 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     aabbShape.SetAsBox(5.5, 5.5, b2Vec2(0,0), 0);
     aabbFixtureDef.isSensor = true;
     b2Fixture* aabbFixture = physComp.physicsBody->CreateFixture(&aabbFixtureDef);
+
+    ninjaSense.ninjaSenseFixture = aabbFixture;
+    ninjaSense.ninjaSenseRectSize = b2Vec2(5.5f, 5.5f);
+
+
 
     sf::RectangleShape rect(sf::Vector2f(20,20));
     rect.setPosition(sf::Vector2f(playerBody->GetPosition().x,playerBody->GetPosition().y));
