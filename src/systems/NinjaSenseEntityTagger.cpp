@@ -6,10 +6,14 @@
 #include <components/PhysicsComponent.h>
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
+#include <components/NinjaDataComponent.h>
 
 class NinjaSenseEntityTagger::NinjaSenseEntityTaggerImpl{
 
 public:
+
+	sf::Clock m_clock;
+
 	NinjaSenseEntityTaggerImpl(){
 	}
 
@@ -17,18 +21,26 @@ public:
 	}
 
 	bool ReportFixture(b2Fixture* fixture, std::vector<anax::Entity>& entities) {
-		 std::cout << "size" << entities.size() << std::endl;
-
 		for(anax::Entity entity: entities){
 			auto& physicsComp = entity.getComponent<PhysicsComponent>();
 			if(fixture->GetFilterData().categoryBits == GameObjectTag::SPLITTABLE_OBJECT && fixture->GetBody() == physicsComp.physicsBody ){
-				b2Body* body = fixture->GetBody();
-				b2Vec2 velocity = body->GetLinearVelocity();
-				body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-				body->SetGravityScale(0.0f);
-				body->SetAngularDamping(100.0f);
+
+				if (fixture->GetBody() == physicsComp.physicsBody) {
+					std::cout << "setting ninja sense" << std::endl;
+					auto& ninjaSenseDataComp = entity.getComponent<NinjaDataComponent>();
+					ninjaSenseDataComp.lastTimeNinjaSenseApplied = m_clock.getElapsedTime();
+					ninjaSenseDataComp.isNinjaSenseApplied = true;
+					b2Body* body = fixture->GetBody();
+					b2Vec2 velocity = body->GetLinearVelocity();
+					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+					body->SetGravityScale(0.0f);
+					body->SetAngularDamping(100.0f);
+					body->SetLinearDamping(100.0f);
+					body->ApplyTorque(10,true);
+				}
+
+
 				 //	entity.addComponent<NinjaSenseComponent>();
-				 std::cout << "setting component" << std::endl;
 			}
 		}
 
@@ -39,7 +51,7 @@ public:
 };
 
 
-NinjaSenseEntityTagger::NinjaSenseEntityTagger() : Base(anax::ComponentFilter().requires<Texcoords, PhysicsComponent>()), 	m_impl(new NinjaSenseEntityTaggerImpl()) {
+NinjaSenseEntityTagger::NinjaSenseEntityTagger() : Base(anax::ComponentFilter().requires<Texcoords, NinjaDataComponent, PhysicsComponent>()), 	m_impl(new NinjaSenseEntityTaggerImpl()) {
 }
 
 NinjaSenseEntityTagger::~NinjaSenseEntityTagger() {

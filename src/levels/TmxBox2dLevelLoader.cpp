@@ -17,6 +17,7 @@ extern "C"
 #include <game-objects/Boulder.h>
 #include <boost/algorithm/string.hpp>
 #include <game-objects/GameObjectTag.h>
+#include <components/NinjaDataComponent.h>
 
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
@@ -94,6 +95,8 @@ public:
 			auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 			auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+			auto& ninjaData = objectEntity.addComponent<NinjaDataComponent>();
+
 
 			if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
 				std::cout << "unable to load texture from tmx: " <<  object.GetPropertyString("Texture") << std::endl;

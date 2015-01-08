@@ -34,7 +34,7 @@ int main()
 
 	SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
     b2world.SetDebugDraw(&m_debugDrawer);
-	m_debugDrawer.SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit);
+	m_debugDrawer.SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit );
 
     Game game(b2world, mainRenderWindow);
     game.init();

@@ -11,7 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <functional>
-
+#include <components/NinjaDataComponent.h>
 struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Entity, anax::Entity>&, bool>
 {
     bool operator()(std::pair<anax::Entity, anax::Entity>& entityPair) const
@@ -35,7 +35,6 @@ struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Ent
 };
 
 class B2dSplitter::B2dSplitterImpl{
-	sf::Clock m_clock;
 
 public:
 
@@ -51,6 +50,7 @@ public:
 	~B2dSplitterImpl(){
 	}
 
+	sf::Clock m_clock;
 	Splitter m_splitter;
     std::unique_ptr<anax::World> m_anaxWorld;
     TextureMapper m_textureMapper;
@@ -82,6 +82,10 @@ public:
 	    auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 	    auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 	    auto& splitdirection = objectEntity.addComponent<SplitDirectionComponent>();
+	    auto& ninjaData = objectEntity.addComponent<NinjaDataComponent>();
+	    ninjaData.isNinjaSenseApplied = true;
+	    ninjaData.lastTimeNinjaSenseApplied = m_clock.getElapsedTime();
+
 	    auto& ignoreCollisionFilter = objectEntity.addComponent<IgnoreCollisionComponent>();
 
 	    ignoreCollisionFilter.reason = IgnoreCollisionReason::NEW_SPLIT_BODY;

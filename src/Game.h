@@ -35,6 +35,7 @@
 #include <systems/BreakableJointSystem.h>
 #include <systems/NinjaSenseDetector.h>
 #include <systems/NinjaSenseEntityTagger.h>
+#include <systems/NinjaSenseRemoverSystem.h>
 
 class Game {
 
@@ -76,6 +77,7 @@ class Game {
 		 BreakableJointSystem m_breakableJointSystem;
 		 NinjaSenseEntityTagger m_ninjaSenseEntityTagger;
 		 NinjaSenseDetector m_ninjaSenseDetector;
+		 NinjaSenseRemoverSystem m_ninjaSenseRemoverSystem;
 
 
 };

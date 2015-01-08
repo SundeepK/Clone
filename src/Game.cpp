@@ -31,6 +31,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_levelEndDetectSystem);
 	m_anaxWorld.addSystem(m_breakableJointSystem);
 	m_anaxWorld.addSystem(m_ninjaSenseEntityTagger);
+	m_anaxWorld.addSystem(m_ninjaSenseRemoverSystem);
 	m_anaxWorld.addSystem(m_ninjaSenseDetector);
 
 
@@ -73,6 +74,7 @@ void Game::update(float deltaTime) {
 	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
 //    m_filterCollisionsSystem.filterCollisions();
 	m_anaxWorld.refresh();
+    m_ninjaSenseRemoverSystem.update();
   //  m_actionController.update(*m_mainRenderWindow.get());
   //  m_playerControlsSystem.update(deltaTime);
   //  m_box2dWorld.step(deltaTime);
@@ -102,9 +104,9 @@ void Game::render() {
 //	m_mainRenderWindow->resetGLStates();
 	m_mainRenderWindow->draw(m_cameraSystem);
 	m_mainRenderWindow->draw(m_mapLoader);
+	m_mainRenderWindow->draw(m_ninjaSenseDetector);
 	m_mainRenderWindow->draw(m_animationSystem);
 	m_mainRenderWindow->draw(m_mouseSplitterSystem);
-	m_mainRenderWindow->draw(m_ninjaSenseDetector);
 	m_fixedTimeStepSystem.drawDebug();
 //	m_mainRenderWindow->popGLStates();
 
