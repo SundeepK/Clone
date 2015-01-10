@@ -108,6 +108,7 @@ public:
 		m_entitiesToKill.insert(entity);
 		b2Fixture* fixture = oldBodyToSplit->GetFixtureList();
 		newSplitB2bodyBuilder.setcategoryBits(fixture->GetFilterData().categoryBits);
+		//TODO set to 1 once reliably can find area of shape to prevent too small object from ebing split
 		newSplitB2bodyBuilder.setDensity(0.01f);
 		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world);
 		entitiesToFill.push_back(createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, entity));
@@ -229,6 +230,8 @@ public:
 	}
 
 	void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* body, std::vector<anax::Entity>& entities) {
+//		if (body->GetMass() < 0.1f && body->GetType() != b2_staticBody) return;
+		//TODO use area of shape to prevent too small objects being split
 		if (body->GetMass() < 0.1f && body->GetType() != b2_staticBody) return;
 		std::vector<anax::Entity> newlyCreatedEntities;
 		for (auto builder : splitBodies) {

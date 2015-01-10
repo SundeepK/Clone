@@ -169,7 +169,6 @@ public:
 				for (auto entity : entities) {
 					auto& ninjaSenseComp = entity.getComponent<NinjaSenseComponent>();
 					ninjaSenseComp.isNinjaSenseTriggered = false;
-					std::cout << "ninjaSenseDisabled" << std::endl;
 				}
 				break;
 			}
@@ -351,7 +350,6 @@ public:
 		 return [this](float,  anax::Entity& entity){
 			 auto& ninjaSenseComp = entity.getComponent<NinjaSenseComponent>();
 			 ninjaSenseComp.isNinjaSenseTriggered = true;
-			 std::cout << "ninjaSenseTriggered" << std::endl;
 		};
 	}
 
