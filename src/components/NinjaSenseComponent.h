@@ -10,6 +10,7 @@ public:
 
 	b2Fixture* ninjaSenseFixture;
 	b2Vec2 ninjaSenseRectSize;
+	bool isNinjaSenseTriggered = false;
 };
 
 

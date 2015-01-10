@@ -11,7 +11,9 @@ enum class PlayerState {
 		MOVE_DOWN = 5,
 		MOVE_LEFT_RELEASED = 6,
 		MOVE_RIGHT_RELEASED = 7,
-		JUMP_RLEASED
+		JUMP_RLEASED = 8,
+		NINJA_SENSE = 9,
+		NINJA_SENSE_RELEASED = 10
 };
 
 namespace std

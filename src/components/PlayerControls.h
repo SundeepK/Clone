@@ -11,9 +11,10 @@ class PlayerControls
 	    typedef sf::Keyboard::Key Key;
 
 	     static const Key JUMP_KEY = Key::W;
-	     static  const Key LEFT_KEY = Key::A;
+	     static const Key LEFT_KEY = Key::A;
 	     static const Key DOWN_KEY = Key::S;
-	     static  const Key RIGHT_KEY = Key::D;
+	     static const Key RIGHT_KEY = Key::D;
+	     static const Key LEFT_SHIFT_KEY = Key::LShift;
 
 };
 

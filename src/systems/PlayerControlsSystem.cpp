@@ -12,6 +12,7 @@
 #include <iostream>
 #include <components/Sensors.h>
 #include <components/SensorComponent.h>
+#include <components/NinjaSenseComponent.h>
 
 class PlayerControlsSystem::PlayerControlsSystemImpl{
 
@@ -32,12 +33,17 @@ class PlayerControlsSystem::PlayerControlsSystemImpl{
 public:
 	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY),
 								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released),
-								m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released), m_jumpReleased(PlayerControls::JUMP_KEY, ActionType::Released){
+								m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released), m_jumpReleased(PlayerControls::JUMP_KEY, ActionType::Released),
+								m_ninjaSense(PlayerControls::LEFT_SHIFT_KEY), m_ninjaSenseReleased(PlayerControls::LEFT_SHIFT_KEY, ActionType::Released){
 		 m_actionController[PlayerState::MOVE_LEFT] = m_moveLeft ;
 	     m_actionController[PlayerState::MOVE_RIGHT] = m_moveRight ;
 		 m_actionController[PlayerState::JUMP] = m_jump ;
 		 m_actionController[PlayerState::MOVE_DOWN] = m_moveDown ;
 		 m_actionController[PlayerState::JUMP_RLEASED] = m_jumpReleased;
+		 m_actionController[PlayerState::NINJA_SENSE] = m_ninjaSense;
+		 m_actionController[PlayerState::NINJA_SENSE_RELEASED] = m_ninjaSenseReleased;
+
+
 //		 m_actionController[PlayerState::MOVE_LEFT_RELEASED] = m_moveLeftReleased ;
 //		 m_actionController[PlayerState::MOVE_RIGHT_RELEASED] = m_moveRightReleased ;
 
@@ -47,6 +53,9 @@ public:
 		 m_actionController.addCallback(PlayerState::MOVE_LEFT_RELEASED,  movePlayerLeftReleased());
 		 m_actionController.addCallback(PlayerState::MOVE_RIGHT_RELEASED,  movePlayerRightReleased());
 		 m_actionController.addCallback(PlayerState::JUMP_RLEASED,  jumpReleased());
+		 m_actionController.addCallback(PlayerState::NINJA_SENSE,  ninjaSenseTriggered());
+
+
 
 
 		// m_actionController.addCallback(PlayerState::MOVE_DOWN,  movePlayerDown());
@@ -61,6 +70,8 @@ public:
 	Action m_jumpReleased;
 	Action m_jump;
 	Action m_moveDown;
+	Action m_ninjaSense;
+	Action m_ninjaSenseReleased;
 
 	sf::Clock m_clock;
 	sf::Time m_changeInDirectionTime;
@@ -93,9 +104,9 @@ public:
 
 	const float m_impulse = 35.0f;
 	const float m_slowDownForce = 5.f;
-	const float m_jumpImpulse = 30.0f;
-	const float m_wallJumpImpulse = 40.5f;
-	const float m_wallJumpForce = 20.0f;
+	const float m_jumpImpulse = 15.0f;
+	const float m_wallJumpImpulse = 25.5f;
+	const float m_wallJumpForce = 18.0f;
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
@@ -132,7 +143,7 @@ public:
 				auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 				b2Body* body = physicsComponent.physicsBody;
 				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
-				body->SetGravityScale(2);
+				body->SetGravityScale(1);
 
 				auto &sensorComps = entity.getComponent<Sensor>();
 				auto sensor = sensorComps.sensors["FootSensor"];
@@ -154,6 +165,15 @@ public:
 	        		m_jumpButtonReleased = true;
 	        		break;
 	        }
+			if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_SHIFT_KEY) {
+				for (auto entity : entities) {
+					auto& ninjaSenseComp = entity.getComponent<NinjaSenseComponent>();
+					ninjaSenseComp.isNinjaSenseTriggered = false;
+					std::cout << "ninjaSenseDisabled" << std::endl;
+				}
+				break;
+			}
+
 	    }
 
 	    movedLeft = 0;
@@ -327,6 +347,13 @@ public:
 	}
 
 
+	std::function<void (float,  anax::Entity& entity)> ninjaSenseTriggered() {
+		 return [this](float,  anax::Entity& entity){
+			 auto& ninjaSenseComp = entity.getComponent<NinjaSenseComponent>();
+			 ninjaSenseComp.isNinjaSenseTriggered = true;
+			 std::cout << "ninjaSenseTriggered" << std::endl;
+		};
+	}
 
 	std::function<void (float, anax::Entity& entity)> playerJump() {
 		return [this](float,  anax::Entity& entity) {

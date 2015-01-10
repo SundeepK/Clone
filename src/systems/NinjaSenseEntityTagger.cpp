@@ -26,7 +26,6 @@ public:
 			if(fixture->GetFilterData().categoryBits == GameObjectTag::SPLITTABLE_OBJECT && fixture->GetBody() == physicsComp.physicsBody ){
 
 				if (fixture->GetBody() == physicsComp.physicsBody) {
-					std::cout << "setting ninja sense" << std::endl;
 					auto& ninjaSenseDataComp = entity.getComponent<NinjaDataComponent>();
 					ninjaSenseDataComp.lastTimeNinjaSenseApplied = m_clock.getElapsedTime();
 					ninjaSenseDataComp.isNinjaSenseApplied = true;
@@ -34,9 +33,8 @@ public:
 					b2Vec2 velocity = body->GetLinearVelocity();
 					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 					body->SetGravityScale(0.0f);
-					body->SetAngularDamping(100.0f);
+					body->SetAngularDamping(60.0f);
 					body->SetLinearDamping(100.0f);
-					body->ApplyTorque(10,true);
 				}
 
 

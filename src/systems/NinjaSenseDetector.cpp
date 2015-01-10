@@ -24,15 +24,19 @@ public:
 	    auto& physicsComp = playerEntity.getComponent<PhysicsComponent>();
 	    auto& ninjaSense =  playerEntity.getComponent<NinjaSenseComponent>();
 
-	    b2AABB aabb = ninjaSense.ninjaSenseFixture->GetAABB(0);
+	    if(ninjaSense.isNinjaSenseTriggered){
+			b2AABB aabb = ninjaSense.ninjaSenseFixture->GetAABB(0);
 
-		sf::Vector2f drawableNinjaSensePos = tmx::BoxToSfVec(b2Vec2(aabb.lowerBound.x, aabb.lowerBound.y ));
+			sf::Vector2f drawableNinjaSensePos = tmx::BoxToSfVec(b2Vec2(aabb.lowerBound.x, aabb.lowerBound.y ));
 
-		m_ninjaSenseAABB.setPosition(drawableNinjaSensePos.x, drawableNinjaSensePos.y);
-		m_ninjaSenseAABB.setSize(tmx::BoxToSfVec(b2Vec2(ninjaSense.ninjaSenseRectSize.x * 2, ninjaSense.ninjaSenseRectSize.y *2)));
-		m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30));
+			m_ninjaSenseAABB.setPosition(drawableNinjaSensePos.x, drawableNinjaSensePos.y);
+			m_ninjaSenseAABB.setSize(tmx::BoxToSfVec(b2Vec2(ninjaSense.ninjaSenseRectSize.x * 2, ninjaSense.ninjaSenseRectSize.y *2)));
+			m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30));
 
-		m_b2world->QueryAABB(m_ninjaSenseEntityTagger.get(), aabb);
+			m_b2world->QueryAABB(m_ninjaSenseEntityTagger.get(), aabb);
+	    }else{
+	    	m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30, 0));
+	    }
 
 	}
 
