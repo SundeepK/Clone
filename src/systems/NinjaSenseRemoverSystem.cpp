@@ -26,6 +26,8 @@ public:
 					physicsComp.physicsBody->SetGravityScale(1.0f);
 					physicsComp.physicsBody->SetLinearDamping(1.0f);
 					physicsComp.physicsBody->SetLinearVelocity(b2Vec2(0, 7.0f));
+					physicsComp.physicsBody->GetFixtureList()->SetDensity(0.1f);
+					physicsComp.physicsBody->ResetMassData();
 					ninjaSenseDataComp.isNinjaSenseApplied = false;
 				}
 			}

@@ -109,7 +109,8 @@ public:
 		b2Fixture* fixture = oldBodyToSplit->GetFixtureList();
 		newSplitB2bodyBuilder.setcategoryBits(fixture->GetFilterData().categoryBits);
 		//TODO set to 1 once reliably can find area of shape to prevent too small object from ebing split
-		newSplitB2bodyBuilder.setDensity(0.01f);
+		newSplitB2bodyBuilder.setDensity(0.1f);
+		newSplitB2bodyBuilder.setFriction(0.0f);
 		b2Body* newSplitBody = newSplitB2bodyBuilder.build(*m_world);
 		entitiesToFill.push_back(createSplitBodyEntityFromOldTexCoords(newSplitBody, oldBodyToSplit, entity));
 	}

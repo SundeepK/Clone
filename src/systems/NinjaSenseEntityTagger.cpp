@@ -35,6 +35,8 @@ public:
 					body->SetGravityScale(0.0f);
 					body->SetAngularDamping(60.0f);
 					body->SetLinearDamping(100.0f);
+					fixture->SetDensity(0.01f);
+					body->ResetMassData();
 				}
 
 

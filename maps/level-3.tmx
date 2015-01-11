@@ -9,12 +9,22 @@
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
-  <object x="69" y="404" width="167" height="34"/>
-  <object x="1428" y="305" width="153" height="30"/>
-  <object x="292" y="16" width="988" height="15"/>
+  <object x="38" y="1847" width="167" height="34"/>
+  <object x="128" y="226" width="153" height="30"/>
+  <object x="233" y="1410" width="988" height="15"/>
+  <object x="65" y="3" width="1477" height="16"/>
+  <object x="67" y="19" width="30" height="234"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="549" y="33" width="42" height="454">
+  <object name="lowersplit" x="424" y="1428" width="42" height="454">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="706" y="1866" width="503" height="43">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
@@ -22,18 +32,50 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="914" y="347" width="503" height="43">
+  <object name="lowersplit" x="1508" y="22" width="37" height="806">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="1514" y="1017" width="37" height="806">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="1228" y="496" width="37" height="806">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="359" y="225" width="249" height="30">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="1227" y="23" width="36" height="381">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
     <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
-  <object name="PlayerEndPoint" x="1502" y="265" width="31" height="31"/>
-  <object name="PlayerStartPoint" x="117" y="359" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="156" y="192" width="31" height="31"/>
+  <object name="PlayerStartPoint" x="67" y="1818" width="29" height="26"/>
  </objectgroup>
  <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25"/>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60"/>

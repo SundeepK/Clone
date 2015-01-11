@@ -5,46 +5,30 @@
  </tileset>
  <layer name="TileLayer" width="50" height="200">
   <data encoding="base64" compression="zlib">
-   eJzt2sENhDAMAEGKoRT6r4kWOImQlW9G8jfO5p3j+N65YecKOlp0tDztOB/OLr90lOlo0dGio0VHi44WHS06WnS06GjR0aKjRUfLv3XUrejY8TY6vj1zx04dLTpadLToaNHRoqNFR4uOFh0tT/+cvT0rOibQ0TKlAwAAAAAAAAAAAAAACq7dF3iJjhYdLTpadLToaNHRoqNFR4uOlkkdE1omdUygo0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS3XkLkBvBE08Q==
+   eJzt2rENw0AMBEEV41LUf01ugYGsXxMzwOVcfPrXBXDOZ7i6f7hxQkeLjndM79PxDh0tOlp0tOho0dGypWNKR4uOFh0tOjhty9vpaNHRoqNFR4uOFh0tOlp0tOho0dEy/XP29H7RsYGOli0dAAAAAAAAAAAAAABQcJ8+4CE6WnS06GjR0aKjRUeLjhYdLTpaNnVsaNnUsYGOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tNxL9gXaIDFt
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
   <object x="3" y="1107" width="32" height="799"/>
   <object x="37" y="1759" width="922" height="34"/>
-  <object x="1247" y="193" width="33" height="831"/>
+  <object x="1247" y="193" width="31" height="832"/>
   <object x="1248" y="163" width="309" height="28"/>
+  <object x="927" y="355" width="34" height="418"/>
  </objectgroup>
- <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="244" y="419" width="45" height="1062">
-   <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="none"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="plankssmall.png"/>
-   </properties>
-  </object>
-  <object name="lowersplit" x="502" y="511" width="45" height="1062">
-   <properties>
-    <property name="Body" value="static"/>
-    <property name="SplitDir" value="down"/>
-    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
-    <property name="Texture" value="plankssmall.png"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200"/>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
   <object name="PlayerEndPoint" x="1348" y="125" width="31" height="31"/>
   <object name="PlayerStartPoint" x="72" y="1715" width="29" height="26"/>
  </objectgroup>
  <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25">
-  <object name="MovingPlatform1" type="MovingPlatform" x="1247" y="1058" width="31" height="439">
+  <object name="MovingPlatform1" type="MovingPlatform" x="1250" y="1087" width="31" height="439">
    <properties>
     <property name="Body" value="kinematic"/>
    </properties>
   </object>
-  <object name="PrismaticButton1" x="605" y="1761" width="64" height="32"/>
+  <object name="PrismaticButton1" x="419" y="1762" width="64" height="32"/>
  </objectgroup>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
-  <object name="RopeBox" x="607" y="1215" width="35" height="35"/>
+  <object name="RopeBox" x="434" y="1222" width="35" height="35"/>
  </objectgroup>
 </map>
