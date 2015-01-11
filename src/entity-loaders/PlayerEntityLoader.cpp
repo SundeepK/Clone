@@ -102,14 +102,15 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
 
 
     //foot sensor
-    b2PolygonShape footShape;
+    b2CircleShape footShape;
     b2FixtureDef footSensor;
     footSensor.shape = &footShape;
 
-    footSensor.density = 1;
+    footSensor.density = 0.0f;
     footSensor.restitution = 0.0f;
-    footShape.SetAsBox(0.15, 0.15, b2Vec2(0,0.7), 0);
+    footShape.m_radius = 0.40;
     footSensor.isSensor = true;
+    footShape.m_p = b2Vec2(0.0f, 0.5f);
     footSensor.filter.categoryBits = playerBitMask;
     b2Fixture* footSensorFixture = physComp.physicsBody->CreateFixture(&footSensor);
     SensorComponent footSensorComp;

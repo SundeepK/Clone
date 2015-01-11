@@ -232,7 +232,6 @@ public:
 	void onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies,b2Body* body, std::vector<anax::Entity>& entities) {
 //		if (body->GetMass() < 0.1f && body->GetType() != b2_staticBody) return;
 		//TODO use area of shape to prevent too small objects being split
-		if (body->GetMass() < 0.1f && body->GetType() != b2_staticBody) return;
 		std::vector<anax::Entity> newlyCreatedEntities;
 		for (auto builder : splitBodies) {
 			for (auto entity : entities) {
