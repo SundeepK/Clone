@@ -82,6 +82,7 @@ public:
 	sf::Time m_lastGroundToWallSlideTime;
 	sf::Time m_lastWallJumpTime;
 
+
 	float frameIteration = 1.0f/60.0f;
 	float beginBoostVal;
 	float m_switchDirectionBoost = 170.0f;
@@ -110,6 +111,8 @@ public:
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
+	int m_leftHeldDown = 0;
+	int m_rightHeldDown = 0;
 	b2Vec2 m_beforeJumpPosition;
 
 	PlayerAction m_playerLeftAction;
@@ -172,6 +175,12 @@ public:
 				}
 				break;
 			}
+			if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_KEY) {
+				m_leftHeldDown = 0;
+			}
+			if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::RIGHT_KEY) {
+				m_rightHeldDown = 0;
+			}
 
 	    }
 
@@ -194,10 +203,13 @@ public:
 	}
 
 
-	void setupChangeDirectionBoost(SensorComponent& footSensor,  float dtSinceChangeInDirection, sf::Time lastKeyPress, int keyPressCount, b2Body* player, KeyPressed keypressed){
+	void setupChangeDirectionBoost(SensorComponent& footSensor,  float dtSinceChangeInDirection, sf::Time lastKeyPress, int keyPressCount, b2Body* player, KeyPressed keypressed,
+				int keyHeldDown){
 		float xvelocity = player->GetLinearVelocity().x;
-		if (footSensor.currentTotalContacts >= 1) {
-			if (((keypressed == KeyPressed::LEFT && xvelocity > 0) || (keypressed == KeyPressed::RIGHT  && xvelocity < 0)) && !m_boostInAction && dtSinceChangeInDirection < 500 && keyPressCount == 0) {
+
+		if (footSensor.currentTotalContacts >= 1 ) {
+			if (((keypressed == KeyPressed::LEFT && xvelocity > 10) || (keypressed == KeyPressed::RIGHT  && xvelocity < -10)) && !m_boostInAction && dtSinceChangeInDirection < 500 && keyPressCount == 0) {
+				std::cout << xvelocity << std::endl;
 				m_boostInAction = true;
 				m_changeInDirectionTime = lastKeyPress;
 				beginBoostVal = xvelocity;
@@ -230,7 +242,6 @@ public:
 		return [this](float, anax::Entity& entity) {
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			auto & sensorComp = entity.getComponent<Sensor>().sensors["FootSensor"];
-			auto & footSensor = entity.getComponent<Sensor>().sensors["FootSensor"];
 
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_LEFT;
@@ -239,7 +250,7 @@ public:
 			float impulseY = 0;
 
 
-			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), m_leftPressed, movedRight, body, KeyPressed::LEFT);
+			setupChangeDirectionBoost(sensorComp, (m_leftPressed - m_rightPressed).asMilliseconds(), m_leftPressed, movedRight, body, KeyPressed::LEFT, m_rightHeldDown);
 
 			if(m_isBoostInMidAir){
 				movedLeft++;
@@ -251,7 +262,7 @@ public:
 			if(m_boostInAction){
 				frameIteration += 1.0f/60.0f;
 				if(m_isLeftWallJumpTriggered){
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -80  - beginBoostVal ,2.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -(beginBoostVal*1.5)  - beginBoostVal ,2.0f);
 					impulseY = -10;
 				}else{
 					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -m_switchDirectionBoost  - beginBoostVal ,1.0f);
@@ -272,6 +283,9 @@ public:
 			applyForce(body, m_playerLeftAction);
 
 			movedLeft++;
+
+			m_leftHeldDown++;
+
 		};
 	}
 
@@ -280,13 +294,15 @@ public:
 			auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 			auto & sensorComp = entity.getComponent<Sensor>().sensors["FootSensor"];
 
+
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_RIGHT;
 			float impulseX = m_impulse;
 			float impulseY = 0;
 			m_rightPressed = m_clock.getElapsedTime();
 
-			setupChangeDirectionBoost(sensorComp, ( m_rightPressed - m_leftPressed).asMilliseconds(), m_rightPressed, movedLeft, body, KeyPressed::RIGHT);
+			 std::cout << "left keyHeldDown" << m_leftHeldDown << std::endl;
+			setupChangeDirectionBoost(sensorComp, ( m_rightPressed - m_leftPressed).asMilliseconds(), m_rightPressed, movedLeft, body, KeyPressed::RIGHT, m_leftHeldDown);
 
 			if(m_isBoostInMidAir){
 				movedRight++;
@@ -298,7 +314,7 @@ public:
 			if(m_boostInAction){
 				frameIteration += 1.0f/60.0f;
 				if(m_isRightWallJumpTriggered){
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, 80  - beginBoostVal ,2.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, (beginBoostVal*1.5)  - beginBoostVal ,2.0f);
 					impulseY = -10;
 				}else{
 					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, m_switchDirectionBoost  - beginBoostVal ,1.0f);
@@ -318,7 +334,13 @@ public:
 
 			applyForce(body, m_playerRightAction);
 			movedRight++;
+
+			m_rightHeldDown++;
 		};
+	}
+
+	void performAction(PlayerAction PlayerAction, PlayerState playerState){
+
 	}
 
 	std::function<void (float,  anax::Entity& entity)> movePlayerLeftReleased() {
