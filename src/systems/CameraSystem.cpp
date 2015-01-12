@@ -11,6 +11,8 @@ class CameraSystem::CameraSystemImpl {
 public:
 	CameraSystemImpl(int width, int height) : m_screenWidth(width), m_screenHeight(height), m_view(sf::FloatRect(0,0, m_screenWidth, m_screenHeight)),
 											m_cameraCenterPos(m_screenWidth/2, m_screenHeight/2) {
+		m_view.zoom(1.2f);
+
 	}
 
 public:

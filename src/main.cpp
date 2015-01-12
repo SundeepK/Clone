@@ -22,7 +22,7 @@ int main()
 //    settings.majorVersion = 3;
 //    settings.minorVersion = 0;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow mainRenderWindow(sf::VideoMode(1280,800,32), "Clone",sf::Style::Default, settings);
+    sf::RenderWindow mainRenderWindow(sf::VideoMode(desktop.width,desktop.height,32), "Clone",sf::Style::Default, settings);
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 	//mainRenderWindow.setVerticalSyncEnabled(true);

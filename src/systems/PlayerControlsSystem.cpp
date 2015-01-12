@@ -105,9 +105,9 @@ public:
 
 	const float m_impulse = 35.0f;
 	const float m_slowDownForce = 5.f;
-	const float m_jumpImpulse = 15.0f;
-	const float m_wallJumpImpulse = 25.5f;
-	const float m_wallJumpForce = 18.0f;
+	const float m_jumpImpulse = 20.0f;
+	const float m_wallJumpImpulse = 30.5f;
+	const float m_wallJumpForce = 25.0f;
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
@@ -262,10 +262,10 @@ public:
 			if(m_boostInAction){
 				frameIteration += 1.0f/60.0f;
 				if(m_isLeftWallJumpTriggered){
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -(beginBoostVal*1.5)  - beginBoostVal ,2.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -80  - beginBoostVal ,2.0f);
 					impulseY = -10;
 				}else{
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -m_switchDirectionBoost  - beginBoostVal ,1.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, -(beginBoostVal*4)  - beginBoostVal ,1.0f);
 				}
 				float elapsed = (m_leftPressed - m_changeInDirectionTime ).asMilliseconds();
 				if(elapsed > 500.0f){
@@ -314,10 +314,10 @@ public:
 			if(m_boostInAction){
 				frameIteration += 1.0f/60.0f;
 				if(m_isRightWallJumpTriggered){
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, (beginBoostVal*1.5)  - beginBoostVal ,2.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, 80  - beginBoostVal ,2.0f);
 					impulseY = -10;
 				}else{
-					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, m_switchDirectionBoost  - beginBoostVal ,1.0f);
+					impulseX = PlayerControlsSystemImpl::easeOutExpo(frameIteration,beginBoostVal, (beginBoostVal*4)  - beginBoostVal ,1.0f);
 				}
 				float elapsed = (m_rightPressed - m_changeInDirectionTime ).asMilliseconds();
 				if(elapsed > 500.0f){

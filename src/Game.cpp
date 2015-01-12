@@ -3,7 +3,7 @@
 #include <functional>
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
-		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, 1280, 800)),
+		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y)),
 		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld), m_ninjaSenseDetector(box2dWorld, m_ninjaSenseEntityTagger){
 	box2dWorld.SetContactListener(&m_sensorSystem);
 }
@@ -46,7 +46,7 @@ void Game::init()
 
 	glMatrixMode(GL_PROJECTION);
   //  gluPerspective( 90.0f, 1.0f, 1.0f, 1500.0f );
-	glOrtho(0, 1280, 800, 0, -1, 1);
+	glOrtho(0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y, 0, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -71,7 +71,8 @@ void Game::update(float deltaTime) {
     }
 
 	sf::Vector2f p(m_cameraSystem.getView().getCenter());
-	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - 1280/2, p.y - 800/2));
+	sf::Vector2u resolution = m_mainRenderWindow->getSize();
+	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - resolution.x/2, p.y - resolution.y/2));
 //    m_filterCollisionsSystem.filterCollisions();
 	m_anaxWorld.refresh();
     m_ninjaSenseRemoverSystem.update();
