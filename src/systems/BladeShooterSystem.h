@@ -3,10 +3,12 @@
 
 #include <anax/System.hpp>
 #include <memory.h>
+#include <anax/World.hpp>
+#include <Box2D/Box2D.h>
 
 class BladeShooterSystem : public anax::System<BladeShooterSystem> {
 public:
-	BladeShooterSystem();
+	BladeShooterSystem(b2World& box2dWorld, anax::World& anaxWorld);
 	~BladeShooterSystem();
 
 	void update();

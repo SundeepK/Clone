@@ -2,12 +2,22 @@
 #define SRC_COMPONENTS_BLADESHOOTERCOMPONENT_H_
 
 #include <Box2D/Box2D.h>
+#include <SFML/System.hpp>
 
-class BladeShooterComponent {
+enum BladeShooterState{
+	NOT_STARTED,
+	SHOOTING
+};
+
+class BladeShooterComponent : public anax::Component<BladeShooterComponent> {
 
 public:
 
 	b2Vec2 bladeLinerVelocty;
+	b2Vec2 bladeSize;
+	BladeShooterState bladeShooterState;
+	sf::Time lastTimeBladeShot;
+	sf::Time delayBetweenBladeShots;
 
 };
 
