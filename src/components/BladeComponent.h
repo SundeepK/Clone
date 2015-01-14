@@ -8,7 +8,8 @@ class BladeComponent : public anax::Component<BladeComponent>{
 
 public:
 
-	b2Vec2 bladeLinerVelocty;
+	b2Vec2 bladeLinearVelocity;
+	b2Vec2 maxLinearVelocity;
 
 };
 

@@ -15,7 +15,7 @@ public:
 
 	b2Vec2 bladeLinerVelocty;
 	b2Vec2 bladeSize;
-	BladeShooterState bladeShooterState;
+	BladeShooterState bladeShooterState = BladeShooterState::NOT_STARTED;
 	sf::Time lastTimeBladeShot;
 	sf::Time delayBetweenBladeShots;
 

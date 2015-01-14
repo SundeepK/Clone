@@ -36,6 +36,8 @@
 #include <systems/NinjaSenseDetector.h>
 #include <systems/NinjaSenseEntityTagger.h>
 #include <systems/NinjaSenseRemoverSystem.h>
+#include <systems/BladeShooterSystem.h>
+#include <systems/BladeUpdateSystem.h>
 
 class Game {
 
@@ -78,6 +80,8 @@ class Game {
 		 NinjaSenseEntityTagger m_ninjaSenseEntityTagger;
 		 NinjaSenseDetector m_ninjaSenseDetector;
 		 NinjaSenseRemoverSystem m_ninjaSenseRemoverSystem;
+		 BladeShooterSystem m_bladeShooterSystem;
+		 BladeUpdateSystem m_bladeUpdateSystem;
 
 
 };

@@ -1,9 +1,10 @@
+#ifndef SRC_SYSTEMS_BREAKABLEJOINTSYSTEM_H_
+#define SRC_SYSTEMS_BREAKABLEJOINTSYSTEM_H_
+
 #include <anax/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <Box2D/Box2D.h>
-#ifndef SRC_SYSTEMS_BREAKABLEJOINTSYSTEM_H_
-#define SRC_SYSTEMS_BREAKABLEJOINTSYSTEM_H_
 
 class BreakableJointSystem :  public b2ContactListener, public anax::System<BreakableJointSystem> {
 public:

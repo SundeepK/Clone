@@ -18,7 +18,7 @@ extern "C"
 #include <boost/algorithm/string.hpp>
 #include <game-objects/GameObjectTag.h>
 #include <components/NinjaDataComponent.h>
-
+#include <game-objects/BladeShooter.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -46,6 +46,7 @@ public:
 		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
 		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
 		m_entityCreators["Boulder"] = std::unique_ptr<GameEntityCreator>(new Boulder());
+		m_entityCreators["BladeShooter"] = std::unique_ptr<GameEntityCreator>(new BladeShooter());
 
 
 	}
@@ -60,7 +61,7 @@ public:
 		 float x;
 		 while(std::getline(texCoordStream,texCoord,',')){
 			 count++;
-
+			 //TODO Handle exception if texcoord cant be parsed
 			 float value = std::stof(texCoord);
 			 if(count % 2 == 0){
 				 textureCoords.push_back(b2Vec2(x, value));

@@ -301,7 +301,6 @@ public:
 			float impulseY = 0;
 			m_rightPressed = m_clock.getElapsedTime();
 
-			 std::cout << "left keyHeldDown" << m_leftHeldDown << std::endl;
 			setupChangeDirectionBoost(sensorComp, ( m_rightPressed - m_leftPressed).asMilliseconds(), m_rightPressed, movedLeft, body, KeyPressed::RIGHT, m_leftHeldDown);
 
 			if(m_isBoostInMidAir){

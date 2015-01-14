@@ -39,7 +39,7 @@ public:
 		auto& bladeComp = bladeEntity.addComponent<BladeComponent>();
 		auto& bladePhysicsComp = bladeEntity.addComponent<PhysicsComponent>();
 
-		bladeComp.bladeLinerVelocty = bladeShooterComp.bladeLinerVelocty;
+		bladeComp.bladeLinearVelocity = bladeShooterComp.bladeLinerVelocty;
 		bladePhysicsComp.physicsBody = createBladeBody(startingPosition, bladeShooterComp.bladeSize);
 		entity.activate();
 	}
@@ -59,7 +59,7 @@ public:
 
 };
 
-BladeShooterSystem::BladeShooterSystem(b2World& box2dWorld, anax::World& anaxWorld) : Base(anax::ComponentFilter().requires<PhysicsComponent,BladeShooterComponent>()), m_impl(new BladeShooterSystemImpl(box2dWorld)) {
+BladeShooterSystem::BladeShooterSystem(b2World& box2dWorld) : Base(anax::ComponentFilter().requires<PhysicsComponent,BladeShooterComponent>()), m_impl(new BladeShooterSystemImpl(box2dWorld)) {
 }
 
 BladeShooterSystem::~BladeShooterSystem() {
