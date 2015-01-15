@@ -18,7 +18,7 @@ public:
 
 private:
 	class BladeShooterImpl;
-	std::unique_ptr<BladeShooter> m_impl;
+	std::unique_ptr<BladeShooterImpl> m_impl;
 
 };
 

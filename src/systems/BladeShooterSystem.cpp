@@ -7,22 +7,23 @@
 class BladeShooterSystem::BladeShooterSystemImpl{
 
 public:
-	BladeShooterSystemImpl(b2World& box2dWorld) : m_box2dWorld(box2dWorld) {}
+	BladeShooterSystemImpl(b2World& box2dWorld) : m_box2dWorld(&box2dWorld) {}
 	~BladeShooterSystemImpl(){}
 
-	b2World m_box2dWorld;
+	std::unique_ptr<b2World> m_box2dWorld;
 	sf::Clock m_clock;
 
 	void update(std::vector<anax::Entity>& entities){
-		for(anax::Entity entity : entities){
+		for(anax::Entity bladeShooterEntity : entities){
 			sf::Time currentTime = m_clock.getElapsedTime();
-			auto& bladeShooterComp = entity.getComponent<BladeShooterComponent>();
+			auto& bladeShooterComp = bladeShooterEntity.getComponent<BladeShooterComponent>();
 			auto bladeShooterState = bladeShooterComp.bladeShooterState;
 			if(bladeShooterState == BladeShooterState::NOT_STARTED){
 				bladeShooterComp.lastTimeBladeShot = m_clock.getElapsedTime();
 				bladeShooterComp.bladeShooterState = BladeShooterState::SHOOTING;
-			}else if((currentTime - bladeShooterComp.lastTimeBladeShot).asMilliseconds() >= bladeShooterComp.lastTimeBladeShot.asMilliseconds()){
-				createBlade(entity);
+				createBlade(bladeShooterEntity);
+			}else if((currentTime - bladeShooterComp.lastTimeBladeShot).asMilliseconds() >= bladeShooterComp.delayBetweenBladeShots.asMilliseconds()){
+				createBlade(bladeShooterEntity);
 				bladeShooterComp.lastTimeBladeShot = currentTime;
 			}
 		}
@@ -41,18 +42,19 @@ public:
 
 		bladeComp.bladeLinearVelocity = bladeShooterComp.bladeLinerVelocty;
 		bladePhysicsComp.physicsBody = createBladeBody(startingPosition, bladeShooterComp.bladeSize);
-		entity.activate();
+		bladeEntity.activate();
 	}
 
 	b2Body* createBladeBody(b2Vec2 startingPosition, b2Vec2 shapeSize){
 		b2BodyDef bd;
-		bd.type = b2_staticBody;
+		bd.type = b2_dynamicBody;
 		bd.position = startingPosition;
 		b2PolygonShape shape;
 		shape.SetAsBox(shapeSize.x, shapeSize.y);
 		b2FixtureDef fd;
 		fd.shape = &shape;
-		b2Body* bladeBody  = m_box2dWorld.CreateBody(&bd);
+		fd.density = 1.0f;
+		b2Body* bladeBody  = m_box2dWorld->CreateBody(&bd);
 		bladeBody->CreateFixture(&fd);
 		return bladeBody;
 	}

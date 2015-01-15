@@ -16,8 +16,9 @@ public:
 		 b2Body* body = tmx::BodyCreator::Add(mapObject, box2dWorld, b2_staticBody);
 		 physicsComp.physicsBody = body;
 		 sf::FloatRect aabb = mapObject.GetAABB();
-		 bladeShooterComp.bladeSize = tmx::SfToBoxVec(sf::Vector2f(aabb.width, aabb.height));
-		 bladeShooterComp.delayBetweenBladeShots = sf::seconds(2); //TODO make configurable
+		 bladeShooterComp.bladeSize = tmx::SfToBoxVec(sf::Vector2f(aabb.width/2, aabb.height/2));
+		 //TODO make configurable
+		 bladeShooterComp.delayBetweenBladeShots = sf::seconds(2);
 		 bladeShooterComp.bladeLinerVelocty = b2Vec2(10.0f, 0.0f);
 		 entity.activate();
 	}
@@ -26,7 +27,7 @@ public:
 };
 
 
-BladeShooter::BladeShooter() {
+BladeShooter::BladeShooter() : m_impl(new BladeShooterImpl()) {
 
 }
 
