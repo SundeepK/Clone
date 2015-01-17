@@ -1,10 +1,3 @@
-/*
- * Bitwise.cpp
- *
- *  Created on: 20 Dec 2014
- *      Author: sundeep
- */
-
 #include <utilities/Bitwise.h>
 
 Bitwise::Bitwise() {

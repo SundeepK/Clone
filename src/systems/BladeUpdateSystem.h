@@ -7,12 +7,14 @@
 #include <anax/System.hpp>
 
 
-class BladeUpdateSystem : public anax::System<BladeUpdateSystem> {
+class BladeUpdateSystem : public b2ContactListener, public anax::System<BladeUpdateSystem> {
 public:
-	BladeUpdateSystem();
+	BladeUpdateSystem(b2World& b2World);
 	~BladeUpdateSystem();
 
 	void update();
+    void BeginContact(b2Contact* contact);
+    void EndContact(b2Contact* contact);
 
 private:
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include <components/PhysicsComponent.h>
 #include <components/BladeShooterComponent.h>
+#include <game-objects/GameObjectTag.h>
 
 class BladeShooterSystem::BladeShooterSystemImpl{
 
@@ -54,6 +55,9 @@ public:
 		b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.density = 1.0f;
+		fd.filter.categoryBits = GameObjectTag::BLADE;
+		fd.filter.maskBits =  ~GameObjectTag::BLADE_SHOOTER;
+
 		b2Body* bladeBody  = m_box2dWorld->CreateBody(&bd);
 		bladeBody->CreateFixture(&fd);
 		return bladeBody;
