@@ -14,16 +14,16 @@ public:
 	std::unique_ptr<b2World> m_box2dWorld;
 
 	void update(std::vector<anax::Entity>& entities){
-		for(anax::Entity entity : entities){
-			if(entity.isValid() && entity.hasComponent<BladeComponent>()){
-			auto& bladeComp = entity.getComponent<BladeComponent>();
-			auto& physcisComp = entity.getComponent<PhysicsComponent>();
-			b2Body* body = physcisComp.physicsBody;
+		for (anax::Entity entity : entities) {
+			if (entity.isValid() && entity.hasComponent<BladeComponent>()) {
+				auto& bladeComp = entity.getComponent<BladeComponent>();
+				auto& physcisComp = entity.getComponent<PhysicsComponent>();
+				b2Body* body = physcisComp.physicsBody;
 
-			b2Vec2 linearVelocity = body->GetLinearVelocity();
-			if (linearVelocity.x <= bladeComp.maxLinearVelocity.x && linearVelocity.y <= bladeComp.maxLinearVelocity.y) {
-				body->ApplyLinearImpulse(bladeComp.bladeLinearVelocity, body->GetWorldCenter(), true);
-			}
+				b2Vec2 linearVelocity = body->GetLinearVelocity();
+				if (linearVelocity.x <= bladeComp.maxLinearVelocity.x && linearVelocity.y <= bladeComp.maxLinearVelocity.y) {
+					body->ApplyLinearImpulse(bladeComp.bladeLinearVelocity, body->GetWorldCenter(), true);
+				}
 			}
 		}
 	}
@@ -34,9 +34,12 @@ public:
 
 		for(anax::Entity entity : entities){
 			auto& physcisComp = entity.getComponent<PhysicsComponent>();
-			if(fixtureA == physcisComp.physicsBody->GetFixtureList() || fixtureB == physcisComp.physicsBody->GetFixtureList() ){
+			if((fixtureA == physcisComp.physicsBody->GetFixtureList() || fixtureB == physcisComp.physicsBody->GetFixtureList())
+				&& 	!CollisionUtils::isColliding(contact, GameObjectTag::BLADE, GameObjectTag::NINJA_SENSE)	){
 				physcisComp.physicsBody->SetLinearVelocity(b2Vec2_zero);
+				physcisComp.isDead = true;
 				entity.removeComponent<BladeComponent>();
+				entity.deactivate();
 			}
 		}
 	}

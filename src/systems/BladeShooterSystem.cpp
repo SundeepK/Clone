@@ -4,6 +4,9 @@
 #include <components/PhysicsComponent.h>
 #include <components/BladeShooterComponent.h>
 #include <game-objects/GameObjectTag.h>
+#include <components/Texcoords.h>
+#include <components/SplitDirectionComponent.h>
+
 
 class BladeShooterSystem::BladeShooterSystemImpl{
 
@@ -40,6 +43,9 @@ public:
 		auto bladeEntity = world.createEntity();
 		auto& bladeComp = bladeEntity.addComponent<BladeComponent>();
 		auto& bladePhysicsComp = bladeEntity.addComponent<PhysicsComponent>();
+		auto& texCoordsComp = bladeEntity.addComponent<Texcoords>();
+		auto& splitDirectionComp = bladeEntity.addComponent<SplitDirectionComponent>();
+		splitDirectionComp.splitDirection = SplitDirection::NONE;
 
 		bladeComp.bladeLinearVelocity = bladeShooterComp.bladeLinerVelocty;
 		bladePhysicsComp.physicsBody = createBladeBody(startingPosition, bladeShooterComp.bladeSize);
@@ -56,7 +62,7 @@ public:
 		fd.shape = &shape;
 		fd.density = 1.0f;
 		fd.filter.categoryBits = GameObjectTag::BLADE;
-		fd.filter.maskBits =  ~GameObjectTag::BLADE_SHOOTER;
+		fd.filter.maskBits =  ~GameObjectTag::BLADE_SHOOTER | ~GameObjectTag::NINJA_SENSE;
 
 		b2Body* bladeBody  = m_box2dWorld->CreateBody(&bd);
 		bladeBody->CreateFixture(&fd);

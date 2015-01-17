@@ -3,9 +3,10 @@
 #include <functional>
 
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
-		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem), m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y)),
+		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem),
+		m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y)),
 		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld), m_ninjaSenseDetector(box2dWorld, m_ninjaSenseEntityTagger),
-			m_bladeShooterSystem(box2dWorld), m_bladeUpdateSystem(box2dWorld){
+			m_bladeShooterSystem(box2dWorld), m_bladeUpdateSystem(box2dWorld), m_deadPhysicsEntityRemover(box2dWorld){
 	box2dWorld.SetContactListener(&m_sensorSystem);
 }
 
@@ -38,8 +39,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_ninjaSenseDetector);
 	m_anaxWorld.addSystem(m_bladeShooterSystem);
 	m_anaxWorld.addSystem(m_bladeUpdateSystem);
-
-
+	m_anaxWorld.addSystem(m_deadPhysicsEntityRemover);
 
 	//m_anaxWorld.addSystem(m_filterCollisionsSystem);
 
@@ -95,6 +95,7 @@ void Game::update(float deltaTime) {
     m_ninjaSenseDetector.checkForEntitiesAffectedByNinjaSense();
     m_bladeShooterSystem.update();
     m_bladeUpdateSystem.update();
+    m_deadPhysicsEntityRemover.update();
 }
 
 void Game::render() {

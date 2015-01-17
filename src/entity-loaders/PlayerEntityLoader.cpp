@@ -164,6 +164,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     aabbFixtureDef.density = 0.0;
     aabbFixtureDef.restitution = 0.0f;
     aabbFixtureDef.friction = 0.0f;
+    aabbFixtureDef.filter.categoryBits = GameObjectTag::NINJA_SENSE;
     aabbShape.SetAsBox(5.5, 5.5, b2Vec2(0,0), 0);
     aabbFixtureDef.isSensor = true;
     b2Fixture* aabbFixture = physComp.physicsBody->CreateFixture(&aabbFixtureDef);

@@ -13,6 +13,7 @@ class PhysicsComponent  : public anax::Component<PhysicsComponent> {
 		float smoothedAngle;
 		b2Vec2 previousPosition;
 		b2Vec2 smoothedPosition;
+		bool isDead = false;
 };
 
 #endif /* PHYSICSCOMPONENT_H_ */

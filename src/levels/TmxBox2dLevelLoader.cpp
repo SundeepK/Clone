@@ -94,8 +94,8 @@ public:
 
 			auto objectEntity = anaxWorld.createEntity();
 			auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
-			auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+			auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 			auto& ninjaData = objectEntity.addComponent<NinjaDataComponent>();
 
 
