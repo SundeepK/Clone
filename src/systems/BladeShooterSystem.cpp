@@ -65,6 +65,7 @@ public:
 		fd.filter.maskBits =  ~GameObjectTag::BLADE_SHOOTER | ~GameObjectTag::NINJA_SENSE;
 
 		b2Body* bladeBody  = m_box2dWorld->CreateBody(&bd);
+		bladeBody->SetGravityScale(0.0f);
 		bladeBody->CreateFixture(&fd);
 		return bladeBody;
 	}
