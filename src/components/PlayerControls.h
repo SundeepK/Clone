@@ -15,6 +15,7 @@ class PlayerControls
 	     static const Key DOWN_KEY = Key::S;
 	     static const Key RIGHT_KEY = Key::D;
 	     static const Key LEFT_SHIFT_KEY = Key::LShift;
+	     static const Key LEFT_CTRL_KEY = Key::LControl;
 
 };
 

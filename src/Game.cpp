@@ -40,6 +40,7 @@ void Game::init()
 	m_anaxWorld.addSystem(m_bladeShooterSystem);
 	m_anaxWorld.addSystem(m_bladeUpdateSystem);
 	m_anaxWorld.addSystem(m_deadPhysicsEntityRemover);
+	m_anaxWorld.addSystem(m_fixedTimeStepSystem);
 
 	//m_anaxWorld.addSystem(m_filterCollisionsSystem);
 

@@ -6,18 +6,16 @@
 #include <SFML/Window.hpp>
 #include <Box2D/Box2D.h>
 #include "B2Builder.h"
-#include "Updateable.h"
 #include <math.h>
 #include "SFMLB2dDebugDraw.h"
-#include "ActionController.h"
-#include "Action.h"
 #include <functional>
 #include <iostream>
 #include <systems/PlayerControlsSystem.h>
 #include <systems/PhysicsInterpolatorSystem.h>
 #include <memory>
+#include <anax/System.hpp>
 
-class PhysicsTimeStepSystem
+class PhysicsTimeStepSystem : public anax::System<PhysicsTimeStepSystem>
 {
 public:
     PhysicsTimeStepSystem(b2World& b2world);

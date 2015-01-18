@@ -5,6 +5,7 @@
 #include <lua-exports/B2WorldProxy.h>
 #include <components/NinjaSenseComponent.h>
 #include <game-objects/GameObjectTag.h>
+#include <components/TimeStepComponent.h>
 
 void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
 
@@ -79,7 +80,9 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     auto& playerTagComp = playerEntity.addComponent<PlayerTagComponent>();
   //  auto& fixtureMap = playerEntity.addComponent<FixtureMapComponent>();
     auto& ninjaSense = playerEntity.addComponent<NinjaSenseComponent>();
-
+    //TODO hack to pass around timestep so that it can be set within player controller system.
+    //It doesn't belong to a player but allow to implment slow motion quickly
+    auto& timeStepComp = playerEntity.addComponent<TimeStepComponent>();
 
     auto startPositionVec = loadedMapData["PlayerStartPoint"].GetPosition();
    // std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;

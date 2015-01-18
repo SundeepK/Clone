@@ -13,6 +13,7 @@
 #include <components/Sensors.h>
 #include <components/SensorComponent.h>
 #include <components/NinjaSenseComponent.h>
+#include <components/TimeStepComponent.h>
 
 class PlayerControlsSystem::PlayerControlsSystemImpl{
 
@@ -34,7 +35,8 @@ public:
 	PlayerControlsSystemImpl() : m_moveLeft (PlayerControls::LEFT_KEY), m_moveRight (PlayerControls::RIGHT_KEY), m_jump (PlayerControls::JUMP_KEY),
 								m_moveDown (PlayerControls::DOWN_KEY), m_moveLeftReleased(PlayerControls::LEFT_KEY,ActionType::Released),
 								m_moveRightReleased(PlayerControls::RIGHT_KEY, ActionType::Released), m_jumpReleased(PlayerControls::JUMP_KEY, ActionType::Released),
-								m_ninjaSense(PlayerControls::LEFT_SHIFT_KEY), m_ninjaSenseReleased(PlayerControls::LEFT_SHIFT_KEY, ActionType::Released){
+								m_ninjaSense(PlayerControls::LEFT_SHIFT_KEY), m_ninjaSenseReleased(PlayerControls::LEFT_SHIFT_KEY, ActionType::Released),
+								m_slowMotion(PlayerControls::LEFT_CTRL_KEY){
 		 m_actionController[PlayerState::MOVE_LEFT] = m_moveLeft ;
 	     m_actionController[PlayerState::MOVE_RIGHT] = m_moveRight ;
 		 m_actionController[PlayerState::JUMP] = m_jump ;
@@ -42,6 +44,7 @@ public:
 		 m_actionController[PlayerState::JUMP_RLEASED] = m_jumpReleased;
 		 m_actionController[PlayerState::NINJA_SENSE] = m_ninjaSense;
 		 m_actionController[PlayerState::NINJA_SENSE_RELEASED] = m_ninjaSenseReleased;
+		 m_actionController[PlayerState::SLOW_MOTION] = m_slowMotion;
 
 
 //		 m_actionController[PlayerState::MOVE_LEFT_RELEASED] = m_moveLeftReleased ;
@@ -54,6 +57,7 @@ public:
 		 m_actionController.addCallback(PlayerState::MOVE_RIGHT_RELEASED,  movePlayerRightReleased());
 		 m_actionController.addCallback(PlayerState::JUMP_RLEASED,  jumpReleased());
 		 m_actionController.addCallback(PlayerState::NINJA_SENSE,  ninjaSenseTriggered());
+		 m_actionController.addCallback(PlayerState::SLOW_MOTION,  slowMotionTriggered());
 
 
 
@@ -72,6 +76,9 @@ public:
 	Action m_moveDown;
 	Action m_ninjaSense;
 	Action m_ninjaSenseReleased;
+	Action m_slowMotion;
+	Action m_slowMotionReleased;
+
 
 	sf::Clock m_clock;
 	sf::Time m_changeInDirectionTime;
@@ -82,6 +89,9 @@ public:
 	sf::Time m_lastGroundToWallSlideTime;
 	sf::Time m_lastWallJumpTime;
 
+
+	const float SLOW_MOTION_TIMESTEP = 1.0f/ 1000.0f;
+	const float NORMAL_TIMESTEP = 1.0f/ 60.0f;
 
 	float frameIteration = 1.0f/60.0f;
 	float beginBoostVal;
@@ -174,6 +184,12 @@ public:
 					ninjaSenseComp.isNinjaSenseTriggered = false;
 				}
 				break;
+			}
+			if(event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_CTRL_KEY){
+				for (auto entity : entities) {
+					auto& timestep = entity.getComponent<TimeStepComponent>();
+					timestep.timeStep = NORMAL_TIMESTEP;
+				}
 			}
 			if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_KEY) {
 				m_leftHeldDown = 0;
@@ -423,6 +439,14 @@ public:
 			b2Body* body = physicsComponent.physicsBody;
 			m_currentPlayerState = PlayerState::MOVE_DOWN;
 			body->ApplyLinearImpulse( b2Vec2(0.0f,m_impulse) , body->GetWorldCenter() , true);
+		};
+	}
+
+	//TODO manage this differently later, i.e. move out of player control class
+	std::function<void (float, anax::Entity& entity)> slowMotionTriggered() {
+		return [this](float, anax::Entity& entity) {
+			auto& timeStep = entity.getComponent<TimeStepComponent>();
+			timeStep.timeStep = SLOW_MOTION_TIMESTEP;
 		};
 	}
 };

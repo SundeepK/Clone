@@ -1,7 +1,7 @@
 #include "PhysicsTimeStepSystem.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-
+#include <components/TimeStepComponent.h>
 
 class PhysicsTimeStepSystem::PhysicsTimeStepSystemImpl{
 
@@ -14,10 +14,11 @@ public:
     float m_fixedTimestepAccumulator = 0.0f;
     float m_fixedTimestepAccumulatorRatio = 0.0f;
 
-    const float FIXED_TIMESTEP = 1.0f / 60.0f;
+    float FIXED_TIMESTEP = 1.0f / 60.0f; //Just a default just in case
     const int MAX_STEPS = 5;
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
+
 
     void setDebugDraw(SFMLB2dDebugDraw& box2dDEbugDrawer){
         m_world->SetDebugDraw(&box2dDEbugDrawer);
@@ -64,7 +65,7 @@ public:
 
 };
 
-PhysicsTimeStepSystem::PhysicsTimeStepSystem(b2World& b2World) : m_impl(new PhysicsTimeStepSystemImpl(b2World))
+PhysicsTimeStepSystem::PhysicsTimeStepSystem(b2World& b2World) : Base(anax::ComponentFilter().requires<TimeStepComponent>()), m_impl(new PhysicsTimeStepSystemImpl(b2World))
 {
 
 }
@@ -72,6 +73,11 @@ PhysicsTimeStepSystem::PhysicsTimeStepSystem(b2World& b2World) : m_impl(new Phys
 PhysicsTimeStepSystem::~PhysicsTimeStepSystem(){}
 
 void PhysicsTimeStepSystem::update(std::vector<sf::Event>& events, float dt, PhysicsInterpolatorSystem& physicsInterpolator, PlayerControlsSystem& controlSystem) {
+	auto entities = getEntities();
+	// only one TimeStepComponent will ever exist in the world
+	anax::Entity entity = entities[0];
+	auto timeStepComp = entity.getComponent<TimeStepComponent>();
+	m_impl->FIXED_TIMESTEP = timeStepComp.timeStep;
 	m_impl->update(events, dt, physicsInterpolator, controlSystem);
 }
 
