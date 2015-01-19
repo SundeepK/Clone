@@ -10,9 +10,39 @@
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
   <object x="38" y="1847" width="1448" height="27"/>
+  <object x="1491" y="979" width="27" height="893"/>
+  <object x="6" y="983" width="27" height="893"/>
+  <object x="1491" y="83" width="27" height="893"/>
+  <object x="36" y="31" width="1485" height="27"/>
+  <object x="6" y="65" width="34" height="914"/>
+  <object x="43" y="325" width="301" height="38"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
-  <object name="lowersplit" x="1446" y="1331" width="37" height="508">
+  <object name="lowersplit" x="35" y="1623" width="1004" height="68">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="484" y="1312" width="1004" height="68">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="37" y="983" width="971" height="37">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="1014" y="404" width="37" height="616">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
@@ -23,9 +53,34 @@
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
   <object name="PlayerStartPoint" x="67" y="1818" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="65" y="291" width="31" height="31"/>
  </objectgroup>
  <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25"/>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
-  <object name="BladeShooter" x="65" y="1478" width="45" height="43"/>
+  <object name="BladeShooter" x="1413" y="1800" width="45" height="43">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="70" y="1574" width="45" height="43">
+   <properties>
+    <property name="ShootDir" value="right"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="428" y="1044" width="45" height="43">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="675" y="73" width="45" height="43">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1424" y="184" width="45" height="43">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

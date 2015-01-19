@@ -142,10 +142,10 @@ public:
 	//	m_splitEntityPairs.clear();
 	}
 
-	bool shouldSetFirstBodyAsDynamic(const b2PolygonShape* firtShape, const b2PolygonShape* secondShape, const SplitDirection& splitDirection){
+	bool shouldSetFirstBodyAsDynamic(const b2PolygonShape* firtShape, const b2PolygonShape* secondShape, const Direction& splitDirection){
 		bool shouldSetFirstBodyAsDynamic = false;
-		if (splitDirection == SplitDirection::RIGHT || splitDirection == SplitDirection::LEFT) {
-			if (splitDirection == SplitDirection::RIGHT) {
+		if (splitDirection == Direction::RIGHT || splitDirection == Direction::LEFT) {
+			if (splitDirection == Direction::RIGHT) {
 				if (firtShape->GetVertex(0).x > secondShape->GetVertex(0).x) {
 					shouldSetFirstBodyAsDynamic = true;
 				}
@@ -154,8 +154,8 @@ public:
 					shouldSetFirstBodyAsDynamic = true;
 				}
 			}
-		} else if (splitDirection == SplitDirection::TOP || splitDirection == SplitDirection::DOWN) {
-			if (splitDirection == SplitDirection::DOWN) {
+		} else if (splitDirection == Direction::TOP || splitDirection == Direction::DOWN) {
+			if (splitDirection == Direction::DOWN) {
 				if (firtShape->GetVertex(0).y > secondShape->GetVertex(0).y) {
 					shouldSetFirstBodyAsDynamic = true;
 				}
@@ -168,7 +168,7 @@ public:
 		return shouldSetFirstBodyAsDynamic;
 	}
 
-	SplitBody decideBodyToSetAsDynamic(const b2Body* firstBody, const b2Body* secondBody, const SplitDirection& splitDirection){
+	SplitBody decideBodyToSetAsDynamic(const b2Body* firstBody, const b2Body* secondBody, const Direction& splitDirection){
         b2PolygonShape* firtshape =((b2PolygonShape*)firstBody->GetFixtureList()->GetShape());
         b2PolygonShape* secshape =((b2PolygonShape*)secondBody->GetFixtureList()->GetShape());
 		if (firtshape->GetVertex(0).x > 0 && firtshape->GetVertex(0).y > 0 && secshape->GetVertex(0).x > 0 && secshape->GetVertex(0).y > 0) {
@@ -197,7 +197,7 @@ public:
 		b2Body* firstBody = firstSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 		b2Body* secondBody = secondSplitEntity.getComponent<PhysicsComponent>().physicsBody;
 
-		if (firstSplitDir.splitDirection == SplitDirection::NONE) {
+		if (firstSplitDir.splitDirection == Direction::NONE) {
 			firstBody->SetType(b2_dynamicBody);
 			secondBody->SetType(b2_dynamicBody);
 

@@ -10,6 +10,8 @@ public:
 
 	b2Vec2 bladeLinearVelocity;
 	b2Vec2 maxLinearVelocity = b2Vec2(20.0f, 20.0f);
+	b2Vec2 minLinearVelocity = b2Vec2(-20.0f, -20.0f);
+
 
 };
 

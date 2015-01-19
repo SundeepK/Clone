@@ -15,7 +15,7 @@ public:
 
 	}
 
-	virtual void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) = 0;
+	virtual void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) = 0;
 
 };
 

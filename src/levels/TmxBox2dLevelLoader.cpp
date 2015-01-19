@@ -19,6 +19,7 @@ extern "C"
 #include <game-objects/GameObjectTag.h>
 #include <components/NinjaDataComponent.h>
 #include <game-objects/BladeShooter.h>
+#include <components/Direction.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -26,7 +27,6 @@ public:
 	std::unique_ptr<tmx::MapLoader> m_mapLoader;
 	std::unique_ptr<b2World> m_box2dWorld;
 	std::unique_ptr<anax::World> m_anaxWorld;
-	std::unordered_map<std::string, SplitDirection> m_splitDirectionMap;
 	std::vector<LevelObject> m_levelsToLoad;
 	WorldEntityLoader m_worldEntityLoader;
 	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
@@ -36,18 +36,11 @@ public:
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
 			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld){
-		m_splitDirectionMap["right"] = SplitDirection::RIGHT;
-		m_splitDirectionMap["left"] = SplitDirection::LEFT;
-		m_splitDirectionMap["top"] =  SplitDirection::TOP;
-		m_splitDirectionMap["down"] = SplitDirection::DOWN;
-		m_splitDirectionMap["none"] = SplitDirection::NONE;
-
 
 		m_entityCreators["RopeBox"] = std::unique_ptr<GameEntityCreator>(new RopeBox());
 		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
 		m_entityCreators["Boulder"] = std::unique_ptr<GameEntityCreator>(new Boulder());
 		m_entityCreators["BladeShooter"] = std::unique_ptr<GameEntityCreator>(new BladeShooter());
-
 
 	}
 
@@ -70,18 +63,6 @@ public:
 			 }
 		 }
 		 return textureCoords;
-	}
-
-
-	SplitDirection parseSplitDirection(std::string direction){
-		boost::algorithm::to_lower(direction);
-		auto splitDirection =  m_splitDirectionMap.find(direction);
-		std::cout << "dir: " << direction << std::endl;
-    	assert (
-    		"Split direction is not found" &&
-    		splitDirection != m_splitDirectionMap.end()
-    	);
-    	return splitDirection->second;
 	}
 
 	std::unordered_map<std::string, tmx::MapObject> loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
@@ -117,7 +98,7 @@ public:
 			filter.categoryBits = GameObjectTag::SPLITTABLE_OBJECT;;
 			physComp.physicsBody->GetFixtureList()->SetFilterData(filter);
 
-			splitDirectionComp.splitDirection = parseSplitDirection(object.GetPropertyString("SplitDir"));
+			splitDirectionComp.splitDirection = DirectionMap::parseDirection(object.GetPropertyString("SplitDir"));
 
 			objectEntity.activate();
 		}

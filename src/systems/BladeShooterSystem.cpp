@@ -45,7 +45,7 @@ public:
 		auto& bladePhysicsComp = bladeEntity.addComponent<PhysicsComponent>();
 		auto& texCoordsComp = bladeEntity.addComponent<Texcoords>();
 		auto& splitDirectionComp = bladeEntity.addComponent<SplitDirectionComponent>();
-		splitDirectionComp.splitDirection = SplitDirection::NONE;
+		splitDirectionComp.splitDirection = Direction::NONE;
 
 		bladeComp.bladeLinearVelocity = bladeShooterComp.bladeLinerVelocty;
 		bladePhysicsComp.physicsBody = createBladeBody(startingPosition, bladeShooterComp.bladeSize);

@@ -21,7 +21,8 @@ public:
 				b2Body* body = physcisComp.physicsBody;
 
 				b2Vec2 linearVelocity = body->GetLinearVelocity();
-				if (linearVelocity.x <= bladeComp.maxLinearVelocity.x && linearVelocity.y <= bladeComp.maxLinearVelocity.y) {
+				if ( linearVelocity.y >= bladeComp.minLinearVelocity.y && linearVelocity.x >= bladeComp.minLinearVelocity.x &&
+						linearVelocity.x <= bladeComp.maxLinearVelocity.x && linearVelocity.y <= bladeComp.maxLinearVelocity.y) {
 					body->ApplyLinearImpulse(bladeComp.bladeLinearVelocity, body->GetWorldCenter(), true);
 				}
 			}

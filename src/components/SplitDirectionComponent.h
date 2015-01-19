@@ -2,20 +2,12 @@
 #define SPLITDIRECTION_H_
 
 #include <anax/Component.hpp>
-
-enum class SplitDirection {
-		RIGHT,
-		LEFT,
-		TOP,
-		DOWN,
-		NONE
-};
-
+#include <components/Direction.h>
 
 class SplitDirectionComponent : public anax::Component<SplitDirectionComponent>{
 
 public:
-	SplitDirection splitDirection;
+	Direction splitDirection;
 
 };
 

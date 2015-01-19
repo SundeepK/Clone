@@ -3,6 +3,8 @@
 #include <components/BladeShooterComponent.h>
 #include <components/PhysicsComponent.h>
 #include <game-objects/GameObjectTag.h>
+#include <components/Direction.h>
+#include <map>
 
 class BladeShooter::BladeShooterImpl{
 
@@ -10,7 +12,16 @@ public:
 	BladeShooterImpl(){}
 	~BladeShooterImpl(){}
 
-	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+	std::map<Direction, b2Vec2> DIR_TO_BLADE_VELOCITY = {
+			{Direction::RIGHT, b2Vec2(8.0f, 0)},
+			{Direction::LEFT, b2Vec2(-8.0f, 0)},
+			{Direction::TOP, b2Vec2(0.0f, -8.0f)},
+			{Direction::DOWN, b2Vec2(0.0f, 8.0f)},
+			{Direction::NONE, b2Vec2(0.0f, 0)}
+	};
+
+
+	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		anax::Entity entity = anaxWorld.createEntity();
 		auto& physicsComp = entity.addComponent<PhysicsComponent>();
 		auto& bladeShooterComp = entity.addComponent<BladeShooterComponent>();
@@ -33,7 +44,7 @@ public:
 		bladeShooterComp.bladeSize = mapOBjectShape;
 		//TODO make configurable
 		bladeShooterComp.delayBetweenBladeShots = sf::seconds(2);
-		bladeShooterComp.bladeLinerVelocty = b2Vec2(10.0f, 0.0f);
+		bladeShooterComp.bladeLinerVelocty = DIR_TO_BLADE_VELOCITY[DirectionMap::parseDirection(mapObject.GetPropertyString("ShootDir"))];
 		entity.activate();
 	}
 
