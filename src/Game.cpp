@@ -5,7 +5,7 @@
 Game::Game(b2World& box2dWorld, sf::RenderWindow& renderWindow) :m_b2world(&box2dWorld), m_mainRenderWindow(&renderWindow),
 		m_fixedTimeStepSystem(box2dWorld), m_mapLoader("maps/"), m_tmxLevelLoader(m_mapLoader, box2dWorld, m_anaxWorld, m_sensorSystem),
 		m_cameraSystem(m_mainRenderWindow->getSize().x,m_mainRenderWindow->getSize().y), m_view(sf::FloatRect(0,0, m_mainRenderWindow->getSize().x, m_mainRenderWindow->getSize().y)),
-		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld), m_ninjaSenseDetector(box2dWorld, m_ninjaSenseEntityTagger),
+		m_b2Dsplitter(box2dWorld, m_anaxWorld), m_mouseSplitterSystem(m_b2Dsplitter, renderWindow), m_playerControlsSystem(), m_levelEndDetectSystem(m_tmxLevelLoader), m_breakableJointSystem(box2dWorld), m_ninjaSenseDetector(box2dWorld, m_ninjaSenseEntityTagger),
 			m_bladeShooterSystem(box2dWorld), m_bladeUpdateSystem(box2dWorld), m_deadPhysicsEntityRemover(box2dWorld){
 	box2dWorld.SetContactListener(&m_sensorSystem);
 }
@@ -77,9 +77,7 @@ void Game::update(float deltaTime) {
     	events.push_back(e);
     }
 
-	sf::Vector2f p(m_cameraSystem.getView().getCenter());
-	sf::Vector2u resolution = m_mainRenderWindow->getSize();
-	m_mouseSplitterSystem.processMouseEventsForSplitter(events, sf::Vector2f(p.x - resolution.x/2, p.y - resolution.y/2));
+	m_mouseSplitterSystem.processMouseEventsForSplitter(events);
 //    m_filterCollisionsSystem.filterCollisions();
 	m_anaxWorld.refresh();
     m_ninjaSenseRemoverSystem.update();

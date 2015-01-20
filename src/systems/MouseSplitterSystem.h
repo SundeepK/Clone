@@ -12,10 +12,10 @@
 class MouseSplitterSystem : public anax::System<MouseSplitterSystem>, public sf::Drawable{
 
 public:
-	MouseSplitterSystem(B2dSplitter& wb2dSplitter);
+	MouseSplitterSystem(B2dSplitter& wb2dSplitter, sf::RenderWindow& renderWindow);
 	~MouseSplitterSystem();
 
-	void processMouseEventsForSplitter(std::vector<sf::Event>& events, sf::Vector2f cameraPos);
+	void processMouseEventsForSplitter(std::vector<sf::Event>& events);
 
 private:
 

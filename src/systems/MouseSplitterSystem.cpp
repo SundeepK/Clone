@@ -11,15 +11,17 @@ class MouseSplitterSystem::MouseSplitterSystemImpl{
 
 public:
 
-	MouseSplitterSystemImpl(B2dSplitter& m_b2dSplitter) : m_b2dSplitter(&m_b2dSplitter), m_sliceLine(sf::Lines, 2){
+	MouseSplitterSystemImpl(B2dSplitter& m_b2dSplitter, sf::RenderWindow& renderWindow) : m_b2dSplitter(&m_b2dSplitter), m_renderWindow(&renderWindow), m_sliceLine(sf::Lines, 2){
 	}
 
 	~MouseSplitterSystemImpl(){}
 
 	std::unique_ptr<B2dSplitter> m_b2dSplitter;
+	std::unique_ptr<sf::RenderWindow> m_renderWindow;
+
     bool isleftPressed = false;
     sf::VertexArray m_sliceLine;
-    const float SPLITTER_LENGTH_LIMIT = 200;
+    const float SPLITTER_LENGTH_LIMIT = 230;
 
     sf::Vector2f getSplitterVec(const sf::Vector2f& playerPos, const sf::Vector2f& mousePos){
 		sf::Vector2f splitterVec = mousePos;
@@ -32,12 +34,12 @@ public:
     	return splitterVec;
     }
 
-    void onLeftClick(const sf::Event& event,  sf::Vector2f cameraPos, sf::Vector2f playerPos){
+    void onLeftClick(const sf::Event& event, sf::Vector2f playerPos){
     	//	m_b2dSplitter->refreshEntityBodyTypes();
 	        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
 	        	m_b2dSplitter->clearIntersects();
-	        	sf::Vector2f mousePos(event.mouseButton.x + cameraPos.x, event.mouseButton.y +cameraPos.y);
-	        	sf::Vector2f endSplitLineVec = getSplitterVec(playerPos, mousePos);
+	        	sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
+	        	sf::Vector2f endSplitLineVec = getSplitterVec(playerPos, m_renderWindow->mapPixelToCoords(mousePos));
 
 	            m_sliceLine[0].position = playerPos;
 	            m_sliceLine[0].color =     sf::Color::Red;
@@ -88,9 +90,9 @@ public:
 		}
 
 
-		void performBox2dSplit(const sf::Event& event,  sf::Vector2f cameraPos, b2Body* playerBody){
+		void performBox2dSplit(const sf::Event& event, b2Body* playerBody){
 			Vec playerPos(playerBody->GetPosition());
-			onLeftClick(event, cameraPos, playerPos.mToPix().toSFMLv());
+			onLeftClick(event, playerPos.mToPix().toSFMLv());
 //		    processLeftMousePressed(event, cameraPos);
 //		    processLeftMouseReleased(event, cameraPos);
 		}
@@ -99,30 +101,30 @@ public:
 			rt.draw(m_sliceLine);
 		}
 
-		void processMouseEvents(std::vector<sf::Event>& events, sf::Vector2f cameraPos, std::vector<anax::Entity>& entites) {
+		void processMouseEvents(std::vector<sf::Event>& events, std::vector<anax::Entity>& entites) {
 			for (auto entity : entites) {
 		    	for(sf::Event event : events){
 		   //     sf::Vector2f gg(App.getViewport(App.getView()).left, App.getViewport(App.getView()).top);
 	    		auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 	    		b2Body* body = physicsComponent.physicsBody;
 
-		        performBox2dSplit(event,cameraPos, body);
+		        performBox2dSplit(event, body);
 		    }
 			}
 		}
 
 };
 
-MouseSplitterSystem::MouseSplitterSystem(B2dSplitter& b2dSplitter) : Base(anax::ComponentFilter().requires<PlayerTagComponent, PhysicsComponent>()),
-											m_impl(new MouseSplitterSystemImpl(b2dSplitter)){
+MouseSplitterSystem::MouseSplitterSystem(B2dSplitter& b2dSplitter, sf::RenderWindow& renderWindow) : Base(anax::ComponentFilter().requires<PlayerTagComponent, PhysicsComponent>()),
+											m_impl(new MouseSplitterSystemImpl(b2dSplitter, renderWindow)){
 }
 
 MouseSplitterSystem::~MouseSplitterSystem() {
 }
 
-void MouseSplitterSystem::processMouseEventsForSplitter(std::vector<sf::Event>& events, sf::Vector2f cameraPos) {
+void MouseSplitterSystem::processMouseEventsForSplitter(std::vector<sf::Event>& events) {
     auto entities = getEntities();
-	m_impl->processMouseEvents(events, cameraPos, entities);
+	m_impl->processMouseEvents(events, entities);
 }
 
 void MouseSplitterSystem::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
