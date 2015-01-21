@@ -187,8 +187,9 @@ public:
 			}
 			if(event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_CTRL_KEY){
 				for (auto entity : entities) {
-					auto& timestep = entity.getComponent<TimeStepComponent>();
-					timestep.timeStep = NORMAL_TIMESTEP;
+					auto& timeStep = entity.getComponent<TimeStepComponent>();
+					timeStep.timeStep = NORMAL_TIMESTEP;
+					timeStep.isTimeSlowedDown = false;
 				}
 			}
 			if (event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_KEY) {
@@ -447,6 +448,7 @@ public:
 		return [this](float, anax::Entity& entity) {
 			auto& timeStep = entity.getComponent<TimeStepComponent>();
 			timeStep.timeStep = SLOW_MOTION_TIMESTEP;
+			timeStep.isTimeSlowedDown = true;
 		};
 	}
 };

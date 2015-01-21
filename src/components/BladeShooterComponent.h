@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include <SFML/System.hpp>
+#include <vector>
 
 enum BladeShooterState{
 	NOT_STARTED,
@@ -18,6 +19,8 @@ public:
 	BladeShooterState bladeShooterState = BladeShooterState::NOT_STARTED;
 	sf::Time lastTimeBladeShot;
 	sf::Time delayBetweenBladeShots;
+	sf::Time slowedDownAccumulation;
+	std::vector<anax::Entity> previousBlades;
 
 };
 

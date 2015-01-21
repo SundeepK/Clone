@@ -9,6 +9,7 @@ class TimeStepComponent : public anax::Component<TimeStepComponent> {
 public:
 
 	float timeStep = 1.0f/ 60.0f;
+	bool isTimeSlowedDown;
 
 };
 
