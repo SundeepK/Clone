@@ -47,7 +47,6 @@ public:
 			}else if(isTimeSlowedDown){
 				sf::Time elaspedTime = (bladeShooterComp.lastTimeBladeShot + bladeShooterComp.slowedDownAccumulation);
 				int diff = (elaspedTime - bladeShooterComp.lastTimeBladeShot).asMilliseconds();
-				std::cout << "diff " << diff << std::endl;
 				if(diff >= bladeShooterComp.delayBetweenBladeShots.asMilliseconds()){
 					createBlade(bladeShooterEntity, box2dWorld);
 					bladeShooterComp.lastTimeBladeShot = elaspedTime;

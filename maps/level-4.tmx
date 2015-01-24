@@ -10,12 +10,13 @@
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
   <object x="38" y="1847" width="1448" height="27"/>
-  <object x="1491" y="979" width="27" height="893"/>
-  <object x="6" y="983" width="27" height="893"/>
-  <object x="1491" y="83" width="27" height="893"/>
-  <object x="36" y="31" width="1485" height="27"/>
+  <object x="1491" y="1313" width="33" height="482"/>
+  <object x="6" y="983" width="22" height="585"/>
+  <object x="1492" y="208" width="36" height="1046"/>
+  <object x="7" y="31" width="1476" height="30"/>
   <object x="6" y="65" width="34" height="914"/>
   <object x="43" y="325" width="301" height="38"/>
+  <object x="1" y="1624" width="29" height="257"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
   <object name="lowersplit" x="35" y="1623" width="1004" height="68">
@@ -26,7 +27,7 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="484" y="1312" width="1004" height="68">
+  <object name="lowersplit" x="506" y="1313" width="978" height="75">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
@@ -34,7 +35,7 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="37" y="983" width="971" height="37">
+  <object name="lowersplit" x="37" y="983" width="383" height="40">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
@@ -42,7 +43,15 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="1014" y="404" width="37" height="616">
+  <object name="lowersplit" x="1014" y="479" width="33" height="543">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="down"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="479" y="989" width="528" height="35">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="down"/>
@@ -56,27 +65,37 @@
   <object name="PlayerEndPoint" x="65" y="291" width="31" height="31"/>
  </objectgroup>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
-  <object name="BladeShooter" x="1413" y="1800" width="45" height="43">
+  <object name="BladeShooter" x="1491" y="1807" width="36" height="32">
    <properties>
     <property name="ShootDir" value="left"/>
    </properties>
   </object>
-  <object name="BladeShooter" x="70" y="1574" width="45" height="43">
+  <object name="BladeShooter" x="2" y="1584" width="28" height="31">
    <properties>
     <property name="ShootDir" value="right"/>
    </properties>
   </object>
-  <object name="BladeShooter" x="428" y="1044" width="45" height="43">
+  <object name="BladeShooter" x="427" y="989" width="39" height="33">
    <properties>
     <property name="ShootDir" value="down"/>
    </properties>
   </object>
-  <object name="BladeShooter" x="675" y="73" width="45" height="43">
+  <object name="BladeShooter" x="1491" y="162" width="34" height="33">
    <properties>
-    <property name="ShootDir" value="down"/>
+    <property name="ShootDir" value="left"/>
    </properties>
   </object>
-  <object name="BladeShooter" x="1424" y="184" width="45" height="43">
+  <object name="BladeShooter" x="1493" y="1268" width="36" height="37">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1491" y="113" width="34" height="33">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1491" y="67" width="34" height="33">
    <properties>
     <property name="ShootDir" value="left"/>
    </properties>

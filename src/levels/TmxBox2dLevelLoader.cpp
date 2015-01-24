@@ -207,6 +207,8 @@ public:
 			deleteEntitiesWithPhysicsComponents(entities);
 			deleteAllBox2dBodies();
 			deleteAllEntities(entities);
+			std::cout << "After deleting all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
+
 
 			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
@@ -237,7 +239,7 @@ public:
 	}
 
 	void deleteEntitiesWithPhysicsComponents(std::vector<anax::Entity>& entities){
-		std::cout << "beofer deleteing all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
+		std::cout << "before deleteing all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
 		for(anax::Entity entity : entities){
 			if(entity.hasComponent<PhysicsComponent>()){
 				auto& physicsComp = entity.getComponent<PhysicsComponent>();
