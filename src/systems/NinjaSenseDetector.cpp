@@ -19,6 +19,8 @@ public:
 	~NinjaSenseDetectorImpl(){}
 
 	void checkForEntitiesAffectedByNinjaSense(std::vector<anax::Entity>& entities) {
+		if(entities.size()  <= 0)
+			return;
 		//we only have one entity here which is the player
 		auto playerEntity = entities[0];
 	    auto& physicsComp = playerEntity.getComponent<PhysicsComponent>();
@@ -37,6 +39,7 @@ public:
 	    }else{
 	    	m_ninjaSenseAABB.setFillColor(sf::Color(30,30,30, 0));
 	    }
+
 
 	}
 

@@ -208,6 +208,7 @@ public:
 			deleteAllBox2dBodies();
 			deleteAllEntities(entities);
 			std::cout << "After deleting all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
+			m_anaxWorld->refresh(); //Last thing refresh all entities doesn't matter if we refresh twice in one update since the level will be changed after draw
 
 
 			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
