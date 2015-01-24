@@ -237,11 +237,14 @@ public:
 	}
 
 	void deleteEntitiesWithPhysicsComponents(std::vector<anax::Entity>& entities){
+		std::cout << "beofer deleteing all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
 		for(anax::Entity entity : entities){
 			if(entity.hasComponent<PhysicsComponent>()){
 				auto& physicsComp = entity.getComponent<PhysicsComponent>();
-				delete(physicsComp.physicsBody->GetUserData());
-				m_box2dWorld->DestroyBody(physicsComp.physicsBody);
+				if(physicsComp.physicsBody){
+					delete(physicsComp.physicsBody->GetUserData());
+					m_box2dWorld->DestroyBody(physicsComp.physicsBody);
+				}
 			}
 		}
 	}

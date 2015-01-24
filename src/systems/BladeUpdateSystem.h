@@ -9,7 +9,7 @@
 
 class BladeUpdateSystem : public b2ContactListener, public anax::System<BladeUpdateSystem> {
 public:
-	BladeUpdateSystem(b2World& b2World);
+	BladeUpdateSystem();
 	~BladeUpdateSystem();
 
 	void update();

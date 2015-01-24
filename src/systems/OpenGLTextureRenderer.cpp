@@ -28,6 +28,9 @@ void OpenGLTextureRenderer::OpenGLTextureRendererImpl::render(std::vector<anax::
 		if(texCoordsVec.size() <= 0)
 			continue;
 
+		if(physicsComp.isDead)
+			continue;
+
 		b2Body* body = physicsComp.physicsBody;
 
 		glBindTexture(GL_TEXTURE_2D, texCoordsComp.texture);

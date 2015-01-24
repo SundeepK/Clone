@@ -8,10 +8,10 @@
 
 class BladeShooterSystem : public anax::System<BladeShooterSystem> {
 public:
-	BladeShooterSystem(b2World& box2dWorld);
+	BladeShooterSystem();
 	~BladeShooterSystem();
 
-	void update();
+	void update(b2World&  box2dWorld);
 
 private:
 	class BladeShooterSystemImpl;

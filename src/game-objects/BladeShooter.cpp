@@ -21,23 +21,25 @@ public:
 	};
 
 
-	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
-		anax::Entity entity = anaxWorld.createEntity();
+	void createEntity(tmx::MapObject mapObject, b2World* box2dWorld, anax::World* anaxWorld) {
+		anax::Entity entity = anaxWorld->createEntity();
 		auto& physicsComp = entity.addComponent<PhysicsComponent>();
 		auto& bladeShooterComp = entity.addComponent<BladeShooterComponent>();
 
 		b2BodyDef bd;
 		bd.type = b2_staticBody;
 		bd.position = tmx::SfToBoxVec(mapObject.GetPosition());
+
 		b2PolygonShape shape;
 		sf::FloatRect shapeAABB = mapObject.GetAABB();
 		b2Vec2 mapOBjectShape = tmx::SfToBoxVec(sf::Vector2f(shapeAABB.width / 2, shapeAABB.height / 2));
 		shape.SetAsBox(mapOBjectShape.x, mapOBjectShape.y);
+
 		b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.density = 1.0f;
 		fd.filter.categoryBits = GameObjectTag::BLADE_SHOOTER;
-		b2Body* bladeShooter = box2dWorld.CreateBody(&bd);
+		b2Body* bladeShooter = box2dWorld->CreateBody(&bd);
 		bladeShooter->CreateFixture(&fd);
 
 		physicsComp.physicsBody = bladeShooter;
@@ -60,5 +62,5 @@ BladeShooter::~BladeShooter() {
 }
 
 void BladeShooter::createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
-	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
+	m_impl->createEntity(mapObject, &box2dWorld, &anaxWorld);
 }

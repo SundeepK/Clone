@@ -8,10 +8,8 @@
 class BladeUpdateSystem::BladeUpdateSystemImpl{
 
 public:
-	BladeUpdateSystemImpl(b2World& b2World): m_box2dWorld(&b2World) {}
+	BladeUpdateSystemImpl() {}
 	~BladeUpdateSystemImpl(){}
-
-	std::unique_ptr<b2World> m_box2dWorld;
 
 	void update(std::vector<anax::Entity>& entities){
 		for (anax::Entity entity : entities) {
@@ -33,14 +31,13 @@ public:
 		auto fixtureA = contact->GetFixtureA();
 		auto fixtureB = contact->GetFixtureB();
 
-		for(anax::Entity entity : entities){
+		for(anax::Entity& entity : entities){
 			auto& physcisComp = entity.getComponent<PhysicsComponent>();
 			if((fixtureA == physcisComp.physicsBody->GetFixtureList() || fixtureB == physcisComp.physicsBody->GetFixtureList())
 				&& 	!CollisionUtils::isColliding(contact, GameObjectTag::BLADE, GameObjectTag::NINJA_SENSE)	){
 				physcisComp.physicsBody->SetLinearVelocity(b2Vec2_zero);
 				physcisComp.isDead = true;
 				entity.removeComponent<BladeComponent>();
-				entity.deactivate();
 			}
 		}
 	}
@@ -51,7 +48,7 @@ public:
 
 };
 
-BladeUpdateSystem::BladeUpdateSystem(b2World& b2World) : Base(anax::ComponentFilter().requires<PhysicsComponent,BladeComponent>()), m_impl(new BladeUpdateSystemImpl(b2World)){
+BladeUpdateSystem::BladeUpdateSystem() : Base(anax::ComponentFilter().requires<PhysicsComponent,BladeComponent>()), m_impl(new BladeUpdateSystemImpl()){
 }
 
 BladeUpdateSystem::~BladeUpdateSystem() {

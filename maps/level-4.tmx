@@ -55,7 +55,6 @@
   <object name="PlayerStartPoint" x="67" y="1818" width="29" height="26"/>
   <object name="PlayerEndPoint" x="65" y="291" width="31" height="31"/>
  </objectgroup>
- <objectgroup color="#aa00ff" name="Level1Objects" width="50" height="25"/>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
   <object name="BladeShooter" x="1413" y="1800" width="45" height="43">
    <properties>

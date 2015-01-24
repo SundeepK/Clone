@@ -14,7 +14,8 @@ public:
 		for(anax::Entity entity : entities){
 			auto& physcisComp = entity.getComponent<PhysicsComponent>();
 			if(physcisComp.isDead){
-				m_box2dWorld->DestroyBody(physcisComp.physicsBody);
+			  m_box2dWorld->DestroyBody(physcisComp.physicsBody);
+			  entity.kill();
 			}
 		}
 	}
