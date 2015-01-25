@@ -130,7 +130,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     rightSensor.density = 0.3;
     rightSensor.restitution = 0.0f;
     rightSensor.friction = 10.0f;
-    rightSensor.filter.categoryBits = playerBitMask;
+    rightSensor.filter.categoryBits = playerBitMask ;
 
 
     rightShape.SetAsBox(0.1, 0.5, b2Vec2(0.6,0), 0);
@@ -146,7 +146,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     b2PolygonShape leftShape;
     b2FixtureDef leftSensor;
     leftSensor.shape = &leftShape;
-    leftSensor.filter.categoryBits = playerBitMask;
+    leftSensor.filter.categoryBits = playerBitMask ;
 
     leftSensor.density = 0.3;
     leftSensor.restitution = 0.0f;

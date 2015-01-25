@@ -20,6 +20,7 @@ extern "C"
 #include <components/NinjaDataComponent.h>
 #include <game-objects/BladeShooter.h>
 #include <components/Direction.h>
+#include <game-objects/DeathFloor.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -41,6 +42,8 @@ public:
 		m_entityCreators["Rope"] = std::unique_ptr<GameEntityCreator>(new Rope());
 		m_entityCreators["Boulder"] = std::unique_ptr<GameEntityCreator>(new Boulder());
 		m_entityCreators["BladeShooter"] = std::unique_ptr<GameEntityCreator>(new BladeShooter());
+		m_entityCreators["DeathFloor"] = std::unique_ptr<GameEntityCreator>(new DeathFloor());
+
 
 	}
 

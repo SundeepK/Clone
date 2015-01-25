@@ -19,6 +19,8 @@ void Game::init()
 	m_sensorSystem.registerb2ContactListener(&m_tmxLevelLoader);
 	m_sensorSystem.registerb2ContactListener(&m_breakableJointSystem);
 	m_sensorSystem.registerb2ContactListener(&m_bladeUpdateSystem);
+	m_sensorSystem.registerb2ContactListener(&m_playerDeathSystem);
+
 
 
 	m_tmxLevelLoader.loadNextLevel();

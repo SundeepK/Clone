@@ -100,5 +100,6 @@
     <property name="ShootDir" value="left"/>
    </properties>
   </object>
+  <object name="DeathFloor" x="810" y="1785" width="288" height="49"/>
  </objectgroup>
 </map>
