@@ -186,7 +186,18 @@ public:
 		assert(m_levelsToLoad.size() > 1 && "No level names found");
 	}
 
-	void loadNextLevel() {
+	void restartLevel(){
+		unsigned int previousLevelIndex = m_currentLevelIndex - 1;
+		loadLevel(previousLevelIndex);
+	}
+
+
+	void loadNextLevel(){
+		loadLevel(m_currentLevelIndex);
+		m_currentLevelIndex++;
+	}
+
+	void loadLevel(int levelNumberToLoad) {
 	    lua_State *luaState = luaL_newstate();
 	    luabind::open(luaState);
 		luaL_openlibs(luaState);
@@ -198,11 +209,11 @@ public:
 		      .def_readwrite("scriptName", &LevelObject::scriptName)
 		];
 
-		if(m_levelsToLoad.size() <= 0 && m_currentLevelIndex <= 0){
+		if(m_levelsToLoad.size() <= 0 && levelNumberToLoad <= 0){
 			loadLevelList(luaState);
 		}
 
-		if(m_currentLevelIndex < m_levelsToLoad.size()){
+		if(levelNumberToLoad < m_levelsToLoad.size()){
 			auto entities = m_anaxWorld->getEntities();
 			deleteEntitiesWithPhysicsComponents(entities);
 			deleteAllBox2dBodies();
@@ -211,7 +222,7 @@ public:
 			m_anaxWorld->refresh(); //Last thing refresh all entities doesn't matter if we refresh twice in one update since the level will be changed after draw
 
 
-			m_mapLoader->Load(m_levelsToLoad[m_currentLevelIndex].levelMapName);
+			m_mapLoader->Load(m_levelsToLoad[levelNumberToLoad].levelMapName);
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
 			std::unordered_map<std::string, tmx::MapObject> loadedItems;
 			const std::string t = "TexCoords";
@@ -225,10 +236,8 @@ public:
 			m_worldEntityLoader.loadWorldEntities(*m_anaxWorld, *m_box2dWorld, loadedItems, luaState);
 		}
 		lua_close(luaState);
-		luaScriptLevel.reset(new LuaScriptLevel(*m_box2dWorld, m_levelsToLoad[m_currentLevelIndex].scriptName));
+		luaScriptLevel.reset(new LuaScriptLevel(*m_box2dWorld, m_levelsToLoad[levelNumberToLoad].scriptName));
 		luaScriptLevel->loadLevel(m_levelObjects);
-		m_currentLevelIndex++;
-
 	}
 
 	void deleteAllBox2dBodies() {
@@ -286,7 +295,6 @@ TmxBox2dLevelLoader::~TmxBox2dLevelLoader() {
 }
 
 void TmxBox2dLevelLoader::loadNextLevel() {
-	auto entities = getEntities();
 	m_impl->loadNextLevel();
 }
 
@@ -302,6 +310,10 @@ void TmxBox2dLevelLoader::BeginContact(b2Contact* contact) {
 void TmxBox2dLevelLoader::EndContact(b2Contact* contact) {
 	m_impl->EndContact(contact);
 
+}
+
+void TmxBox2dLevelLoader::restartLevel() {
+	m_impl->restartLevel();
 }
 
 sf::Vector2u TmxBox2dLevelLoader::getMapSize() {

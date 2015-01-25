@@ -26,8 +26,9 @@ struct LevelObject{
 class TmxBox2dLevelLoader :   public b2ContactListener,  public anax::System<TmxBox2dLevelLoader>{
 	public:
 		TmxBox2dLevelLoader(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld, SensorSystem& sensor);
-		virtual ~TmxBox2dLevelLoader();
+		~TmxBox2dLevelLoader();
 
+		void restartLevel();
 		void loadNextLevel();
 		void update();
 		void BeginContact(b2Contact* contact);

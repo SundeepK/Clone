@@ -39,6 +39,8 @@
 #include <systems/BladeShooterSystem.h>
 #include <systems/BladeUpdateSystem.h>
 #include <systems/RemoveDeadEntitySystem.h>
+#include <systems/PlayerDeathSystem.h>
+#include <systems/LevelRestartSystem.h>
 
 class Game {
 
@@ -84,6 +86,8 @@ class Game {
 		 BladeShooterSystem m_bladeShooterSystem;
 		 BladeUpdateSystem m_bladeUpdateSystem;
 		 RemoveDeadEntitySystem m_deadPhysicsEntityRemover;
+		 PlayerDeathSystem m_playerDeathSystem;
+		 LevelRestartSystem m_levelRestartSystem;
 
 };
 
