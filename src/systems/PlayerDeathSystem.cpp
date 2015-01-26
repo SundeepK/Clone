@@ -34,14 +34,19 @@ public:
 		}
 
 		if(CollisionUtils::isColliding(contact, 0x0003, GameObjectTag::DEATH_BRINGER_OBJECT)){
- 			std::cout << "should be dead" << std::endl;
-			auto entity = world.createEntity();
-			entity.addComponent<PlayerDeadComponent>();
-			entity.activate();
+			killPlayer(world);
 		}
+
 	}
 
 	void EndContact(b2Contact* contact) {
+	}
+
+	void killPlayer(anax::World& world){
+		std::cout << "should be dead" << std::endl;
+		auto entity = world.createEntity();
+		entity.addComponent<PlayerDeadComponent>();
+		entity.activate();
 	}
 
 

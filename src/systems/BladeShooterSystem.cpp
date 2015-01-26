@@ -99,7 +99,7 @@ public:
 		b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.density = 1.0f;
-		fd.filter.categoryBits = GameObjectTag::BLADE;
+		fd.filter.categoryBits = GameObjectTag::BLADE | GameObjectTag::DEATH_BRINGER_OBJECT;
 		fd.filter.maskBits =  ~GameObjectTag::BLADE_SHOOTER | ~GameObjectTag::NINJA_SENSE;
 
 		b2Body* bladeBody  = box2dWorld.CreateBody(&bd);
