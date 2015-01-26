@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <functional>
 #include <components/NinjaDataComponent.h>
+#include <game-objects/GameObjectTag.h>
+
 struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Entity, anax::Entity>&, bool>
 {
     bool operator()(std::pair<anax::Entity, anax::Entity>& entityPair) const
@@ -34,6 +36,12 @@ struct RemoveValidSplitEntities : public std::unary_function<std::pair<anax::Ent
     }
 };
 
+	struct SplitLine{
+	b2Vec2 startPoint;
+	b2Vec2 endPoint;
+	int count = 0;
+	};
+
 class B2dSplitter::B2dSplitterImpl{
 
 public:
@@ -43,6 +51,7 @@ public:
 			SECOND_BODY,
 			NOT_SURE
 	};
+
 
 	B2dSplitterImpl(b2World& box2dWorld, anax::World& anaxWorld) :  m_world(&box2dWorld), m_anaxWorld(&anaxWorld), m_textureMapper(Box2DConstants::WORLD_SCALE){
 	}
@@ -60,6 +69,7 @@ public:
 	std::vector<std::pair<anax::Entity, anax::Entity>> m_splitEntityPairs;
 	std::set<b2Body*> m_bodiesToKill;
     std::unique_ptr<b2World> m_world;
+    std::vector<SplitLine> m_splitLines;
 
 	void deleteEntities() {
 		for(b2Body * body : m_bodiesToKill){
@@ -107,7 +117,11 @@ public:
 		m_bodiesToKill.insert(oldBodyToSplit);
 		m_entitiesToKill.insert(entity);
 		b2Fixture* fixture = oldBodyToSplit->GetFixtureList();
-		newSplitB2bodyBuilder.setcategoryBits(fixture->GetFilterData().categoryBits);
+
+		if(!((fixture->GetFilterData().categoryBits & GameObjectTag::DEATH_BRINGER_OBJECT ) == GameObjectTag::DEATH_BRINGER_OBJECT)){
+			newSplitB2bodyBuilder.setcategoryBits(fixture->GetFilterData().categoryBits);
+		}
+
 		//TODO set to 1 once reliably can find area of shape to prevent too small object from ebing split
 		newSplitB2bodyBuilder.setDensity(0.1f);
 		newSplitB2bodyBuilder.setFriction(0.0f);
@@ -261,12 +275,22 @@ B2dSplitter::~B2dSplitter() {
 
 void B2dSplitter::onb2BodySplit(std::vector<B2BoxBuilder>& splitBodies, b2Body* body) {
 	auto entities = getEntities();
+
+	if(m_impl->m_splitLines.size() >=1 && m_impl->m_splitLines.back().count >= 1){
+		m_impl->m_splitLines.pop_back();
+	}
+
 	m_impl->onb2BodySplit(splitBodies, body, entities);
 }
 
 void B2dSplitter::split(b2Vec2 startPoint, b2Vec2 endPoint) {
+	SplitLine splitLine;
+	splitLine.startPoint = startPoint;
+	splitLine.endPoint = endPoint;
+	//m_impl->m_splitLines.push_back(splitLine);
 	m_impl->m_world->RayCast(&m_impl->m_splitter,startPoint, endPoint);
 	m_impl->m_world->RayCast(&m_impl->m_splitter,endPoint, startPoint);
+	//m_impl->m_splitLines.back().count++;
 }
 
 void B2dSplitter::clearIntersects() {
@@ -278,6 +302,19 @@ void B2dSplitter::deleteEntities() {
 }
 
 void B2dSplitter::refreshEntityBodyTypes() {
+	for(SplitLine& splitLine : m_impl->m_splitLines){
+		m_impl->m_world->RayCast(&m_impl->m_splitter,splitLine.startPoint, splitLine.endPoint);
+		m_impl->m_world->RayCast(&m_impl->m_splitter,splitLine.endPoint, splitLine.startPoint);
+		splitLine.count++;
+	}
+
+	m_impl->m_splitLines.erase(
+	    std::remove_if(
+	    		m_impl->m_splitLines.begin(),
+				m_impl->m_splitLines.end(),
+	        [&](SplitLine& splitLine){return  splitLine.count >= 2;}),
+			m_impl->m_splitLines.end());
+
 	m_impl->refreshEntityBodyTypes();
 }
 
