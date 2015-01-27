@@ -33,7 +33,7 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="831" y="471" width="321" height="30">
+  <object name="lowersplit" x="832" y="493" width="321" height="30">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="none"/>
@@ -41,7 +41,7 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="830" y="504" width="7" height="255">
+  <object name="lowersplit" x="830" y="526" width="7" height="255">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="none"/>
@@ -49,7 +49,7 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
-  <object name="lowersplit" x="557" y="370" width="37" height="331">
+  <object name="lowersplit" x="560" y="425" width="37" height="331">
    <properties>
     <property name="Body" value="static"/>
     <property name="SplitDir" value="none"/>

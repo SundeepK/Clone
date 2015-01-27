@@ -117,7 +117,7 @@ public:
 	const float m_slowDownForce = 5.f;
 	const float m_jumpImpulse = 27.0f;
 	const float m_wallJumpImpulse = 30.5f;
-	const float m_wallJumpForce = 20.0f;
+	const float m_wallJumpForce = 25.0f;
 	int movedLeft = 0;
 	int movedRight = 0;
 	int m_jumpedCount = 0;
@@ -156,7 +156,7 @@ public:
 				auto& physicsComponent = entity.getComponent<PhysicsComponent>();
 				b2Body* body = physicsComponent.physicsBody;
 				m_currentPlayerState = PlayerState::MOVE_LEFT_RELEASED;
-				body->SetGravityScale(1.7);
+				body->SetGravityScale(1.5);
 
 				auto &sensorComps = entity.getComponent<Sensor>();
 				auto sensor = sensorComps.sensors["FootSensor"];
@@ -188,6 +188,8 @@ public:
 			if(event.type == sf::Event::KeyReleased && event.key.code == PlayerControls::LEFT_CTRL_KEY){
 				for (auto entity : entities) {
 					auto& timeStep = entity.getComponent<TimeStepComponent>();
+					auto& physicsComp = entity.getComponent<PhysicsComponent>();
+					physicsComp.physicsBody->SetGravityScale(1.5);
 					timeStep.timeStep = NORMAL_TIMESTEP;
 					timeStep.isTimeSlowedDown = false;
 				}
@@ -447,6 +449,9 @@ public:
 	std::function<void (float, anax::Entity& entity)> slowMotionTriggered() {
 		return [this](float, anax::Entity& entity) {
 			auto& timeStep = entity.getComponent<TimeStepComponent>();
+			auto& physicsComp = entity.getComponent<PhysicsComponent>();
+
+			physicsComp.physicsBody->SetGravityScale(0.8f);
 			timeStep.timeStep = SLOW_MOTION_TIMESTEP;
 			timeStep.isTimeSlowedDown = true;
 		};
