@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="130" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="diffuse" tilewidth="32" tileheight="32">
+  <image source="diffuse.png" width="512" height="320"/>
+ </tileset>
+ <layer name="TileLayer" width="50" height="200">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJwDAAA7EMl/1n6hKBHkYC/33nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMB79+8Dj+ho0dGio2WpY6FlqWOBjhYdLTpadLToaNHRoqNFR4uOFh0tOlp0tOho0dGio0VHi44WHS06WnS06GjR0aKjRUeLjhYdLTpadLTckX1XGx+d
+  </data>
+ </layer>
+ <objectgroup name="StaticObjects" width="50" height="200">
+  <object x="361" y="1135" width="33" height="404"/>
+  <object x="1156" y="468" width="28" height="516"/>
+  <object x="1583" y="986" width="28" height="444"/>
+  <object x="1583" y="1435" width="32" height="722"/>
+  <object x="362" y="1505" width="32" height="722"/>
+  <object x="360" y="2231" width="31" height="925"/>
+  <object x="722" y="1404" width="857" height="25"/>
+  <object x="1164" y="2353" width="34" height="494"/>
+  <object x="1165" y="3108" width="30" height="1011"/>
+  <object x="352" y="3540" width="34" height="589"/>
+  <object x="1119" y="19" width="147" height="10"/>
+  <object x="1479" y="19" width="147" height="10"/>
+  <object x="1585" y="34" width="20" height="726"/>
+  <object x="1153" y="988" width="33" height="58"/>
+ </objectgroup>
+ <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
+  <object name="lowersplit" x="52" y="1026" width="1096" height="23">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="831" y="471" width="321" height="30">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="830" y="504" width="7" height="255">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+  <object name="lowersplit" x="557" y="370" width="37" height="331">
+   <properties>
+    <property name="Body" value="static"/>
+    <property name="SplitDir" value="none"/>
+    <property name="TexCoords" value="0,1,1,1,1,0,0,0"/>
+    <property name="Texture" value="plankssmall.png"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
+  <object name="PlayerStartPoint" x="64" y="992" width="29" height="26"/>
+  <object name="PlayerEndPoint" x="738" y="1370" width="31" height="31"/>
+ </objectgroup>
+ <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
+  <object name="BladeShooter" x="1379" y="2" width="34" height="33">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1586" y="767" width="33" height="29">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1586" y="806" width="33" height="29">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1428" y="4" width="34" height="33">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1337" y="1" width="34" height="33">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1288" y="0" width="34" height="33">
+   <properties>
+    <property name="ShootDir" value="down"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1586" y="843" width="33" height="29">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+  <object name="BladeShooter" x="1586" y="882" width="33" height="29">
+   <properties>
+    <property name="ShootDir" value="left"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
