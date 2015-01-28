@@ -90,7 +90,7 @@ public:
 	sf::Time m_lastWallJumpTime;
 
 
-	const float SLOW_MOTION_TIMESTEP = 1.0f/ 1000.0f;
+	const float SLOW_MOTION_TIMESTEP = 1.0f/ 1700.0f;
 	const float NORMAL_TIMESTEP = 1.0f/ 60.0f;
 
 	float frameIteration = 1.0f/60.0f;

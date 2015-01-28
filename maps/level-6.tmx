@@ -103,5 +103,6 @@
     <property name="ShootDir" value="left"/>
    </properties>
   </object>
+  <object name="DynamicRotatingBlade" x="297" y="483" width="36" height="41"/>
  </objectgroup>
 </map>

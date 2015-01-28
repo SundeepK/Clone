@@ -21,6 +21,7 @@ extern "C"
 #include <game-objects/BladeShooter.h>
 #include <components/Direction.h>
 #include <game-objects/DeathFloor.h>
+#include <game-objects/DynamicRotatingBlade.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -43,6 +44,8 @@ public:
 		m_entityCreators["Boulder"] = std::unique_ptr<GameEntityCreator>(new Boulder());
 		m_entityCreators["BladeShooter"] = std::unique_ptr<GameEntityCreator>(new BladeShooter());
 		m_entityCreators["DeathFloor"] = std::unique_ptr<GameEntityCreator>(new DeathFloor());
+		m_entityCreators["DynamicRotatingBlade"] = std::unique_ptr<GameEntityCreator>(new DynamicRotatingBlade());
+
 
 
 	}
