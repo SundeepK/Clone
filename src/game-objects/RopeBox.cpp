@@ -85,8 +85,8 @@ public:
 
 				physComp.physicsBody = body;
 
-				objectEntity.activate();
 				prevBody = body;
+				objectEntity.activate();
 			}
 
 			m_ropeDef.localAnchorB.SetZero();

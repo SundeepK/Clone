@@ -1,6 +1,9 @@
 #include <game-objects/DynamicRotatingBlade.h>
 #include <tmx/tmx2box2d.h>
 #include <iostream>
+#include <components/PhysicsComponent.h>
+#include <components/Texcoords.h>
+#include <components/SplitDirectionComponent.h>
 
 class DynamicRotatingBlade::DynamicRotatingBladeImpl{
 public:
@@ -24,12 +27,12 @@ public:
 	}
 
 
-	b2Body* createBladeConnector(b2Vec2 position,  b2World& box2dWorld){
+	b2Body* createBladeRod(b2Vec2 position,  b2World& box2dWorld){
 		b2BodyDef bd;
 		bd.type = b2_dynamicBody;
 		bd.position = position;
 		b2PolygonShape shape;
-		shape.SetAsBox(5.0f, 0.5f);
+		shape.SetAsBox(5.0f, 0.2f);
 		b2FixtureDef fd;
 		fd.shape = &shape;
 		fd.restitution = 0.1f;
@@ -40,19 +43,76 @@ public:
 		return connector;
 	}
 
+	b2Fixture* createBlade(b2Body* bodyToAttachTo){
+	    b2PolygonShape bladeShape;
+	    b2FixtureDef bladeFixtureDef;
+	    bladeFixtureDef.shape = &bladeShape;
+
+	    bladeFixtureDef.density = 0.3;
+	    bladeFixtureDef.restitution = 0.0f;
+	    bladeFixtureDef.friction = 10.0f;
+//	    bladeFixtureDef.filter.categoryBits = playerBitMask ;
+	    bladeShape.SetAsBox(2.0f, 2.0f, b2Vec2(-7.0f,0), 0);
+	    return bodyToAttachTo->CreateFixture(&bladeFixtureDef);
+	}
+
+
+	b2Body* blade(b2Vec2 position,  b2World& box2dWorld){
+		b2BodyDef bd;
+		bd.type = b2_dynamicBody;
+		bd.position =  b2Vec2(15.0f, 0.0f);
+		b2PolygonShape shape;
+		shape.SetAsBox(2.0f, 2.0f);
+		b2FixtureDef fd;
+		fd.shape = &shape;
+		fd.restitution = 0.1f;
+		fd.friction = 1.0f;
+		fd.density = 1.0f;
+		b2Body* connector  = box2dWorld.CreateBody(&bd);
+		connector->CreateFixture(&fd);
+		return connector;
+	}
+
+
+	void addEntity(b2Body* body, anax::World& anaxWorld){
+		auto objectEntity = anaxWorld.createEntity();
+		auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
+		auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+		auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
+		physComp.physicsBody = body;
+		objectEntity.activate();
+	}
+
 	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+
+
+
+		b2WeldJointDef jdblade;
+
 		b2RevoluteJointDef jd;
 		jd.enableMotor = true;
 		jd.motorSpeed = 2.0f;
 		jd.maxMotorTorque = 1.0f;
 		std::cout << "in DynamicRotatingBlade" << std::endl;
 		b2Vec2 anchor(tmx::SfToBoxVec(mapObject.GetPosition()));
-		anchor.x = anchor.x -2.0f;
+		anchor.x = anchor.x -4.0f;
 		b2Body* joint = createJoint(tmx::SfToBoxVec(mapObject.GetPosition()), box2dWorld);
-		b2Body* pivot = createBladeConnector(anchor, box2dWorld);
+		b2Body* rod = createBladeRod(anchor, box2dWorld);
+		b2Body* blad = blade(tmx::SfToBoxVec(mapObject.GetPosition()), box2dWorld);
 
-		jd.Initialize(joint, pivot, tmx::SfToBoxVec(mapObject.GetPosition()));
+		addEntity(rod, anaxWorld);
+		addEntity(blad, anaxWorld);
+
+		jd.Initialize(joint, rod, tmx::SfToBoxVec(mapObject.GetPosition()));
+
+		jdblade.bodyA = rod;
+		jdblade.bodyB = blad;
+		jdblade.collideConnected = false;
+		jdblade.localAnchorA = b2Vec2(-7.0f, 0.0f);
+
 		box2dWorld.CreateJoint(&jd);
+		box2dWorld.CreateJoint(&jdblade);
+
 	}
 
 };
