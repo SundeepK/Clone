@@ -12,7 +12,7 @@ public:
 	DynamicRotatingBlade();
 	~DynamicRotatingBlade();
 
-	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
+	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
 
 
 private:

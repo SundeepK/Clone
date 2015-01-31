@@ -21,7 +21,7 @@ public:
 
     bool isleftPressed = false;
     sf::VertexArray m_sliceLine;
-    const float SPLITTER_LENGTH_LIMIT = 230;
+    const float SPLITTER_LENGTH_LIMIT = 255;
 
     sf::Vector2f getSplitterVec(const sf::Vector2f& playerPos, const sf::Vector2f& mousePos){
 		sf::Vector2f splitterVec = mousePos;

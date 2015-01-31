@@ -9,20 +9,17 @@
   </data>
  </layer>
  <objectgroup name="StaticObjects" width="50" height="200">
-  <object x="361" y="1135" width="33" height="404"/>
+  <object x="54" y="1051" width="33" height="404"/>
   <object x="1156" y="468" width="28" height="516"/>
   <object x="1583" y="986" width="28" height="444"/>
-  <object x="1583" y="1435" width="32" height="722"/>
-  <object x="362" y="1505" width="32" height="722"/>
-  <object x="360" y="2231" width="31" height="925"/>
-  <object x="722" y="1404" width="857" height="25"/>
-  <object x="1164" y="2353" width="34" height="494"/>
-  <object x="1165" y="3108" width="30" height="1011"/>
-  <object x="352" y="3540" width="34" height="589"/>
+  <object x="1560" y="1993" width="32" height="722"/>
+  <object x="54" y="1458" width="32" height="403"/>
+  <object x="1097" y="1408" width="477" height="29"/>
   <object x="1119" y="19" width="147" height="10"/>
   <object x="1479" y="19" width="147" height="10"/>
   <object x="1585" y="34" width="20" height="726"/>
   <object x="1153" y="988" width="33" height="58"/>
+  <object x="984" y="2721" width="613" height="29"/>
  </objectgroup>
  <objectgroup color="#09a409" name="SplittableObjects" width="50" height="200">
   <object name="lowersplit" x="52" y="1026" width="1096" height="23">
@@ -60,7 +57,7 @@
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
   <object name="PlayerStartPoint" x="64" y="992" width="29" height="26"/>
-  <object name="PlayerEndPoint" x="738" y="1370" width="31" height="31"/>
+  <object name="PlayerEndPoint" x="1312" y="2680" width="31" height="31"/>
  </objectgroup>
  <objectgroup color="#ffaa00" name="Entities" width="50" height="60">
   <object name="BladeShooter" x="1379" y="2" width="34" height="33">
@@ -103,6 +100,9 @@
     <property name="ShootDir" value="left"/>
    </properties>
   </object>
-  <object name="DynamicRotatingBlade" x="297" y="483" width="36" height="41"/>
+  <object name="DynamicRotatingBlade" x="590" y="1414" width="36" height="41"/>
+  <object name="DynamicRotatingBlade" x="498" y="2113" width="36" height="41"/>
+  <object name="DynamicRotatingBlade" x="1206" y="2091" width="36" height="41"/>
+  <object name="DynamicRotatingBlade" x="896" y="75" width="36" height="41"/>
  </objectgroup>
 </map>

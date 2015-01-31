@@ -60,7 +60,7 @@ public:
 	b2Body* blade(b2Vec2 position,  b2World& box2dWorld){
 		b2BodyDef bd;
 		bd.type = b2_dynamicBody;
-		bd.position =  b2Vec2(15.0f, 0.0f);
+
 		b2PolygonShape shape;
 		shape.SetAsBox(2.0f, 2.0f);
 		b2FixtureDef fd;
@@ -83,22 +83,31 @@ public:
 		objectEntity.activate();
 	}
 
-	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+	float getValue(std::string valueToParse, float defaultValue){
+		if(!valueToParse.empty()) return std::stof(valueToParse);
+		return defaultValue;
+	}
 
+	b2RevoluteJointDef getRevoluteJointForRotatingBlade(tmx::MapObject mapObject){
+		b2RevoluteJointDef jointDef;
+		jointDef.enableMotor = true;
+		jointDef.motorSpeed = getValue(mapObject.GetPropertyString("motorSpeed"), 2.0f);
+		jointDef.maxMotorTorque = getValue(mapObject.GetPropertyString("maxMotorTorque"), 1.0f);
+		return jointDef;
+	}
 
+	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 
 		b2WeldJointDef jdblade;
+		b2RevoluteJointDef jd = getRevoluteJointForRotatingBlade(mapObject);
 
-		b2RevoluteJointDef jd;
-		jd.enableMotor = true;
-		jd.motorSpeed = 2.0f;
-		jd.maxMotorTorque = 1.0f;
-		std::cout << "in DynamicRotatingBlade" << std::endl;
-		b2Vec2 anchor(tmx::SfToBoxVec(mapObject.GetPosition()));
+		b2Vec2 position = tmx::SfToBoxVec(mapObject.GetPosition());
+		b2Vec2 anchor(position);
 		anchor.x = anchor.x -4.0f;
-		b2Body* joint = createJoint(tmx::SfToBoxVec(mapObject.GetPosition()), box2dWorld);
+
+		b2Body* joint = createJoint(position, box2dWorld);
 		b2Body* rod = createBladeRod(anchor, box2dWorld);
-		b2Body* blad = blade(tmx::SfToBoxVec(mapObject.GetPosition()), box2dWorld);
+		b2Body* blad = blade(position, box2dWorld);
 
 		addEntity(rod, anaxWorld);
 		addEntity(blad, anaxWorld);
@@ -125,6 +134,6 @@ DynamicRotatingBlade::~DynamicRotatingBlade() {
 
 }
 
-void DynamicRotatingBlade::createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+void DynamicRotatingBlade::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }
