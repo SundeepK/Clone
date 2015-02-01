@@ -10,3 +10,6 @@
 [submodule "splitter"]
 	path = splitter
 	url = https://github.com/SundeepK/Splitter.git
+[submodule "SFGUI"]
+	path = SFGUI
+	url = https://github.com/TankOs/SFGUI.git
