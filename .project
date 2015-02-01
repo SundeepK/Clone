@@ -26,12 +26,21 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1418936005516</id>
+			<id>1422815074270</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-projectRelativePath-matches-false-true-splitter/example/*</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1422815074274</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-true-SFGUI/examples/*</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
