@@ -87,27 +87,22 @@ int main()
 		while (mainRenderWindow.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mainRenderWindow.close();
-			}
+			}else if (event.type == sf::Event::MouseButtonPressed) {
+		        if (event.mouseButton.button == sf::Mouse::Left) {
+					sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
+
+					std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
+					std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
+		        	sf::Vector2i position(event.mouseButton.x, event.mouseButton.y );
+					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
+					if(tilePanel.update(mousePos)){
+
+					}
+		        }
+		    }
+
 			sfguiDesktop.HandleEvent(event);
 		}
-
-		if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-			sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
-			sf::Vector2f absolutePositionwindow = sfmlWindow->GetAbsolutePosition();
-
-			std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
-			std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
-			sf::Vector2i position = sf::Mouse::getPosition();
-			position.y -= 24;
-			sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
-			if(tilePanel.update(mousePos)){
-				textureCanvas->Invalidate();
-				textureCanvas->RequestResize();
-				sfmlWindow->Invalidate();
-				sfmlWindow->RequestResize();
-			}
-		}
-
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
