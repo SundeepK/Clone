@@ -78,8 +78,8 @@ int main()
 	auto sfmlCanvas = sfg::Canvas::Create( true );
 	auto textureCanvas = sfg::Canvas::Create();
 
-	auto mapWindow = sfg::Window::Create( sfg::Window::TITLEBAR | sfg::Window::BACKGROUND | sfg::Window::RESIZE );
-	auto sfmlWindow = sfg::Window::Create();
+	auto mapWindow = sfg::Window::Create(sfg::Window::BACKGROUND | sfg::Window::RESIZE );
+	auto sfmlWindow = sfg::Window::Create(sfg::Window::BACKGROUND | sfg::Window::RESIZE);
 
 	unsigned int spaceReservedForControls = desktop.width / 7;
 	sfmlCanvas->SetRequisition(sf::Vector2f((desktop.width - spaceReservedForControls), desktop.height));
@@ -104,6 +104,13 @@ int main()
 			}
 			sfguiDesktop.HandleEvent(event);
 		}
+
+		if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+			sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
+			sf::Vector2i mousePos = sf::Mouse::getPosition() - sf::Vector2i(absolutePosition.x, absolutePosition.y);
+			tilePanel.update(mousePos);
+		}
+
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 

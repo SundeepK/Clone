@@ -12,6 +12,8 @@ public:
 	TilePanel(std::string imageFilePath);
 	~TilePanel();
 
+	void update(sf::Vector2i mousePos);
+
 private:
 
     void draw(sf::RenderTarget& rt, sf::RenderStates states) const;

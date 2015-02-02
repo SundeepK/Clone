@@ -37,8 +37,7 @@ public:
 			v2.position = m_coords[2];
 			v3.position = m_coords[3];
 
-
-			sf::Color colour = sf::Color(0u, 255u, 255u, 255u);
+			sf::Color colour = sf::Color(255u, 255u, 255u, 255u);
 
 			v0.color = colour;
 			v1.color = colour;
@@ -59,6 +58,7 @@ public:
 	const int  HEIGHT = 32;
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
+	std::vector<sf::Vertex> m_tileLinesVertices;
 
 	TilePanelImpl(std::string imageFilePath)  {
 		m_image.loadFromFile(imageFilePath);
@@ -70,26 +70,49 @@ public:
 		int imageWidthInTiles = resolution.x / WIDTH;
 		int imageHeightInTiles = resolution.y / HEIGHT;
 
-		for(int row = 0; row < imageWidthInTiles ; row++ ){
-			for(int column = 0; column < imageHeightInTiles; column++){
+		int gid = 0;
+		for(int row = 0; row < imageWidthInTiles  ; row++ ){
+			for(int column = 0, x = row; column < imageHeightInTiles  ; column++, x++){
 				sf::IntRect rect(row * WIDTH, column * HEIGHT, WIDTH, HEIGHT);
-				Tile tile(row + column, rect);
+				Tile tile((row  ) + (column * 10) + 1, rect);
+
+
 				m_tiles.push_back(tile);
 				auto texCoords = tile.getTexcoords();
 				m_vertices.push_back(texCoords[0]);
 				m_vertices.push_back(texCoords[1]);
 				m_vertices.push_back(texCoords[2]);
 				m_vertices.push_back(texCoords[3]);
-			}
+
+				texCoords[0].color = sf::Color::White;
+				texCoords[1].color = sf::Color::White;
+				texCoords[2].color = sf::Color::White;
+				texCoords[3].color = sf::Color::White;
+
+				m_tileLinesVertices.push_back(texCoords[0]);
+				m_tileLinesVertices.push_back(texCoords[1]);
+				m_tileLinesVertices.push_back(texCoords[2]);
+				m_tileLinesVertices.push_back(texCoords[3]);			}
 		}
 
 	}
 
 	~TilePanelImpl(){}
 
+	void update(sf::Vector2i mousePos){
+		for(Tile tile : m_tiles){
+			if(tile.m_rect.contains(mousePos)){
+				std::cout << "im slected: " << tile.getGid() << std::endl;
+				break;
+			}
+		}
+
+	}
+
 	void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 		states.texture = &m_texture;
 		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::Quads, states);
+
 		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::LinesStrip);
 	//	rt.draw(sprite, states);
 	}
@@ -101,6 +124,10 @@ TilePanel::TilePanel(std::string imageFilePath) : m_impl(new TilePanelImpl(image
 }
 
 TilePanel::~TilePanel() {
+}
+
+void TilePanel::update(sf::Vector2i mousePos) {
+	m_impl->update(mousePos);
 }
 
 void TilePanel::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
