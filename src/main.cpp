@@ -63,32 +63,18 @@ int main()
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 
-	b2World b2world(b2Vec2(0, 18.0f));
-	b2world.SetAllowSleeping(true);
-	b2world.SetContinuousPhysics(false);
-
-	SFMLB2dDebugDraw m_debugDrawer(mainRenderWindow);
-    b2world.SetDebugDraw(&m_debugDrawer);
-	m_debugDrawer.SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit );
-
     mainRenderWindow.setActive(true);
 
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
-	auto sfmlCanvas = sfg::Canvas::Create( true );
 	auto textureCanvas = sfg::Canvas::Create();
 
-	auto mapWindow = sfg::Window::Create(sfg::Window::BACKGROUND | sfg::Window::RESIZE );
-	auto sfmlWindow = sfg::Window::Create(sfg::Window::BACKGROUND | sfg::Window::RESIZE);
-
-	unsigned int spaceReservedForControls = desktop.width / 7;
-	sfmlCanvas->SetRequisition(sf::Vector2f((desktop.width - spaceReservedForControls), desktop.height));
-	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 100.0f));
-    mapWindow->Add(sfmlCanvas);
+	auto sfmlWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
+	sfmlWindow->SetPosition(sf::Vector2f(50,50));
+	unsigned int spaceReservedForControls = desktop.width / 5;
+	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
     sfmlWindow->Add(textureCanvas);
-    sfguiDesktop.Add(mapWindow);
     sfguiDesktop.Add(sfmlWindow);
-
 	mainRenderWindow.resetGLStates();
 
 	TilePanel tilePanel("maps/diffuse.png");
@@ -107,18 +93,25 @@ int main()
 
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 			sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
-			sf::Vector2i mousePos = sf::Mouse::getPosition() - sf::Vector2i(absolutePosition.x, absolutePosition.y);
-			tilePanel.update(mousePos);
+			sf::Vector2f absolutePositionwindow = sfmlWindow->GetAbsolutePosition();
+
+			std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
+			std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
+			sf::Vector2i position = sf::Mouse::getPosition();
+			position.y -= 24;
+			sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
+			if(tilePanel.update(mousePos)){
+				textureCanvas->Invalidate();
+				textureCanvas->RequestResize();
+				sfmlWindow->Invalidate();
+				sfmlWindow->RequestResize();
+			}
 		}
 
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
 		mainRenderWindow.clear();
-		sfmlCanvas->Bind();
-		sfmlCanvas->Clear(sf::Color(50, 50, 50));
-		sfmlCanvas->Display();
-		sfmlCanvas->Unbind();
 
 		textureCanvas->Bind();
 		textureCanvas->Clear(sf::Color(50, 50, 50));

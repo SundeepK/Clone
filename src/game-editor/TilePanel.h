@@ -12,7 +12,7 @@ public:
 	TilePanel(std::string imageFilePath);
 	~TilePanel();
 
-	void update(sf::Vector2i mousePos);
+	bool update(sf::Vector2i mousePos);
 
 private:
 

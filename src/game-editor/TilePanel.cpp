@@ -74,7 +74,7 @@ public:
 		for(int row = 0; row < imageWidthInTiles  ; row++ ){
 			for(int column = 0, x = row; column < imageHeightInTiles  ; column++, x++){
 				sf::IntRect rect(row * WIDTH, column * HEIGHT, WIDTH, HEIGHT);
-				Tile tile((row  ) + (column * 10) + 1, rect);
+				Tile tile((row  ) + (column * imageWidthInTiles) + 1, rect);
 
 
 				m_tiles.push_back(tile);
@@ -99,13 +99,15 @@ public:
 
 	~TilePanelImpl(){}
 
-	void update(sf::Vector2i mousePos){
+	bool update(sf::Vector2i mousePos){
 		for(Tile tile : m_tiles){
 			if(tile.m_rect.contains(mousePos)){
-				std::cout << "im slected: " << tile.getGid() << std::endl;
-				break;
+				std::cout << "im slected: " << tile.getGid()  << " x " << tile.m_rect.left << " y: " << tile.m_rect.top << std::endl;
+				return true;
 			}
 		}
+
+		return false;
 
 	}
 
@@ -126,8 +128,8 @@ TilePanel::TilePanel(std::string imageFilePath) : m_impl(new TilePanelImpl(image
 TilePanel::~TilePanel() {
 }
 
-void TilePanel::update(sf::Vector2i mousePos) {
-	m_impl->update(mousePos);
+bool TilePanel::update(sf::Vector2i mousePos) {
+	return m_impl->update(mousePos);
 }
 
 void TilePanel::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
