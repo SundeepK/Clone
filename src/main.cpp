@@ -13,6 +13,8 @@
 #include <anax/World.hpp>
 #include <Game.h>
 #include <SFGUI/SFGUI.hpp>
+#include <game-editor/TilePanel.h>
+
 
 //int main()
 //{
@@ -74,18 +76,26 @@ int main()
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
 	auto sfmlCanvas = sfg::Canvas::Create( true );
+	auto textureCanvas = sfg::Canvas::Create();
 
-	auto mapContainer = sfg::Window::Create( sfg::Window::TITLEBAR | sfg::Window::BACKGROUND | sfg::Window::RESIZE );
+	auto mapWindow = sfg::Window::Create( sfg::Window::TITLEBAR | sfg::Window::BACKGROUND | sfg::Window::RESIZE );
+	auto sfmlWindow = sfg::Window::Create();
+
 	unsigned int spaceReservedForControls = desktop.width / 7;
 	sfmlCanvas->SetRequisition(sf::Vector2f((desktop.width - spaceReservedForControls), desktop.height));
-    mapContainer->Add(sfmlCanvas);
-    sfguiDesktop.Add(mapContainer);
+	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 100.0f));
+    mapWindow->Add(sfmlCanvas);
+    sfmlWindow->Add(textureCanvas);
+    sfguiDesktop.Add(mapWindow);
+    sfguiDesktop.Add(sfmlWindow);
 
 	mainRenderWindow.resetGLStates();
 
+	TilePanel tilePanel("maps/diffuse.png");
+
 	sf::Clock clock;
-	sf::Event event;
 	while (mainRenderWindow.isOpen()) {
+		sf::Event event;
 		float dt = clock.restart().asMilliseconds();
 
 		while (mainRenderWindow.pollEvent(event)) {
@@ -97,12 +107,19 @@ int main()
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
+		mainRenderWindow.clear();
 		sfmlCanvas->Bind();
-		sfmlCanvas->Clear(sf::Color(0, 0, 0, 0));
+		sfmlCanvas->Clear(sf::Color(50, 50, 50));
 		sfmlCanvas->Display();
 		sfmlCanvas->Unbind();
 
-		mainRenderWindow.clear();
+		textureCanvas->Bind();
+		textureCanvas->Clear(sf::Color(50, 50, 50));
+		textureCanvas->Draw(tilePanel);
+		textureCanvas->Display();
+		textureCanvas->Unbind();
+
+		mainRenderWindow.setActive(true);
 		sfgui.Display(mainRenderWindow);
 		mainRenderWindow.display();
 	}
