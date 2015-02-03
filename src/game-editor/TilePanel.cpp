@@ -23,6 +23,31 @@ public:
 			return m_gid;
 		}
 
+		const std::vector<sf::Vertex> getSelectedTexcoords() const{
+		    sf::Vertex v0, v1, v2, v3;
+
+			//applying half pixel trick avoids artifacting when scrolling
+			v0.texCoords = m_coords[0] + sf::Vector2f(0.5f, 0.5f);
+			v1.texCoords = m_coords[1] + sf::Vector2f(-0.5f, 0.5f);
+			v2.texCoords = m_coords[2] + sf::Vector2f(-0.5f, -0.5f);
+			v3.texCoords = m_coords[3] + sf::Vector2f(0.5f, -0.5f);
+
+			v0.position = m_coords[0];
+			v1.position = m_coords[1];
+			v2.position = m_coords[2];
+			v3.position = m_coords[3];
+
+			sf::Color colour = sf::Color::Yellow;
+			colour.a = 50;
+			v0.color = colour;
+			v1.color = colour;
+			v2.color = colour;
+			v3.color = colour;
+
+			std::vector<sf::Vertex> texcoords = {v0, v1, v2, v3};
+			return texcoords;
+		}
+
 		std::vector<sf::Vertex> getTexcoords(){
 		    sf::Vertex v0, v1, v2, v3;
 
@@ -59,8 +84,9 @@ public:
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
 	std::vector<sf::Vertex> m_tileLinesVertices;
+	int m_currentlySelectedTile;
 
-	TilePanelImpl(std::string imageFilePath)  {
+	TilePanelImpl(std::string imageFilePath) : m_currentlySelectedTile(0) {
 		m_image.loadFromFile(imageFilePath);
 		m_texture.loadFromImage(m_image);
 		sprite.setTexture( m_texture );
@@ -70,7 +96,6 @@ public:
 		int imageWidthInTiles = resolution.x / WIDTH;
 		int imageHeightInTiles = resolution.y / HEIGHT;
 
-		int gid = 0;
 		for(int row = 0; row < imageWidthInTiles  ; row++ ){
 			for(int column = 0, x = row; column < imageHeightInTiles  ; column++, x++){
 				sf::IntRect rect(row * WIDTH, column * HEIGHT, WIDTH, HEIGHT);
@@ -89,20 +114,20 @@ public:
 				texCoords[2].color = sf::Color::White;
 				texCoords[3].color = sf::Color::White;
 
-				m_tileLinesVertices.push_back(texCoords[0]);
-				m_tileLinesVertices.push_back(texCoords[1]);
-				m_tileLinesVertices.push_back(texCoords[2]);
-				m_tileLinesVertices.push_back(texCoords[3]);			}
+			}
 		}
 
+		m_currentlySelectedTile = 0;
 	}
 
 	~TilePanelImpl(){}
 
 	bool update(sf::Vector2i mousePos){
-		for(Tile tile : m_tiles){
+			for(int i = 0; i < m_tiles.size(); i++){
+			Tile tile = m_tiles[i];
 			if(tile.m_rect.contains(mousePos)){
 				std::cout << "im slected: " << tile.getGid()  << " x " << tile.m_rect.left << " y: " << tile.m_rect.top << std::endl;
+				m_currentlySelectedTile = i;
 				return true;
 			}
 		}
@@ -115,7 +140,15 @@ public:
 		states.texture = &m_texture;
 		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::Quads, states);
 
-		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::LinesStrip);
+		for(unsigned i = 0; i < m_vertices.size() ; i+=4 ){
+			rt.draw(&m_vertices[i], 4, sf::LinesStrip);
+		}
+
+		std::vector<sf::Vertex> selectedTileVertexArray = m_tiles[m_currentlySelectedTile].getSelectedTexcoords();
+
+		rt.draw(&selectedTileVertexArray[0], 4, sf::Quads);
+
+
 	//	rt.draw(sprite, states);
 	}
 
