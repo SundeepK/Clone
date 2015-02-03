@@ -111,11 +111,11 @@ int main()
 					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
 					auto tilesSelected = tilePanel.update(mousePos);
 
-					sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-					for(Tile tile : tilesSelected){
-						mapPanel.addTile(position - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
+					sf::Vector2i pos(event.mouseButton.x, event.mouseButton.y);
+					if(tilesSelected.size() <= 0){
+						sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
+						mapPanel.addTile(pos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
 					}
-
 
 		        }
 		    }

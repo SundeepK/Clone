@@ -18,6 +18,7 @@ public:
 	int getGid() const;
 	const std::vector<sf::Vertex> getSelectedTexcoords() const;
 	std::vector<sf::Vertex> getTexturedVertices();
+	std::vector<sf::Vertex> getTexturedVerticesWithPosition(sf::IntRect rect);
 
 };
 

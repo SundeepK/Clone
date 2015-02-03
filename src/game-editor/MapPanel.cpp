@@ -46,7 +46,7 @@ public:
 			Tile tile = m_tiles[i];
 			if (tile.m_rect.contains(mousePos)) {
 				std::cout << "im slected: " << tile.getGid() << " x " << tile.m_rect.left << " y: " << tile.m_rect.top << std::endl;
-				tileToDraw.m_rect = tile.m_rect;
+				tileToDraw.m_gid = i;
 				m_texturedTiles.push_back(tileToDraw);
 				m_currentlySelectedTile = i;
 				return true;
@@ -63,7 +63,9 @@ public:
 		}
 
 		for(Tile tile : m_texturedTiles){
-			rt.draw(&tile.getTexturedVertices()[0], 4, sf::Quads, states);
+			auto ti = m_tiles[tile.getGid()];
+			auto vertexArray = tile.getTexturedVerticesWithPosition(ti.m_rect);
+			rt.draw(&vertexArray[0], 4, sf::Quads, states);
 		}
 
 	}
