@@ -14,7 +14,7 @@
 #include <Game.h>
 #include <SFGUI/SFGUI.hpp>
 #include <game-editor/TilePanel.h>
-
+#include <game-editor/MapPanel.h>
 
 //int main()
 //{
@@ -68,16 +68,30 @@ int main()
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
 	auto textureCanvas = sfg::Canvas::Create();
+	auto mapCanvas = sfg::Canvas::Create();
 
 	auto sfmlWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
+	auto mapWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
+
 	sfmlWindow->SetPosition(sf::Vector2f(50,50));
+	mapWindow->SetPosition(sf::Vector2f(100,90));
+
 	unsigned int spaceReservedForControls = desktop.width / 5;
 	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
+	mapCanvas->SetRequisition(sf::Vector2f(800.0f, 200.0f));
     sfmlWindow->Add(textureCanvas);
+    mapWindow->Add(mapCanvas);
+
     sfguiDesktop.Add(sfmlWindow);
+    sfguiDesktop.Add(mapWindow);
 	mainRenderWindow.resetGLStates();
 
-	TilePanel tilePanel("maps/diffuse.png");
+	sf::Image image;
+	image.loadFromFile("maps/diffuse.png");
+	sf::Texture texture;
+	texture.loadFromImage(image);
+	TilePanel tilePanel(texture, 32, 32);
+	MapPanel mapPanel(texture, sf::Vector2f(50, 10), 32, 32);
 
 	sf::Clock clock;
 	while (mainRenderWindow.isOpen()) {
@@ -95,9 +109,14 @@ int main()
 					std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
 		        	sf::Vector2i position(event.mouseButton.x, event.mouseButton.y );
 					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
-					if(tilePanel.update(mousePos)){
+					auto tilesSelected = tilePanel.update(mousePos);
 
+					sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
+					for(Tile tile : tilesSelected){
+						mapPanel.addTile(position - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
 					}
+
+
 		        }
 		    }
 
@@ -113,6 +132,13 @@ int main()
 		textureCanvas->Draw(tilePanel);
 		textureCanvas->Display();
 		textureCanvas->Unbind();
+
+
+		mapCanvas->Bind();
+		mapCanvas->Clear(sf::Color(50, 50, 50));
+		mapCanvas->Draw(mapPanel);
+		mapCanvas->Display();
+		mapCanvas->Unbind();
 
 		mainRenderWindow.setActive(true);
 		sfgui.Display(mainRenderWindow);
