@@ -1,5 +1,7 @@
 #include <game-editor/MapPanel.h>
 #include <iostream>
+#include <unordered_map>
+#include <TemplateHasher.h>
 
 class MapPanel::MapPanelImpl{
 public:
@@ -10,7 +12,7 @@ public:
 	int m_currentlySelectedTile = 0;
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
-	std::vector<Tile> m_texturedTiles;
+	std::unordered_map<Tile, Tile, Tile::TileHasher> m_mapTileToTextureTile;
 
 
 	MapPanelImpl(sf::Texture& texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight) : m_texture(&texture), m_width(tileWidth), m_height(tileHeight){
@@ -42,12 +44,10 @@ public:
 	~MapPanelImpl(){}
 
 	bool addTile(sf::Vector2i mousePos, Tile tileToDraw) {
-		for (int i = 0; i < m_tiles.size(); i++) {
+		for (sf::Uint32 i = 0; i < m_tiles.size(); i++) {
 			Tile tile = m_tiles[i];
 			if (tile.m_rect.contains(mousePos)) {
-				std::cout << "im slected: " << tile.getGid() << " x " << tile.m_rect.left << " y: " << tile.m_rect.top << std::endl;
-				tileToDraw.m_gid = i;
-				m_texturedTiles.push_back(tileToDraw);
+				m_mapTileToTextureTile.insert(std::make_pair(tile, tileToDraw));
 				m_currentlySelectedTile = i;
 				return true;
 			}
@@ -62,9 +62,10 @@ public:
 			rt.draw(&m_vertices[i], 4, sf::LinesStrip);
 		}
 
-		for(Tile tile : m_texturedTiles){
-			auto ti = m_tiles[tile.getGid()];
-			auto vertexArray = tile.getTexturedVerticesWithPosition(ti.m_rect);
+		for(auto mapItr=m_mapTileToTextureTile.begin(); mapItr!=m_mapTileToTextureTile.end(); ++mapItr) {
+			auto mapTile = mapItr->first;
+			auto textureTile = mapItr->second;
+			auto vertexArray =textureTile.getTexturedVerticesWithPosition(mapTile.m_rect);
 			rt.draw(&vertexArray[0], 4, sf::Quads, states);
 		}
 

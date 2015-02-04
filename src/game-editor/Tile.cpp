@@ -64,6 +64,20 @@ std::vector<sf::Vertex> Tile::getTexturedVertices() {
 	return texcoords;
 }
 
+bool Tile::operator <(const Tile& rhs) const {
+	return this->m_gid < rhs.m_gid;
+}
+
+bool Tile::operator ==(const Tile& other) const {
+	return this->m_gid == other.m_gid;
+}
+
+Tile::Tile(const Tile& tile) {
+	this->m_gid = tile.m_gid;
+	this->m_rect = tile.m_rect;
+	this->m_coords = tile.m_coords;
+}
+
 std::vector<sf::Vertex> Tile::getTexturedVerticesWithPosition(sf::IntRect rect) {
 	sf::Vertex v0, v1, v2, v3;
 
