@@ -76,10 +76,14 @@ class MainGame {
 
 
 void MainGame::sliderPressed() {
+	std::cout << "pressed" <<std::endl;
+
 	isUsingSlider = true;
 }
 
 void MainGame::sliderReleased() {
+	std::cout << "released" <<std::endl;
+
 	isUsingSlider = false;
 }
 
@@ -119,8 +123,8 @@ void MainGame::run()
 
 	scrollbarY->SetRequisition( sf::Vector2f( 0.f, 80.f ) );
 	m_yAdjustment = scrollbarY->GetAdjustment();
-	m_yAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
-	m_yAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
+	scrollbarY->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
+	scrollbarY->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
 	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
 
 
@@ -131,8 +135,8 @@ void MainGame::run()
 
 	scrollbarX->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
 	m_xAdjustment = scrollbarX->GetAdjustment();
-	m_xAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
-	m_xAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
+	scrollbarX->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
+	scrollbarX->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
 	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
 
 
@@ -171,7 +175,7 @@ void MainGame::run()
 	sf::Texture texture;
 	texture.loadFromImage(image);
 	TilePanel tilePanel(texture, 32, 32);
-	MapPanel mapPanel(texture, sf::Vector2f(70, 70), 32, 32, sf::Vector2f(desktop.width - spaceReservedForControls, desktop.height));
+	MapPanel mapPanel(texture, sf::Vector2i(70, 70), 32, 32, sf::Vector2i(desktop.width - spaceReservedForControls, desktop.height));
 
 	sf::Clock clock;
 	while (mainRenderWindow.isOpen()) {
@@ -202,8 +206,6 @@ void MainGame::run()
 			sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
 			sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
 			sf::Vector2i mViewDeltaFromSlider = tileMapPos + m_prevSliderValue;
-			std::cout << "prev x: " << m_prevSliderValue.x << " y:" << m_prevSliderValue.y <<std::endl;
-			std::cout << "mousePos x: " << tileMapPos.x << " y:" << tileMapPos.y << " with slider: x"  << mViewDeltaFromSlider.x  << " y:" << mViewDeltaFromSlider.y <<std::endl;
 			mapPanel.addTile(mViewDeltaFromSlider, tilePanel.getCurrentlySelectedTile());
 		}
 
