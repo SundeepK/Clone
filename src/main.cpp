@@ -53,13 +53,51 @@
 //    }
 //}
 
-int main()
+class MainGame {
+	public:
+		void sliderPressed();
+		void sliderReleased();
+		void sliderAdjusted();
+
+		void run();
+
+	private:
+
+		// Create our adjustment smart pointer.
+		sfg::Adjustment::Ptr m_yAdjustment;
+		sfg::Adjustment::Ptr m_xAdjustment;
+
+		bool isUsingSlider = false;
+		bool shouldScrollMap = false;
+		sf::Vector2i m_viewDeltaFromSlider;
+		sf::Vector2i m_prevSliderValue;
+};
+
+
+
+void MainGame::sliderPressed() {
+	isUsingSlider = true;
+}
+
+void MainGame::sliderReleased() {
+	isUsingSlider = false;
+}
+
+void MainGame::sliderAdjusted() {
+
+	shouldScrollMap = true;
+	m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
+	m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
+}
+
+
+void MainGame::run()
 {
 
 
 	sf::ContextSettings settings;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow mainRenderWindow(sf::VideoMode(desktop.width,desktop.height,32), "Clone",sf::Style::Default, settings);
+    sf::RenderWindow mainRenderWindow(sf::VideoMode(desktop.width,desktop.height,32), "Clone", sf::Style::Default , settings);
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 
@@ -73,14 +111,56 @@ int main()
 	auto sfmlWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
 	auto mapWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
 
-	sfmlWindow->SetPosition(sf::Vector2f(50,50));
-	mapWindow->SetPosition(sf::Vector2f(100,90));
+	auto boxScrollY = sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL );
+	auto boxScrollX = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
+
+	auto scrollbarY = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::VERTICAL );
+	auto scrollbarX = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::HORIZONTAL );
+
+	scrollbarY->SetRequisition( sf::Vector2f( 0.f, 80.f ) );
+	m_yAdjustment = scrollbarY->GetAdjustment();
+	m_yAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
+	m_yAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
+	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
+
+
+	m_yAdjustment->SetLower( 0.0f );
+	m_yAdjustment->SetUpper( (70 * 32) - desktop.width );
+	m_yAdjustment->SetMinorStep( 10.f );
+	m_yAdjustment->SetMajorStep( 20.f );
+
+	scrollbarX->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
+	m_xAdjustment = scrollbarX->GetAdjustment();
+	m_xAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
+	m_xAdjustment->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
+	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
+
+
+	m_xAdjustment->SetLower( 0.0f );
+	m_xAdjustment->SetUpper( (70 * 32) - desktop.width );
+	m_xAdjustment->SetMinorStep( 10.f );
+	m_xAdjustment->SetMajorStep( 20.f );
+
 
 	unsigned int spaceReservedForControls = desktop.width / 5;
+
+	sfmlWindow->SetPosition(sf::Vector2f(desktop.width - spaceReservedForControls + 10,100.0f));
+	mapWindow->SetPosition(sf::Vector2f(0,0));
+
+	boxScrollY->Pack(scrollbarY, true, false);
+	boxScrollX->Pack( scrollbarX, true, false);
+
+	mapCanvas->SetRequisition(sf::Vector2f(desktop.width - spaceReservedForControls, desktop.height));
+
+	auto table = sfg::Table::Create();
+
+	table->Attach( boxScrollX, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL, sf::Vector2f( 0.f, 0.f ) );
+	table->Attach( mapCanvas, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL, sf::Vector2f( 0.f, 0.f ) );
+	table->Attach( boxScrollY, sf::Rect<sf::Uint32>( 1, 0, 1, 3 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL, sf::Vector2f( 0.f, 0.f ) );
+
 	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
-	mapCanvas->SetRequisition(sf::Vector2f(800.0f, 200.0f));
     sfmlWindow->Add(textureCanvas);
-    mapWindow->Add(mapCanvas);
+    mapWindow->Add(table);
 
     sfguiDesktop.Add(sfmlWindow);
     sfguiDesktop.Add(mapWindow);
@@ -91,7 +171,7 @@ int main()
 	sf::Texture texture;
 	texture.loadFromImage(image);
 	TilePanel tilePanel(texture, 32, 32);
-	MapPanel mapPanel(texture, sf::Vector2f(50, 10), 32, 32);
+	MapPanel mapPanel(texture, sf::Vector2f(70, 70), 32, 32, sf::Vector2f(desktop.width - spaceReservedForControls, desktop.height));
 
 	sf::Clock clock;
 	while (mainRenderWindow.isOpen()) {
@@ -105,38 +185,42 @@ int main()
 		        if (event.mouseButton.button == sf::Mouse::Left) {
 					sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
 
-					std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
-					std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
+//					std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
+//					std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
 		        	sf::Vector2i position(event.mouseButton.x, event.mouseButton.y );
 					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
 					auto tilesSelected = tilePanel.update(mousePos);
 
-					sf::Vector2i pos(event.mouseButton.x, event.mouseButton.y);
-					//if(tilesSelected.size() <= 0){
-						sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-						mapPanel.addTile(pos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
-					//}
 		        }
 		    }
 
 			sfguiDesktop.HandleEvent(event);
 		}
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (!isUsingSlider && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
 			sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-			mapPanel.addTile(mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
+			sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
+			sf::Vector2i mViewDeltaFromSlider = tileMapPos + m_prevSliderValue;
+			std::cout << "prev x: " << m_prevSliderValue.x << " y:" << m_prevSliderValue.y <<std::endl;
+			std::cout << "mousePos x: " << tileMapPos.x << " y:" << tileMapPos.y << " with slider: x"  << mViewDeltaFromSlider.x  << " y:" << mViewDeltaFromSlider.y <<std::endl;
+			mapPanel.addTile(mViewDeltaFromSlider, tilePanel.getCurrentlySelectedTile());
 		}
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
 		mainRenderWindow.clear();
 
+		if(shouldScrollMap){
+			mapPanel.updateMapView(sf::Vector2f(m_viewDeltaFromSlider.x, m_viewDeltaFromSlider.y));
+		}
+
 		textureCanvas->Bind();
 		textureCanvas->Clear(sf::Color(50, 50, 50));
 		textureCanvas->Draw(tilePanel);
 		textureCanvas->Display();
 		textureCanvas->Unbind();
+
 
 
 		mapCanvas->Bind();
@@ -148,7 +232,13 @@ int main()
 		mainRenderWindow.setActive(true);
 		sfgui.Display(mainRenderWindow);
 		mainRenderWindow.display();
+		shouldScrollMap = false;
 	}
 }
 
+int main() {
+	MainGame game;
+	game.run();
 
+	return EXIT_SUCCESS;
+}

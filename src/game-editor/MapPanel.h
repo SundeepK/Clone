@@ -9,10 +9,11 @@
 
 class MapPanel : public sf::Drawable{
 public:
-	MapPanel(sf::Texture& m_texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight);
+	MapPanel(sf::Texture& m_texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2f resolution);
 	~MapPanel();
 
 	bool addTile(sf::Vector2i mousePos, Tile tileToDraw);
+	void updateMapView(sf::Vector2f sliderOffset);
 
 private:
 

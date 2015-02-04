@@ -13,9 +13,11 @@ public:
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
 	std::unordered_map<Tile, Tile, Tile::TileHasher> m_mapTileToTextureTile;
+	sf::View m_view;
+	sf::Vector2f m_sliderOffset;
 
-
-	MapPanelImpl(sf::Texture& texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight) : m_texture(&texture), m_width(tileWidth), m_height(tileHeight){
+	MapPanelImpl(sf::Texture& texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2f resolution) : m_texture(&texture), m_width(tileWidth), m_height(tileHeight),
+				m_view(sf::FloatRect(0,0, resolution.x, resolution.y)){
 
 		for(int row = 0; row < mapSizeInTiles.x  ; row++ ){
 			for(int column = 0, x = row; column < mapSizeInTiles.y ; column++, x++){
@@ -50,7 +52,6 @@ public:
 				auto tileItr = m_mapTileToTextureTile.find(tile);
 				if (tileItr != m_mapTileToTextureTile.end()) {
 					m_mapTileToTextureTile[tile] = tileToDraw;
-					std::cout << "replacing" << std::endl;
 				}else{
 					m_mapTileToTextureTile.insert(std::make_pair(tile, tileToDraw));
 				}
@@ -63,6 +64,7 @@ public:
 	}
 
 	void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+		rt.setView(m_view);
 		states.texture = m_texture.get();
 
 		for(unsigned i = 0; i < m_vertices.size() ; i+=4 ){
@@ -76,12 +78,18 @@ public:
 			rt.draw(&vertexArray[0], 4, sf::Quads, states);
 		}
 
+
+	}
+
+	void updateMapView(sf::Vector2f sliderOffset) {
+		m_sliderOffset  = sliderOffset;
+		m_view.move(sliderOffset);
 	}
 
 
 };
 
-MapPanel::MapPanel(sf::Texture& texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight) : m_impl(new MapPanelImpl(texture, mapSizeInTiles, tileWidth, tileHeight)) {
+MapPanel::MapPanel(sf::Texture& texture, sf::Vector2f mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2f resolution) : m_impl(new MapPanelImpl(texture, mapSizeInTiles, tileWidth, tileHeight, resolution)) {
 }
 
 MapPanel::~MapPanel() {
@@ -93,4 +101,8 @@ void MapPanel::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 
 bool MapPanel::addTile(sf::Vector2i mousePos, Tile tileToDraw) {
 	return m_impl->addTile(mousePos, tileToDraw);
+}
+
+void MapPanel::updateMapView(sf::Vector2f sliderOffset) {
+	m_impl->updateMapView(sliderOffset);
 }
