@@ -30,7 +30,7 @@ public:
 	  }
 	};
 
-
+	Tile();
 	Tile(int gid, sf::IntRect rect);
 	~Tile();
 	Tile(const Tile& tile);

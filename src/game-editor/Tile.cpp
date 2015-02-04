@@ -78,6 +78,9 @@ Tile::Tile(const Tile& tile) {
 	this->m_coords = tile.m_coords;
 }
 
+Tile::Tile() {
+}
+
 std::vector<sf::Vertex> Tile::getTexturedVerticesWithPosition(sf::IntRect rect) {
 	sf::Vertex v0, v1, v2, v3;
 

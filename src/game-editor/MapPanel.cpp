@@ -47,7 +47,15 @@ public:
 		for (sf::Uint32 i = 0; i < m_tiles.size(); i++) {
 			Tile tile = m_tiles[i];
 			if (tile.m_rect.contains(mousePos)) {
-				m_mapTileToTextureTile.insert(std::make_pair(tile, tileToDraw));
+
+				auto tileItr = m_mapTileToTextureTile.find(tile);
+				if (tileItr != m_mapTileToTextureTile.end()) {
+					m_mapTileToTextureTile[tile] = tileToDraw;
+					std::cout << "replacing" << std::endl;
+				}else{
+					m_mapTileToTextureTile.insert(std::make_pair(tile, tileToDraw));
+				}
+
 				m_currentlySelectedTile = i;
 				return true;
 			}
