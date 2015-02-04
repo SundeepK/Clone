@@ -101,7 +101,7 @@ int main()
 		while (mainRenderWindow.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mainRenderWindow.close();
-			}else if (event.type == sf::Event::MouseButtonPressed) {
+			}else if (event.type == sf::Event::MouseButtonPressed ) {
 		        if (event.mouseButton.button == sf::Mouse::Left) {
 					sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
 
@@ -112,15 +112,20 @@ int main()
 					auto tilesSelected = tilePanel.update(mousePos);
 
 					sf::Vector2i pos(event.mouseButton.x, event.mouseButton.y);
-					if(tilesSelected.size() <= 0){
+					//if(tilesSelected.size() <= 0){
 						sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
 						mapPanel.addTile(pos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
-					}
-
+					//}
 		        }
 		    }
 
 			sfguiDesktop.HandleEvent(event);
+		}
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
+			sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
+			mapPanel.addTile(mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y), tilePanel.getCurrentlySelectedTile());
 		}
 
 		sfguiDesktop.Update(1.0f / 60.0f);
