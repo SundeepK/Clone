@@ -21,14 +21,16 @@ public:
 	~MapPanelImpl(){}
 
 	void addTile(sf::Vector2i mousePos, Tile tileToDraw) {
-		auto tilesFound = m_tileMap.getTile(mousePos);
-		for (Tile tile : tilesFound) {
+		auto tileFound = m_tileMap.getTile(mousePos);
+		if (tileFound) {
+			Tile tile = tileFound.get();
 			auto tileItr = m_mapTileToTextureTile.find(tile);
 			if (tileItr != m_mapTileToTextureTile.end()) {
 				m_mapTileToTextureTile[tile] = tileToDraw;
 			} else {
 				m_mapTileToTextureTile.insert(std::make_pair(tile, tileToDraw));
 			}
+
 		}
 	}
 

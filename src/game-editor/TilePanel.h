@@ -12,7 +12,7 @@ public:
 	TilePanel(sf::Texture& texture, int tileWdith, int tileHeight);
 	~TilePanel();
 
-	std::vector<Tile>  update(sf::Vector2i mousePos);
+	void  selectTileAt(sf::Vector2i mousePos);
 	Tile getCurrentlySelectedTile();
 
 private:

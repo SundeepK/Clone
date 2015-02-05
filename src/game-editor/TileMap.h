@@ -6,15 +6,18 @@
 #include <SFML/System.hpp>
 #include <memory>
 #include <game-editor/Tile.h>
+#include <boost/optional.hpp>
 
-class TileMap : public sf::Drawable{
+
+class TileMap{
 public:
 	TileMap(sf::Vector2i mapSizeInTiles, sf::Vector2i tileDimensions);
 	~TileMap();
 
-	std::vector<Tile> getTile(sf::Vector2i mousePos);
+	boost::optional<Tile> getTile(sf::Vector2i mousePos);
 	std::vector<sf::Vertex> getVerticies();
-    void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& rt, sf::RenderStates states, bool shouldDrawTexture = false) const;
+    boost::optional<Tile> getTile(int idOfTile) const;
 
 private:
 

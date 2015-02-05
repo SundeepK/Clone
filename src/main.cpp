@@ -189,11 +189,9 @@ void MainGame::run()
 		        if (event.mouseButton.button == sf::Mouse::Left) {
 					sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
 
-//					std::cout << "canvas x: " << absolutePosition.x << " y:" << absolutePosition.y << std::endl;
-//					std::cout << "mouse x: " << sf::Mouse::getPosition().x << " y:" << sf::Mouse::getPosition().y << std::endl;
 		        	sf::Vector2i position(event.mouseButton.x, event.mouseButton.y );
 					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
-					auto tilesSelected = tilePanel.update(mousePos);
+					tilePanel.selectTileAt(mousePos);
 
 		        }
 		    }

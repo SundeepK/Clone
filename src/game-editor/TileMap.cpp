@@ -23,18 +23,36 @@ TileMap::TileMap(sf::Vector2i mapSizeInTiles, sf::Vector2i tileDimensions) {
 TileMap::~TileMap() {
 }
 
-std::vector<Tile> TileMap::getTile(sf::Vector2i mousePos) {
-	for (sf::Uint32 i = 0; i < m_tiles.size(); i++) {
-		Tile tile = m_tiles[i];
+boost::optional<Tile> TileMap::getTile(sf::Vector2i mousePos) {
+	for (Tile tile : m_tiles) {
 		if (tile.m_rect.contains(mousePos)) {
-			return {tile};
+			return boost::optional<Tile>(tile);
 		}
 	}
-	return {};
+	return boost::optional<Tile>();
 }
 
-void TileMap::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+void TileMap::draw(sf::RenderTarget& rt, sf::RenderStates states, bool shouldDrawTexture) const {
 	for(unsigned i = 0; i < m_vertices.size() ; i+=4 ){
 		rt.draw(&m_vertices[i], 4, sf::LinesStrip);
+	}
+
+	if(states.texture && shouldDrawTexture){
+		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::Quads, states);
+	}
+}
+
+boost::optional<Tile> TileMap::getTile(int idOfTile) const{
+	if(idOfTile < 0 || idOfTile >  m_tiles.size()){
+		return boost::optional<Tile>();
+	}
+
+	auto foundItr = std::find_if(m_tiles.begin(), m_tiles.end(), [idOfTile](const Tile& tile) { return tile.getGid() == idOfTile;} );
+
+	if(foundItr != m_tiles.end()){
+		Tile tile(foundItr->getGid(), foundItr->m_rect);
+		return boost::optional<Tile>(tile);
+	}else{
+		return boost::optional<Tile>();
 	}
 }
