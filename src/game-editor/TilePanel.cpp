@@ -35,7 +35,12 @@ public:
 	}
 
 	Tile getCurrentlySelectedTile() {
-		return m_tileMap.getTile(m_currentlySelectedTile).get();
+		auto tileOption = m_tileMap.getTile(m_currentlySelectedTile);
+		if(tileOption){
+			Tile tile = tileOption.get();
+			return tile;
+		}
+		return Tile();
 	}
 
 

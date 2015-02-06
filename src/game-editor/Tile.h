@@ -46,6 +46,8 @@ public:
 	std::vector<sf::Vertex> getTexturedVertices();
 	std::vector<sf::Vertex> getTexturedVerticesWithPosition(sf::IntRect rect);
 
+private:
+	void initCoords(const sf::IntRect& rect);
 };
 
 #endif /* SRC_GAME_EDITOR_TILE_H_ */

@@ -1,10 +1,14 @@
 #include <game-editor/Tile.h>
 
-Tile::Tile(int gid, sf::IntRect rect): m_gid(gid), m_rect(rect) {
+void Tile::initCoords(const sf::IntRect& rect) {
 	m_coords.push_back(sf::Vector2f(static_cast<float>(rect.left), static_cast<float>(rect.top)));
 	m_coords.push_back(sf::Vector2f(static_cast<float>(rect.left + rect.width), static_cast<float>(rect.top)));
 	m_coords.push_back(sf::Vector2f(static_cast<float>(rect.left + rect.width), static_cast<float>(rect.top + rect.height)));
 	m_coords.push_back(sf::Vector2f(static_cast<float>(rect.left), static_cast<float>(rect.top + rect.height)));
+}
+
+Tile::Tile(int gid, sf::IntRect rect): m_gid(gid), m_rect(rect) {
+	initCoords(m_rect);
 }
 
 Tile::~Tile() {
@@ -78,7 +82,8 @@ Tile::Tile(const Tile& tile) {
 	this->m_coords = tile.m_coords;
 }
 
-Tile::Tile() {
+Tile::Tile() : m_gid(0), m_rect(0,0,0,0) {
+	initCoords(m_rect);
 }
 
 std::vector<sf::Vertex> Tile::getTexturedVerticesWithPosition(sf::IntRect rect) {
