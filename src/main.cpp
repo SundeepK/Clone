@@ -177,13 +177,13 @@ void MainGame::run()
 	m_yAdjustment->SetMajorStep( 20 );
 	m_yAdjustment->SetPageSize( 10.f );
 
-	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &view]() {
-			view.setCenter( m_xAdjustment->GetValue(), view.getCenter().y );
-		} );
-
-	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &view]() {
-			view.setCenter( view.getCenter().x, m_yAdjustment->GetValue() );
-		} );
+//	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &view]() {
+//			view.setCenter( m_xAdjustment->GetValue(), view.getCenter().y );
+//		} );
+//
+//	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &view]() {
+//			view.setCenter( view.getCenter().x, m_yAdjustment->GetValue() );
+//		} );
 
 
 	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
@@ -243,7 +243,7 @@ void MainGame::run()
 		mainRenderWindow.clear();
 
 		if(shouldScrollMap){
-			mapPanel.updateMapView(sf::Vector2f(m_viewDeltaFromSlider.x, m_viewDeltaFromSlider.y));
+		//	mapPanel.updateMapView(sf::Vector2f(m_viewDeltaFromSlider.x, m_viewDeltaFromSlider.y));
 		}
 
 		textureCanvas->Bind();
