@@ -15,7 +15,7 @@ public:
 	TileMap m_tileMap;
 
 	MapPanelImpl(sf::Texture& texture, sf::Vector2i mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2i resolution) : m_texture(&texture), m_width(tileWidth), m_height(tileHeight),
-				m_view(sf::FloatRect(0,0, resolution.x, resolution.y)), m_tileMap(mapSizeInTiles, sf::Vector2i(tileWidth, tileHeight)){
+				m_view(sf::Vector2f(resolution.x / 2,resolution.y / 2) , sf::Vector2f(resolution)), m_tileMap(mapSizeInTiles, sf::Vector2i(tileWidth, tileHeight)){
 	}
 
 	~MapPanelImpl(){}
@@ -50,6 +50,14 @@ public:
 		m_view.move(sliderOffset);
 	}
 
+	void updateCenterMapView(sf::Vector2f center) {
+		m_view.setCenter(center);
+	}
+
+	sf::View getView() {
+		return m_view;
+	}
+
 
 };
 
@@ -69,4 +77,12 @@ void MapPanel::addTile(sf::Vector2i mousePos, Tile tileToDraw) {
 
 void MapPanel::updateMapView(sf::Vector2f sliderOffset) {
 	m_impl->updateMapView(sliderOffset);
+}
+
+void MapPanel::updateCenterMapView(sf::Vector2f center) {
+	m_impl->updateCenterMapView(center);
+}
+
+sf::View MapPanel::getView() {
+	return m_impl->getView();
 }

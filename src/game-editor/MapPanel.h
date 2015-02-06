@@ -14,6 +14,8 @@ public:
 
 	void addTile(sf::Vector2i mousePos, Tile tileToDraw);
 	void updateMapView(sf::Vector2f sliderOffset);
+	void updateCenterMapView(sf::Vector2f center);
+	sf::View getView();
 
 private:
 
