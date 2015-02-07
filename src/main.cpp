@@ -57,7 +57,6 @@
 class MainGame {
 	public:
 		void sliderPressed();
-		void sliderReleased();
 		void sliderAdjusted();
 
 		void run();
@@ -76,25 +75,13 @@ class MainGame {
 };
 
 
-
 void MainGame::sliderPressed() {
-	std::cout << "pressed" <<std::endl;
-
 	isUsingSlider = true;
 }
 
-void MainGame::sliderReleased() {
-	std::cout << "released" <<std::endl;
-
-	isUsingSlider = false;
-}
-
 void MainGame::sliderAdjusted() {
-
 	shouldScrollMap = true;
 	m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
-	std::cout << "m_viewDeltaFromSlider x:" << m_viewDeltaFromSlider.x << " y:" <<m_viewDeltaFromSlider.y << std::endl;
-
 	m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
 }
 
@@ -120,14 +107,11 @@ void MainGame::run()
 	TilePanel tilePanel(texture, 32, 32);
 	MapPanel mapPanel(texture, sf::Vector2i(70, 70), 32, 32, sf::Vector2i(mapSizeInPixels));
 
-
-
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
 	auto textureCanvas = sfg::Canvas::Create();
 	auto mapCanvas = sfg::Canvas::Create();
 
-	auto sfmlWindow = sfg::Window::Create(sfg::Window::TITLEBAR |  sfg::Window::RESIZE);
 	auto mapWindow = sfg::Window::Create(sfg::Window::RESIZE);
 
 	auto boxScrollY = sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL );
@@ -138,27 +122,10 @@ void MainGame::run()
 
 	scrollbarY->SetRequisition( sf::Vector2f( 0.f, 80.f ) );
 	m_yAdjustment = scrollbarY->GetAdjustment();
-//	scrollbarY->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
-//	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
-
-
-//	m_yAdjustment->SetLower( 0.0f );
-//	m_yAdjustment->SetUpper( (70 * 32) - desktop.width );
-//	m_yAdjustment->SetMinorStep( 10.f );
-//	m_yAdjustment->SetMajorStep( 20.f );
 
 	scrollbarX->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
 	m_xAdjustment = scrollbarX->GetAdjustment();
-//	scrollbarX->GetSignal( sfg::Scrollbar::OnMouseLeftRelease).Connect( std::bind( &MainGame::sliderReleased, this ) );
-//	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
 
-
-//	m_xAdjustment->SetLower( 0 );
-//	m_xAdjustment->SetUpper( (70 * 32) - desktop.width );
-//	m_xAdjustment->SetMinorStep( 10.f );
-//	m_xAdjustment->SetMajorStep( 20.f );
-
-	sfmlWindow->SetPosition(sf::Vector2f(desktop.width - spaceReservedForControls + 10,100.0f));
 	mapWindow->SetPosition(sf::Vector2f(0,0));
 	mapCanvas->SetRequisition(mapSizeInPixels);
 
@@ -168,19 +135,6 @@ void MainGame::run()
 	table->Attach( scrollbarY, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
 	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
 	table->Attach( textureCanvas, sf::Rect<sf::Uint32>( 2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
-
-//
-//	m_xAdjustment->SetLower( mapSizeInPixels.x / 2 );
-//	m_xAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.x /2 ) );
-//	m_xAdjustment->SetMinorStep( 10.f );
-//	m_xAdjustment->SetMajorStep( mapSizeInPixels.x );
-//	m_xAdjustment->SetPageSize( mapSizeInPixels.x );
-//
-//	m_yAdjustment->SetLower( mapSizeInPixels.y );
-//	m_yAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.y / 2) );
-//	m_yAdjustment->SetMinorStep( 10.f );
-//	m_yAdjustment->SetMajorStep( mapSizeInPixels.y );
-//	m_yAdjustment->SetPageSize( mapSizeInPixels.y );
 
 	m_xAdjustment->SetLower(0 );
 	m_xAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.x /2 ) );
@@ -198,48 +152,22 @@ void MainGame::run()
 	scrollbarX->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
 	scrollbarY->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
 
-//		m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
-//		m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( std::bind( &MainGame::sliderAdjusted, this ) );
+	m_xAdjustment->GetSignal(sfg::Adjustment::OnChange).Connect([this, &desktop, &mapSizeInPixels, &mapPanel]() {
+		this->sliderAdjusted();
+		m_center = sf::Vector2f((mapSizeInPixels.x /2 ) + m_xAdjustment->GetValue(), mapPanel.getView().getCenter().y);
+	});
 
-//
-	m_xAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &desktop, &mapSizeInPixels, &mapPanel]() {
-
-		shouldScrollMap = true;
-		m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
-
-		m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
-		const float y = mapPanel.getView().getCenter().y;
-		std::cout << "y " << y << std::endl;
-
-		m_center = sf::Vector2f((mapSizeInPixels.x /2 ) + m_xAdjustment->GetValue(),  y );
-		} );
-
-	m_yAdjustment->GetSignal( sfg::Adjustment::OnChange ).Connect( [this, &desktop, &mapSizeInPixels, &mapPanel]() {
-
-		shouldScrollMap = true;
-		m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
-		std::cout << "m_viewDeltaFromSlider x:" << m_viewDeltaFromSlider.x << " y:" <<m_viewDeltaFromSlider.y << std::endl;
-
-		m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
-
-		m_center = sf::Vector2f(mapPanel.getView().getCenter().x, (mapSizeInPixels.y /2 ) +  m_yAdjustment->GetValue());
-
-
-		} );
+	m_yAdjustment->GetSignal(sfg::Adjustment::OnChange).Connect([this, &desktop, &mapSizeInPixels, &mapPanel]() {
+		this->sliderAdjusted();
+		m_center = sf::Vector2f(mapPanel.getView().getCenter().x, (mapSizeInPixels.y /2 ) + m_yAdjustment->GetValue());
+	});
 
 
 	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
-  //  sfmlWindow->Add(textureCanvas);
     mapWindow->Add(table);
 
- //   sfguiDesktop.Add(sfmlWindow);
     sfguiDesktop.Add(mapWindow);
 	mainRenderWindow.resetGLStates();
-
-
-
-
-
 
 	sf::Clock clock;
 	while (mainRenderWindow.isOpen()) {
@@ -271,10 +199,6 @@ void MainGame::run()
 			sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
 			sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
 			sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
-//			std::cout << "tileMapPos x:" << tileMapPos.x << " y:" <<tileMapPos.y << std::endl;
-//			std::cout << "positionWithScrollbarDelta x:" << positionWithScrollbarDelta.x << " y:" <<positionWithScrollbarDelta.y << std::endl;
-//			std::cout << "m_prevSliderValue x:" << m_prevSliderValue.x << " y:" <<m_prevSliderValue.y << std::endl;
-
 			mapPanel.addTile(positionWithScrollbarDelta, tilePanel.getCurrentlySelectedTile());
 		}
 
@@ -283,8 +207,6 @@ void MainGame::run()
 		mainRenderWindow.clear();
 
 		if(isUsingSlider ){
-			//std::cout << "m_viewDeltaFromSlider x:" << m_viewDeltaFromSlider.x << " y:" <<m_viewDeltaFromSlider.y << std::endl;
-			//mapPanel.updateMapView(sf::Vector2f(m_prevSliderValue.x, m_prevSliderValue.y));
 			mapPanel.updateCenterMapView(m_center);
 		}
 
@@ -294,11 +216,8 @@ void MainGame::run()
 		textureCanvas->Display();
 		textureCanvas->Unbind();
 
-
-
 		mapCanvas->Bind();
 		mapCanvas->Clear(sf::Color(50, 50, 50));
-	//	mapCanvas->SetView(view);
 		mapCanvas->Draw(mapPanel);
 		mapCanvas->Display();
 		mapCanvas->Unbind();
