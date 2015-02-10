@@ -46,3 +46,13 @@ Boulder::~Boulder() {
 void Boulder::createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }
+
+Boulder::Boulder(Boulder&& other) {
+}
+
+Boulder::Boulder(Boulder& other) {
+}
+
+std::vector<std::string> Boulder::getProperties() {
+	return { "width" };
+}

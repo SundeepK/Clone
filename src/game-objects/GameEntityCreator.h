@@ -11,11 +11,22 @@ public:
 	GameEntityCreator(){
 
 	}
+
 	virtual ~GameEntityCreator(){
 
 	}
 
+	GameEntityCreator(GameEntityCreator&& other){
+
+	}
+
+	GameEntityCreator(GameEntityCreator& other){
+
+	}
+
+
 	virtual void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) = 0;
+	virtual std::vector<std::string> getProperties() = 0;
 
 };
 

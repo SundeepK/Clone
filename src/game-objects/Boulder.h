@@ -11,8 +11,13 @@ class Boulder : public GameEntityCreator {
 public:
 	Boulder();
 	~Boulder();
+	Boulder(Boulder&& other);
+	Boulder(Boulder& other);
+
 
 	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
+	std::vector<std::string> getProperties();
+
 
 private:
 

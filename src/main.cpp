@@ -16,6 +16,9 @@
 #include <game-editor/TilePanel.h>
 #include <game-editor/MapPanel.h>
 #include <SFGUI/Widgets.hpp>
+#include <game-editor/ObjectCreatorController.h>
+#include <game-objects/GameEntityCreator.h>
+#include <game-objects/Boulder.h>
 
 //int main()
 //{
@@ -107,15 +110,16 @@ void MainGame::run()
 	TilePanel tilePanel(texture, 32, 32);
 	MapPanel mapPanel(texture, sf::Vector2i(70, 70), 32, 32, sf::Vector2i(mapSizeInPixels));
 
+
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
+
 	auto textureCanvas = sfg::Canvas::Create();
 	auto mapCanvas = sfg::Canvas::Create();
+	ObjectCreatorController objectController;
 
 	auto mapWindow = sfg::Window::Create(sfg::Window::RESIZE);
-
-	auto boxScrollY = sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL );
-	auto boxScrollX = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
+	auto objectCreatorWindow = sfg::Window::Create(sfg::Window::RESIZE);
 
 	auto scrollbarY = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::VERTICAL );
 	auto scrollbarX = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::HORIZONTAL );
@@ -126,15 +130,16 @@ void MainGame::run()
 	scrollbarX->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
 	m_xAdjustment = scrollbarX->GetAdjustment();
 
+	mapWindow->SetRequisition(mapSizeInPixels);
 	mapWindow->SetPosition(sf::Vector2f(0,0));
 	mapCanvas->SetRequisition(mapSizeInPixels);
 
 	auto table = sfg::Table::Create();
 
-	table->Attach( mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
-	table->Attach( scrollbarY, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
-	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
-	table->Attach( textureCanvas, sf::Rect<sf::Uint32>( 2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
+//	table->Attach( mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
+//	table->Attach( scrollbarY, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
+//	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
+	//table->Attach( textureCanvas, sf::Rect<sf::Uint32>( 2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
 
 	m_xAdjustment->SetLower(0 );
 	m_xAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.x /2 ) );
@@ -162,6 +167,8 @@ void MainGame::run()
 		m_center = sf::Vector2f(mapPanel.getView().getCenter().x, (mapSizeInPixels.y /2 ) + m_yAdjustment->GetValue());
 	});
 
+	objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
+	objectController.attachTo(table);
 
 	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
     mapWindow->Add(table);

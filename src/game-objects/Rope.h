@@ -13,6 +13,7 @@ public:
 	~Rope();
 
 	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
+	std::vector<std::string> getProperties();
 	b2Body* createRope();
 
 private:

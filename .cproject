@@ -47,6 +47,7 @@
 								<option id="gnu.cpp.compiler.option.dialect.std.1732332056" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.default" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1207153183" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__"/>
+									<listOptionValue builtIn="false" value="SFGUI_INCLUDE_FONT"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.flags.1575339043" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" value="-std=c++11" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.185434944" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
