@@ -4,16 +4,20 @@
 #include <SFGUI/Widgets.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <vector>
+#include <anax/World.hpp>
+#include <Box2D/Box2D.h>
 #include <memory>
+#include <tmx/MapObject.h>
 #include <game-objects/GameEntityCreator.h>
 
 class ObjectCreatorController {
 public:
-	ObjectCreatorController();
+	ObjectCreatorController(anax::World& anaxWorld, b2World& box2dWorld);
 	~ObjectCreatorController();
 
 	void addEntityCreator(std::string nameOfCreator, std::unique_ptr<GameEntityCreator> entityCreator);
-	void attachTo(sfg::Table::Ptr window);
+	void attachTo(sfg::Box::Ptr window);
+	void createGameObjectAt(sf::Vector2f& position);
 
 private:
 	class ObjectCreatorControllerImpl;

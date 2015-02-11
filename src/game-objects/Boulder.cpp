@@ -3,6 +3,7 @@
 #include <tmx/tmx2box2d.h>
 #include <game-objects/GameObjectTag.h>
 #include <iostream>
+#include <utilities/StringUtils.h>
 
 class Boulder::BoulderImpl {
 
@@ -13,7 +14,7 @@ public:
 	~BoulderImpl() {
 	}
 
-	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
+	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
 
@@ -27,7 +28,12 @@ public:
 
 		//make a circle
 		b2CircleShape c;
-		c.m_radius = tmx::SfToBoxFloat(mapObject.GetAABB().width / 2.f);
+		auto width = mapObject.GetPropertyString("width");
+		if(!width.empty()){
+			c.m_radius = (std::stof(width) / 2.f);
+		}else{
+			c.m_radius = tmx::SfToBoxFloat(mapObject.GetAABB().width / 2.f);
+		}
 		f.shape = &c;
 
 		b2Body* body = box2dWorld.CreateBody(&bodyDef);

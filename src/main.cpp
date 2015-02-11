@@ -13,12 +13,13 @@
 #include <anax/World.hpp>
 #include <Game.h>
 #include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Widgets.hpp>
 #include <game-editor/TilePanel.h>
 #include <game-editor/MapPanel.h>
-#include <SFGUI/Widgets.hpp>
 #include <game-editor/ObjectCreatorController.h>
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Boulder.h>
+#include <SFGUIDebugDraw.h>
 
 //int main()
 //{
@@ -116,7 +117,20 @@ void MainGame::run()
 
 	auto textureCanvas = sfg::Canvas::Create();
 	auto mapCanvas = sfg::Canvas::Create();
-	ObjectCreatorController objectController;
+
+    //box2d stuff
+    b2World b2world(b2Vec2(0, 18.0f));
+	//	b2world.SetAutoClearForces(false);
+	b2world.SetAllowSleeping(true);
+	b2world.SetContinuousPhysics(false);
+
+	SFGUIDebugDraw debugDrawer(mapCanvas);
+	b2world.SetDebugDraw(&debugDrawer);
+	debugDrawer.SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit);
+
+	anax::World anaxWorld;
+
+	ObjectCreatorController objectController(anaxWorld, b2world);
 
 	auto mapWindow = sfg::Window::Create(sfg::Window::RESIZE);
 	auto objectCreatorWindow = sfg::Window::Create(sfg::Window::RESIZE);
@@ -134,12 +148,17 @@ void MainGame::run()
 	mapWindow->SetPosition(sf::Vector2f(0,0));
 	mapCanvas->SetRequisition(mapSizeInPixels);
 
+	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), image.getSize().y));
 	auto table = sfg::Table::Create();
 
-//	table->Attach( mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
-//	table->Attach( scrollbarY, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
-//	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
-	//table->Attach( textureCanvas, sf::Rect<sf::Uint32>( 2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
+	auto rightPanel =  sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
+	rightPanel->SetSpacing(10);
+	rightPanel->Pack(textureCanvas, true, false);
+
+	table->Attach( mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
+	table->Attach( scrollbarY, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
+	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
+	table->Attach( rightPanel, sf::Rect<sf::Uint32>(  2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
 
 	m_xAdjustment->SetLower(0 );
 	m_xAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.x /2 ) );
@@ -168,9 +187,9 @@ void MainGame::run()
 	});
 
 	objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
-	objectController.attachTo(table);
+	objectController.attachTo(rightPanel);
 
-	textureCanvas->SetRequisition(sf::Vector2f((spaceReservedForControls), 200.0f));
+
     mapWindow->Add(table);
 
     sfguiDesktop.Add(mapWindow);
@@ -217,6 +236,8 @@ void MainGame::run()
 			mapPanel.updateCenterMapView(m_center);
 		}
 
+		b2world.Step(1.f/60.f, 8, 3);
+
 		textureCanvas->Bind();
 		textureCanvas->Clear(sf::Color(50, 50, 50));
 		textureCanvas->Draw(tilePanel);
@@ -225,6 +246,7 @@ void MainGame::run()
 
 		mapCanvas->Bind();
 		mapCanvas->Clear(sf::Color(50, 50, 50));
+		b2world.DrawDebugData();
 		mapCanvas->Draw(mapPanel);
 		mapCanvas->Display();
 		mapCanvas->Unbind();
