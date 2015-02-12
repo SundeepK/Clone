@@ -62,26 +62,25 @@ public:
 			}
 			m_labelBox->Invalidate();
 		}
-
-		createGameObjectWithCurrentlySelectedObjectCreator(sf::Vector2f(50.0f, 50.0f));
 	}
 
 	void attachTo(sfg::Box::Ptr table){
 		table->Pack( m_objectCreatorTable, false );
-		table->ReorderChild(m_objectCreatorTable, 0);
 //		table->Attach(m_gameObjectsComboBox, sf::Rect<sf::Uint32>(  2, 1, 1, 1 ), sfg::Table::FILL, 0 );
 	}
 
-	void createGameObjectWithCurrentlySelectedObjectCreator(sf::Vector2f position) {
+	tmx::MapObject createGameObjectWithCurrentlySelectedObjectCreator(sf::Vector2f position) {
+		tmx::MapObject mapObject;
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
-			tmx::MapObject mapObject;
+			std::cout << "now adding game object" << std::endl;
 			mapObject.SetPosition(position);
-			for(auto entry : m_objectCreatorContainer.propertyEntryBoxes){
+			for (auto entry : m_objectCreatorContainer.propertyEntryBoxes) {
 				mapObject.SetProperty(entry->GetId(), "5");
 			}
 			gameObjectItr->second->createEntity(mapObject, *m_box2dWorld, *m_anaxWorld);
 		}
+		return mapObject;
 	}
 
 };
@@ -101,6 +100,6 @@ void ObjectCreatorController::attachTo(sfg::Box::Ptr window) {
 	m_impl->attachTo(window);
 }
 
-void ObjectCreatorController::createGameObjectAt(sf::Vector2f& position) {
-	m_impl->createGameObjectWithCurrentlySelectedObjectCreator(position);
+tmx::MapObject ObjectCreatorController::createGameObjectAt(sf::Vector2i position) {
+	return m_impl->createGameObjectWithCurrentlySelectedObjectCreator(sf::Vector2f(position));
 }

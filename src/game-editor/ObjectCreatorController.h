@@ -17,7 +17,7 @@ public:
 
 	void addEntityCreator(std::string nameOfCreator, std::unique_ptr<GameEntityCreator> entityCreator);
 	void attachTo(sfg::Box::Ptr window);
-	void createGameObjectAt(sf::Vector2f& position);
+	tmx::MapObject createGameObjectAt(sf::Vector2i position);
 
 private:
 	class ObjectCreatorControllerImpl;
