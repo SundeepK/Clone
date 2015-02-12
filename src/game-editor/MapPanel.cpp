@@ -8,14 +8,13 @@ class MapPanel::MapPanelImpl{
 public:
 
 	std::unique_ptr<sf::Texture> m_texture;
-	int  m_width = 32;
-	int  m_height = 32;
 	std::unordered_map<Tile, Tile, Tile::TileHasher> m_mapTileToTextureTile;
 	sf::View m_view;
 	TileMap m_tileMap;
+	sf::Vector2i m_mapSizeInPixels;
 
-	MapPanelImpl(sf::Texture& texture, sf::Vector2i mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2i resolution) : m_texture(&texture), m_width(tileWidth), m_height(tileHeight),
-				m_view(sf::Vector2f(resolution.x / 2,resolution.y / 2) , sf::Vector2f(resolution)), m_tileMap(mapSizeInTiles, sf::Vector2i(tileWidth, tileHeight)){
+	MapPanelImpl(sf::Texture& texture, sf::Vector2i mapSizeInTiles, sf::Vector2i tileSize, sf::Vector2i resolution) : m_texture(&texture),
+				m_view(sf::Vector2f(resolution.x / 2,resolution.y / 2) , sf::Vector2f(resolution)), m_tileMap(mapSizeInTiles, sf::Vector2i(tileSize.x, tileSize.y)), m_mapSizeInPixels(resolution){
 	}
 
 	~MapPanelImpl(){}
@@ -58,10 +57,15 @@ public:
 		return m_view;
 	}
 
+	sf::Vector2i getMapSizeInPixels(){
+		return m_mapSizeInPixels;
+	}
+
 
 };
 
-MapPanel::MapPanel(sf::Texture& texture, sf::Vector2i mapSizeInTiles, int tileWidth, int tileHeight, sf::Vector2i resolution) : m_impl(new MapPanelImpl(texture, mapSizeInTiles, tileWidth, tileHeight, resolution)) {
+MapPanel::MapPanel(sf::Texture& texture, sf::Vector2i mapSizeInTiles, sf::Vector2i tileSize, sf::Vector2i resolution) :
+		m_impl(new MapPanelImpl(texture, mapSizeInTiles, tileSize, resolution)) {
 }
 
 MapPanel::~MapPanel() {
@@ -85,4 +89,16 @@ void MapPanel::updateCenterMapView(sf::Vector2f center) {
 
 sf::View MapPanel::getView() {
 	return m_impl->getView();
+}
+
+sf::Vector2i MapPanel::getMapSizeInTiles() {
+	return m_impl->m_tileMap.getMapSizeInTiles();
+}
+
+sf::Vector2i MapPanel::getTileSize() {
+	return m_impl->m_tileMap.getTileDimensions();
+}
+
+sf::Vector2i MapPanel::getMapSizeInPixels() {
+	return m_impl->getMapSizeInPixels();
 }

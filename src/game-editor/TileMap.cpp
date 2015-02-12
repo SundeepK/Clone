@@ -1,6 +1,6 @@
 #include <game-editor/TileMap.h>
 
-TileMap::TileMap(sf::Vector2i mapSizeInTiles, sf::Vector2i tileDimensions) {
+TileMap::TileMap(sf::Vector2i mapSizeInTiles, sf::Vector2i tileDimensions) : m_mapSizeInTiles(mapSizeInTiles), m_tileDimensions(tileDimensions)  {
 	for(int row = 0; row < mapSizeInTiles.x  ; row++ ){
 		for(int column = 0, x = row; column < mapSizeInTiles.y ; column++, x++){
 			sf::IntRect rect(row * tileDimensions.x, column * tileDimensions.y, tileDimensions.x, tileDimensions.y);
@@ -55,4 +55,12 @@ boost::optional<Tile> TileMap::getTile(int idOfTile) const{
 	}else{
 		return boost::optional<Tile>();
 	}
+}
+
+sf::Vector2i TileMap::getMapSizeInTiles()  {
+	return m_mapSizeInTiles;
+}
+
+sf::Vector2i TileMap::getTileDimensions()  {
+	return m_tileDimensions;
 }

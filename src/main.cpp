@@ -20,6 +20,7 @@
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Boulder.h>
 #include <SFGUIDebugDraw.h>
+#include <game-editor/MapPanelController.h>
 
 //int main()
 //{
@@ -67,28 +68,7 @@ class MainGame {
 
 	private:
 
-		// Create our adjustment smart pointer.
-		sfg::Adjustment::Ptr m_yAdjustment;
-		sfg::Adjustment::Ptr m_xAdjustment;
-
-		bool isUsingSlider = false;
-		bool shouldScrollMap = false;
-		sf::Vector2i m_viewDeltaFromSlider;
-		sf::Vector2i m_prevSliderValue;
-		sf::Vector2f m_center;
 };
-
-
-void MainGame::sliderPressed() {
-	isUsingSlider = true;
-}
-
-void MainGame::sliderAdjusted() {
-	shouldScrollMap = true;
-	m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
-	m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
-}
-
 
 void MainGame::run()
 {
@@ -109,8 +89,6 @@ void MainGame::run()
 	sf::Texture texture;
 	texture.loadFromImage(image);
 	TilePanel tilePanel(texture, 32, 32);
-	MapPanel mapPanel(texture, sf::Vector2i(70, 70), 32, 32, sf::Vector2i(mapSizeInPixels));
-
 
 	sfg::SFGUI sfgui;
 	sfg::Desktop sfguiDesktop;
@@ -132,17 +110,12 @@ void MainGame::run()
 
 	ObjectCreatorController objectController(anaxWorld, b2world);
 
+
 	auto mapWindow = sfg::Window::Create(sfg::Window::RESIZE);
 	auto objectCreatorWindow = sfg::Window::Create(sfg::Window::RESIZE);
 
 	auto scrollbarY = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::VERTICAL );
 	auto scrollbarX = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::HORIZONTAL );
-
-	scrollbarY->SetRequisition( sf::Vector2f( 0.f, 80.f ) );
-	m_yAdjustment = scrollbarY->GetAdjustment();
-
-	scrollbarX->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
-	m_xAdjustment = scrollbarX->GetAdjustment();
 
 	mapWindow->SetRequisition(mapSizeInPixels);
 	mapWindow->SetPosition(sf::Vector2f(0,0));
@@ -160,35 +133,11 @@ void MainGame::run()
 	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
 	table->Attach( rightPanel, sf::Rect<sf::Uint32>(  2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
 
-	m_xAdjustment->SetLower(0 );
-	m_xAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.x /2 ) );
-	m_xAdjustment->SetMinorStep( 10.f );
-	m_xAdjustment->SetMajorStep( 20 );
-	m_xAdjustment->SetPageSize( 10 );
-
-	m_yAdjustment->SetLower( 0 );
-	m_yAdjustment->SetUpper( (70 * 32) - (mapSizeInPixels.y / 2) );
-	m_yAdjustment->SetMinorStep( 10.f );
-	m_yAdjustment->SetMajorStep( 20 );
-	m_yAdjustment->SetPageSize( 10 );
-
-
-	scrollbarX->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
-	scrollbarY->GetSignal( sfg::Scrollbar::OnMouseLeftPress).Connect( std::bind( &MainGame::sliderPressed, this ) );
-
-	m_xAdjustment->GetSignal(sfg::Adjustment::OnChange).Connect([this, &desktop, &mapSizeInPixels, &mapPanel]() {
-		this->sliderAdjusted();
-		m_center = sf::Vector2f((mapSizeInPixels.x /2 ) + m_xAdjustment->GetValue(), mapPanel.getView().getCenter().y);
-	});
-
-	m_yAdjustment->GetSignal(sfg::Adjustment::OnChange).Connect([this, &desktop, &mapSizeInPixels, &mapPanel]() {
-		this->sliderAdjusted();
-		m_center = sf::Vector2f(mapPanel.getView().getCenter().x, (mapSizeInPixels.y /2 ) + m_yAdjustment->GetValue());
-	});
-
 	objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
 	objectController.attachTo(rightPanel);
 
+	MapPanelController mapPanelController(mapCanvas, scrollbarX, scrollbarY,
+			std::unique_ptr<MapPanel>(new MapPanel (texture, sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels))));
 
     mapWindow->Add(table);
 
@@ -199,7 +148,7 @@ void MainGame::run()
 	while (mainRenderWindow.isOpen()) {
 		sf::Event event;
 		float dt = clock.restart().asMilliseconds();
-
+		std::vector<sf::Event> events;
 		while (mainRenderWindow.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mainRenderWindow.close();
@@ -212,29 +161,17 @@ void MainGame::run()
 					tilePanel.selectTileAt(mousePos);
 
 		        }
-		    }else if (event.type == sf::Event::MouseButtonReleased ) {
-		        if ( isUsingSlider && event.mouseButton.button == sf::Mouse::Left) {
-		        		isUsingSlider = false;
-		        }
 		    }
 			sfguiDesktop.HandleEvent(event);
+			events.push_back(event);
 		}
 
-		if (!isUsingSlider && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
-			sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-			sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
-			sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
-			mapPanel.addTile(positionWithScrollbarDelta, tilePanel.getCurrentlySelectedTile());
-		}
+		sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
+		mapPanelController.addTile(events, mousePos, tilePanel.getCurrentlySelectedTile());
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
 		mainRenderWindow.clear();
-
-		if(isUsingSlider ){
-			mapPanel.updateCenterMapView(m_center);
-		}
 
 		b2world.Step(1.f/60.f, 8, 3);
 
@@ -247,14 +184,13 @@ void MainGame::run()
 		mapCanvas->Bind();
 		mapCanvas->Clear(sf::Color(50, 50, 50));
 		b2world.DrawDebugData();
-		mapCanvas->Draw(mapPanel);
+		mapPanelController.draw();
 		mapCanvas->Display();
 		mapCanvas->Unbind();
 
 		mainRenderWindow.setActive(true);
 		sfgui.Display(mainRenderWindow);
 		mainRenderWindow.display();
-		shouldScrollMap = false;
 	}
 }
 

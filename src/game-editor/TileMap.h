@@ -18,12 +18,15 @@ public:
 	std::vector<sf::Vertex> getVerticies();
     void draw(sf::RenderTarget& rt, sf::RenderStates states, bool shouldDrawTexture = false) const;
     boost::optional<Tile> getTile(int idOfTile) const;
+	sf::Vector2i getMapSizeInTiles();
+	sf::Vector2i getTileDimensions();
 
 private:
 
-
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
+	sf::Vector2i m_mapSizeInTiles;
+	sf::Vector2i m_tileDimensions;
 
 };
 
