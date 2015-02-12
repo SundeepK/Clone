@@ -97,6 +97,10 @@ public:
 		return m_prevSliderValue;
 	}
 
+	bool isSliderInUse(){
+		return isUsingSlider;
+	}
+
 
 };
 
@@ -110,6 +114,10 @@ MapPanelController::MapPanelController(sfg::Canvas::Ptr canvas, sfg::Scrollbar::
 
 void MapPanelController::addTile(std::vector<sf::Event>& events, sf::Vector2i mousePos, Tile tile)  {
 	m_impl->addTile(events, mousePos, tile);
+}
+
+bool MapPanelController::isSliderInUse() {
+	return m_impl->isSliderInUse();
 }
 
 void MapPanelController::draw(sf::RenderTarget& rt, sf::RenderStates states) const {

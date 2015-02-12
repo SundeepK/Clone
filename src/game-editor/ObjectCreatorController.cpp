@@ -73,10 +73,10 @@ public:
 		tmx::MapObject mapObject;
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
-			std::cout << "now adding game object at x" << position.x <<  " y:" << position.y << std::endl;
 			mapObject.SetPosition(position);
 			for (auto entry : m_objectCreatorContainer.propertyEntryBoxes) {
-				mapObject.SetProperty(entry->GetId(), "5");
+				std::cout << "now adding game object at x" << position.x <<  " y:" << position.y <<  "with property: " << static_cast<std::string>(entry->GetId()) << " " << static_cast<std::string>(entry->GetVisibleText()) << std::endl;
+				mapObject.SetProperty(static_cast<std::string>(entry->GetId()), static_cast<std::string>(entry->GetVisibleText()));
 			}
 			gameObjectItr->second->createEntity(mapObject, *m_box2dWorld, *m_anaxWorld);
 		}

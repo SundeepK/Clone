@@ -22,6 +22,7 @@
 #include <SFGUIDebugDraw.h>
 #include <game-editor/MapPanelController.h>
 #include <game-editor/LayerController.h>
+#include <game-objects/Rope.h>
 
 //int main()
 //{
@@ -136,6 +137,7 @@ void MainGame::run()
 	LayerController layerController;
 	layerController.attachTo(rightPanel);
 	objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
+	objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
 	objectController.attachTo(rightPanel);
 	rightPanel->Pack(textureCanvas, true, false);
 
@@ -168,7 +170,7 @@ void MainGame::run()
 
 					if (currentLayerOptional) {
 						Layer currentLayer = currentLayerOptional.get();
-						if (currentLayer.getLayerType() == LayerType::OBJECTS) {
+						if (currentLayer.getLayerType() == LayerType::OBJECTS && !mapPanelController.isSliderInUse()) {
 							sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
 							sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
 							sf::Vector2i tileMapPos = (mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y)) + mapPanelController.getSliderOffset();

@@ -39,7 +39,14 @@ public:
 
 	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
-		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + mapObject.GetAABB().width, mapObject.GetPosition().y));
+		auto widthProperty = mapObject.GetPropertyString("width");
+		float width = 0;
+		if (!widthProperty.empty()) {
+			width = (std::stof(widthProperty));
+		} else {
+			width = (mapObject.GetAABB().width);
+		}
+		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + width, mapObject.GetPosition().y));
 
 		b2Body* firstBodyToJoinWith = createStartingBody(statingPosition, box2dWorld);
 		b2Body* prevBody = firstBodyToJoinWith;
@@ -52,7 +59,7 @@ public:
 			b2RevoluteJointDef jd;
 			jd.collideConnected = false;
 
-			const int32 N = ceilf((mapObject.GetAABB().width / 30) / (1.0f )) + 1;
+			const int32 N = ceilf(( width / 30) / (1.0f )) + 1;
 
 			for (int32 xVal = 1; xVal < N; ++xVal) {
 				b2BodyDef bd;
@@ -108,5 +115,5 @@ void Rope::createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, ana
 }
 
 std::vector<std::string> Rope::getProperties() {
-	return {};
+	return { "width" };
 }

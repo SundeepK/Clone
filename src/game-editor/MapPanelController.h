@@ -19,13 +19,14 @@ public:
 	void draw();
 	void updateCanvasView();
 	sf::Vector2i getSliderOffset();
+	bool isSliderInUse();
+
 private:
-
     void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
-
 
 	class MapPanelControllerImpl;
 	std::unique_ptr<MapPanelControllerImpl> m_impl;
+
 };
 
 #endif /* SRC_GAME_EDITOR_MAPPANELCONTROLLER_H_ */
