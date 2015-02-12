@@ -17,8 +17,8 @@ public:
 
 	void addTile(std::vector<sf::Event>& events, sf::Vector2i mousePos, Tile tile);
 	void draw();
-
-
+	void updateCanvasView();
+	sf::Vector2i getSliderOffset();
 private:
 
     void draw(sf::RenderTarget& rt, sf::RenderStates states) const;

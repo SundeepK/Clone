@@ -153,45 +153,48 @@ void MainGame::run()
 	while (mainRenderWindow.isOpen()) {
 		sf::Event event;
 		float dt = clock.restart().asMilliseconds();
+		auto currentLayerOptional = layerController.getCurrentlySelectedLayer();
 		std::vector<sf::Event> events;
 		while (mainRenderWindow.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mainRenderWindow.close();
-			}else if (event.type == sf::Event::MouseButtonPressed ) {
-		        if (event.mouseButton.button == sf::Mouse::Left) {
+			} else if (event.type == sf::Event::MouseButtonPressed) {
+				if (event.mouseButton.button == sf::Mouse::Left) {
 					sf::Vector2f absolutePosition = textureCanvas->GetAbsolutePosition();
 
-		        	sf::Vector2i position(event.mouseButton.x, event.mouseButton.y );
+					sf::Vector2i position(event.mouseButton.x, event.mouseButton.y);
 					sf::Vector2i mousePos = position - sf::Vector2i(absolutePosition.x, absolutePosition.y);
 					tilePanel.selectTileAt(mousePos);
 
-		        }
-		    }
+					if (currentLayerOptional) {
+						Layer currentLayer = currentLayerOptional.get();
+						if (currentLayer.getLayerType() == LayerType::OBJECTS) {
+							sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
+							sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
+							sf::Vector2i tileMapPos = (mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y)) + mapPanelController.getSliderOffset();
+							auto mapObject = objectController.createGameObjectAt(tileMapPos);
+							layerController.addMapObjectToCurrentLayer(mapObject);
+						}
+					}
+
+				}
+			}
 			sfguiDesktop.HandleEvent(event);
 			events.push_back(event);
 		}
 
-		auto currentLayerOptional = layerController.getCurrentlySelectedLayer();
 		//should always have a selected layer, but just in case
 		if(currentLayerOptional){
 			Layer currentLayer = currentLayerOptional.get();
 			if(currentLayer.getLayerType() == LayerType::TILE){
 				sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
 				mapPanelController.addTile(events, mousePos, tilePanel.getCurrentlySelectedTile());
-			}else{
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					std::cout << "attempt creating game object" << std::endl;
-					sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
-					sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-					sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
-					auto mapObject = objectController.createGameObjectAt(tileMapPos);
-					layerController.addMapObjectToCurrentLayer(mapObject);
-				}
 			}
 		}else{
 			std::cerr << "No currently selected layer found" << std::endl;
 		}
 
+		mapPanelController.updateCanvasView();
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 

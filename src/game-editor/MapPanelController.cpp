@@ -71,10 +71,6 @@ public:
 			sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
 			m_mapPanel->addTile(positionWithScrollbarDelta, tile);
 		}
-
-		if(isUsingSlider ){
-			m_mapPanel->updateCenterMapView(m_center);
-		}
 	}
 
 
@@ -89,6 +85,16 @@ public:
 
 	void draw(){
 		m_canvas->Draw(*m_mapPanel);
+	}
+
+	void updateCanvasView(){
+		if(isUsingSlider ){
+			m_mapPanel->updateCenterMapView(m_center);
+		}
+	}
+
+	sf::Vector2i getSliderOffset(){
+		return m_prevSliderValue;
 	}
 
 
@@ -111,4 +117,12 @@ void MapPanelController::draw(sf::RenderTarget& rt, sf::RenderStates states) con
 
 void MapPanelController::draw(){
 	m_impl->draw();
+}
+
+void MapPanelController::updateCanvasView() {
+	m_impl->updateCanvasView();
+}
+
+sf::Vector2i MapPanelController::getSliderOffset() {
+	return m_impl->getSliderOffset();
 }
