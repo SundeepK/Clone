@@ -15,11 +15,13 @@ public:
 	MapPanelController(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, std::unique_ptr<MapPanel> mapPanel);
 	~MapPanelController();
 
-	void addTile(std::vector<sf::Event>& events, sf::Vector2i mousePos, Tile tile);
+	void addTile(sf::Vector2i mousePos, Tile tile);
 	void draw();
 	void updateCanvasView();
 	sf::Vector2i getSliderOffset();
 	bool isSliderInUse();
+	void handleEvents(std::vector<sf::Event>& events);
+	bool isInBounds(sf::Vector2i mousePos);
 
 private:
     void draw(sf::RenderTarget& rt, sf::RenderStates states) const;

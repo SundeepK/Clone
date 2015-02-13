@@ -14,6 +14,10 @@ public:
 	sf::Vector2i m_viewDeltaFromSlider;
 	sf::Vector2i m_prevSliderValue;
 	sf::Vector2f m_center;
+	sf::IntRect m_bounds;
+	sf::RectangleShape m_rectangle;
+	const int POSITION_OFFSET = 6;
+	const int PADDING = 12;
 
 	MapPanelControllerImpl(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, std::unique_ptr<MapPanel> mapPanel) :
 		m_mapPanel(std::move(mapPanel)), m_canvas(canvas), m_xScrollbar(xScrollbar), m_yScrollbar(yScrollbar){
@@ -26,6 +30,16 @@ public:
 		sf::Vector2i mapSizeInTiles = m_mapPanel->getMapSizeInTiles();
 		sf::Vector2i tileSize = m_mapPanel->getTileSize();
 
+		m_bounds.left = POSITION_OFFSET;
+		m_bounds.top = POSITION_OFFSET;
+		m_bounds.width = m_mapPanel->getMapSizeInPixels().x - PADDING;
+		m_bounds.height = m_mapPanel->getMapSizeInPixels().y - PADDING;
+
+		m_rectangle.setFillColor(sf::Color::Transparent);
+		m_rectangle.setOutlineColor(sf::Color::Red);
+		m_rectangle.setOutlineThickness(2.f);
+		m_rectangle.setPosition(sf::Vector2f(m_bounds.left, m_bounds.top));
+		m_rectangle.setSize(sf::Vector2f(m_bounds.width, m_bounds.height));
 
 		m_xAdjustment->SetLower(0 );
 		m_xAdjustment->SetUpper( (mapSizeInTiles.x * tileSize.x ) - (m_mapPanel->getMapSizeInPixels().x / 2));
@@ -56,7 +70,7 @@ public:
 
 	~MapPanelControllerImpl(){}
 
-	void addTile(std::vector<sf::Event>& events, sf::Vector2i mousePos, Tile tile) {
+	void handleEvents(std::vector<sf::Event>& events){
 		for (auto event : events) {
 			if (event.type == sf::Event::MouseButtonReleased) {
 				if (isUsingSlider && event.mouseButton.button == sf::Mouse::Left) {
@@ -64,12 +78,16 @@ public:
 				}
 			}
 		}
+	}
 
+	void addTile(sf::Vector2i mousePos, Tile tile) {
 		if (!isUsingSlider && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			sf::Vector2f absolutePositionForMapCanvas = m_canvas->GetAbsolutePosition();
 			sf::Vector2i tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
-			sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
-			m_mapPanel->addTile(positionWithScrollbarDelta, tile);
+				sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
+			if(isInBounds(positionWithScrollbarDelta)){
+				m_mapPanel->addTile(positionWithScrollbarDelta, tile);
+			}
 		}
 	}
 
@@ -77,6 +95,9 @@ public:
 	void sliderAdjusted() {
 		m_viewDeltaFromSlider = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue()) - m_prevSliderValue;
 		m_prevSliderValue = sf::Vector2i(m_xAdjustment->GetValue(), m_yAdjustment->GetValue());
+		auto boundsPosition = sf::Vector2f(m_prevSliderValue) + sf::Vector2f(POSITION_OFFSET, POSITION_OFFSET);
+		m_bounds.left = boundsPosition.x;
+		m_bounds.top = boundsPosition.y;
 	}
 
 	void sliderPressed() {
@@ -85,6 +106,8 @@ public:
 
 	void draw(){
 		m_canvas->Draw(*m_mapPanel);
+		m_rectangle.setPosition(sf::Vector2f(m_bounds.left, m_bounds.top));
+		m_canvas->Draw(m_rectangle);
 	}
 
 	void updateCanvasView(){
@@ -101,6 +124,9 @@ public:
 		return isUsingSlider;
 	}
 
+	bool isInBounds(sf::Vector2i mousePos){
+		return m_bounds.contains(mousePos);
+	}
 
 };
 
@@ -112,12 +138,16 @@ MapPanelController::MapPanelController(sfg::Canvas::Ptr canvas, sfg::Scrollbar::
 		m_impl(new MapPanelControllerImpl(canvas, xScrollbar, yScrollbar, std::move(mapPanel))){
 }
 
-void MapPanelController::addTile(std::vector<sf::Event>& events, sf::Vector2i mousePos, Tile tile)  {
-	m_impl->addTile(events, mousePos, tile);
+void MapPanelController::addTile(sf::Vector2i mousePos, Tile tile)  {
+	m_impl->addTile(mousePos, tile);
 }
 
 bool MapPanelController::isSliderInUse() {
 	return m_impl->isSliderInUse();
+}
+
+bool MapPanelController::isInBounds(sf::Vector2i mousePos) {
+	return m_impl->isInBounds(mousePos);
 }
 
 void MapPanelController::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
@@ -133,4 +163,8 @@ void MapPanelController::updateCanvasView() {
 
 sf::Vector2i MapPanelController::getSliderOffset() {
 	return m_impl->getSliderOffset();
+}
+
+void MapPanelController::handleEvents(std::vector<sf::Event>& events) {
+	m_impl->handleEvents(events);
 }

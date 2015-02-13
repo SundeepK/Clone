@@ -174,8 +174,10 @@ void MainGame::run()
 							sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
 							sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
 							sf::Vector2i tileMapPos = (mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y)) + mapPanelController.getSliderOffset();
-							auto mapObject = objectController.createGameObjectAt(tileMapPos);
-							layerController.addMapObjectToCurrentLayer(mapObject);
+							if(mapPanelController.isInBounds(tileMapPos)){
+								auto mapObject = objectController.createGameObjectAt(tileMapPos);
+								layerController.addMapObjectToCurrentLayer(mapObject);
+							}
 						}
 					}
 
@@ -185,12 +187,14 @@ void MainGame::run()
 			events.push_back(event);
 		}
 
+		mapPanelController.handleEvents(events);
+
 		//should always have a selected layer, but just in case
 		if(currentLayerOptional){
 			Layer currentLayer = currentLayerOptional.get();
 			if(currentLayer.getLayerType() == LayerType::TILE){
 				sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
-				mapPanelController.addTile(events, mousePos, tilePanel.getCurrentlySelectedTile());
+				mapPanelController.addTile(mousePos, tilePanel.getCurrentlySelectedTile());
 			}
 		}else{
 			std::cerr << "No currently selected layer found" << std::endl;
