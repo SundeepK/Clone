@@ -10053,6 +10053,9 @@
     <property name="Texture" value="plankssmall.png"/>
    </properties>
   </object>
+  <object name="circletopleft" x="4" y="3" width="114" height="103">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup color="#a42000" name="InterestPoints" width="50" height="25">
   <object name="PlayerStartPoint" x="64" y="992" width="29" height="26"/>

@@ -9,12 +9,11 @@ public:
 
 	std::unique_ptr<sf::Texture> m_texture;
 	std::unordered_map<Tile, Tile, Tile::TileHasher> m_mapTileToTextureTile;
-	sf::View m_view;
 	TileMap m_tileMap;
 	sf::Vector2i m_mapSizeInPixels;
 
 	MapPanelImpl(sf::Texture& texture, sf::Vector2i mapSizeInTiles, sf::Vector2i tileSize, sf::Vector2i resolution) : m_texture(&texture),
-				m_view(sf::Vector2f(resolution.x / 2,resolution.y / 2) , sf::Vector2f(resolution)), m_tileMap(mapSizeInTiles, sf::Vector2i(tileSize.x, tileSize.y)), m_mapSizeInPixels(resolution){
+			 m_tileMap(mapSizeInTiles, sf::Vector2i(tileSize.x, tileSize.y)), m_mapSizeInPixels(resolution){
 	}
 
 	~MapPanelImpl(){}
@@ -34,7 +33,6 @@ public:
 	}
 
 	void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
-		rt.setView(m_view);
 		states.texture = m_texture.get();
 		m_tileMap.draw(rt, states);
 		for(auto mapItr=m_mapTileToTextureTile.begin(); mapItr!=m_mapTileToTextureTile.end(); ++mapItr) {
@@ -43,18 +41,6 @@ public:
 			auto vertexArray =textureTile.getTexturedVerticesWithPosition(mapTile.m_rect);
 			rt.draw(&vertexArray[0], 4, sf::Quads, states);
 		}
-	}
-
-	void updateMapView(sf::Vector2f sliderOffset) {
-		m_view.move(sliderOffset);
-	}
-
-	void updateCenterMapView(sf::Vector2f center) {
-		m_view.setCenter(center);
-	}
-
-	sf::View getView() {
-		return m_view;
 	}
 
 	sf::Vector2i getMapSizeInPixels(){
@@ -77,18 +63,6 @@ void MapPanel::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 
 void MapPanel::addTile(sf::Vector2i mousePos, Tile tileToDraw) {
 	m_impl->addTile(mousePos, tileToDraw);
-}
-
-void MapPanel::updateMapView(sf::Vector2f sliderOffset) {
-	m_impl->updateMapView(sliderOffset);
-}
-
-void MapPanel::updateCenterMapView(sf::Vector2f center) {
-	m_impl->updateCenterMapView(center);
-}
-
-sf::View MapPanel::getView() {
-	return m_impl->getView();
 }
 
 sf::Vector2i MapPanel::getMapSizeInTiles() {

@@ -8,22 +8,17 @@
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
 #include <game-editor/MapPanel.h>
+#include <game-editor/ScrollableCanvas.h>
 
-
-class MapPanelController :  public sf::Drawable {
+class MapPanelController : public sf::Drawable{
 public:
-	MapPanelController(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, std::unique_ptr<MapPanel> mapPanel);
+	MapPanelController(ScrollableCanvas& canvas, std::unique_ptr<MapPanel> mapPanel);
 	~MapPanelController();
 
 	void addTile(sf::Vector2i mousePos, Tile tile);
-	void draw();
-	void updateCanvasView();
-	sf::Vector2i getSliderOffset();
-	bool isSliderInUse();
-	void handleEvents(std::vector<sf::Event>& events);
-	bool isInBounds(sf::Vector2i mousePos);
 
 private:
+
     void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
 
 	class MapPanelControllerImpl;

@@ -23,6 +23,7 @@
 #include <game-editor/MapPanelController.h>
 #include <game-editor/LayerController.h>
 #include <game-objects/Rope.h>
+#include <game-editor/ScrollableCanvas.h>
 
 //int main()
 //{
@@ -63,13 +64,7 @@
 
 class MainGame {
 	public:
-		void sliderPressed();
-		void sliderAdjusted();
-
 		void run();
-
-	private:
-
 };
 
 void MainGame::run()
@@ -141,8 +136,10 @@ void MainGame::run()
 	objectController.attachTo(rightPanel);
 	rightPanel->Pack(textureCanvas, true, false);
 
-	MapPanelController mapPanelController(mapCanvas, scrollbarX, scrollbarY,
-			std::unique_ptr<MapPanel>(new MapPanel (texture, sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels))));
+	MapData mapData(sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels));
+	ScrollableCanvas scrollableCanvas(mapCanvas, scrollbarX, scrollbarY, mapData);
+
+	MapPanelController mapPanelController(scrollableCanvas,	std::unique_ptr<MapPanel>(new MapPanel (texture, sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels))));
 
 	layerController.addLayer("Entities", LayerType::OBJECTS);
 
@@ -152,11 +149,20 @@ void MainGame::run()
 	mainRenderWindow.resetGLStates();
 
 	sf::Clock clock;
+	sf::IntRect objectBounds;
+	sf::RectangleShape objectBoundsRect;
+	objectBoundsRect.setFillColor(sf::Color::Transparent);
+	objectBoundsRect.setOutlineThickness(2.0f);
+	objectBoundsRect.setOutlineColor(sf::Color::Red);
 	while (mainRenderWindow.isOpen()) {
 		sf::Event event;
 		float dt = clock.restart().asMilliseconds();
 		auto currentLayerOptional = layerController.getCurrentlySelectedLayer();
 		std::vector<sf::Event> events;
+		auto remnderWindowMousePos = sf::Mouse::getPosition(mainRenderWindow);
+		auto canvasMousePosition = scrollableCanvas.getCanvasMousePositionFrom(remnderWindowMousePos);
+		bool isInBoundsAndSliderNotInUse = scrollableCanvas.isInBoundsAndSlidersNotInUse(remnderWindowMousePos);
+
 		while (mainRenderWindow.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mainRenderWindow.close();
@@ -170,37 +176,48 @@ void MainGame::run()
 
 					if (currentLayerOptional) {
 						Layer currentLayer = currentLayerOptional.get();
-						if (currentLayer.getLayerType() == LayerType::OBJECTS && !mapPanelController.isSliderInUse()) {
-							sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
-							sf::Vector2f absolutePositionForMapCanvas = mapCanvas->GetAbsolutePosition();
-							sf::Vector2i tileMapPos = (mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y)) + mapPanelController.getSliderOffset();
-							if(mapPanelController.isInBounds(tileMapPos)){
-								auto mapObject = objectController.createGameObjectAt(tileMapPos);
-								layerController.addMapObjectToCurrentLayer(mapObject);
-							}
+						if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse) {
+								objectBounds.top = canvasMousePosition.y;
+								objectBounds.left = canvasMousePosition.x;
 						}
 					}
+				}
+			}else if(event.type == sf::Event::MouseButtonReleased){
+				if (currentLayerOptional) {
+					Layer currentLayer = currentLayerOptional.get();
+					if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse) {
+							objectBounds.height = canvasMousePosition.y - objectBounds.top;
+							objectBounds.width  = canvasMousePosition.x - objectBounds.left;
 
+							auto mapObject = objectController.createGameObjectAt(objectBounds);
+							layerController.addMapObjectToCurrentLayer(mapObject);
+					}
 				}
 			}
 			sfguiDesktop.HandleEvent(event);
 			events.push_back(event);
 		}
 
-		mapPanelController.handleEvents(events);
+		if (currentLayerOptional) {
+				Layer currentLayer = currentLayerOptional.get();
+				if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+						objectBounds.height = canvasMousePosition.y - objectBounds.top;
+						objectBounds.width = canvasMousePosition.x - objectBounds.left;
+				}
+		}
+
+		scrollableCanvas.updateCanvas(events);
 
 		//should always have a selected layer, but just in case
 		if(currentLayerOptional){
 			Layer currentLayer = currentLayerOptional.get();
 			if(currentLayer.getLayerType() == LayerType::TILE){
-				sf::Vector2i mousePos = sf::Mouse::getPosition(mainRenderWindow);
-				mapPanelController.addTile(mousePos, tilePanel.getCurrentlySelectedTile());
+				mapPanelController.addTile(remnderWindowMousePos, tilePanel.getCurrentlySelectedTile());
 			}
 		}else{
 			std::cerr << "No currently selected layer found" << std::endl;
 		}
 
-		mapPanelController.updateCanvasView();
 
 		sfguiDesktop.Update(1.0f / 60.0f);
 
@@ -217,7 +234,11 @@ void MainGame::run()
 		mapCanvas->Bind();
 		mapCanvas->Clear(sf::Color(50, 50, 50));
 		b2world.DrawDebugData();
-		mapPanelController.draw();
+		mapCanvas->Draw(scrollableCanvas);
+		mapCanvas->Draw(mapPanelController);
+		objectBoundsRect.setPosition(sf::Vector2f(objectBounds.left, objectBounds.top));
+		objectBoundsRect.setSize(sf::Vector2f(objectBounds.width, objectBounds.height));
+		mapCanvas->Draw(objectBoundsRect);
 		mapCanvas->Display();
 		mapCanvas->Unbind();
 

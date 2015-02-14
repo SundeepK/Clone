@@ -1,14 +1,14 @@
 #ifndef SRC_GAME_EDITOR_OBJECTCREATORCONTROLLER_H_
 #define SRC_GAME_EDITOR_OBJECTCREATORCONTROLLER_H_
 
-#include <SFGUI/Widgets.hpp>
-#include <SFGUI/SFGUI.hpp>
 #include <vector>
 #include <anax/World.hpp>
 #include <Box2D/Box2D.h>
 #include <memory>
 #include <tmx/MapObject.h>
 #include <game-objects/GameEntityCreator.h>
+#include <SFGUI/Widgets.hpp>
+#include <SFGUI/SFGUI.hpp>
 
 class ObjectCreatorController {
 public:
@@ -17,7 +17,7 @@ public:
 
 	void addEntityCreator(std::string nameOfCreator, std::unique_ptr<GameEntityCreator> entityCreator);
 	void attachTo(sfg::Box::Ptr window);
-	tmx::MapObject createGameObjectAt(sf::Vector2i position);
+	tmx::MapObject createGameObjectAt(sf::IntRect aabb);
 
 private:
 	class ObjectCreatorControllerImpl;
