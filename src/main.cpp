@@ -129,7 +129,7 @@ void MainGame::run()
 	table->Attach( scrollbarX, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
 	table->Attach( rightPanel, sf::Rect<sf::Uint32>(  2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
 
-	LayerController layerController;
+	LayerController layerController(anaxWorld, b2world);
 	layerController.attachTo(rightPanel);
 	objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
 	objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
@@ -181,16 +181,20 @@ void MainGame::run()
 								objectBounds.left = canvasMousePosition.x;
 						}
 					}
+				}else if (event.mouseButton.button == sf::Mouse::Right) {
+					layerController.deleteObjectAt(canvasMousePosition);
 				}
-			}else if(event.type == sf::Event::MouseButtonReleased){
-				if (currentLayerOptional) {
-					Layer currentLayer = currentLayerOptional.get();
-					if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse) {
+			} else if (event.type == sf::Event::MouseButtonReleased) {
+				if (event.mouseButton.button == sf::Mouse::Left) {
+					if (currentLayerOptional) {
+						Layer currentLayer = currentLayerOptional.get();
+						if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse) {
 							objectBounds.height = canvasMousePosition.y - objectBounds.top;
-							objectBounds.width  = canvasMousePosition.x - objectBounds.left;
+							objectBounds.width = canvasMousePosition.x - objectBounds.left;
 
 							auto mapObject = objectController.createGameObjectAt(objectBounds);
 							layerController.addMapObjectToCurrentLayer(mapObject);
+						}
 					}
 				}
 			}
@@ -224,6 +228,7 @@ void MainGame::run()
 		mainRenderWindow.clear();
 
 		b2world.Step(1.f/60.f, 8, 3);
+		anaxWorld.refresh();
 
 		textureCanvas->Bind();
 		textureCanvas->Clear(sf::Color(50, 50, 50));

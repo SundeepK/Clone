@@ -1,4 +1,12 @@
 #include <game-editor/LayerController.h>
+#include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Widgets.hpp>
+#include <components/IDComponent.h>
+#include <components/SizeComponent.h>
+#include <components/PhysicsComponent.h>
+#include <iostream>
+#include <tmx/tmx2box2d.h>
+#include <components/AABBComponent.h>
 
 struct LayerControllerContainer {
 
@@ -10,13 +18,16 @@ struct LayerControllerContainer {
 class LayerController::LayerControllerImpl{
 public:
 
+
+	anax::World& m_anaxWorld;
+	b2World& m_box2dWorld;
 	sfg::Table::Ptr m_objectCreatorTable;
 	sfg::ComboBox::Ptr m_gameObjectsComboBox;
 	sfg::Box::Ptr m_objectLabelBox;
 	sfg::Box::Ptr m_objectCheckButtonBox;
 	std::unordered_map<Layer, std::vector<tmx::MapObject>, Layer::LayerHasher> m_layerToMapObjects;
 
-	LayerControllerImpl(){
+	LayerControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld) {
 		m_objectCreatorTable = sfg::Table::Create();
 		m_gameObjectsComboBox = sfg::ComboBox::Create();
 		m_objectLabelBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
@@ -32,6 +43,59 @@ public:
 
 	void attachTo(sfg::Box::Ptr box){
 		box->Pack( m_objectCreatorTable, false );
+	}
+
+	void deleteObjectAt(sf::Vector2i mousePos) {
+		auto entities = m_anaxWorld.getEntities();
+		sf::IntRect testRect;
+		std::string uuid;
+		for (auto entity : entities) {
+			if (entity.hasComponent<IDComponent>() && entity.hasComponent<PhysicsComponent>()) {
+				auto idComponent = entity.getComponent<IDComponent>();
+				auto physicsComponent = entity.getComponent<PhysicsComponent>();
+				auto physicsBody = physicsComponent.physicsBody;
+				auto position = tmx::BoxToSfVec(physicsBody->GetPosition());
+
+				if (entity.hasComponent<AABBComponent>()) {
+					auto aabbComponent = entity.getComponent<AABBComponent>();
+					testRect.left = aabbComponent.aabb.left;
+					testRect.top = aabbComponent.aabb.top;
+					testRect.height =  aabbComponent.aabb.height;
+					testRect.width =aabbComponent.aabb.width;
+
+					std::cout  << "aabb.left " <<  aabbComponent.aabb.left << std::endl;
+					std::cout  << "aabb.top " <<  aabbComponent.aabb.top<< std::endl;
+					std::cout  << "aabb.height " << aabbComponent.aabb.height << std::endl;
+					std::cout  << "aabb.width " << aabbComponent.aabb.width << std::endl;
+
+
+				}else if (entity.hasComponent<SizeComponent>()) {
+					auto sizeComponent = entity.getComponent<SizeComponent>();
+					testRect.left = position.x;
+					testRect.top = position.y;
+					testRect.width = sizeComponent.size.x;
+					testRect.height = sizeComponent.size.y;
+				}
+
+				if (testRect.contains(mousePos)) {
+					uuid = idComponent.uuid;
+					break;
+				}
+
+			}
+		}
+
+		for (auto entity : entities) {
+			if (entity.hasComponent<IDComponent>() && entity.hasComponent<PhysicsComponent>()) {
+				auto idComponent = entity.getComponent<IDComponent>();
+				auto physicsBody = entity.getComponent<PhysicsComponent>().physicsBody;
+				if (idComponent.uuid == uuid) {
+					m_box2dWorld.DestroyBody(physicsBody);
+					entity.kill();
+				}
+			}
+		}
+
 	}
 
 	void addMapObjectToCurrentLayer(tmx::MapObject mapObject) {
@@ -75,7 +139,7 @@ public:
 
 };
 
-LayerController::LayerController() : m_impl(new LayerControllerImpl()){
+LayerController::LayerController(anax::World& anaxWorld, b2World& box2dWorld) : m_impl(new LayerControllerImpl(anaxWorld, box2dWorld)){
 }
 
 LayerController::~LayerController() {
@@ -95,4 +159,8 @@ void LayerController::addLayer(std::string layerName, LayerType layerType) {
 
 boost::optional<Layer> LayerController::getCurrentlySelectedLayer() {
 	return m_impl->getCurrentlySelectedLayer();
+}
+
+void LayerController::deleteObjectAt(sf::Vector2i mousePos) {
+	m_impl->deleteObjectAt(mousePos);
 }

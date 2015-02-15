@@ -10,6 +10,8 @@
 #include <tmx/MapObject.h>
 #include <unordered_map>
 #include <boost/optional.hpp>
+#include <anax/World.hpp>
+#include <Box2D/Box2D.h>
 
 enum LayerType {
 	TILE, OBJECTS
@@ -56,13 +58,14 @@ private:
 
 class LayerController {
 public:
-	LayerController();
+	LayerController(anax::World& anaxWorld, b2World& box2dWorld);
 	~LayerController();
 
 	void addMapObjectToCurrentLayer(tmx::MapObject mapObject);
 	void attachTo(sfg::Box::Ptr box);
 	void addLayer(std::string layerName, LayerType layerType);
 	boost::optional<Layer> getCurrentlySelectedLayer();
+	void deleteObjectAt(sf::Vector2i mousePos);
 
 private:
 	class LayerControllerImpl;

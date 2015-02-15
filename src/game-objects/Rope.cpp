@@ -6,6 +6,9 @@
 #include <iostream>
 #include <game-objects/GameObjectTag.h>
 #include <math.h>
+#include <components/IDComponent.h>
+#include <components/AABBComponent.h>
+
 class Rope::RopeImpl{
 
 public:
@@ -41,10 +44,12 @@ public:
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
 		auto widthProperty = mapObject.GetPropertyString("width");
 		float width = 0;
-		if (!widthProperty.empty()) {
+		auto aabb = mapObject.GetAABB();
+		bool hasWidth = !widthProperty.empty();
+		if (hasWidth) {
 			width = (std::stof(widthProperty));
 		} else {
-			width = (mapObject.GetAABB().width);
+			width = (aabb.width);
 		}
 		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + width, mapObject.GetPosition().y));
 
@@ -76,6 +81,31 @@ public:
 				body->CreateFixture(&fd);
 
 				auto objectEntity = anaxWorld.createEntity();
+				auto& idComponent = objectEntity.addComponent<IDComponent>();
+				idComponent.uuid = mapObject.GetPropertyString("uuid");
+				auto& aabbComponent = objectEntity.addComponent<AABBComponent>();
+//				if(hasWidth){
+//					aabbComponent.aabb.left = aabb.left;
+//					aabbComponent.aabb.top = aabb.top;
+//					aabbComponent.aabb.height = aabb.height;
+//					aabbComponent.aabb.width = width;
+//				}else{
+//					aabbComponent.aabb.left = aabb.left;
+//					aabbComponent.aabb.top = aabb.top;
+//					aabbComponent.aabb.height = aabb.height;
+//					aabbComponent.aabb.width = aabb.width;
+//				}
+				aabbComponent.aabb.left = aabb.left;
+				aabbComponent.aabb.top = aabb.top;
+				aabbComponent.aabb.height = aabb.height;
+				aabbComponent.aabb.width = aabb.width;
+
+
+				std::cout  << "adding aabb.left " <<  aabbComponent.aabb.left << std::endl;
+				std::cout  << "adding aabb.top " <<  aabbComponent.aabb.top<< std::endl;
+				std::cout  << "adding aabb.height " << aabbComponent.aabb.height << std::endl;
+				std::cout  << "adding aabb.width " << aabbComponent.aabb.width << std::endl;
+
 				auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();
 				auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();

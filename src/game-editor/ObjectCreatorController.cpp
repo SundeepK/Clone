@@ -1,6 +1,7 @@
 #include <game-editor/ObjectCreatorController.h>
 #include <unordered_map>
 #include <iostream>
+#include <UUIDGenerator.h>
 
 struct ObjectCreatorContainer{
 
@@ -12,7 +13,7 @@ struct ObjectCreatorContainer{
 class ObjectCreatorController::ObjectCreatorControllerImpl{
 public:
 
-	ObjectCreatorControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(&anaxWorld), m_box2dWorld(&box2dWorld){
+	ObjectCreatorControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld){
 		m_objectCreatorTable = sfg::Table::Create();
 		m_inputBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
 		m_labelBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
@@ -25,8 +26,8 @@ public:
 
 	~ObjectCreatorControllerImpl(){}
 
-	std::unique_ptr<anax::World> m_anaxWorld;
-	std::unique_ptr<b2World> m_box2dWorld;
+	anax::World& m_anaxWorld;
+	b2World& m_box2dWorld;
 	sfg::Table::Ptr m_objectCreatorTable;
 	sfg::Box::Ptr m_inputBox;
 	sfg::Box::Ptr m_labelBox;
@@ -73,17 +74,18 @@ public:
 		tmx::MapObject mapObject;
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
+			mapObject.SetProperty("uuid", UUIDGenerator::createUuid());
 			mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
-			mapObject.AddPoint(sf::Vector2f(aabb.left, aabb.top));
-			mapObject.AddPoint(sf::Vector2f(aabb.left + aabb.width, aabb.top ));
-			mapObject.AddPoint(sf::Vector2f(aabb.left + aabb.width, aabb.top + aabb.height));
-			mapObject.AddPoint(sf::Vector2f(aabb.left, aabb.top + aabb.height));
+			mapObject.AddPoint(sf::Vector2f(0,0));
+			mapObject.AddPoint(sf::Vector2f(aabb.width, 0));
+			mapObject.AddPoint(sf::Vector2f(aabb.width, aabb.height));
+			mapObject.AddPoint(sf::Vector2f(0, aabb.height));
 			mapObject.CreateDebugShape(sf::Color::Blue);
 			for (auto entry : m_objectCreatorContainer.propertyEntryBoxes) {
 //				std::cout << "now adding game object at x" << position.x <<  " y:" << position.y <<  "with property: " << static_cast<std::string>(entry->GetId()) << " " << static_cast<std::string>(entry->GetVisibleText()) << std::endl;
 				mapObject.SetProperty(static_cast<std::string>(entry->GetId()), static_cast<std::string>(entry->GetVisibleText()));
 			}
-			gameObjectItr->second->createEntity(mapObject, *m_box2dWorld, *m_anaxWorld);
+			gameObjectItr->second->createEntity(mapObject, m_box2dWorld, m_anaxWorld);
 		}
 		return mapObject;
 	}
