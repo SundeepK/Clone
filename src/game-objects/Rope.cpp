@@ -43,6 +43,7 @@ public:
 	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
 		auto widthProperty = mapObject.GetPropertyString("width");
+		auto stringColor =  mapObject.GetPropertyString("layerColor");
 		float width = 0;
 		auto aabb = mapObject.GetAABB();
 		bool hasWidth = !widthProperty.empty();
@@ -99,7 +100,7 @@ public:
 				aabbComponent.aabb.top = aabb.top;
 				aabbComponent.aabb.height = aabb.height;
 				aabbComponent.aabb.width = aabb.width;
-
+				aabbComponent.stringColor = stringColor;
 
 				std::cout  << "adding aabb.left " <<  aabbComponent.aabb.left << std::endl;
 				std::cout  << "adding aabb.top " <<  aabbComponent.aabb.top<< std::endl;

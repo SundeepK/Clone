@@ -33,12 +33,19 @@ public:
 	sfg::Box::Ptr m_labelBox;
 	sfg::ComboBox::Ptr m_gameObjectsComboBox;
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
+	std::unordered_map<std::string, sf::Color> m_entityCreatorToLayerColors;
 	ObjectCreatorContainer m_objectCreatorContainer;
 	std::string m_currentObjectCreator;
 
 	void addEntityCreator(std::string nameOfObjectCreator, std::unique_ptr<GameEntityCreator> entityCreator) {
 		m_entityCreators.insert(std::make_pair(nameOfObjectCreator, std::move(entityCreator)));
+		m_entityCreatorToLayerColors.insert(std::make_pair(nameOfObjectCreator, randColor()));
 		m_gameObjectsComboBox->AppendItem(nameOfObjectCreator);
+	}
+
+	sf::Color randColor()
+	{
+	    return sf::Color(std::rand() % 256, std::rand() % 256, std::rand() % 256);
 	}
 
 	void onObjectCreatorSelect() {
@@ -75,6 +82,9 @@ public:
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
 			mapObject.SetProperty("uuid", UUIDGenerator::createUuid());
+			auto color = m_entityCreatorToLayerColors[m_currentObjectCreator];
+			std::string stringColor =  std::to_string(color.r) + "," +  std::to_string(color.g) + "," +  std::to_string(color.b);
+			mapObject.SetProperty("layerColor",  stringColor);
 			mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
 			mapObject.AddPoint(sf::Vector2f(0,0));
 			mapObject.AddPoint(sf::Vector2f(aabb.width, 0));

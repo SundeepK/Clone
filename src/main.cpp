@@ -24,6 +24,7 @@
 #include <game-editor/LayerController.h>
 #include <game-objects/Rope.h>
 #include <game-editor/ScrollableCanvas.h>
+#include <systems/DrawStaticAABBSystem.h>
 
 //int main()
 //{
@@ -148,6 +149,10 @@ void MainGame::run()
     sfguiDesktop.Add(mapWindow);
 	mainRenderWindow.resetGLStates();
 
+
+	DrawStaticAABBSystem gameObjectAABBDrawSystem;
+	anaxWorld.addSystem(gameObjectAABBDrawSystem);
+
 	sf::Clock clock;
 	sf::IntRect objectBounds;
 	sf::RectangleShape objectBoundsRect;
@@ -229,6 +234,7 @@ void MainGame::run()
 
 		b2world.Step(1.f/60.f, 8, 3);
 		anaxWorld.refresh();
+		gameObjectAABBDrawSystem.updateAABBs();
 
 		textureCanvas->Bind();
 		textureCanvas->Clear(sf::Color(50, 50, 50));
@@ -244,6 +250,7 @@ void MainGame::run()
 		objectBoundsRect.setPosition(sf::Vector2f(objectBounds.left, objectBounds.top));
 		objectBoundsRect.setSize(sf::Vector2f(objectBounds.width, objectBounds.height));
 		mapCanvas->Draw(objectBoundsRect);
+		mapCanvas->Draw(gameObjectAABBDrawSystem);
 		mapCanvas->Display();
 		mapCanvas->Unbind();
 
