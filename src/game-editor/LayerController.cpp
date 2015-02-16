@@ -22,16 +22,21 @@ public:
 	anax::World& m_anaxWorld;
 	b2World& m_box2dWorld;
 	sfg::Table::Ptr m_objectCreatorTable;
+	sfg::Button::Ptr m_selectToolButton;
 	sfg::ComboBox::Ptr m_gameObjectsComboBox;
 	sfg::Box::Ptr m_objectLabelBox;
 	sfg::Box::Ptr m_objectCheckButtonBox;
 	std::unordered_map<Layer, std::vector<tmx::MapObject>, Layer::LayerHasher> m_layerToMapObjects;
+	std::string m_uuidOfSelectedObjectForDeletion;
+	bool m_isSelectionToolSelected = false;
 
 	LayerControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld) {
 		m_objectCreatorTable = sfg::Table::Create();
 		m_gameObjectsComboBox = sfg::ComboBox::Create();
 		m_objectLabelBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
 		m_objectCheckButtonBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
+		m_selectToolButton = sfg::Button::Create("Select Tool");
+		m_selectToolButton->GetSignal( sfg::Widget::OnLeftClick ).Connect( std::bind( &LayerControllerImpl::OnSelectButtonClicked, this ) );
 		m_objectCreatorTable->Attach( m_gameObjectsComboBox, sf::Rect<sf::Uint32>( 0, 0, 2, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
 		m_objectCreatorTable->Attach( m_objectCheckButtonBox, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), 0, sfg::Table::FILL);
 		m_objectCreatorTable->Attach( m_objectLabelBox, sf::Rect<sf::Uint32>( 1, 1, 1, 1 ), 0, sfg::Table::FILL);
@@ -41,11 +46,36 @@ public:
 
 	~LayerControllerImpl(){}
 
-	void attachTo(sfg::Box::Ptr box){
-		box->Pack( m_objectCreatorTable, false );
+	void OnSelectButtonClicked(){
+		m_isSelectionToolSelected = !m_isSelectionToolSelected;
+		if(m_isSelectionToolSelected){
+			m_selectToolButton->SetLabel("UnSelect");
+		}else{
+			m_selectToolButton->SetLabel("Select Tool");
+		}
 	}
 
-	void deleteObjectAt(sf::Vector2i mousePos) {
+	void attachTo(sfg::Box::Ptr box){
+		box->Pack( m_objectCreatorTable, false );
+		box->Pack(m_selectToolButton, false);
+	}
+
+	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
+		if (m_isSelectionToolSelected) {
+			for (auto event : events) {
+				if (event.mouseButton.button == sf::Mouse::Left) {
+					selectedObjectForDeletion(mousePos);
+				} else if (event.type == sf::Event::KeyPressed) {
+					if (event.key.code == sf::Keyboard::Delete) {
+						deleteCurrentlySelectedObject();
+					}
+				}
+
+			}
+		}
+	}
+
+	void selectedObjectForDeletion(sf::Vector2i mousePos) {
 		auto entities = m_anaxWorld.getEntities();
 		sf::IntRect testRect;
 		std::string uuid;
@@ -63,12 +93,6 @@ public:
 					testRect.height =  aabbComponent.aabb.height;
 					testRect.width =aabbComponent.aabb.width;
 
-					std::cout  << "aabb.left " <<  aabbComponent.aabb.left << std::endl;
-					std::cout  << "aabb.top " <<  aabbComponent.aabb.top<< std::endl;
-					std::cout  << "aabb.height " << aabbComponent.aabb.height << std::endl;
-					std::cout  << "aabb.width " << aabbComponent.aabb.width << std::endl;
-
-
 				}else if (entity.hasComponent<SizeComponent>()) {
 					auto sizeComponent = entity.getComponent<SizeComponent>();
 					testRect.left = position.x;
@@ -78,24 +102,26 @@ public:
 				}
 
 				if (testRect.contains(mousePos)) {
-					uuid = idComponent.uuid;
+					m_uuidOfSelectedObjectForDeletion = idComponent.uuid;
 					break;
 				}
 
 			}
 		}
+	}
 
+	void deleteCurrentlySelectedObject(){
+		auto entities = m_anaxWorld.getEntities();
 		for (auto entity : entities) {
 			if (entity.hasComponent<IDComponent>() && entity.hasComponent<PhysicsComponent>()) {
 				auto idComponent = entity.getComponent<IDComponent>();
 				auto physicsBody = entity.getComponent<PhysicsComponent>().physicsBody;
-				if (idComponent.uuid == uuid) {
+				if (idComponent.uuid == m_uuidOfSelectedObjectForDeletion) {
 					m_box2dWorld.DestroyBody(physicsBody);
 					entity.kill();
 				}
 			}
 		}
-
 	}
 
 	void addMapObjectToCurrentLayer(tmx::MapObject mapObject) {
@@ -161,6 +187,6 @@ boost::optional<Layer> LayerController::getCurrentlySelectedLayer() {
 	return m_impl->getCurrentlySelectedLayer();
 }
 
-void LayerController::deleteObjectAt(sf::Vector2i mousePos) {
-	m_impl->deleteObjectAt(mousePos);
+void LayerController::update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
+	m_impl->update(mousePos, events);
 }

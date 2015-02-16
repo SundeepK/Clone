@@ -186,8 +186,6 @@ void MainGame::run()
 								objectBounds.left = canvasMousePosition.x;
 						}
 					}
-				}else if (event.mouseButton.button == sf::Mouse::Right) {
-					layerController.deleteObjectAt(canvasMousePosition);
 				}
 			} else if (event.type == sf::Event::MouseButtonReleased) {
 				if (event.mouseButton.button == sf::Mouse::Left) {
@@ -216,6 +214,7 @@ void MainGame::run()
 		}
 
 		scrollableCanvas.updateCanvas(events);
+		layerController.update(canvasMousePosition, events);
 
 		//should always have a selected layer, but just in case
 		if(currentLayerOptional){

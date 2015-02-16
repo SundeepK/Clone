@@ -65,7 +65,7 @@ public:
 	void attachTo(sfg::Box::Ptr box);
 	void addLayer(std::string layerName, LayerType layerType);
 	boost::optional<Layer> getCurrentlySelectedLayer();
-	void deleteObjectAt(sf::Vector2i mousePos);
+	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events);
 
 private:
 	class LayerControllerImpl;

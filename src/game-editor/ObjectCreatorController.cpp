@@ -74,7 +74,6 @@ public:
 
 	void attachTo(sfg::Box::Ptr table){
 		table->Pack( m_objectCreatorTable, false );
-//		table->Attach(m_gameObjectsComboBox, sf::Rect<sf::Uint32>(  2, 1, 1, 1 ), sfg::Table::FILL, 0 );
 	}
 
 	tmx::MapObject createGameObjectWithCurrentlySelectedObjectCreator(sf::IntRect aabb) {
@@ -92,7 +91,6 @@ public:
 			mapObject.AddPoint(sf::Vector2f(0, aabb.height));
 			mapObject.CreateDebugShape(sf::Color::Blue);
 			for (auto entry : m_objectCreatorContainer.propertyEntryBoxes) {
-//				std::cout << "now adding game object at x" << position.x <<  " y:" << position.y <<  "with property: " << static_cast<std::string>(entry->GetId()) << " " << static_cast<std::string>(entry->GetVisibleText()) << std::endl;
 				mapObject.SetProperty(static_cast<std::string>(entry->GetId()), static_cast<std::string>(entry->GetVisibleText()));
 			}
 			gameObjectItr->second->createEntity(mapObject, m_box2dWorld, m_anaxWorld);
