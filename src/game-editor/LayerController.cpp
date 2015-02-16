@@ -22,46 +22,41 @@ public:
 	anax::World& m_anaxWorld;
 	b2World& m_box2dWorld;
 	sfg::Table::Ptr m_objectCreatorTable;
-	sfg::Button::Ptr m_selectToolButton;
+	sfg::ToggleButton::Ptr m_selectToolButton;
 	sfg::ComboBox::Ptr m_gameObjectsComboBox;
 	sfg::Box::Ptr m_objectLabelBox;
 	sfg::Box::Ptr m_objectCheckButtonBox;
 	std::unordered_map<Layer, std::vector<tmx::MapObject>, Layer::LayerHasher> m_layerToMapObjects;
 	std::string m_uuidOfSelectedObjectForDeletion;
-	bool m_isSelectionToolSelected = false;
+	sf::Image m_selectToolImage;
+	sfg::Image::Ptr m_sfguiSelectToolImage;
 
 	LayerControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld) {
 		m_objectCreatorTable = sfg::Table::Create();
 		m_gameObjectsComboBox = sfg::ComboBox::Create();
 		m_objectLabelBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
 		m_objectCheckButtonBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
-		m_selectToolButton = sfg::Button::Create("Select Tool");
-		m_selectToolButton->GetSignal( sfg::Widget::OnLeftClick ).Connect( std::bind( &LayerControllerImpl::OnSelectButtonClicked, this ) );
+		m_selectToolButton = sfg::ToggleButton::Create();
+		m_selectToolImage.loadFromFile("icons/tool-select-objects.png");
+		m_sfguiSelectToolImage = sfg::Image::Create();
+		m_sfguiSelectToolImage->SetImage(m_selectToolImage);
+		m_selectToolButton->SetImage(m_sfguiSelectToolImage);
 		m_objectCreatorTable->Attach( m_gameObjectsComboBox, sf::Rect<sf::Uint32>( 0, 0, 2, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
 		m_objectCreatorTable->Attach( m_objectCheckButtonBox, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), 0, sfg::Table::FILL);
 		m_objectCreatorTable->Attach( m_objectLabelBox, sf::Rect<sf::Uint32>( 1, 1, 1, 1 ), 0, sfg::Table::FILL);
+		m_objectCreatorTable->Attach( m_selectToolButton, sf::Rect<sf::Uint32>( 0, 2, 1, 1 ), 0, sfg::Table::FILL);
 		addLayer("TileLayer", LayerType::TILE);
 		m_gameObjectsComboBox->SelectItem(0);
 	}
 
 	~LayerControllerImpl(){}
 
-	void OnSelectButtonClicked(){
-		m_isSelectionToolSelected = !m_isSelectionToolSelected;
-		if(m_isSelectionToolSelected){
-			m_selectToolButton->SetLabel("UnSelect");
-		}else{
-			m_selectToolButton->SetLabel("Select Tool");
-		}
-	}
-
 	void attachTo(sfg::Box::Ptr box){
 		box->Pack( m_objectCreatorTable, false );
-		box->Pack(m_selectToolButton, false);
 	}
 
 	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
-		if (m_isSelectionToolSelected) {
+		if (m_selectToolButton->IsActive()) {
 			for (auto event : events) {
 				if (event.mouseButton.button == sf::Mouse::Left) {
 					selectedObjectForDeletion(mousePos);
