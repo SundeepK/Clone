@@ -9,6 +9,8 @@ public:
 	sfg::Scrollbar::Ptr m_yScrollbar;
 	sfg::Adjustment::Ptr m_yAdjustment;
 	sfg::Adjustment::Ptr m_xAdjustment;
+	sfg::Canvas::Ptr m_mapCanvas;
+	sfg::Table::Ptr m_table;
 	MapData m_mapData;
 	sf::IntRect m_bounds;
 	sf::RectangleShape m_rectangle;
@@ -18,7 +20,6 @@ public:
 	sf::Vector2f m_center;
 	sf::Vector2i m_prevSliderValue;
 	bool m_isUsingSlider = false;
-	sfg::Canvas::Ptr m_mapCanvas;
 
 
 
@@ -27,7 +28,7 @@ public:
 
 		m_mapCanvas = sfg::Canvas::Create();
 		m_mapCanvas->SetRequisition(sf::Vector2f(mapData.getMapSizeInPixels()));
-
+		m_table = sfg::Table::Create();
 
 		m_yScrollbar = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::VERTICAL );
 		m_xScrollbar = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::HORIZONTAL );
@@ -80,6 +81,9 @@ public:
 			m_center = sf::Vector2f( m_view.getCenter().x, ( mapSizeInPixels.y /2 ) + m_yAdjustment->GetValue());
 		});
 
+		m_table->Attach( m_mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
+		m_table->Attach( m_yScrollbar, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
+		m_table->Attach( m_xScrollbar, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
 
 	}
 
@@ -135,10 +139,8 @@ public:
 		return positionWithScrollbarDelta;
 	}
 
-	void attachTo(sfg::Table::Ptr table) {
-		table->Attach( m_mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
-		table->Attach( m_yScrollbar, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
-		table->Attach( m_xScrollbar, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
+	void attachTo(sfg::Box::Ptr box) {
+		box->Pack(m_table, true);
 	}
 
 	sfg::Canvas::Ptr getCanvas() {
@@ -190,9 +192,8 @@ void ScrollableCanvas::draw(sf::RenderTarget& rt, sf::RenderStates states) const
 	m_impl->draw(rt, states);
 }
 
-void ScrollableCanvas::attachTo(sfg::Table::Ptr table) {
-	m_impl->attachTo(table);
-
+void ScrollableCanvas::attachTo(sfg::Box::Ptr box) {
+	m_impl->attachTo(box);
 }
 
 sfg::Canvas::Ptr ScrollableCanvas::getCanvas() {

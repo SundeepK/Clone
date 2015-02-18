@@ -43,7 +43,7 @@ public:
 	bool isInBoundsAndSlidersNotInUse(sf::Vector2i renderWindowMousePos);
 	void updateCanvas(std::vector<sf::Event>& events);
 	void draw();
-	void attachTo(sfg::Table::Ptr table);
+	void attachTo(sfg::Box::Ptr box);
 	sfg::Canvas::Ptr getCanvas();
 
 	void beginDraw();

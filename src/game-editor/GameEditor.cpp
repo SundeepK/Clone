@@ -25,6 +25,7 @@ public:
 	sfg::Scrollbar::Ptr m_scrollbarX;
 	sfg::Table::Ptr m_table;
 	sfg::Box::Ptr m_rightPanel;
+	sfg::Box::Ptr m_mainBox;
 
 	TilePanel m_tilePanel;
 	ObjectCreatorController m_objectController;
@@ -56,8 +57,6 @@ public:
 
 		spaceReservedForControls = mainRenderWindow.getSize().x / 5;
 
-
-
 		m_textureCanvas = sfg::Canvas::Create();
 
 	    //box2d stuff
@@ -67,7 +66,6 @@ public:
 
 		m_b2world.SetDebugDraw(&m_debugDrawer);
 		m_debugDrawer.SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit);
-
 
 		m_mapWindow = sfg::Window::Create(sfg::Window::RESIZE);
 
@@ -80,8 +78,11 @@ public:
 		m_rightPanel =  sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
 		m_rightPanel->SetSpacing(10);
 
-		m_scrollableCanvas.attachTo(m_table);
-		m_table->Attach( m_rightPanel, sf::Rect<sf::Uint32>(  2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
+		m_mainBox = sfg::Box::Create( sfg::Box::Orientation::HORIZONTAL );
+
+		m_scrollableCanvas.attachTo(m_mainBox);
+		m_mainBox->Pack(m_rightPanel);
+		//m_table->Attach( m_rightPanel, sf::Rect<sf::Uint32>(  2, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL );
 
 		m_layerController.attachTo(m_rightPanel);
 		m_objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
@@ -92,7 +93,7 @@ public:
 
 		m_layerController.addLayer("Entities", LayerType::OBJECTS);
 
-	    m_mapWindow->Add(m_table);
+	    m_mapWindow->Add(m_mainBox);
 
 	    m_sfguiDesktop.Add(m_mapWindow);
 
