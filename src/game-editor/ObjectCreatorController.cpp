@@ -13,6 +13,17 @@ struct ObjectCreatorContainer{
 class ObjectCreatorController::ObjectCreatorControllerImpl{
 public:
 
+	anax::World& m_anaxWorld;
+	b2World& m_box2dWorld;
+	sfg::Table::Ptr m_objectCreatorTable;
+	sfg::Box::Ptr m_inputBox;
+	sfg::Box::Ptr m_labelBox;
+	sfg::ComboBox::Ptr m_gameObjectsComboBox;
+	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
+	std::unordered_map<std::string, sf::Color> m_entityCreatorToLayerColors;
+	ObjectCreatorContainer m_objectCreatorContainer;
+	std::string m_currentObjectCreator;
+
 	ObjectCreatorControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld){
 		m_objectCreatorTable = sfg::Table::Create();
 		m_inputBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
@@ -26,16 +37,6 @@ public:
 
 	~ObjectCreatorControllerImpl(){}
 
-	anax::World& m_anaxWorld;
-	b2World& m_box2dWorld;
-	sfg::Table::Ptr m_objectCreatorTable;
-	sfg::Box::Ptr m_inputBox;
-	sfg::Box::Ptr m_labelBox;
-	sfg::ComboBox::Ptr m_gameObjectsComboBox;
-	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
-	std::unordered_map<std::string, sf::Color> m_entityCreatorToLayerColors;
-	ObjectCreatorContainer m_objectCreatorContainer;
-	std::string m_currentObjectCreator;
 
 	void addEntityCreator(std::string nameOfObjectCreator, std::unique_ptr<GameEntityCreator> entityCreator) {
 		m_entityCreators.insert(std::make_pair(nameOfObjectCreator, std::move(entityCreator)));

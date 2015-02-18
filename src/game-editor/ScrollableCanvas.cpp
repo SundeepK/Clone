@@ -5,7 +5,6 @@
 class ScrollableCanvas::ScrollableCanvasImpl{
 
 public:
-	sfg::Canvas::Ptr m_canvas;
 	sfg::Scrollbar::Ptr m_xScrollbar;
 	sfg::Scrollbar::Ptr m_yScrollbar;
 	sfg::Adjustment::Ptr m_yAdjustment;
@@ -19,11 +18,19 @@ public:
 	sf::Vector2f m_center;
 	sf::Vector2i m_prevSliderValue;
 	bool m_isUsingSlider = false;
+	sfg::Canvas::Ptr m_mapCanvas;
 
 
-	ScrollableCanvasImpl(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, MapData mapData) :
-		m_canvas(canvas), m_xScrollbar(xScrollbar), m_yScrollbar(yScrollbar), m_mapData(mapData),
+
+	ScrollableCanvasImpl(MapData mapData) : m_mapData(mapData),
 		m_view(sf::Vector2f(m_mapData.getMapSizeInPixels().x / 2, m_mapData.getMapSizeInPixels().y / 2) , sf::Vector2f(m_mapData.getMapSizeInPixels())) {
+
+		m_mapCanvas = sfg::Canvas::Create();
+		m_mapCanvas->SetRequisition(sf::Vector2f(mapData.getMapSizeInPixels()));
+
+
+		m_yScrollbar = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::VERTICAL );
+		m_xScrollbar = sfg::Scrollbar::Create( sfg::Scrollbar::Orientation::HORIZONTAL );
 
 		m_yScrollbar->SetRequisition(sf::Vector2f(0.f, 80.f));
 		m_yAdjustment = m_yScrollbar->GetAdjustment();
@@ -122,17 +129,41 @@ public:
 	}
 
 	sf::Vector2i getCanvasMousePositionFrom(sf::Vector2i mousePos){
-		auto absolutePositionForMapCanvas = m_canvas->GetAbsolutePosition();
+		auto absolutePositionForMapCanvas = m_mapCanvas->GetAbsolutePosition();
 		auto tileMapPos = mousePos - sf::Vector2i(absolutePositionForMapCanvas.x, absolutePositionForMapCanvas.y);
 		sf::Vector2i positionWithScrollbarDelta = tileMapPos + m_prevSliderValue;
 		return positionWithScrollbarDelta;
 	}
 
+	void attachTo(sfg::Table::Ptr table) {
+		table->Attach( m_mapCanvas, sf::Rect<sf::Uint32>( 0, 0, 1, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
+		table->Attach( m_yScrollbar, sf::Rect<sf::Uint32>( 1, 0, 1, 1 ), 0, sfg::Table::FILL);
+		table->Attach( m_xScrollbar, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), sfg::Table::FILL, 0  );
+	}
+
+	sfg::Canvas::Ptr getCanvas() {
+		return m_mapCanvas;
+	}
+
+	void beginDraw() {
+		m_mapCanvas->Bind();
+		m_mapCanvas->Clear(sf::Color(50, 50, 50));
+	}
+
+	void draw(const sf::Drawable& drawable) {
+		m_mapCanvas->Draw(drawable);
+	}
+
+	void endDraw() {
+		m_mapCanvas->Display();
+		m_mapCanvas->Unbind();
+	}
+
 };
 
 
-ScrollableCanvas::ScrollableCanvas(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, MapData mapData) :
-	m_impl(new ScrollableCanvasImpl(canvas, xScrollbar, yScrollbar, mapData)){
+ScrollableCanvas::ScrollableCanvas(MapData mapData) :
+	m_impl(new ScrollableCanvasImpl(mapData)){
 }
 
 ScrollableCanvas::~ScrollableCanvas() {
@@ -157,4 +188,27 @@ void ScrollableCanvas::updateCanvas(std::vector<sf::Event>& events) {
 
 void ScrollableCanvas::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
 	m_impl->draw(rt, states);
+}
+
+void ScrollableCanvas::attachTo(sfg::Table::Ptr table) {
+	m_impl->attachTo(table);
+
+}
+
+sfg::Canvas::Ptr ScrollableCanvas::getCanvas() {
+	return m_impl->getCanvas();
+}
+
+void ScrollableCanvas::beginDraw() {
+	m_impl->beginDraw();
+	m_impl->draw(*this);
+
+}
+
+void ScrollableCanvas::draw(const sf::Drawable& drawable) {
+	m_impl->draw(drawable);
+}
+
+void ScrollableCanvas::endDraw() {
+	m_impl->endDraw();
 }

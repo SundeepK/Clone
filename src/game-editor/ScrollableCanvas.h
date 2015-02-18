@@ -35,7 +35,7 @@ private:
 
 class ScrollableCanvas : public sf::Drawable  {
 public:
-	ScrollableCanvas(sfg::Canvas::Ptr canvas, sfg::Scrollbar::Ptr xScrollbar, sfg::Scrollbar::Ptr yScrollbar, MapData mapData);
+	ScrollableCanvas(MapData mapData);
 	~ScrollableCanvas();
 
 	sf::Vector2i getCanvasMousePositionFrom(sf::Vector2i renderWindowMousePos);
@@ -43,6 +43,12 @@ public:
 	bool isInBoundsAndSlidersNotInUse(sf::Vector2i renderWindowMousePos);
 	void updateCanvas(std::vector<sf::Event>& events);
 	void draw();
+	void attachTo(sfg::Table::Ptr table);
+	sfg::Canvas::Ptr getCanvas();
+
+	void beginDraw();
+	void draw(const sf::Drawable& drawable);
+	void endDraw();
 
 
 private:
