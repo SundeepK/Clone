@@ -6,14 +6,22 @@
 #include <SFML/System.hpp>
 #include <memory>
 #include <game-editor/Tile.h>
+#include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Widgets.hpp>
 
 class TilePanel : public sf::Drawable {
 public:
-	TilePanel(sf::Texture& texture, int tileWdith, int tileHeight);
+	TilePanel(sf::Texture& texture, sf::Vector2i tilePanelSize, sf::Vector2i tileSize);
 	~TilePanel();
 
-	void  selectTileAt(sf::Vector2i mousePos);
+	void selectTileAt(sf::Vector2i mousePos);
 	Tile getCurrentlySelectedTile();
+	void attachTo(sfg::Box::Ptr box);
+	void beginDraw();
+	void draw(const sf::Drawable& drawable);
+	void endDraw();
+	sf::Vector2i getCanvasMousePositionFrom(sf::Vector2i renderWindowMousePos);
+
 
 private:
 
