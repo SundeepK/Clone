@@ -14,7 +14,7 @@ public:
 	~PlayerEndPoint();
 
 	void createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld);
-	std::vector<std::string> getProperties();
+	GameObjectProperty getProperties();
 
 };
 

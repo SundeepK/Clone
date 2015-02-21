@@ -116,6 +116,8 @@ void RopeBox::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }
 
-std::vector<std::string> RopeBox::getProperties() {
-	return {};
-}
+GameObjectProperty RopeBox::getProperties() {
+	GameObjectProperty object;
+	object.properties = {  };
+	object.objectShapeType = tmx::MapObjectShape::Rectangle;
+	return object;}

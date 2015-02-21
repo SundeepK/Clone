@@ -43,6 +43,9 @@ void DeathFloor::createEntity(const tmx::MapObject mapObject, b2World& box2dWorl
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }
 
-std::vector<std::string> DeathFloor::getProperties() {
-	return {};
+GameObjectProperty DeathFloor::getProperties() {
+	GameObjectProperty object;
+	object.properties = {};
+	object.objectShapeType = tmx::MapObjectShape::Rectangle;
+	return object;
 }

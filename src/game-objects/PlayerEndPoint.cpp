@@ -40,6 +40,9 @@ void PlayerEndPoint::createEntity(const tmx::MapObject mapObject, b2World& box2d
 	endPoint.activate();
 }
 
-std::vector<std::string> PlayerEndPoint::getProperties() {
-	return {};
+GameObjectProperty PlayerEndPoint::getProperties() {
+	GameObjectProperty object;
+	object.properties = {};
+	object.objectShapeType = tmx::MapObjectShape::Rectangle;
+	return object;
 }

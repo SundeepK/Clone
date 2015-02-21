@@ -11,6 +11,7 @@
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Boulder.h>
 #include <game-objects/Rope.h>
+#include <game-objects/StaticObject.h>
 
 struct LayerControllerContainer {
 
@@ -57,6 +58,7 @@ public:
 
 		m_objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
 		m_objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
+		m_objectController.addEntityCreator("staticObject", std::unique_ptr<GameEntityCreator>(new StaticObject()));
 
 		m_objectBoundsRect.setFillColor(sf::Color(250, 77, 100, 150));
 		m_objectBoundsRect.setOutlineThickness(2.0f);

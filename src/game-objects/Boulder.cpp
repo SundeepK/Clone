@@ -59,6 +59,9 @@ Boulder::Boulder(Boulder&& other) {
 Boulder::Boulder(Boulder& other) {
 }
 
-std::vector<std::string> Boulder::getProperties() {
-	return { "width" };
+GameObjectProperty Boulder::getProperties() {
+	GameObjectProperty object;
+	object.properties =  { "width" };
+	object.objectShapeType = tmx::MapObjectShape::Circle;
+	return object;
 }

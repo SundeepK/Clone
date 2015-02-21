@@ -138,6 +138,9 @@ void DynamicRotatingBlade::createEntity(tmx::MapObject mapObject, b2World& box2d
 	m_impl->createEntity(mapObject, box2dWorld, anaxWorld);
 }
 
-std::vector<std::string> DynamicRotatingBlade::getProperties() {
-	return {};
+GameObjectProperty DynamicRotatingBlade::getProperties() {
+	GameObjectProperty object;
+	object.properties = {};
+	object.hasShape = false;
+	return object;
 }

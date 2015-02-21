@@ -57,6 +57,9 @@ void BladeShooter::createEntity(const tmx::MapObject mapObject, b2World& box2dWo
 	m_impl->createEntity(mapObject, box2dWorld, &anaxWorld);
 }
 
-std::vector<std::string> BladeShooter::getProperties() {
-	return {};
+GameObjectProperty BladeShooter::getProperties() {
+	GameObjectProperty object;
+	object.properties = {};
+	object.objectShapeType = tmx::MapObjectShape::Rectangle;
+	return object;
 }

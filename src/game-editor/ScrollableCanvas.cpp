@@ -122,7 +122,6 @@ public:
 
 	void updateCanvasView(){
 		if(m_isUsingSlider){
-			std::cout << "setting center x:" << m_center.x << " y: " << m_center.y << std::endl;
 			m_view.setCenter(m_center);
 		}
 	}

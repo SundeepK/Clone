@@ -29,6 +29,9 @@ void StaticObject::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, a
 
 }
 
-std::vector<std::string> StaticObject::getProperties() {
-	return {"Body"};
+GameObjectProperty StaticObject::getProperties() {
+	GameObjectProperty object;
+	object.properties = { "Body" };
+	object.objectShapeType = tmx::MapObjectShape::Rectangle;
+	return object;
 }

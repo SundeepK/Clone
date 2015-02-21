@@ -6,6 +6,15 @@
 #include <anax/World.hpp>
 #include <Box2D/Box2D.h>
 
+struct GameObjectProperty{
+
+	enum tmx::MapObjectShape objectShapeType;
+	bool hasShape = true;
+	std::vector<std::string> properties;
+
+};
+
+
 class GameEntityCreator {
 public:
 	GameEntityCreator(){
@@ -26,7 +35,7 @@ public:
 
 
 	virtual void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) = 0;
-	virtual std::vector<std::string> getProperties() = 0;
+	virtual GameObjectProperty getProperties() = 0;
 
 };
 

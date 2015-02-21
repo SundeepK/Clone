@@ -59,7 +59,7 @@ public:
 			m_labelBox->RemoveAll();
 
 		    auto propertyNames =  gameObjectItr->second->getProperties();
-			for (auto property : propertyNames) {
+			for (auto property : propertyNames.properties) {
 				auto label = sfg::Label::Create(property);
 				auto entry = sfg::Entry::Create();
 				entry->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
@@ -84,6 +84,12 @@ public:
 			mapObject.SetProperty("uuid", UUIDGenerator::createUuid());
 			auto color = m_entityCreatorToLayerColors[m_currentObjectCreator];
 			std::string stringColor =  std::to_string(color.r) + "," +  std::to_string(color.g) + "," +  std::to_string(color.b);
+
+			auto gameObjectProperty = gameObjectItr->second->getProperties();
+			if(gameObjectProperty.hasShape){
+				mapObject.SetShapeType(gameObjectProperty.objectShapeType);
+			}
+			mapObject.SetSize(sf::Vector2f(aabb.width, aabb.height));
 			mapObject.SetProperty("layerColor",  stringColor);
 			mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
 			mapObject.AddPoint(sf::Vector2f(0,0));

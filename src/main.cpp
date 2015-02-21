@@ -75,7 +75,7 @@ void MainGame::run()
 
 	sf::ContextSettings settings;
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-    sf::RenderWindow mainRenderWindow(sf::VideoMode(desktop.width,desktop.height,32), "Clone", sf::Style::Default , settings);
+    sf::RenderWindow mainRenderWindow(sf::VideoMode(desktop.width,desktop.height,32), "Clone", sf::Style::Default, settings);
 	mainRenderWindow.setKeyRepeatEnabled(true);
 	mainRenderWindow.setFramerateLimit(60);
 
