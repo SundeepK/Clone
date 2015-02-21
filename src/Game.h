@@ -24,7 +24,6 @@
 #include <GL/glut.h>
 #include <vector>
 #include <ActionController.h>
-#include <entity-loaders/WorldEntityLoader.h>
 #include <systems/PlayerAnimationSystem.h>
 #include <levels/TmxBox2dLevelLoader.h>
 #include <input-events/B2dSplitter.h>

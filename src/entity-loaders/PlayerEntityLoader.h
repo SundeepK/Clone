@@ -15,10 +15,10 @@
 #include <components/SensorComponent.h>
 #include <lua-exports/B2WorldProxy.h>
 
-class PlayerEntityLoader : public LuaEntityLoader {
+class PlayerEntityLoader  {
 public:
 
-	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  std::unordered_map<std::string, tmx::MapObject>& loadedMapData,  lua_State *myLuaState);
+	void loadEntity(anax::World& anaxWorld, b2World& box2dWorld,  tmx::MapObject& loadedMapData, lua_State *myLuaState);
 
 };
 

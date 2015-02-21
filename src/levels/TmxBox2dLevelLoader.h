@@ -13,7 +13,6 @@
 #include <opengl/TextureLoader.h>
 #include <components/SplitDirectionComponent.h>
 #include <unordered_map>
-#include <entity-loaders/WorldEntityLoader.h>
 #include <SFML/OpenGL.hpp>
 #include <GL/glut.h>
 #include <systems/SensorSystem.h>

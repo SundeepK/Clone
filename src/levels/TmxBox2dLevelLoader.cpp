@@ -22,6 +22,9 @@ extern "C"
 #include <components/Direction.h>
 #include <game-objects/DeathFloor.h>
 #include <game-objects/DynamicRotatingBlade.h>
+#include <game-objects/PlayerEndPoint.h>
+#include <entity-loaders/PlayerEntityLoader.h>
+#include <game-objects/StaticObject.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -30,11 +33,11 @@ public:
 	std::unique_ptr<b2World> m_box2dWorld;
 	std::unique_ptr<anax::World> m_anaxWorld;
 	std::vector<LevelObject> m_levelsToLoad;
-	WorldEntityLoader m_worldEntityLoader;
-	std::unordered_map<std::string, tmx::MapObject> m_levelObjects;
 	unsigned int m_currentLevelIndex = 0;
 	std::unique_ptr<LuaScriptLevel> luaScriptLevel;
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
+	PlayerEntityLoader m_playerEntityLoader;
+	StaticObject m_staticObjectCreator;
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
 			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld){
@@ -45,7 +48,7 @@ public:
 		m_entityCreators["BladeShooter"] = std::unique_ptr<GameEntityCreator>(new BladeShooter());
 		m_entityCreators["DeathFloor"] = std::unique_ptr<GameEntityCreator>(new DeathFloor());
 		m_entityCreators["DynamicRotatingBlade"] = std::unique_ptr<GameEntityCreator>(new DynamicRotatingBlade());
-
+		m_entityCreators["PlayerEndPoint"] = std::unique_ptr<GameEntityCreator>(new PlayerEndPoint());
 
 
 	}
@@ -71,14 +74,8 @@ public:
 		 return textureCoords;
 	}
 
-	std::unordered_map<std::string, tmx::MapObject> loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
-		std::unordered_map<std::string, tmx::MapObject> mapObjects;
+	void loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
 		for (auto& object : mapObject) {
-
-			if (!object.GetName().empty()) {
-				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
-			}
-
 			auto objectEntity = anaxWorld.createEntity();
 			auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
@@ -108,24 +105,12 @@ public:
 
 			objectEntity.activate();
 		}
-		return mapObjects;
 	}
 
-	std::unordered_map<std::string, tmx::MapObject> loadStaticObjects(tmx::MapObjects& mapObject, b2World& b2dworld) {
-		std::unordered_map<std::string, tmx::MapObject> mapObjects;
+	void loadStaticObjects(tmx::MapObjects& mapObject) {
 		for (auto& object : mapObject) {
-			if (!object.GetName().empty()) {
-				mapObjects.insert(std::pair<std::string, tmx::MapObject>(object.GetName(), object));
-			}
-
-			if (object.GetPropertyString("Body") == "dynamic") {
-				 tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
-			} else {
-				 tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
-			}
-
+			m_staticObjectCreator.createEntity(object, *m_box2dWorld, *m_anaxWorld);
 		}
-		return mapObjects;
 	}
 
 	std::unordered_map<std::string, tmx::MapObject> loadMiscMapObjects(const tmx::MapObjects& mapObject) {
@@ -145,27 +130,33 @@ public:
 			if ( m_entityCreators.find(entityName) != m_entityCreators.end() ) {
 				m_entityCreators[entityName]->createEntity(object, *m_box2dWorld, *m_anaxWorld);
 			}else{
-				std::cout << "No entity creator found for name: " << entityName << std::endl;
+				std::cerr << "No entity creator found for name: " << entityName << std::endl;
 			}
 		}
 	}
 
-
-	std::unordered_map<std::string, tmx::MapObject> loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld){
-		std::unordered_map<std::string, tmx::MapObject> mapObjects;
-		if (layer.name == "StaticObjects") {
-			auto objectsMap =  loadStaticObjects(layer.objects, b2dworld);
-			mapObjects.insert(objectsMap.begin(), objectsMap.end());
-		}else if (layer.name == "SplittableObjects") {
-			auto objectsMap =  loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
-			mapObjects.insert(objectsMap.begin(), objectsMap.end());
-		}else if(layer.name == "Entities"){
-			loadEntities(layer.objects);
-		}else{
-			auto objectsMap =  loadMiscMapObjects(layer.objects);
-			mapObjects.insert(objectsMap.begin(), objectsMap.end());
+	void loadInterestPoints(const tmx::MapObjects& mapObject, lua_State* luaState) {
+		for (auto object : mapObject) {
+			if (object.GetName() == "PlayerStartPoint") {
+				m_playerEntityLoader.loadEntity(*m_anaxWorld, *m_box2dWorld, object, luaState);
+			}else{
+				loadEntities(mapObject);
+			}
 		}
-		return mapObjects;
+	}
+
+	void loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld, lua_State* luaState) {
+		if (layer.name == "StaticObjects") {
+			loadStaticObjects(layer.objects);
+		} else if (layer.name == "SplittableObjects") {
+			loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
+		} else if (layer.name == "Entities") {
+			loadEntities(layer.objects);
+		} else if (layer.name == "InterestPoints") {
+			loadInterestPoints(layer.objects, luaState);
+		} else {
+			auto objectsMap = loadMiscMapObjects(layer.objects);
+		}
 	}
 
 	void loadLevelList(lua_State *luaState){
@@ -227,23 +218,24 @@ public:
 			std::cout << "After deleting all count is: " << m_box2dWorld->GetBodyCount() << std::endl;
 			m_anaxWorld->refresh(); //Last thing refresh all entities doesn't matter if we refresh twice in one update since the level will be changed after draw
 
-
 			m_mapLoader->Load(m_levelsToLoad[levelNumberToLoad].levelMapName);
 			std::vector<tmx::MapLayer>& layers = m_mapLoader->GetLayers();
-			std::unordered_map<std::string, tmx::MapObject> loadedItems;
 			const std::string t = "TexCoords";
+			std::vector<tmx::MapObject> levelObjects;
 			for (auto& layer : layers) {
 				if (layer.visible) {
-					auto objectsMap = loadTmxLayerForLevel(layer, *m_box2dWorld, *m_anaxWorld);
-					loadedItems.insert(objectsMap.begin(), objectsMap.end());
+					loadTmxLayerForLevel(layer, *m_box2dWorld, *m_anaxWorld, luaState);
 				}
 			}
-			m_levelObjects = loadedItems;
-			m_worldEntityLoader.loadWorldEntities(*m_anaxWorld, *m_box2dWorld, loadedItems, luaState);
+
+			for (auto& layer : layers) {
+				levelObjects.insert(levelObjects.end(), layer.objects.begin(), layer.objects.end());
+			}
+
+			luaScriptLevel.reset(new LuaScriptLevel(*m_box2dWorld, m_levelsToLoad[levelNumberToLoad].scriptName));
+			luaScriptLevel->loadLevel(levelObjects);
 		}
 		lua_close(luaState);
-		luaScriptLevel.reset(new LuaScriptLevel(*m_box2dWorld, m_levelsToLoad[levelNumberToLoad].scriptName));
-		luaScriptLevel->loadLevel(m_levelObjects);
 	}
 
 	void deleteAllBox2dBodies() {

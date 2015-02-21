@@ -17,7 +17,7 @@ public:
 	 LuaScriptLevel(b2World& b2dworld, std::string luaScriptLevel);
 	 ~LuaScriptLevel();
 
-	 void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects);
+	 void loadLevel(std::vector<tmx::MapObject>& levelObjects);
 	 void updateLevel();
 	 void endLevel();
 

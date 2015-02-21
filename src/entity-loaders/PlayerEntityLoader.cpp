@@ -7,7 +7,10 @@
 #include <game-objects/GameObjectTag.h>
 #include <components/TimeStepComponent.h>
 
-void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, std::unordered_map<std::string, tmx::MapObject>& loadedMapData, lua_State* luaState) {
+
+
+
+void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, tmx::MapObject& loadedMapData, lua_State* luaState) {
 
 	if(luaL_dofile(luaState, "lua-scripts/playerConfig.lua")){
         printf("%s\n", lua_tostring(luaState, -1));
@@ -84,7 +87,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, s
     //It doesn't belong to a player but allow to implment slow motion quickly
     auto& timeStepComp = playerEntity.addComponent<TimeStepComponent>();
 
-    auto startPositionVec = loadedMapData["PlayerStartPoint"].GetPosition();
+    auto startPositionVec = loadedMapData.GetPosition();
    // std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
 
     uint16 playerBitMask = 0x0003;

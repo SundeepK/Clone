@@ -55,7 +55,7 @@ public:
 		std::cout << "deleted lua state" << std::endl;
 	}
 
-	void loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
+	void loadLevel(std::vector<tmx::MapObject>& levelObjects) {
 
 		if(!shouldCallScript)
 			return;
@@ -69,14 +69,14 @@ public:
 			std::cout << error << std::endl;
 		}
 
-		for(auto iterator = levelObjects.begin(); iterator != levelObjects.end(); iterator++) {
-			std::string name = iterator->first;
-			tmx::MapObject mapObject = iterator->second;
-			try {
-				luabind::call_function<void>(m_luaState, "loadMapObject", name,  mapObject);
-			} catch (luabind::error& e) {
-				std::string error = lua_tostring(e.state(), -1);
-				std::cout << error << std::endl;
+		for (auto object : levelObjects) {
+			if (!object.GetName().empty()) {
+				try {
+					luabind::call_function<void>(m_luaState, "loadMapObject", object.GetName(), object);
+				} catch (luabind::error& e) {
+					std::string error = lua_tostring(e.state(), -1);
+					std::cout << error << std::endl;
+				}
 			}
 		}
 
@@ -164,7 +164,7 @@ LuaScriptLevel::LuaScriptLevel(b2World& b2dworld, std::string luaScriptLevel) :
 LuaScriptLevel::~LuaScriptLevel() {
 }
 
-void LuaScriptLevel::loadLevel(std::unordered_map<std::string, tmx::MapObject>& levelObjects) {
+void LuaScriptLevel::loadLevel(std::vector<tmx::MapObject>& levelObjects) {
 	m_impl->loadLevel(levelObjects);
 }
 
