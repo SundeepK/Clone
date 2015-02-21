@@ -12,7 +12,7 @@
 
 class GameEditor {
 public:
-	GameEditor(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture);
+	GameEditor(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture, sf::Vector2i tileSize);
 	~GameEditor();
 
 	void update();

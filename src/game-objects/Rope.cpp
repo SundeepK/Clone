@@ -18,16 +18,22 @@ public:
 	b2RopeJointDef m_ropeDef;
 
 
-	b2Body* createStartingBody(b2Vec2 position,  b2World& box2dWorld){
+	b2Body* createStartingBody(tmx::MapObject& mapObject,  b2World& box2dWorld, anax::World& anaxWorld){
 		b2BodyDef bd;
 		bd.type = b2_staticBody;
-		bd.position = position;
+		bd.position = tmx::SfToBoxVec(mapObject.GetPosition());
 		b2PolygonShape shape;
 		shape.SetAsBox(0.1f, 0.1f);
 		b2FixtureDef fd;
 		fd.shape = &shape;
 		b2Body* ground  = box2dWorld.CreateBody(&bd);
 		ground->CreateFixture(&fd);
+		auto objectEntity = anaxWorld.createEntity();
+		auto& idComponent = objectEntity.addComponent<IDComponent>();
+		idComponent.uuid = mapObject.GetPropertyString("uuid");
+		auto& aabbComponent = objectEntity.addComponent<AABBComponent>();
+		auto& physComp = objectEntity.addComponent<PhysicsComponent>();
+		physComp.physicsBody = ground;
 		return ground;
 	}
 
@@ -54,7 +60,7 @@ public:
 		}
 		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + width, mapObject.GetPosition().y));
 
-		b2Body* firstBodyToJoinWith = createStartingBody(statingPosition, box2dWorld);
+		b2Body* firstBodyToJoinWith = createStartingBody(mapObject, box2dWorld, anaxWorld);
 		b2Body* prevBody = firstBodyToJoinWith;
 		{
 			b2PolygonShape shape;
@@ -101,11 +107,6 @@ public:
 				aabbComponent.aabb.height = aabb.height;
 				aabbComponent.aabb.width = aabb.width;
 				aabbComponent.stringColor = stringColor;
-
-				std::cout  << "adding aabb.left " <<  aabbComponent.aabb.left << std::endl;
-				std::cout  << "adding aabb.top " <<  aabbComponent.aabb.top<< std::endl;
-				std::cout  << "adding aabb.height " << aabbComponent.aabb.height << std::endl;
-				std::cout  << "adding aabb.width " << aabbComponent.aabb.width << std::endl;
 
 				auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
 				auto& physComp = objectEntity.addComponent<PhysicsComponent>();

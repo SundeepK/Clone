@@ -90,7 +90,9 @@ void MainGame::run()
 	m_image.loadFromFile("maps/diffuse.png");
 	m_texture.loadFromImage(m_image);
 
-	GameEditor gameEditor(mainRenderWindow, mapSizeInPixels, m_texture);
+	sf::Vector2i tileSize(32, 32);
+
+	GameEditor gameEditor(mainRenderWindow, mapSizeInPixels, m_texture, tileSize);
     mainRenderWindow.resetGLStates();
 
 	while (mainRenderWindow.isOpen()) {

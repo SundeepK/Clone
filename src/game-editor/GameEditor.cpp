@@ -1,13 +1,9 @@
 #include <game-editor/GameEditor.h>
 #include <game-editor/TilePanel.h>
 #include <game-editor/MapPanel.h>
-#include <game-editor/ObjectCreatorController.h>
-#include <game-objects/GameEntityCreator.h>
-#include <game-objects/Boulder.h>
 #include <SFGUIDebugDraw.h>
 #include <game-editor/MapPanelController.h>
 #include <game-editor/LayerController.h>
-#include <game-objects/Rope.h>
 #include <game-editor/ScrollableCanvas.h>
 #include <systems/DrawStaticAABBSystem.h>
 
@@ -26,7 +22,6 @@ public:
 	sf::RenderWindow& m_mainRenderWindow;
     b2World m_b2world;
 	LayerController m_layerController;
-	ObjectCreatorController m_objectController;
 	MapData m_mapData;
 	ScrollableCanvas m_scrollableCanvas;
 	MapPanelController m_mapPanelController;
@@ -39,10 +34,9 @@ public:
 	sf::IntRect objectBounds;
 	sf::RectangleShape objectBoundsRect;
 
-	GameEditorImpl(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture) : m_tilePanel(texture, sf::Vector2i(mapSizeInPixels.x / 5,mapSizeInPixels.y), sf::Vector2i(32, 32)),
-			m_mainRenderWindow(mainRenderWindow),  m_b2world(b2Vec2(0, 18.0f)), m_layerController(m_anaxWorld, m_b2world), m_objectController(m_anaxWorld, m_b2world),
-			m_mapData(sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels)), m_scrollableCanvas(m_mapData),
-			m_mapPanelController(m_scrollableCanvas, std::unique_ptr<MapPanel>(new MapPanel (texture, sf::Vector2i(70, 70), sf::Vector2i(32, 32), sf::Vector2i(mapSizeInPixels)))),
+	GameEditorImpl(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture, sf::Vector2i tileSize) : m_tilePanel(texture, sf::Vector2i(mapSizeInPixels.x / 5,mapSizeInPixels.y), tileSize),
+			m_mainRenderWindow(mainRenderWindow),  m_b2world(b2Vec2(0, 18.0f)), m_layerController(m_anaxWorld, m_b2world), m_mapData(sf::Vector2i(70, 70), tileSize, sf::Vector2i(mapSizeInPixels)),
+			m_scrollableCanvas(m_mapData), m_mapPanelController(m_scrollableCanvas, std::unique_ptr<MapPanel>(new MapPanel (texture, sf::Vector2i(70, 70), tileSize, sf::Vector2i(mapSizeInPixels)))),
 			m_debugDrawer(m_scrollableCanvas.getCanvas()){
 
 
@@ -69,9 +63,6 @@ public:
 		m_mainBox->Pack(m_rightPanel);
 
 		m_layerController.attachTo(m_rightPanel);
-		m_objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
-		m_objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
-		m_objectController.attachTo(m_rightPanel);
 		m_tilePanel.attachTo(m_rightPanel);
 
 		m_layerController.addLayer("Entities", LayerType::OBJECTS);
@@ -105,8 +96,7 @@ public:
 				if (currentLayer.getLayerType() == LayerType::OBJECTS && isInBoundsAndSliderNotInUse) {
 					objectBounds.height = canvasMousePos.y - objectBounds.top;
 					objectBounds.width = canvasMousePos.x - objectBounds.left;
-					auto mapObject = m_objectController.createGameObjectAt(objectBounds);
-					m_layerController.addMapObjectToCurrentLayer(mapObject);
+					m_layerController.addMapObjectToCurrentLayerWithAABB(objectBounds);
 				}
 			}
 		}
@@ -170,6 +160,7 @@ public:
 			m_scrollableCanvas.draw(m_mapPanelController);
 			objectBoundsRect.setPosition(sf::Vector2f(objectBounds.left, objectBounds.top));
 			objectBoundsRect.setSize(sf::Vector2f(objectBounds.width, objectBounds.height));
+			m_scrollableCanvas.draw(m_layerController);
 			m_scrollableCanvas.draw(objectBoundsRect);
 			m_scrollableCanvas.draw(m_gameObjectAABBDrawSystem);
 			m_scrollableCanvas.endDraw();
@@ -184,7 +175,8 @@ public:
 };
 
 
-GameEditor::GameEditor(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture) : m_impl(new GameEditorImpl(mainRenderWindow, mapSizeInPixels, texture)){
+GameEditor::GameEditor(sf::RenderWindow& mainRenderWindow, sf::Vector2f mapSizeInPixels, sf::Texture& texture, sf::Vector2i tileSize) :
+		m_impl(new GameEditorImpl(mainRenderWindow, mapSizeInPixels, texture, tileSize)){
 }
 
 GameEditor::~GameEditor() {

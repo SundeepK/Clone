@@ -7,6 +7,10 @@
 #include <iostream>
 #include <tmx/tmx2box2d.h>
 #include <components/AABBComponent.h>
+#include <game-editor/ObjectCreatorController.h>
+#include <game-objects/GameEntityCreator.h>
+#include <game-objects/Boulder.h>
+#include <game-objects/Rope.h>
 
 struct LayerControllerContainer {
 
@@ -30,8 +34,11 @@ public:
 	std::string m_uuidOfSelectedObjectForDeletion;
 	sf::Image m_selectToolImage;
 	sfg::Image::Ptr m_sfguiSelectToolImage;
+	sf::RectangleShape m_objectBoundsRect;
+	ObjectCreatorController m_objectController;
 
-	LayerControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld) {
+
+	LayerControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld),  m_objectController(anaxWorld, box2dWorld) {
 		m_objectCreatorTable = sfg::Table::Create();
 		m_gameObjectsComboBox = sfg::ComboBox::Create();
 		m_objectLabelBox = sfg::Box::Create( sfg::Box::Orientation::VERTICAL );
@@ -47,12 +54,20 @@ public:
 		m_objectCreatorTable->Attach( m_selectToolButton, sf::Rect<sf::Uint32>( 0, 2, 1, 1 ), 0, sfg::Table::FILL);
 		addLayer("TileLayer", LayerType::TILE);
 		m_gameObjectsComboBox->SelectItem(0);
+
+		m_objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
+		m_objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
+
+		m_objectBoundsRect.setFillColor(sf::Color(250, 77, 100, 150));
+		m_objectBoundsRect.setOutlineThickness(2.0f);
+		m_objectBoundsRect.setOutlineColor(sf::Color::Red);
 	}
 
 	~LayerControllerImpl(){}
 
 	void attachTo(sfg::Box::Ptr box){
 		box->Pack( m_objectCreatorTable, false );
+		m_objectController.attachTo(box);
 	}
 
 	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
@@ -97,6 +112,8 @@ public:
 				}
 
 				if (testRect.contains(mousePos)) {
+					m_objectBoundsRect.setPosition(sf::Vector2f(testRect.left,testRect.top));
+					m_objectBoundsRect.setSize(sf::Vector2f(testRect.width, testRect.height));
 					m_uuidOfSelectedObjectForDeletion = idComponent.uuid;
 					break;
 				}
@@ -114,17 +131,24 @@ public:
 				if (idComponent.uuid == m_uuidOfSelectedObjectForDeletion) {
 					m_box2dWorld.DestroyBody(physicsBody);
 					entity.kill();
+					m_objectBoundsRect.setSize(sf::Vector2f(0,0));
 				}
 			}
 		}
 	}
 
-	void addMapObjectToCurrentLayer(tmx::MapObject mapObject) {
+	void addMapObjectToCurrentLayerWithAABB(sf::IntRect objectBounds) {
 		auto layerName = static_cast<std::string>(m_gameObjectsComboBox->GetSelectedText());
 
 		if (layerName.empty()) {
 			return;
 		}
+
+		if(m_selectToolButton->IsActive()){
+			return;
+		}
+
+		auto mapObject = m_objectController.createGameObjectAt(objectBounds);
 
 		for(auto mapItr=m_layerToMapObjects.begin(); mapItr!=m_layerToMapObjects.end(); ++mapItr) {
 			if (mapItr->first.getLayerName() == layerName) {
@@ -158,6 +182,10 @@ public:
 		return boost::optional<Layer>();
 	}
 
+	void draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+		rt.draw(m_objectBoundsRect);
+	}
+
 };
 
 LayerController::LayerController(anax::World& anaxWorld, b2World& box2dWorld) : m_impl(new LayerControllerImpl(anaxWorld, box2dWorld)){
@@ -170,8 +198,8 @@ void LayerController::attachTo(sfg::Box::Ptr box) {
 	m_impl->attachTo(box);
 }
 
-void LayerController::addMapObjectToCurrentLayer(tmx::MapObject mapObject) {
-	m_impl->addMapObjectToCurrentLayer(mapObject);
+void LayerController::addMapObjectToCurrentLayerWithAABB(sf::IntRect objectBounds) {
+	m_impl->addMapObjectToCurrentLayerWithAABB(objectBounds);
 }
 
 void LayerController::addLayer(std::string layerName, LayerType layerType) {
@@ -184,4 +212,8 @@ boost::optional<Layer> LayerController::getCurrentlySelectedLayer() {
 
 void LayerController::update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
 	m_impl->update(mousePos, events);
+}
+
+void LayerController::draw(sf::RenderTarget& rt, sf::RenderStates states) const {
+	m_impl->draw(rt, states);
 }

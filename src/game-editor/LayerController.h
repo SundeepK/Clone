@@ -56,18 +56,21 @@ private:
 
 };
 
-class LayerController {
+class LayerController : public sf::Drawable {
 public:
 	LayerController(anax::World& anaxWorld, b2World& box2dWorld);
 	~LayerController();
 
-	void addMapObjectToCurrentLayer(tmx::MapObject mapObject);
+	void addMapObjectToCurrentLayerWithAABB(sf::IntRect objectBounds);
 	void attachTo(sfg::Box::Ptr box);
 	void addLayer(std::string layerName, LayerType layerType);
 	boost::optional<Layer> getCurrentlySelectedLayer();
 	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events);
 
 private:
+
+    void draw(sf::RenderTarget& rt, sf::RenderStates states) const;
+
 	class LayerControllerImpl;
 	std::unique_ptr<LayerControllerImpl> m_impl;
 
