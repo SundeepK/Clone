@@ -65,8 +65,6 @@ public:
 		m_layerController.attachTo(m_rightPanel);
 		m_tilePanel.attachTo(m_rightPanel);
 
-		m_layerController.addLayer("Entities", LayerType::OBJECTS);
-
 	    m_mapWindow->Add(m_mainBox);
 
 	    m_sfguiDesktop.Add(m_mapWindow);

@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <UUIDGenerator.h>
+#include <entity-loaders/PlayerEntityLoader.h>
 
 struct ObjectCreatorContainer{
 
@@ -22,6 +23,8 @@ public:
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
 	std::unordered_map<std::string, sf::Color> m_entityCreatorToLayerColors;
 	ObjectCreatorContainer m_objectCreatorContainer;
+	PlayerEntityLoader m_playerLoader;
+
 	std::string m_currentObjectCreator;
 
 	ObjectCreatorControllerImpl(anax::World& anaxWorld, b2World& box2dWorld) : m_anaxWorld(anaxWorld), m_box2dWorld(box2dWorld){
@@ -63,13 +66,15 @@ public:
 				auto propertyName = objectProperty->first;
 				auto label = sfg::Label::Create(propertyName);
 				auto entry = sfg::Entry::Create();
-				entry->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
+				entry->SetRequisition( sf::Vector2f( 150.f, 0.f ) );
 				m_objectCreatorContainer.propertyLabels.push_back(label);
 				m_objectCreatorContainer.propertyEntryBoxes.push_back(entry);
 				entry->SetId(propertyName);
 				entry->SetText(objectProperty->second);
+				entry->SetMaximumLength(500);
+				label->SetAlignment(sf::Vector2f(2, 2));
 				m_labelBox->Pack(label, true);
-				m_inputBox->Pack(entry, false, true);
+				m_inputBox->Pack(entry, true, true);
 			}
 			m_labelBox->Invalidate();
 		}
@@ -100,7 +105,7 @@ public:
 			mapObject.AddPoint(sf::Vector2f(0, aabb.height));
 			mapObject.CreateDebugShape(sf::Color::Blue);
 			for (auto entry : m_objectCreatorContainer.propertyEntryBoxes) {
-				mapObject.SetProperty(static_cast<std::string>(entry->GetId()), static_cast<std::string>(entry->GetVisibleText()));
+				mapObject.SetProperty(static_cast<std::string>(entry->GetId()), static_cast<std::string>(entry->GetText()));
 			}
 			gameObjectItr->second->createEntity(mapObject, m_box2dWorld, m_anaxWorld);
 		}

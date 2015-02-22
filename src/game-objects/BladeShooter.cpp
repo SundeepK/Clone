@@ -59,6 +59,7 @@ void BladeShooter::createEntity(const tmx::MapObject mapObject, b2World& box2dWo
 
 GameObjectProperty BladeShooter::getProperties() {
 	GameObjectProperty object;
+	object.properties = { {"ShootDir",  "right"} };
 	object.objectShapeType = tmx::MapObjectShape::Rectangle;
 	return object;
 }

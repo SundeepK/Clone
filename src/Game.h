@@ -46,7 +46,7 @@ class Game {
 
 	public:
 
-		Game(b2World& box2dWorld, sf::RenderWindow& renderWindow);
+		Game(b2World& box2dWorld, anax::World& anaxWorld, sf::RenderWindow& renderWindow);
 		virtual ~Game();
 
 		 void loadMap(tmx::MapLoader& levelLoader,b2World* b2world);
@@ -56,12 +56,12 @@ class Game {
 
 	private:
 		 std::shared_ptr<b2World> m_b2world;
+		 anax::World& m_anaxWorld;
 		 std::unique_ptr<sf::RenderWindow> m_mainRenderWindow;
 		 PhysicsTimeStepSystem m_fixedTimeStepSystem;
 		 tmx::MapLoader m_mapLoader;
 		 TmxBox2dLevelLoader m_tmxLevelLoader;
 
-		 anax::World m_anaxWorld;
 		 anax::Entity m_player;
 		 PlayerControlsSystem m_playerControlsSystem;
 		 TextureRectRenderSystem m_animationSystem;

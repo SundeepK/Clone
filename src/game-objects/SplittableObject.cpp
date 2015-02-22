@@ -67,7 +67,7 @@ public:
 		}
 
 		b2Filter filter;
-		filter.categoryBits = GameObjectTag::SPLITTABLE_OBJECT;;
+		filter.categoryBits = GameObjectTag::SPLITTABLE_OBJECT;
 		physComp.physicsBody->GetFixtureList()->SetFilterData(filter);
 
 		splitDirectionComp.splitDirection = DirectionMap::parseDirection(mapObject.GetPropertyString("SplitDir"));
@@ -94,7 +94,7 @@ void SplittableObject::createEntity(tmx::MapObject mapObject, b2World& box2dWorl
 
 GameObjectProperty SplittableObject::getProperties() {
 	GameObjectProperty object;
-	object.properties = { {"Texture", "plankssmall.png"}, {"TexCoords", "0,1,1,1,1,0,0,0"}, {"Body", "static"} };
+	object.properties = { {"Texture", "plankssmall.png"}, {"TexCoords", "0,1,1,1,1,0,0,0"}, {"Body", "static"}, {"SplitDir", "none"} };
 	object.objectShapeType = tmx::MapObjectShape::Rectangle;
 	return object;
 }

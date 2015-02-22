@@ -12,6 +12,10 @@
 #include <game-objects/Boulder.h>
 #include <game-objects/Rope.h>
 #include <game-objects/StaticObject.h>
+#include <game-objects/SplittableObject.h>
+#include <game-objects/BladeShooter.h>
+#include <game-objects/DeathFloor.h>
+#include <game-objects/DynamicRotatingBlade.h>
 
 struct LayerControllerContainer {
 
@@ -32,6 +36,8 @@ public:
 	sfg::Box::Ptr m_objectLabelBox;
 	sfg::Box::Ptr m_objectCheckButtonBox;
 	std::unordered_map<Layer, std::vector<tmx::MapObject>, Layer::LayerHasher> m_layerToMapObjects;
+	std::unordered_map<Layer, std::vector<std::string>, Layer::LayerHasher> m_layerToObjectNames;
+
 	std::string m_uuidOfSelectedObjectForDeletion;
 	sf::Image m_selectToolImage;
 	sfg::Image::Ptr m_sfguiSelectToolImage;
@@ -53,12 +59,21 @@ public:
 		m_objectCreatorTable->Attach( m_objectCheckButtonBox, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), 0, sfg::Table::FILL);
 		m_objectCreatorTable->Attach( m_objectLabelBox, sf::Rect<sf::Uint32>( 1, 1, 1, 1 ), 0, sfg::Table::FILL);
 		m_objectCreatorTable->Attach( m_selectToolButton, sf::Rect<sf::Uint32>( 0, 2, 1, 1 ), 0, sfg::Table::FILL);
-		addLayer("TileLayer", LayerType::TILE);
-		m_gameObjectsComboBox->SelectItem(0);
 
-		m_objectController.addEntityCreator("boulder", std::unique_ptr<GameEntityCreator>(new Boulder()));
-		m_objectController.addEntityCreator("rope", std::unique_ptr<GameEntityCreator>(new Rope()));
-		m_objectController.addEntityCreator("staticObject", std::unique_ptr<GameEntityCreator>(new StaticObject()));
+		addLayer("TileLayer", LayerType::TILE, true);
+		auto entitiesLayer = addLayer("Entities", LayerType::OBJECTS, true);
+		auto splittableLayer =  addLayer("SplittableObjects", LayerType::OBJECTS);
+		auto staticObjectLayer =  addLayer("StaticObjects", LayerType::OBJECTS);
+		auto intersetPointLayer =  addLayer("InterestPoints", LayerType::OBJECTS);
+		m_gameObjectsComboBox->SelectItem(0); //Always select 1 layer so that something is selected after construction
+
+		addEntityCreator("boulder", entitiesLayer, std::unique_ptr<GameEntityCreator>(new Boulder()));
+		addEntityCreator("rope", entitiesLayer, std::unique_ptr<GameEntityCreator>(new Rope()));
+		addEntityCreator("bladeShooter", entitiesLayer, std::unique_ptr<GameEntityCreator>(new BladeShooter()));
+		addEntityCreator("deathFloor", entitiesLayer, std::unique_ptr<GameEntityCreator>(new DeathFloor()));
+		addEntityCreator("staticObject", staticObjectLayer, std::unique_ptr<GameEntityCreator>(new StaticObject()));
+		addEntityCreator("splittableObject", splittableLayer, std::unique_ptr<GameEntityCreator>(new SplittableObject()));
+		addEntityCreator("dynamicRotatingBlade", splittableLayer, std::unique_ptr<GameEntityCreator>(new DynamicRotatingBlade()));
 
 		m_objectBoundsRect.setFillColor(sf::Color(250, 77, 100, 150));
 		m_objectBoundsRect.setOutlineThickness(2.0f);
@@ -70,6 +85,18 @@ public:
 	void attachTo(sfg::Box::Ptr box){
 		box->Pack( m_objectCreatorTable, false );
 		m_objectController.attachTo(box);
+	}
+
+	void addEntityCreator(std::string entityName, Layer& layer, std::unique_ptr<GameEntityCreator> entityCreator){
+		m_objectController.addEntityCreator(entityName, std::move(entityCreator));
+		auto layerItr = m_layerToObjectNames.find(layer);
+		if(layerItr == m_layerToObjectNames.end()){
+			std::vector<std::string> objectNames;
+			objectNames.push_back(entityName);
+			m_layerToObjectNames.insert(std::make_pair(layer, objectNames));
+		}else{
+			layerItr->second.push_back(entityName);
+		}
 	}
 
 	void update(sf::Vector2i mousePos, std::vector<sf::Event>& events) {
@@ -160,7 +187,7 @@ public:
 		}
 	}
 
-	void addLayer(std::string layerName, LayerType layerType) {
+	Layer addLayer(std::string layerName, LayerType layerType, bool shouldAddToComboBox = false) {
 		Layer layer(layerName, layerType);
 		auto layerToMapObjectsItr = m_layerToMapObjects.find(layer);
 
@@ -168,9 +195,11 @@ public:
 			std::vector<tmx::MapObject> mapObjects;
 			Layer layer(layerName, layerType);
 			m_layerToMapObjects.insert(std::make_pair(layer, mapObjects));
-			m_gameObjectsComboBox->AppendItem(layerName);
+			if(shouldAddToComboBox){
+				m_gameObjectsComboBox->AppendItem(layerName);
+			}
 		}
-
+		return layer;
 	}
 
 	boost::optional<Layer> getCurrentlySelectedLayer() {
