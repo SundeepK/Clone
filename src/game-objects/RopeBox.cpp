@@ -118,6 +118,5 @@ void RopeBox::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::
 
 GameObjectProperty RopeBox::getProperties() {
 	GameObjectProperty object;
-	object.properties = {  };
 	object.objectShapeType = tmx::MapObjectShape::Rectangle;
 	return object;}

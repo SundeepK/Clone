@@ -58,14 +58,16 @@ public:
 			m_inputBox->RemoveAll();
 			m_labelBox->RemoveAll();
 
-		    auto propertyNames =  gameObjectItr->second->getProperties();
-			for (auto property : propertyNames.properties) {
-				auto label = sfg::Label::Create(property);
+		    auto objectProperties =  gameObjectItr->second->getProperties().properties;
+			for(auto objectProperty = objectProperties.begin(); objectProperty !=objectProperties.end(); ++objectProperty ) {
+				auto propertyName = objectProperty->first;
+				auto label = sfg::Label::Create(propertyName);
 				auto entry = sfg::Entry::Create();
 				entry->SetRequisition( sf::Vector2f( 80.f, 0.f ) );
 				m_objectCreatorContainer.propertyLabels.push_back(label);
 				m_objectCreatorContainer.propertyEntryBoxes.push_back(entry);
-				entry->SetId(property);
+				entry->SetId(propertyName);
+				entry->SetText(objectProperty->second);
 				m_labelBox->Pack(label, true);
 				m_inputBox->Pack(entry, false, true);
 			}

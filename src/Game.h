@@ -40,6 +40,7 @@
 #include <systems/RemoveDeadEntitySystem.h>
 #include <systems/PlayerDeathSystem.h>
 #include <systems/LevelRestartSystem.h>
+#include <opengl/TextureLoader.h>
 
 class Game {
 

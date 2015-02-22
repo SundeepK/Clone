@@ -9,22 +9,19 @@ extern "C"
 
 #include <luabind/luabind.hpp>
 #include <luabind/object.hpp>
-#include <components/PhysicsComponent.h>
 #include <levels/Level1.h>
 #include <game-objects/RopeBox.h>
 #include <game-objects/GameEntityCreator.h>
 #include <game-objects/Rope.h>
 #include <game-objects/Boulder.h>
-#include <boost/algorithm/string.hpp>
 #include <game-objects/GameObjectTag.h>
-#include <components/NinjaDataComponent.h>
 #include <game-objects/BladeShooter.h>
-#include <components/Direction.h>
 #include <game-objects/DeathFloor.h>
 #include <game-objects/DynamicRotatingBlade.h>
 #include <game-objects/PlayerEndPoint.h>
-#include <entity-loaders/PlayerEntityLoader.h>
 #include <game-objects/StaticObject.h>
+#include <game-objects/SplittableObject.h>
+#include <entity-loaders/PlayerEntityLoader.h>
 
 class TmxBox2dLevelLoader::TmxBox2dLevelLoaderImpl{
 public:
@@ -38,6 +35,7 @@ public:
 	std::unordered_map<std::string, std::unique_ptr<GameEntityCreator>> m_entityCreators;
 	PlayerEntityLoader m_playerEntityLoader;
 	StaticObject m_staticObjectCreator;
+	SplittableObject m_splittableObjectCreator;
 
 	TmxBox2dLevelLoaderImpl(tmx::MapLoader& mapDirectory, b2World& b2dworld, anax::World& anaxWorld) : m_mapLoader(&mapDirectory),
 			m_box2dWorld(&b2dworld), m_anaxWorld(&anaxWorld){
@@ -55,55 +53,9 @@ public:
 
 	~TmxBox2dLevelLoaderImpl() {}
 
-	std::vector<b2Vec2> parseTexCoordsFromTmxObject(std::string texCoordsToParse){
-		 std::stringstream texCoordStream(texCoordsToParse);
-		 std::vector<b2Vec2> textureCoords;
-		 int count = 0;
-		 std::string texCoord;
-		 float x;
-		 while(std::getline(texCoordStream,texCoord,',')){
-			 count++;
-			 //TODO Handle exception if texcoord cant be parsed
-			 float value = std::stof(texCoord);
-			 if(count % 2 == 0){
-				 textureCoords.push_back(b2Vec2(x, value));
-			 }else{
-				x = value;
-			 }
-		 }
-		 return textureCoords;
-	}
-
-	void loadSplittableObjects( tmx::MapObjects& mapObject, anax::World& anaxWorld, b2World& b2dworld){
+	void loadSplittableObjects( tmx::MapObjects& mapObject){
 		for (auto& object : mapObject) {
-			auto objectEntity = anaxWorld.createEntity();
-			auto& texCoordsComp = objectEntity.addComponent<Texcoords>();
-			auto& splitDirectionComp = objectEntity.addComponent<SplitDirectionComponent>();
-			auto& physComp = objectEntity.addComponent<PhysicsComponent>();
-			auto& ninjaData = objectEntity.addComponent<NinjaDataComponent>();
-
-
-			if (!texCoordsComp.image.loadFromFile("maps/" + object.GetPropertyString("Texture")))
-				std::cout << "unable to load texture from tmx: " <<  object.GetPropertyString("Texture") << std::endl;
-			texCoordsComp.image.flipVertically();
-			texCoordsComp.textCoords = parseTexCoordsFromTmxObject(object.GetPropertyString("TexCoords"));
-
-			texCoordsComp.texture = TextureLoader::loadAsOpenglTexture(texCoordsComp.texture, texCoordsComp.image);
-			std::cout << object.PolyPoints().size() << "points size" << std::endl;
-
-			if (object.GetPropertyString("Body") == "dynamic") {
-				physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_dynamicBody);
-			} else {
-				physComp.physicsBody = tmx::BodyCreator::Add(object, b2dworld, b2_staticBody);
-			}
-
-			b2Filter filter;
-			filter.categoryBits = GameObjectTag::SPLITTABLE_OBJECT;;
-			physComp.physicsBody->GetFixtureList()->SetFilterData(filter);
-
-			splitDirectionComp.splitDirection = DirectionMap::parseDirection(object.GetPropertyString("SplitDir"));
-
-			objectEntity.activate();
+			m_splittableObjectCreator.createEntity(object, *m_box2dWorld, *m_anaxWorld);
 		}
 	}
 
@@ -149,7 +101,7 @@ public:
 		if (layer.name == "StaticObjects") {
 			loadStaticObjects(layer.objects);
 		} else if (layer.name == "SplittableObjects") {
-			loadSplittableObjects(layer.objects, anaxWorld, b2dworld);
+			loadSplittableObjects(layer.objects);
 		} else if (layer.name == "Entities") {
 			loadEntities(layer.objects);
 		} else if (layer.name == "InterestPoints") {

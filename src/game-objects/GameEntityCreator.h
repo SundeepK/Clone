@@ -5,12 +5,13 @@
 #include <tmx/tmx2box2d.h>
 #include <anax/World.hpp>
 #include <Box2D/Box2D.h>
+#include <unordered_map>
 
 struct GameObjectProperty{
 
 	enum tmx::MapObjectShape objectShapeType;
 	bool hasShape = true;
-	std::vector<std::string> properties;
+	std::unordered_map<std::string, std::string> properties;
 
 };
 

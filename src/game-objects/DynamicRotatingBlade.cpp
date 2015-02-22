@@ -140,7 +140,6 @@ void DynamicRotatingBlade::createEntity(tmx::MapObject mapObject, b2World& box2d
 
 GameObjectProperty DynamicRotatingBlade::getProperties() {
 	GameObjectProperty object;
-	object.properties = {};
 	object.hasShape = false;
 	return object;
 }

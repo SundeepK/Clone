@@ -48,16 +48,10 @@ public:
 
 	void createEntity(tmx::MapObject mapObject, b2World& box2dWorld, anax::World& anaxWorld) {
 		b2Vec2 statingPosition = tmx::SfToBoxVec(mapObject.GetPosition());
-		auto widthProperty = mapObject.GetPropertyString("width");
 		auto stringColor =  mapObject.GetPropertyString("layerColor");
-		float width = 0;
 		auto aabb = mapObject.GetAABB();
-		bool hasWidth = !widthProperty.empty();
-		if (hasWidth) {
-			width = (std::stof(widthProperty));
-		} else {
-			width = (aabb.width);
-		}
+		float width =  aabb.width;
+
 		b2Vec2 endPosition = tmx::SfToBoxVec(sf::Vector2f(mapObject.GetPosition().x + width, mapObject.GetPosition().y));
 
 		b2Body* firstBodyToJoinWith = createStartingBody(mapObject, box2dWorld, anaxWorld);
@@ -148,7 +142,6 @@ void Rope::createEntity(const tmx::MapObject mapObject, b2World& box2dWorld, ana
 
 GameObjectProperty Rope::getProperties() {
 	GameObjectProperty object;
-	object.properties = { "width" };
 	object.objectShapeType = tmx::MapObjectShape::Rectangle;
 	return object;
 }

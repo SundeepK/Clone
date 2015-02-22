@@ -6,12 +6,7 @@
 #include <tmx/tmx2box2d.h>
 #include <anax/World.hpp>
 #include <anax/System.hpp>
-#include <sstream>
 #include <memory.h>
-#include <components/PhysicsComponent.h>
-#include <components/Texcoords.h>
-#include <opengl/TextureLoader.h>
-#include <components/SplitDirectionComponent.h>
 #include <unordered_map>
 #include <SFML/OpenGL.hpp>
 #include <GL/glut.h>

@@ -9,6 +9,7 @@
 #include <SFML/OpenGL.hpp>
 
 class Texcoords : public anax::Component<Texcoords>{
+	//TODO use a cache of sf::Image objects and reuse them, maybe map <imageLocation, sf::image>
 	public:
 	    std::vector<b2Vec2> textCoords;
         sf::Image image;

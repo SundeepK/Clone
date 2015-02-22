@@ -28,12 +28,7 @@ public:
 
 		//make a circle
 		b2CircleShape c;
-		auto width = mapObject.GetPropertyString("width");
-		if(!width.empty()){
-			c.m_radius = (std::stof(width) / 2.f);
-		}else{
-			c.m_radius = tmx::SfToBoxFloat(mapObject.GetAABB().width / 2.f);
-		}
+		c.m_radius = tmx::SfToBoxFloat(mapObject.GetAABB().width / 2.f);
 		f.shape = &c;
 
 		b2Body* body = box2dWorld.CreateBody(&bodyDef);
@@ -61,7 +56,6 @@ Boulder::Boulder(Boulder& other) {
 
 GameObjectProperty Boulder::getProperties() {
 	GameObjectProperty object;
-	object.properties =  { "width" };
 	object.objectShapeType = tmx::MapObjectShape::Circle;
 	return object;
 }

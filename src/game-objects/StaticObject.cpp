@@ -31,7 +31,7 @@ void StaticObject::createEntity(tmx::MapObject mapObject, b2World& box2dWorld, a
 
 GameObjectProperty StaticObject::getProperties() {
 	GameObjectProperty object;
-	object.properties = { "Body" };
+	object.properties = { {"Body", "static"} };
 	object.objectShapeType = tmx::MapObjectShape::Rectangle;
 	return object;
 }
