@@ -75,6 +75,8 @@ public:
 		addEntityCreator("splittableObject", splittableLayer, std::unique_ptr<GameEntityCreator>(new SplittableObject()));
 		addEntityCreator("dynamicRotatingBlade", splittableLayer, std::unique_ptr<GameEntityCreator>(new DynamicRotatingBlade()));
 
+		m_layerToObjectNames[entitiesLayer].push_back("player");
+
 		m_objectBoundsRect.setFillColor(sf::Color(250, 77, 100, 150));
 		m_objectBoundsRect.setOutlineThickness(2.0f);
 		m_objectBoundsRect.setOutlineColor(sf::Color::Red);
@@ -106,7 +108,7 @@ public:
 					selectedObjectForDeletion(mousePos);
 				} else if (event.type == sf::Event::KeyPressed) {
 					if (event.key.code == sf::Keyboard::Delete) {
-						deleteCurrentlySelectedObject();
+						deleteObjectWithUUidOf(m_uuidOfSelectedObjectForDeletion);
 					}
 				}
 
@@ -151,13 +153,13 @@ public:
 		}
 	}
 
-	void deleteCurrentlySelectedObject(){
+	void deleteObjectWithUUidOf(std::string uuid){
 		auto entities = m_anaxWorld.getEntities();
 		for (auto entity : entities) {
 			if (entity.hasComponent<IDComponent>() && entity.hasComponent<PhysicsComponent>()) {
 				auto idComponent = entity.getComponent<IDComponent>();
 				auto physicsBody = entity.getComponent<PhysicsComponent>().physicsBody;
-				if (idComponent.uuid == m_uuidOfSelectedObjectForDeletion) {
+				if (idComponent.uuid == uuid) {
 					m_box2dWorld.DestroyBody(physicsBody);
 					entity.kill();
 					m_objectBoundsRect.setSize(sf::Vector2f(0,0));
@@ -179,12 +181,39 @@ public:
 
 		auto mapObject = m_objectController.createGameObjectAt(objectBounds);
 
+		if(mapObject.GetPropertyString("objectType") == "player"){
+			deletePreviousPlayer();
+		}
+
+
 		for(auto mapItr=m_layerToMapObjects.begin(); mapItr!=m_layerToMapObjects.end(); ++mapItr) {
 			if (mapItr->first.getLayerName() == layerName) {
 				mapItr->second.push_back(mapObject);
+				break;
 			}
-			break;
 		}
+	}
+
+
+	void deletePreviousPlayer() {
+		Layer entitiesLayer("Entities", LayerType::OBJECTS);
+		auto layerToMapObjectsItr = m_layerToMapObjects.find(entitiesLayer);
+		if (layerToMapObjectsItr != m_layerToMapObjects.end()) {
+			std::string uuid = "";
+			std::cout << "deleting prev playuer"  << layerToMapObjectsItr->second.size() << std::endl;
+			auto mapObjectItr =  layerToMapObjectsItr->second.begin();
+			for ( ; mapObjectItr != layerToMapObjectsItr->second.end(); ) {
+			  if (mapObjectItr->GetPropertyString("objectType") == "player") {
+				  uuid  = mapObjectItr->GetPropertyString("uuid");
+				  deleteObjectWithUUidOf(uuid);
+				  mapObjectItr =  layerToMapObjectsItr->second.erase(mapObjectItr);
+				  break;
+			  } else {
+			    ++mapObjectItr;
+			  }
+			}
+		}
+
 	}
 
 	Layer addLayer(std::string layerName, LayerType layerType, bool shouldAddToComboBox = false) {

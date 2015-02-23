@@ -97,7 +97,7 @@ public:
 		}
 	}
 
-	void loadTmxLayerForLevel(tmx::MapLayer& layer, b2World& b2dworld, anax::World& anaxWorld, lua_State* luaState) {
+	void loadTmxLayerForLevel(tmx::MapLayer& layer, lua_State* luaState) {
 		if (layer.name == "StaticObjects") {
 			loadStaticObjects(layer.objects);
 		} else if (layer.name == "SplittableObjects") {
@@ -176,7 +176,7 @@ public:
 			std::vector<tmx::MapObject> levelObjects;
 			for (auto& layer : layers) {
 				if (layer.visible) {
-					loadTmxLayerForLevel(layer, *m_box2dWorld, *m_anaxWorld, luaState);
+					loadTmxLayerForLevel(layer, luaState);
 				}
 			}
 

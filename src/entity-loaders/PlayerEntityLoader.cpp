@@ -6,11 +6,12 @@
 #include <components/NinjaSenseComponent.h>
 #include <game-objects/GameObjectTag.h>
 #include <components/TimeStepComponent.h>
+#include <components/IDComponent.h>
+#include <components/AABBComponent.h>
 
 
 
-
-void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, tmx::MapObject& loadedMapData, lua_State* luaState) {
+void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, tmx::MapObject& mapObject, lua_State* luaState) {
 
 	if(luaL_dofile(luaState, "lua-scripts/playerConfig.lua")){
         printf("%s\n", lua_tostring(luaState, -1));
@@ -72,6 +73,8 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, t
 	];
 
 	auto playerEntity = anaxWorld.createEntity();
+	auto aabb = mapObject.GetAABB();
+
 //    auto& texCoordsComp = playerEntity.addComponent<Texcoords>();
     auto& animationComp = playerEntity.addComponent<AnimationComponent>();
     auto& playerStateComp = playerEntity.addComponent<PlayerStateComponent>();
@@ -87,7 +90,7 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, t
     //It doesn't belong to a player but allow to implment slow motion quickly
     auto& timeStepComp = playerEntity.addComponent<TimeStepComponent>();
 
-    auto startPositionVec = loadedMapData.GetPosition();
+    auto startPositionVec = mapObject.GetPosition();
    // std::cout << "player start pos x:" << startPositionVec.x << " y: " << startPositionVec.y << std::endl;
 
     uint16 playerBitMask = 0x0003;
@@ -106,6 +109,15 @@ void PlayerEntityLoader::loadEntity(anax::World& anaxWorld, b2World& b2dWorld, t
 
     physComp.physicsBody = playerBody;
 
+	auto stringColor =  mapObject.GetPropertyString("layerColor");
+	auto& idComponent = playerEntity.addComponent<IDComponent>();
+	idComponent.uuid = mapObject.GetPropertyString("uuid");
+	auto& aabbComponent = playerEntity.addComponent<AABBComponent>();
+	aabbComponent.aabb.left = aabb.left;
+	aabbComponent.aabb.top = aabb.top;
+	aabbComponent.aabb.height = aabb.height;
+	aabbComponent.aabb.width = aabb.width;
+	aabbComponent.stringColor = stringColor;
 
     //foot sensor
     b2CircleShape footShape;

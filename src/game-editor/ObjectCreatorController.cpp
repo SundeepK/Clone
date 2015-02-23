@@ -36,6 +36,8 @@ public:
 		m_objectCreatorTable->Attach( m_gameObjectsComboBox, sf::Rect<sf::Uint32>( 0, 0, 2, 1 ), sfg::Table::FILL | sfg::Table::EXPAND, sfg::Table::FILL | sfg::Table::EXPAND );
 		m_objectCreatorTable->Attach( m_labelBox, sf::Rect<sf::Uint32>( 0, 1, 1, 1 ), 0, sfg::Table::FILL);
 		m_objectCreatorTable->Attach( m_inputBox, sf::Rect<sf::Uint32>( 1, 1, 1, 1 ), 0, sfg::Table::FILL);
+		m_gameObjectsComboBox->AppendItem("player");
+
 	}
 
 	~ObjectCreatorControllerImpl(){}
@@ -45,6 +47,27 @@ public:
 		m_entityCreators.insert(std::make_pair(nameOfObjectCreator, std::move(entityCreator)));
 		m_entityCreatorToLayerColors.insert(std::make_pair(nameOfObjectCreator, randColor()));
 		m_gameObjectsComboBox->AppendItem(nameOfObjectCreator);
+	}
+
+	tmx::MapObject addPlayer(sf::IntRect aabb){
+		tmx::MapObject mapObject;
+		mapObject.SetProperty("uuid", UUIDGenerator::createUuid());
+		mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
+		mapObject.SetSize(sf::Vector2f(aabb.width, aabb.height));
+		mapObject.SetProperty("layerColor",  "255, 41, 105");
+		mapObject.SetProperty("objectType", "player");
+		mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
+		mapObject.AddPoint(sf::Vector2f(0,0));
+		mapObject.AddPoint(sf::Vector2f(aabb.width, 0));
+		mapObject.AddPoint(sf::Vector2f(aabb.width, aabb.height));
+		mapObject.AddPoint(sf::Vector2f(0, aabb.height));
+		mapObject.CreateDebugShape(sf::Color::Blue);
+		lua_State *luaState = luaL_newstate();
+	    luabind::open(luaState);
+		luaL_openlibs(luaState);
+		m_playerLoader.loadEntity(m_anaxWorld, m_box2dWorld, mapObject, luaState);
+		lua_close(luaState);
+		return mapObject;
 	}
 
 	sf::Color randColor()
@@ -84,22 +107,23 @@ public:
 		table->Pack( m_objectCreatorTable, false );
 	}
 
-	tmx::MapObject createGameObjectWithCurrentlySelectedObjectCreator(sf::IntRect aabb) {
+	tmx::MapObject addGameObject(sf::IntRect aabb) {
 		tmx::MapObject mapObject;
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
 			mapObject.SetProperty("uuid", UUIDGenerator::createUuid());
 			auto color = m_entityCreatorToLayerColors[m_currentObjectCreator];
-			std::string stringColor =  std::to_string(color.r) + "," +  std::to_string(color.g) + "," +  std::to_string(color.b);
+			std::string stringColor = std::to_string(color.r) + "," + std::to_string(color.g) + "," + std::to_string(color.b);
 
 			auto gameObjectProperty = gameObjectItr->second->getProperties();
-			if(gameObjectProperty.hasShape){
+			if (gameObjectProperty.hasShape) {
 				mapObject.SetShapeType(gameObjectProperty.objectShapeType);
 			}
 			mapObject.SetSize(sf::Vector2f(aabb.width, aabb.height));
-			mapObject.SetProperty("layerColor",  stringColor);
+			mapObject.SetProperty("layerColor", stringColor);
+			mapObject.SetProperty("objectType", m_currentObjectCreator);
 			mapObject.SetPosition(sf::Vector2f(aabb.left, aabb.top));
-			mapObject.AddPoint(sf::Vector2f(0,0));
+			mapObject.AddPoint(sf::Vector2f(0, 0));
 			mapObject.AddPoint(sf::Vector2f(aabb.width, 0));
 			mapObject.AddPoint(sf::Vector2f(aabb.width, aabb.height));
 			mapObject.AddPoint(sf::Vector2f(0, aabb.height));
@@ -110,6 +134,14 @@ public:
 			gameObjectItr->second->createEntity(mapObject, m_box2dWorld, m_anaxWorld);
 		}
 		return mapObject;
+	}
+
+	tmx::MapObject createGameObjectWithCurrentlySelectedObjectCreator(sf::IntRect aabb) {
+		if(m_currentObjectCreator == "player"){
+			return addPlayer(aabb);
+		}else{
+			return addGameObject(aabb);
+		}
 	}
 
 };
