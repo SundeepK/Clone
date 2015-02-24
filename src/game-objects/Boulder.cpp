@@ -22,7 +22,7 @@ public:
 		f.density = 1.f;
 		f.restitution = 0.0f;
 		f.filter.categoryBits = GameObjectTag::BOULDER;
-		bodyDef.position = tmx::SfToBoxVec(mapObject.GetPosition());
+		bodyDef.position = tmx::SfToBoxVec(mapObject.GetCentre());
 		tmx::MapObjectShape shapeType = mapObject.GetShapeType();
 		sf::Uint16 pointCount = mapObject.PolyPoints().size();
 

@@ -109,6 +109,11 @@ public:
 
 	tmx::MapObject addGameObject(sf::IntRect aabb) {
 		tmx::MapObject mapObject;
+
+		if(aabb.height < 5 && aabb.width < 5){
+			return mapObject;
+		}
+
 		auto gameObjectItr = m_entityCreators.find(m_currentObjectCreator);
 		if (gameObjectItr != m_entityCreators.end()) {
 			mapObject.SetProperty("uuid", UUIDGenerator::createUuid());

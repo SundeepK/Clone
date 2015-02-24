@@ -25,6 +25,7 @@ private:
 
 	std::vector<Tile> m_tiles;
 	std::vector<sf::Vertex> m_vertices;
+	std::vector<sf::Vertex> m_tileVertices;
 	sf::Vector2i m_mapSizeInTiles;
 	sf::Vector2i m_tileDimensions;
 

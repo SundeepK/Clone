@@ -1,21 +1,25 @@
 #include <game-editor/TileMap.h>
 
 TileMap::TileMap(sf::Vector2i mapSizeInTiles, sf::Vector2i tileDimensions) : m_mapSizeInTiles(mapSizeInTiles), m_tileDimensions(tileDimensions)  {
+	sf::Color grey(100, 100, 100);
 	for(int row = 0; row < mapSizeInTiles.x  ; row++ ){
 		for(int column = 0, x = row; column < mapSizeInTiles.y ; column++, x++){
 			sf::IntRect rect(row * tileDimensions.x, column * tileDimensions.y, tileDimensions.x, tileDimensions.y);
 			Tile tile((row  ) + (column * mapSizeInTiles.x) + 1, rect);
 			m_tiles.push_back(tile);
 			auto texCoords = tile.getTexturedVertices();
+			m_tileVertices.push_back(texCoords[0]);
+			m_tileVertices.push_back(texCoords[1]);
+			m_tileVertices.push_back(texCoords[2]);
+			m_tileVertices.push_back(texCoords[3]);
+			texCoords[0].color = grey;
+			texCoords[1].color = grey;
+			texCoords[2].color = grey;
+			texCoords[3].color = grey;
 			m_vertices.push_back(texCoords[0]);
 			m_vertices.push_back(texCoords[1]);
 			m_vertices.push_back(texCoords[2]);
 			m_vertices.push_back(texCoords[3]);
-
-			texCoords[0].color = sf::Color::White;
-			texCoords[1].color = sf::Color::White;
-			texCoords[2].color = sf::Color::White;
-			texCoords[3].color = sf::Color::White;
 		}
 	}
 }
@@ -38,7 +42,7 @@ void TileMap::draw(sf::RenderTarget& rt, sf::RenderStates states, bool shouldDra
 	}
 
 	if(states.texture && shouldDrawTexture){
-		rt.draw(&m_vertices[0], static_cast<unsigned int>(m_vertices.size()), sf::Quads, states);
+		rt.draw(&m_tileVertices[0], static_cast<unsigned int>(m_tileVertices.size()), sf::Quads, states);
 	}
 }
 

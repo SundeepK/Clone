@@ -10103,5 +10103,8 @@
   <object name="DynamicRotatingBlade" x="498" y="2113" width="36" height="41"/>
   <object name="DynamicRotatingBlade" x="1206" y="2091" width="36" height="41"/>
   <object name="DynamicRotatingBlade" x="896" y="75" width="36" height="41"/>
+  <object x="0" y="1" width="64" height="59">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>
